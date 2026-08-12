@@ -120,23 +120,27 @@ def _fetch_financial_statements(corp_code: str, api_key: str, bsns_year: str, re
     return []
 
 
-def _extract_statement_accounts(raw_list: list[dict], sj_div: str, accounts: list[str]) -> dict:
-    """지정한 재무제표 구분(sj_div)에서 계정만 당기/전기/전전기 금액으로 추린다.
+def _extract_statement_accounts(raw_list: list[dict], sj_divs: list[str], accounts: list[str]) -> dict:
+    """지정한 재무제표 구분(sj_div) 목록에서 계정만 당기/전기/전전기 금액으로 추린다.
 
-    IS(손익계산서)는 "손익계산서상 sj_div", BS(재무상태표)는 "BS"를 넘긴다.
+    손익계산서는 기업마다 "IS"(별도 손익계산서)와 "CIS"(포괄손익계산서 — 손익계산서를
+    따로 내지 않고 포괄손익계산서 하나로 공시하는 경우)로 나뉘어 공시되므로 둘 다 검색한다.
+    재무상태표는 "BS" 하나만 쓴다. 같은 계정이 여러 sj_div에 있으면 sj_divs 순서상 먼저
+    오는 쪽을 채택한다(먼저 채워진 계정은 덮어쓰지 않는다).
     """
     result = {}
-    for row in raw_list:
-        if row.get("sj_div") != sj_div:
-            continue
-        account_nm = row.get("account_nm", "").strip()
-        if account_nm not in accounts:
-            continue
-        result[account_nm] = {
-            "당기": {"기간": row.get("thstrm_nm"), "금액": _parse_amount(row.get("thstrm_amount"))},
-            "전기": {"기간": row.get("frmtrm_nm"), "금액": _parse_amount(row.get("frmtrm_amount"))},
-            "전전기": {"기간": row.get("bfefrmtrm_nm"), "금액": _parse_amount(row.get("bfefrmtrm_amount"))},
-        }
+    for sj_div in sj_divs:
+        for row in raw_list:
+            if row.get("sj_div") != sj_div:
+                continue
+            account_nm = row.get("account_nm", "").strip()
+            if account_nm not in accounts or account_nm in result:
+                continue
+            result[account_nm] = {
+                "당기": {"기간": row.get("thstrm_nm"), "금액": _parse_amount(row.get("thstrm_amount"))},
+                "전기": {"기간": row.get("frmtrm_nm"), "금액": _parse_amount(row.get("frmtrm_amount"))},
+                "전전기": {"기간": row.get("bfefrmtrm_nm"), "금액": _parse_amount(row.get("bfefrmtrm_amount"))},
+            }
     return result
 
 
@@ -190,8 +194,8 @@ def get_company_filings(company_name: str, bsns_year: str | None = None) -> dict
     for year in years_to_try:
         raw_list = _fetch_financial_statements(corp_code, api_key, year, ANNUAL_REPORT_CODE)
         if raw_list:
-            income_statement = _extract_statement_accounts(raw_list, "IS", INCOME_STATEMENT_ACCOUNTS)
-            balance_sheet = _extract_statement_accounts(raw_list, "BS", BALANCE_SHEET_ACCOUNTS)
+            income_statement = _extract_statement_accounts(raw_list, ["IS", "CIS"], INCOME_STATEMENT_ACCOUNTS)
+            balance_sheet = _extract_statement_accounts(raw_list, ["BS"], BALANCE_SHEET_ACCOUNTS)
             used_year = year
             break
 

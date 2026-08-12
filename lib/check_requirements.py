@@ -8,6 +8,8 @@ import sys
 import requests
 from dotenv import load_dotenv
 
+import fnguide_client
+
 load_dotenv()
 
 SAMSUNG_CORP_CODE = "00126380"  # 라이브 체크용 샘플 corp_code (삼성전자)
@@ -59,9 +61,24 @@ def check_fnguide() -> tuple[bool, str]:
     fnguide_id = os.environ.get("FNGUIDE_ID")
     fnguide_pw = os.environ.get("FNGUIDE_PW")
     if fnguide_id and fnguide_pw:
+        try:
+            session = fnguide_client.login(fnguide_id, fnguide_pw)
+        except requests.RequestException as e:
+            return False, f"FnGuide 로그인 호출 실패(네트워크 오류): {e}"
+        except RuntimeError as e:
+            return False, f"FnGuide 로그인 실패: {e}"
+
+        try:
+            has_entitlement = fnguide_client.has_consensus_entitlement(session)
+        except requests.RequestException as e:
+            return False, f"로그인은 성공했지만 컨센서스 이용권 확인 중 오류: {e}"
+
+        if has_entitlement:
+            return True, "로그인 및 컨센서스 이용권 확인 완료 (브라우저 없이 requests 세션으로 라이브 체크)"
         return False, (
-            "FNGUIDE_ID/PW는 설정되어 있지만, 해당 계정에 컨센서스 서비스 이용권이 없어 사용할 수 없는 것으로 확인됨"
-            "(2026-08-12 점검). fnspace.com(FnGuide 공식 API, 유료)으로 전환하거나 이용권을 구매해야 합니다."
+            "로그인은 성공(브라우저 불필요, requests 세션)하지만 해당 계정에 컨센서스 서비스 이용권이 없어 "
+            "사용할 수 없는 것으로 확인됨(2026-08-12 점검). fnspace.com(FnGuide 공식 API, 유료)으로 전환하거나 "
+            "이용권을 구매해야 합니다."
         )
     return False, (
         "FnGuide 컨센서스 데이터 접근 수단이 설정되어 있지 않습니다. "

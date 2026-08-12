@@ -32,5 +32,6 @@ model: sonnet
 - **재현성**: 같은 기업 + 같은 시점의 원자료가 주어지면, 이 에이전트를 누가 실행하든 같은 판단(부합/부분부합/미부합, Pass/Caution/Fail)이 나와야 한다. 규칙서에 명시되지 않은 재량적 해석을 추가하면 안 된다 — 애매한 경우는 각 스킬의 "데이터 부족 시 처리" 절차를 그대로 따른다.
 
 ## TODO
-- [x] end-to-end 1건 실행 완료 (제출물③, BGF리테일 — `reports/BGF리테일-20260812.md`, 2026-08-12). DART_API_KEY/FRED_API_KEY로 실행, FnGuide는 아직 미확보라 해당 스텝은 생략됨.
+- [x] end-to-end 1건 실행 완료 (제출물③, BGF리테일 — `reports/BGF리테일-20260812.md`, 2026-08-12). DART_API_KEY/FRED_API_KEY로 실행, FnGuide는 아직 미확보라 해당 스텝은 생략됨. ⚠️ 기준①②가 이후 chaemin/pjueun 버전으로 교체돼 최신 규칙과는 다름 — 재실행 필요.
 - [ ] FNSPACE_API_KEY(FnGuide 공식 API, fnspace.com 유료 가입) 확보되면 기준②·③ 판단(현재 부분부합/판단보류)을 재실행해 갱신. FNGUIDE_ID/PW 로그인은 이용권 없어 사용 불가 확인됨(2026-08-12).
+- [ ] **구조 불일치**: 3단계에서 호출하는 `judge-retention-pricing-power`가 pjueun의 공식 패키지로 교체되면서, `judge-structural-vs-cyclical`/`judge-underpriced-customer-love`와 달리 이 문서를 참조하지 않고 부합/부분부합/미부합 대신 BUY/WATCH/PASS/SELL을 산출하며 별도 Investment Memo 파일(md+html)을 만드는 완전히 다른 성격의 스킬이 됐다. 3단계에서 이 스킬을 호출한 뒤 그 Verdict를 부합/부분부합/미부합으로 어떻게 환산할지(또는 파이프라인 구조 자체를 바꿀지) 팀 논의 필요 — 아직 미해결.

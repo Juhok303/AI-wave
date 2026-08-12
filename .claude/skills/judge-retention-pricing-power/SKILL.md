@@ -1,32 +1,115 @@
 ---
 name: judge-retention-pricing-power
-description: "Retention-to-Pricing-Power" 기준(가격 인상에도 이탈하지 않는가 + 그 가격결정력이 재무 전환되고 있는가 + 시장이 이미 다 아는 스토리는 아닌가)으로 개별기업을 판단한다. judgment-rules.md의 기준①을 실행하는 스킬. 잠정 버전(pjueun 정식 설계문서 도착 전) — retention-pricing-power-memo/assets/example-memo-costco.html에서 역추출.
+description: >
+  Use this skill whenever the user gives a company name or ticker and wants an investment view, a
+  buy/watch/pass/sell call, an Investment Memo, or any deep-dive equity analysis — even if they
+  don't mention "retention" or "pricing power" explicitly. Also trigger on phrases like "이 기업
+  어때", "지금 사도 될까", "투자 관점에서 분석해줘", "Investment Memo 만들어줘", or any request to
+  evaluate a B2C, subscription, membership, consumer-brand, or repeat-purchase company for
+  investment purposes. This skill applies ONE FIXED investment philosophy — high retention
+  converts into pricing power, and the market underestimates the speed and size of that conversion
+  — as the mandatory analytical lens. Do NOT invent a different framework (DCF-only, generic SWOT,
+  simple bull/bear list, etc.) when this skill is applicable. The skill ends by producing two
+  deliverable files, a Markdown Investment Memo and a styled HTML Investment Memo.
 ---
 
-# judge-retention-pricing-power
+# Retention-to-Pricing-Power Investment Decision Skill
 
-## 입력
-- `data/cache/<기업명>/dart.json`, `data/cache/<기업명>/web.json`, `data/cache/<기업명>/fnguide.json`(있는 경우)
-- `judgment-rules.md`의 "1. Retention-to-Pricing-Power" 섹션
-- 참고: `.claude/skills/retention-pricing-power-memo/assets/example-memo-costco.html` (pjueun, 이 판단 로직의 원본 예시)
+## What this skill is
 
-## 동작
+This is not a general equity-research assistant. It is a **fixed decision architecture** that always asks
+the same question about every company:
 
-1. **가격 인상 이벤트 확인 (web.json)**: 최근 2~3년 내 가격 인상 발표가 있었는지 검색 결과에서 찾는다. 있으면 그 시점을 기록.
-2. **Retention 방어 확인 (dart.json)**: 가격 인상 전후 매출액 YoY·매출총이익률 변화를 비교한다. 가격 인상 이벤트를 특정하지 못했으면 최근 2개년 매출액 YoY로 대체 판단(그 사실을 명시).
-3. **재무 전환 여부 (dart.json)**: 매출총이익률·영업이익률의 YoY 추이를 본다. 마진이 유지·개선 중이면 가격결정력이 재무로 전환되고 있다는 신호, 아직 정체면 "전환 안 됨"으로 기록.
-4. **Consensus Gate 점검 (web.json, Low Confidence)**: "가격결정력/충성도/멤버십" 관련 언급이 이미 여러 언론·리포트에서 반복되는 컨센서스 스토리인지 확인한다. 반복 언급이 많으면 Variant View 약화로 판단.
-5. **밸류에이션 참고 (fnguide.json, 있는 경우)**: 현재 Multiple이 역사적 평균 대비 프리미엄인지 참고만 한다(판단 기준 자체는 아래 3단계 규칙만 사용).
-6. `judgment-rules.md` "1. Retention-to-Pricing-Power"의 판단 기준을 그대로 적용한다:
-   - Retention 방어 확인 **AND** 마진 전이가 아직 시장에 다 반영 안 된 개선 초기 신호 → **부합**
-   - Retention 확인되나 이미 컨센서스에 충분히 반영(Consensus Gate 발동) 또는 마진 정체 → **부분부합**
-   - 가격 인상 후 매출·판매량이 뚜렷이 이탈 → **미부합**
+> "이 기업의 높은 Retention이 아직 시장이 충분히 가격에 반영하지 않은 Pricing Power로 전환되고 있는가?"
+> ("Is this company's high retention converting into pricing power that the market has not yet
+> priced in?")
 
-## 출력
-- 판단 결과(부합/부분부합/미부합) + 사용한 수치(매출총이익률·영업이익률 YoY, 가격 인상 이벤트 유무)와 근거 + Consensus Gate 점검 결과 + 적용한 `judgment-rules.md` 조항 — investment-desk 에이전트가 최종 보고서에 통합. 이 문서에 없는 별도 기준으로 판단하지 않는다.
+Never substitute a different investment philosophy. Never skip steps because a company "obviously"
+passes or fails. Always run the full causal chain below, and always look for where the chain breaks.
 
-## 데이터 부족 시 처리
-`dart.json`에 매출총이익률 계산에 필요한 계정이 없으면 그 사실을 명시하고 "판단 보류(데이터 부족)"로 표시한다. `web.json`에 가격 인상 이벤트 정보가 없으면 Retention 방어 판단은 "가격 인상 이벤트 특정 불가, 매출 YoY로 대체 판단"임을 근거에 명시한다. 임의로 부합/미부합을 추정하지 않는다.
+**Core belief driving every analysis:**
 
-## TODO
-- [ ] pjueun의 정식 SKILL.md/설계문서가 도착하면 이 스킬과 `judgment-rules.md` 기준① 섹션을 함께 재검토
+> Retention → Churn 하락/반복구매 → 가격 인상 수용능력 → ASP/Mix 상승 → Gross Margin 개선 →
+> Contribution Margin 개선 → Operating Leverage → EPS/FCF 상향 → Earnings Revision → Multiple Re-rating
+
+**Core Thesis to test on every company (never assume true):**
+
+> "이 기업은 이미 가격결정권을 보유하고 있거나 초기 신호가 나타나고 있으나, 시장은 여전히 이를
+> Volume/User Growth 중심의 스토리로 가치평가하고 있다."
+
+Verdict must be one of: **Supported / Partially Supported / Not Supported**.
+
+## Guiding behavioral rules (apply throughout, not just once)
+
+1. **재무제표 우선순위**: 항상 최신 데이터를 검색해서 사용한다 (web search / 회사 IR, 10-K/10-Q,
+   earnings call, investor day, 신뢰도 높은 산업 데이터·언론, app/web traffic, 소비자 리뷰 순).
+   숫자는 항상 **값 + 기간 + 출처**로 표기한다. 데이터가 없으면 만들지 말고 "Insufficient Data"라고 쓴다.
+   Fact / Estimate / Inference를 명확히 구분한다.
+2. **반증 우선 원칙**: 분석을 시작하기 전에 "이 기업이 이 투자철학에 맞지 않는다는 가장 강한 증거는
+   무엇인가?"를 먼저 묻고, 최소 3개의 반대 근거를 적극적으로 찾은 뒤에 Thesis를 평가한다. PASS로
+   끝나는 것도 정상적인 결과다. Bull case를 만들기 위해 이 스킬이 존재하는 게 아니다.
+3. **인과 전달 확인**: 각 Layer를 독립 체크리스트로 채점하지 말고, 앞 Layer의 결과가 실제로 뒤
+   Layer로 전달되는지 확인한다. 연결이 끊어지는 지점을 반드시 찾아 명시한다.
+4. **추상적 표현 금지**: "브랜드가 강하다", "고객이 만족한다" 같은 표현은 금지. 항상 관찰 가능한
+   데이터(리뷰 평점, NPS, repeat purchase rate, ASP 등)로 뒷받침한다.
+5. **Variant Perception 자기검증**: 시장이 이미 알고 있는 좋은 점을 Variant View로 인정하지 않는다.
+   "정말 시장이 모르는가?"를 항상 먼저 검증한다.
+
+## Workflow (run in this order)
+
+1. **Universe Filter** — read `references/layers_a_to_g.md` §Universe Filter first. Output
+   `Framework Fit: High / Medium / Low`. If Low, explain why and stop the deep analysis (still produce
+   a short memo stating the mismatch — don't force a full workflow onto a bad-fit company).
+2. **Data gathering** — before writing any layer, search for the company's latest retention/cohort
+   data, pricing history, ASP/ARPU, margins, and consensus estimates. Use web search liberally; this
+   skill is only as good as the data behind it. Cite value + period + source for every number.
+3. **Layers A → G** — follow `references/layers_a_to_g.md` in order (Demand → Product/Brand →
+   Customer Economics → Competitive Advantage → Distribution → Financial Translation →
+   Variant Perception). Run the **Pricing Power Test** (4 sub-tests) inside Layer C/D per
+   `references/pricing_power_test.md`.
+4. **Financial Transmission Chain** — mark each link Confirmed / Emerging / Broken / Insufficient
+   Data per `references/financial_transmission.md`, and state how far the chain has progressed.
+5. **Variant Perception** — build Market Believes / We Believe / Why Market May Be Wrong / Evidence /
+   Recognition Trigger, then classify into the 6-category self-check per
+   `references/variant_perception.md`. Category 1 never counts as a variant view.
+6. **Catalyst Map, Entry Timing, Valuation, Expected Return, Holding Period, Thesis Break** — follow
+   `references/catalyst_and_entry.md`.
+7. **Scorecard, Gates, Final Verdict** — follow `references/scorecard_and_verdict.md` exactly. Do not
+   award points a gate has blocked. Show score/max + 1-2 line justification for every row.
+8. **Write the memo** — follow the exact structure in `references/output_template.md` (this mirrors
+   the required section 27 format: Snapshot → Thesis Test → Retention Quality → Pricing Power Evidence
+   → Financial Transmission table → Layer A-G table → Variant Perception → Catalyst Map → Valuation →
+   Expected Return → Entry Strategy → Thesis Break → Scorecard → Final Investment Decision).
+9. **Produce deliverable files** — see "Final file output" below. This step is mandatory; a
+   conversational answer alone is not a complete run of this skill.
+
+## Final file output (mandatory)
+
+Once the memo content is finalized, always generate BOTH of the following files, with identical
+content, using the company's name (spaces replaced with underscores, no special characters):
+
+- `[Company]_Investment_Memo.md` — the memo exactly as structured in `references/output_template.md`.
+- `[Company]_Investment_Memo.html` — the same content rendered as a polished, IM-style report:
+  the Scorecard, Financial Transmission Chain, Layer A-G table, Catalyst Map, and Valuation/Expected
+  Return sections must render as actual styled tables (not plain text), with the Final Verdict
+  (BUY/WATCH/PASS/SELL) visually prominent near the top (e.g., a colored badge — green=BUY,
+  yellow=WATCH, gray=PASS, red=SELL). Use `assets/memo_template.html` as the base template/CSS;
+  do not reinvent styling from scratch each time.
+
+Steps:
+1. Write both files under `/home/claude/` first, then copy final versions into `/mnt/user-data/outputs/`.
+2. Call `present_files` with both paths (.md first, then .html) so the user can open/download them.
+3. Do not add a long post-amble after presenting the files — a one-line summary of the verdict is enough.
+
+## Reference files (load as needed)
+
+- `references/layers_a_to_g.md` — Universe Filter + full Layer A-G definitions and required metrics.
+- `references/pricing_power_test.md` — the 4 mandatory pricing-power sub-tests.
+- `references/financial_transmission.md` — the Retention→Re-rating chain and how to mark each link.
+- `references/variant_perception.md` — Market Believes/We Believe structure + 6-way self-check.
+- `references/catalyst_and_entry.md` — Catalyst Map, Entry Timing (4 options), Valuation, Expected
+  Return, Holding Period, Thesis Break/Sell Discipline.
+- `references/scorecard_and_verdict.md` — 100-point scorecard, Gate Conditions, and BUY/WATCH/PASS/SELL
+  thresholds.
+- `references/output_template.md` — the exact memo skeleton to fill in (matches required output format).
+- `assets/memo_template.html` — base HTML/CSS template for the HTML deliverable.

@@ -29,7 +29,7 @@ AI-wave/
 ├── .env.example                # API 키 자리표시자
 ├── requirements.txt             # lib/ 클라이언트 실행에 필요한 Python 패키지
 ├── .claude/
-│   ├── skills/                 # check-requirements 1개 + 데이터 수집 4개(DART/FnGuide/FRED/웹) + 1단계 판단 기준 3개 + 2단계 스크리닝 1개 + 독립형 메모 스킬 2개
+│   ├── skills/                 # check-requirements 1개 + 데이터 수집 4개(DART/FnGuide/FRED/웹) + 1단계 판단 기준 3개(judge-retention-pricing-power는 독립형 메모 패키지로 통일됨) + 2단계 스크리닝 1개 + 독립형 메모 스킬 1개(structural-cyclical-misclassification-memo)
 │   └── agents/investment-desk.md  # 오케스트레이터 에이전트
 ├── lib/                        # DART/FnGuide/FRED API 클라이언트 (fetch-web은 별도 클라이언트 없이 WebSearch/WebFetch 사용)
 ├── data/cache/                 # 기업별 원자료 캐시 (git 미추적)
@@ -38,7 +38,7 @@ AI-wave/
 
 ### 문서 배치 규칙
 - `docs/`: `judgment-rules.md`(공식 판단 규칙서)가 직접 링크하는 참고자료만 (예: `underpriced-customer-love-framework.md`, `report-format-reference.md`).
-- `.claude/skills/<스킬명>/references/`, `.../assets/`: 그 스킬 하나만 참조하는 설계문서·예시 (judgment-rules.md 파이프라인과 무관한 개인 기여 스킬 전용, 예: `structural-cyclical-misclassification-memo`, `retention-pricing-power-memo`).
+- `.claude/skills/<스킬명>/references/`, `.../assets/`: 그 스킬 하나만 참조하는 설계문서·예시 (예: `structural-cyclical-misclassification-memo/references/thesis-tree.md`, `judge-retention-pricing-power/references/*.md`).
 
 ## 진행 상황
 
@@ -50,12 +50,11 @@ AI-wave/
 | `fetch-fnguide` | ⏳ 보유 계정에 컨센서스 이용권 없음 확인됨 — FnSpace(fnspace.com) 유료 가입/키 발급 대기, 스텁만 존재 |
 | `fetch-web` | 🔧 스킬 정의 완료 (WebSearch/WebFetch 사용, 로직은 실행 시점에 Claude가 수행) |
 | `judge-structural-vs-cyclical` | ✅ chaemin의 `thesis-tree.md`(source of truth)를 파이프라인 데이터로 근사한 축약판으로 재작성 완료(2026-08-12). 실 데이터 실행 검증은 아직 |
-| `judge-retention-pricing-power` | ⚠️ 잠정 버전 — pjueun의 costco 예시 메모에서 로직을 역추출해 재작성(2026-08-12). 정식 SKILL.md/설계문서가 오면 재검토 필요 |
+| `judge-retention-pricing-power` | ✅ pjueun의 공식 패키지(`SKILL.md` + `references/` 7개 문서 + `assets/` memo_template.html·example-memo-costco.html)로 통일 완료(2026-08-12) — 제가 먼저 쓴 역추출 잠정 버전 및 중복 폴더(`retention-pricing-power-memo`)는 정리·삭제. ⚠️ 다만 이 SKILL.md는 `judgment-rules.md`/`investment-desk` 파이프라인과 무관하게 독립적으로 작성돼(부합/부분부합/미부합이 아니라 BUY/WATCH/PASS/SELL 산출, `judgment-rules.md` 미참조), 파일 출력 경로도 Claude.ai 전용 표현(`/mnt/user-data/outputs/`, `present_files`)이라 Claude Code(`investment-desk`)에서 그대로 호출하면 안 맞는 부분이 있음 — 아래 참고 |
 | `judge-underpriced-customer-love` | ✅ `judgment-rules.md` 대체지표 정의 확정 + 스킬에 계산식·임계값 반영 완료. 실 데이터로 실행 검증은 아직 |
 | `screen-fundamentals` | ✅ 5개 항목 계산식·임계값 반영 완료 (이자보상배율·ROIC·TAM/시가총액은 데이터 공백으로 일부 Proxy·미구현 상태, 스킬 파일에 명시) |
-| `investment-desk` (오케스트레이터) | ✅ end-to-end 1건 실행 완료(제출물③, BGF리테일) — `reports/BGF리테일-20260812.md`. 실행 중 `dart_client.py`의 CIS/IS 버그 발견·수정. ⚠️ 이 보고서는 기준①②가 chaemin/pjueun 버전으로 교체(2026-08-12)되기 **전** 정의로 만들어졌으므로, 최신 판단 규칙과 정확히 일치하지 않는다 — 재실행 필요 |
-| `structural-cyclical-misclassification-memo` | ✅ 독립형 스킬 완료 (chaemin 기여) — `judgment-rules.md` 파이프라인과 별개로, 기준②(Structural vs Cyclical) 철학을 자체 Layer A–G 스코어카드·Gate 조건으로 채점해 팀 표준 양식 HTML 투자메모를 생성. `references/thesis-tree.md`(Layer/Factor 정의), `assets/example-memo-onon.html`(양식 참조본) 포함 |
-| `retention-pricing-power-memo` | ⚠️ **미완성** — 기준①(Retention-to-Pricing-Power) 예시 산출물 `assets/example-memo-costco.html`만 있음. `structural-cyclical-misclassification-memo`와 짝을 맞추려면 **SKILL.md(워크플로 정의)**와 **references/thesis-tree.md 격 설계문서(Layer/Factor 정의)**가 아직 필요 — 아직 커밋되지 않음, 원작자 확인 대기. 이 예시는 `judge-retention-pricing-power`가 로직 역추출 원본으로 참조 중(2026-08-12) |
+| `investment-desk` (오케스트레이터) | ✅ end-to-end 1건 실행 완료(제출물③, BGF리테일) — `reports/BGF리테일-20260812.md`. 실행 중 `dart_client.py`의 CIS/IS 버그 발견·수정. ⚠️ 이 보고서는 기준①②가 chaemin/pjueun 버전으로 교체되기 **전** 정의로 만들어졌으므로 최신 판단 규칙과 정확히 일치하지 않는다 — 별도로 `reports/BGF리테일_Investment_Memo.md`+`.html`(공식 retention-pricing-power 패키지로 재실행, PASS 39/100, Entry: WAIT)이 생성됐지만 이건 기준① 단독 메모이지 3기준 통합 재실행은 아직임 |
+| `structural-cyclical-misclassification-memo` | ✅ 독립형 스킬 완료 (chaemin 기여, `.claude/skills/`로 경로 정리함). `judgment-rules.md` 파이프라인과 별개로 기준②(Structural vs Cyclical) 철학을 자체 Layer A–G 스코어카드·Gate 조건으로 채점해 HTML 투자메모를 생성. `references/thesis-tree.md`, `assets/example-memo-onon.html` 포함 |
 
 ## 기여자 ↔ 스킬 매핑 (1인 1기여)
 
@@ -68,13 +67,12 @@ AI-wave/
 | | `fetch-fnguide` |
 | | `fetch-fred` |
 | | `fetch-web` |
-| | `judge-retention-pricing-power` |
+| pjueun | `judge-retention-pricing-power` — SKILL.md·references 7개·assets(memo_template, example-memo-costco) 전체 기여 |
 | | `judge-structural-vs-cyclical` |
 | | `judge-underpriced-customer-love` |
 | | `screen-fundamentals` |
 | | `investment-desk` (오케스트레이터) |
 | chaemin | `structural-cyclical-misclassification-memo` |
-| (확인 필요) | `retention-pricing-power-memo` — SKILL.md/설계문서 원작자 확인 대기 |
 
 ## 완성 기준
 

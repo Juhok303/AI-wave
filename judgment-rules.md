@@ -26,7 +26,7 @@
   - **밸류에이션 참고 (fnguide.json, 있는 경우)**: 현재 Multiple이 역사적 평균 대비 이미 프리미엄인지 — 프리미엄이 크면 Gate 발동(이미 반영) 신호로 참고.
   - **판단 기준**: Retention 방어 확인 **AND** 마진 전이가 아직 시장 컨센서스에 다 반영되지 않은 개선 초기 신호 → **부합**. Retention은 확인되나 이미 컨센서스에 충분히 반영(Consensus Gate 발동) 또는 마진 정체 → **부분부합**. 가격 인상 후 매출·판매량이 뚜렷이 이탈(Retention 자체 실패) → **미부합**.
   - 데이터 출처: DART 공시(매출총이익률·영업이익률 YoY), 웹 검색(가격 인상 이벤트, 컨센서스 언급 여부, Proxy), FnGuide 컨센서스(Multiple 참고, 있는 경우).
-  - 참고 예시: [`.claude/skills/retention-pricing-power-memo/assets/example-memo-costco.html`](.claude/skills/retention-pricing-power-memo/assets/example-memo-costco.html) (Costco 적용 사례, pjueun).
+  - 참고 예시: [`.claude/skills/judge-retention-pricing-power/assets/example-memo-costco.html`](.claude/skills/judge-retention-pricing-power/assets/example-memo-costco.html) (Costco 적용 사례, pjueun).
 
 ### 2. Structural vs Cyclical Misclassification
 

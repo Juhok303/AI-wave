@@ -35,7 +35,7 @@ ESG와 신규 경쟁사 동향처럼 데이터 키트(DART/FnGuide/FRED) 밖 정
 5. **ESG 부합 여부**: `web.json`의 "ESG OR 소송 OR 제재" 검색 결과만으로 판단한다(데이터 키트에 ESG 등급 소스 없음). 최근 1년 내 중대 이력이 있으면 Caution/Fail, 검색 결과가 없으면 "데이터 없음"(Pass로 임의 처리 금지).
 
 ## 출력
-- 5개 항목 각각의 Flag(Pass/Caution/Fail/데이터 없음) + 근거 한 줄 — investment-desk 에이전트가 투심보고서의 "스크리닝 Flag" 섹션에 그대로 반영.
+- 5개 항목 각각의 Flag(Pass/Caution/Fail/데이터 없음) + 근거 한 줄 + 적용한 `judgment-rules.md` 2단계 표의 Flag 기준 문구 — investment-desk 에이전트가 투심보고서의 "스크리닝 Flag" 섹션에 그대로 반영. 표에 없는 별도 임계값으로 Flag를 매기지 않는다.
 
 ## 알려진 데이터 공백
 `lib/dart_client.py`는 이제 재무상태표 핵심 계정(`balance_sheet`)을 수집해 부채비율·유동비율은 계산 가능하다. 다만 (1) 이자비용이 본문에 없는 기업은 이자보상배율을 계산할 수 없고, (2) ROIC는 투하자본(영업투하자본) 산정에 추가 계정이 필요해 아직 미구현이며, (3) 시가총액·TAM은 이 데이터 키트에 시세 소스가 없어 여전히 `web.json` Proxy에 의존한다.

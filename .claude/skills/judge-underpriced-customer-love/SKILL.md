@@ -19,7 +19,7 @@ description: "Underpriced Customer Love (ULRS)" 기준(진짜 애착 + 재무 �
 6. 데이터가 없는 지표는 중립(50점)으로 채우지 말고, 해당 weight를 제외한 뒤 나머지 weight로 재정규화한다.
 
 ## 출력
-- ULRS 값 + 해석(ULRS>0 매수 구간 / ≈0 Watchlist / <0 Avoid) + 핵심 근거(Love/Durability/Gap/Red Flag 요약).
+- ULRS 값 + 해석(ULRS>0 매수 구간 / ≈0 Watchlist / <0 Avoid) + 핵심 근거(Love/Durability/Gap/Red Flag 요약) + 적용한 `judgment-rules.md` 기준③ 공식·임계값(및 `docs/underpriced-customer-love-framework.md`의 어느 절을 참조했는지). 문서에 없는 별도 가중치·임계값을 임의로 쓰지 않는다.
 
 ## Peer Group 정의 (실전 축소판)
 

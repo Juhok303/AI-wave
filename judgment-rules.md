@@ -17,9 +17,9 @@
 
 > Source of truth: `.claude/skills/judge-retention-pricing-power/`(pjueun) — SKILL.md가 곧 이 기준의 정의다. `references/`(Layer A-G, Pricing Power Test, Financial Transmission, Variant Perception, Catalyst/Entry, Scorecard/Gates, Output Template)에 전체 방법론이 있다.
 
-- **정의**: 이 기업의 높은 Retention이 아직 시장이 충분히 가격에 반영하지 않은 Pricing Power로 전환되고 있는가 — Retention → Churn 방어 → 가격 인상 수용 → ASP/Mix 상승 → Gross Margin → Operating Leverage → EPS/FCF → Earnings Revision → Multiple Re-rating의 인과 체인이 실제로 이어지는지, 어디서 끊기는지를 본다.
+- **정의**: 이 기업의 높은 Retention이 아직 시장이 충분히 가격에 반영하지 않은 Pricing Power로 전환되고 있는가 — `Retention ↑ → Purchase Frequency ↑/Churn ↓ → LTV ↑ → CAC Payback ↓ → Pricing/Mix ↑ → Gross Margin ↑ → Contribution Margin ↑ → Operating Leverage → EPS/FCF Revision → Multiple Re-rating`의 인과 체인이 실제로 이어지는지, 어디서 끊기는지를 본다(`references/financial_transmission.md`).
 - **왜 가치가 있다고 보는가**: 가격 인상 후에도 갱신율·재구매가 유지된다는 사실 자체는 이미 널리 알려진 컨센서스 스토리인 경우가 많다. 진짜 초과수익은 그 가격결정력이 아직 상품마진/영업레버리지로 다 전이되지 않았는데 시장은 여전히 Volume/User Growth 중심으로만 가치평가하고 있는 지점에서 나온다 — 시장이 "이미 아는 좋은 점"과 "아직 반영 안 한 지점"을 구분해야 한다.
-- **판정**: Verdict는 Supported(=부합) / Partially Supported(=부분부합) / Not Supported(=미부합)로 매핑한다. 상세 채점(Layer A-G, Gate 조건, 100점 스코어카드)은 `references/scorecard_and_verdict.md`를 그대로 따른다 — 이 문서에서 별도 임계값을 만들지 않는다.
+- **판정**: `references/scorecard_and_verdict.md`의 **최종 Verdict**(Core Thesis Test의 중간 판정 Supported/Partially/Not이 아니라, Gate 적용 후 나오는 최종 판정)를 기준으로 매핑한다 — **BUY → 부합**, **WATCH → 부분부합**, **PASS(또는 Gate 위반) → 미부합**. SELL은 기존 보유분 매도 판단용이라 신규 판단(1단계 필터링)에는 등장하지 않는다. 100점 스코어카드(Layer A-G, 4개 Gate)는 그대로 따르고 이 문서에서 별도 임계값을 만들지 않는다.
 - **참고 예시**: [`.claude/skills/judge-retention-pricing-power/assets/example-memo-costco.html`](.claude/skills/judge-retention-pricing-power/assets/example-memo-costco.html) (Costco 적용 사례, pjueun).
 - ⚠️ 이 스킬은 Claude.ai 출력 관례(`/mnt/user-data/outputs/`, `present_files`)로 작성돼 있어 `investment-desk`가 자동 호출할 때는 이 레포의 `reports/` 관례로 저장 경로를 바꿔 적용해야 한다(SKILL.md 자체는 원작자 그대로 유지, 호출 시점에 오케스트레이터가 보정).
 
@@ -29,7 +29,7 @@
 
 - **정의**: 소비자 행동의 구조적 변화를 시장이 경기순환이나 일시적 유행으로 오인해 Multiple을 잘못 매기고 있는가(또는 반대로 순환적 변화를 구조적으로 오인해 고평가하고 있는가).
 - **왜 가치가 있다고 보는가**: 구조적 성장기업이 경기순환주로 오분류되면 경기 저점에서 밸류에이션이 과도하게 할인되고, 오분류가 풀리는 리레이팅 시점에 이익 성장과 별개인 멀티플 확장 alpha가 발생한다. 이 철학은 확증편향 위험이 특히 크다 — "구조적이다"는 주장은 사후적으로만 완전히 검증되므로, 경기 하방 동행 여부(Layer 2, Cyclical Contamination Test)를 반드시 반증 시도해야 하며 Bear case를 Bull case와 동등한 무게로 다뤄야 한다.
-- **판정**: Verdict는 BUY/WATCH/PASS/SELL로 산출되며, 이 기준①③과의 3단 출력(부합/부분부합/미부합)과 맞추려면 BUY·WATCH→부합, PASS→부분부합, SELL(또는 Gate 위반)→미부합으로 환산한다. 상세 채점(Layer A-G 재가중, Gate 4종, 100점 스코어카드)은 `references/thesis-tree.md`의 재가중 테이블을 그대로 따른다.
+- **판정**: `references/thesis-tree.md`의 최종 판단 매핑(BUY 80점+/WATCH 65~79점/PASS 50~64점 또는 Gate 위반/SELL·PASS <50점)을 기준①과 동일한 규칙으로 환산한다 — **BUY → 부합**, **WATCH → 부분부합**, **PASS(또는 Gate 위반) → 미부합**. SELL은 신규 판단에는 등장하지 않는다. 상세 채점(Layer A-G 재가중, Gate 4종, 100점 스코어카드)은 `references/thesis-tree.md`의 재가중 테이블을 그대로 따른다.
 - **참고 예시**: [`.claude/skills/judge-structural-vs-cyclical/assets/example-memo-onon.html`](.claude/skills/judge-structural-vs-cyclical/assets/example-memo-onon.html) (chaemin).
 - ⚠️ 이 스킬도 `/mnt/user-data/outputs/` 관례로 작성돼 있어 `investment-desk` 호출 시 `reports/` 관례로 저장 경로를 보정해야 한다(위 기준① 참고).
 
@@ -44,7 +44,9 @@
   - `Conversion_Readiness_Gap = (Financial Conversion Capacity%ile − Market Recognition%ile) / 100` — 값이 클수록 강한 매수 신호, 음수면 자동 배제
   - `Risk_Penalty% = Red Flag 개수 × 10%p (최대 50%)`, Red Flag 2개 이상이면 점수와 무관하게 강제 Avoid
   - 데이터 출처: DART 공시(매출·마진), FnGuide 컨센서스(Estimate Revision, EV/Sales) + `fetch-web`이 수집하는 리뷰/뉴스 데이터(Proxy, 데이터 신뢰도에 따라 0.6~1.0x 할인, 데이터 없음은 중립(50점) 처리 금지 — weight 배제 후 재정규화)
-  - 상세 방법론(Layer 정의, Gap 공식, Entry Timing, Red Flag 10종, 섹터 적합도): [`.claude/skills/judge-underpriced-customer-love/references/underpriced-customer-love-framework.md`](.claude/skills/judge-underpriced-customer-love/references/underpriced-customer-love-framework.md)
+- **판정**: `references/underpriced-customer-love-framework.md`의 최종 판단(ULRS>0 → BUY / ULRS≈0 → WATCH / ULRS<0 또는 Red Flag 2개↑ → AVOID)을 기준①②와 동일한 규칙으로 환산한다 — **BUY → 부합**, **WATCH → 부분부합**, **AVOID → 미부합**. 100점 스코어카드(문서 D절)는 참고 지표로 함께 산출하되, 최종 판정은 ULRS 부호를 따른다(원문 설계 그대로).
+- **참고 예시**: [`.claude/skills/judge-underpriced-customer-love/assets/example-memo-duolingo.html`](.claude/skills/judge-underpriced-customer-love/assets/example-memo-duolingo.html) (Duolingo 적용 사례).
+- 상세 방법론(Layer 정의, Gap 공식, Entry Timing, Red Flag 10종, 섹터 적합도): [`.claude/skills/judge-underpriced-customer-love/references/underpriced-customer-love-framework.md`](.claude/skills/judge-underpriced-customer-love/references/underpriced-customer-love-framework.md)
 
 ## 2단계 — 스크리닝 체크리스트
 

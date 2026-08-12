@@ -23,6 +23,10 @@ CORP_CODE_CACHE = PROJECT_ROOT / "data" / "cache" / "dart_corp_codes.json"
 # 판단 스킬(judge-*)이 참조하는 손익계산서 핵심 계정.
 INCOME_STATEMENT_ACCOUNTS = ["매출액", "매출원가", "매출총이익", "영업이익"]
 
+# screen-fundamentals(재무 효율성 항목: 부채비율·유동비율)가 참조하는 재무상태표 핵심 계정.
+# 이자비용은 K-IFRS 연결재무제표 본문에 별도 계정으로 없는 경우가 많아 있으면 수집하되 없어도 무시한다.
+BALANCE_SHEET_ACCOUNTS = ["자산총계", "부채총계", "자본총계", "유동자산", "유동부채", "이자비용"]
+
 # 사업보고서(연간). 반기/분기가 필요하면 11012(반기)/11013(1분기)/11014(3분기)로 교체.
 ANNUAL_REPORT_CODE = "11011"
 
@@ -116,14 +120,17 @@ def _fetch_financial_statements(corp_code: str, api_key: str, bsns_year: str, re
     return []
 
 
-def _extract_income_statement(raw_list: list[dict]) -> dict:
-    """손익계산서 핵심 계정만 당기/전기/전전기 금액으로 추린다."""
+def _extract_statement_accounts(raw_list: list[dict], sj_div: str, accounts: list[str]) -> dict:
+    """지정한 재무제표 구분(sj_div)에서 계정만 당기/전기/전전기 금액으로 추린다.
+
+    IS(손익계산서)는 "손익계산서상 sj_div", BS(재무상태표)는 "BS"를 넘긴다.
+    """
     result = {}
     for row in raw_list:
-        if row.get("sj_div") != "IS":
+        if row.get("sj_div") != sj_div:
             continue
         account_nm = row.get("account_nm", "").strip()
-        if account_nm not in INCOME_STATEMENT_ACCOUNTS:
+        if account_nm not in accounts:
             continue
         result[account_nm] = {
             "당기": {"기간": row.get("thstrm_nm"), "금액": _parse_amount(row.get("thstrm_amount"))},
@@ -178,11 +185,13 @@ def get_company_filings(company_name: str, bsns_year: str | None = None) -> dict
     years_to_try = [bsns_year] if bsns_year else [str(datetime.now().year - i) for i in (1, 2, 3)]
 
     income_statement = {}
+    balance_sheet = {}
     used_year = None
     for year in years_to_try:
         raw_list = _fetch_financial_statements(corp_code, api_key, year, ANNUAL_REPORT_CODE)
         if raw_list:
-            income_statement = _extract_income_statement(raw_list)
+            income_statement = _extract_statement_accounts(raw_list, "IS", INCOME_STATEMENT_ACCOUNTS)
+            balance_sheet = _extract_statement_accounts(raw_list, "BS", BALANCE_SHEET_ACCOUNTS)
             used_year = year
             break
 
@@ -192,6 +201,7 @@ def get_company_filings(company_name: str, bsns_year: str | None = None) -> dict
         "stock_code": company["stock_code"],
         "bsns_year": used_year,
         "income_statement": income_statement,
+        "balance_sheet": balance_sheet,
         "recent_disclosures": _fetch_recent_disclosures(corp_code, api_key),
         "fetched_at": datetime.now(timezone.utc).isoformat(),
     }

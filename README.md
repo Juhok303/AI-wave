@@ -36,13 +36,13 @@ AI-wave/
 
 | 스킬/에이전트 | 상태 |
 | --- | --- |
-| `fetch-dart` | ✅ 구현·검증 완료 (실제 API로 삼성전자 테스트) |
+| `fetch-dart` | ✅ 구현 완료, 재무상태표 계정(부채총계·자본총계 등) 추가 반영 — 실 API 재검증 필요(코드 변경 후 삼성전자 재테스트 대기) |
 | `fetch-fred` | ✅ 구현·검증 완료 (실제 API로 테스트) |
 | `fetch-fnguide` | ⏳ FnGuide 키 확보 대기, 스텁만 존재 |
 | `fetch-web` | 🔧 스킬 정의 완료 (WebSearch/WebFetch 사용, 로직은 실행 시점에 Claude가 수행) |
-| `judge-retention-pricing-power` / `judge-structural-vs-cyclical` / `judge-underpriced-customer-love` | 🔧 스킬 정의 완료, 대체지표 계산 로직은 TODO |
-| `screen-fundamentals` | 🔧 스킬 정의 완료, 대체지표 계산 로직은 TODO |
-| `investment-desk` (오케스트레이터) | 🔧 실행 순서 정의 완료, end-to-end 실행(제출물③)은 아직 |
+| `judge-retention-pricing-power` / `judge-structural-vs-cyclical` / `judge-underpriced-customer-love` | ✅ `judgment-rules.md` 대체지표 정의 확정 + 스킬에 계산식·임계값 반영 완료. 실 데이터로 실행 검증은 아직 |
+| `screen-fundamentals` | ✅ 5개 항목 계산식·임계값 반영 완료 (이자보상배율·ROIC·TAM/시가총액은 데이터 공백으로 일부 Proxy·미구현 상태, 스킬 파일에 명시) |
+| `investment-desk` (오케스트레이터) | 🔧 실행 순서 정의 완료, end-to-end 실행(제출물③)은 아직 — Python 설치 + DART/FRED API 키 필요 |
 
 ## 기여자 ↔ 스킬 매핑 (1인 1기여)
 

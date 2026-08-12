@@ -6,16 +6,16 @@ description: FRED 매크로 지표(금리, 소비자물가, 소매판매 등)를
 # fetch-fred
 
 ## 입력
-- (선택) 기업의 섹터/업종에 관련된 매크로 지표 목록. 없으면 기본 지표 세트를 사용.
+- (선택) 시리즈 ID 목록. 없으면 기본 지표 세트(`lib/fred_client.py`의 `DEFAULT_SERIES`)를 사용.
 
 ## 동작
-1. `lib/fred_client.py`의 함수를 호출해 FRED API에서 관련 매크로 시계열을 가져온다.
-2. API 키는 `.env`의 `FRED_API_KEY`를 사용한다.
-3. 결과를 `data/cache/<기업명>/fred.json`에 저장한다.
+1. `python lib/fred_client.py [series_id ...]`를 실행한다(또는 `get_macro_series(series_ids=None)`을 직접 호출). `requirements.txt`의 패키지가 필요하다.
+2. 기본 지표: `CPIAUCSL`(소비자물가지수), `FEDFUNDS`(기준금리), `RSAFS`(소매판매), `UNRATE`(실업률) — 최근 24개월 관측치.
+3. API 키는 `.env`의 `FRED_API_KEY`를 사용한다.
+4. 결과를 `data/cache/<기업명>/fred.json`에 저장한다.
 
 ## 출력
-- `data/cache/<기업명>/fred.json` — structural-vs-cyclical 판단 스킬이 참조할 원자료.
+- `data/cache/<기업명>/fred.json` — `{series: {series_id: [{date, value}, ...]}}`. structural-vs-cyclical 판단 스킬이 참조할 원자료.
 
 ## TODO
-- [ ] `lib/fred_client.py`의 실제 API 호출 구현
-- [ ] 기본으로 가져올 매크로 지표 목록 확정 (예: CPI, 기준금리, 소매판매지수)
+- [ ] 업종별로 더 관련성 높은 시리즈(예: Beauty→개인소비지출, Consumer Subscription→가처분소득)를 기본 세트에 추가할지 검토

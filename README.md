@@ -42,7 +42,7 @@ AI-wave/
 | `fetch-web` | 🔧 스킬 정의 완료 (WebSearch/WebFetch 사용, 로직은 실행 시점에 Claude가 수행) |
 | `judge-retention-pricing-power` / `judge-structural-vs-cyclical` / `judge-underpriced-customer-love` | ✅ `judgment-rules.md` 대체지표 정의 확정 + 스킬에 계산식·임계값 반영 완료. 실 데이터로 실행 검증은 아직 |
 | `screen-fundamentals` | ✅ 5개 항목 계산식·임계값 반영 완료 (이자보상배율·ROIC·TAM/시가총액은 데이터 공백으로 일부 Proxy·미구현 상태, 스킬 파일에 명시) |
-| `investment-desk` (오케스트레이터) | 🔧 실행 순서 정의 완료, end-to-end 실행(제출물③)은 아직 — Python 설치 + DART/FRED API 키 필요 |
+| `investment-desk` (오케스트레이터) | ✅ end-to-end 1건 실행 완료(제출물③, BGF리테일) — `reports/BGF리테일-20260812.md`. 실행 중 `dart_client.py`의 CIS/IS 버그 발견·수정 |
 
 ## 기여자 ↔ 스킬 매핑 (1인 1기여)
 

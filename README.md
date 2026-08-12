@@ -10,10 +10,14 @@ B2C 개별기업에 대한 투자 판단을 자동화하는 Claude Code 기반 �
 
 ## 실행 방법
 
-1. `.env.example`을 `.env`로 복사하고 `DART_API_KEY`, `FNGUIDE_API_KEY`, `FRED_API_KEY`를 채운다. `pip install -r requirements.txt`로 의존성을 설치한다.
+1. `.env.example`을 `.env`로 복사하고 `DART_API_KEY`, `FRED_API_KEY`(필수), `FNSPACE_API_KEY`(선택 — 아래 "FnGuide 관련 참고" 참조)를 채운다. `pip install -r requirements.txt`로 의존성을 설치한다.
 2. Claude Code에서 이 레포를 열고 `investment-desk` 에이전트에게 판단하고 싶은 기업명을 준다.
    (예: "삼성전자 판단해줘")
-3. 에이전트가 데이터 수집 → 1단계(핵심 기준 3가지 필터링) → 2단계(스크리닝 체크리스트 5개 항목 flag) → 보고서 작성까지 자동으로 수행하며, 결과는 `reports/<기업명>-<yyyymmdd>.md`에 저장된다.
+3. 에이전트가 **0단계(요구사항 점검, `check-requirements`)**를 가장 먼저 실행해 `.env` 키가 실제로 동작하는지 확인한다. 필수 항목(DART/FRED)이 실패하면 여기서 멈추고 무엇을 채워야 하는지 안내한다.
+4. 이어서 데이터 수집 → 1단계(핵심 기준 3가지 필터링) → 2단계(스크리닝 체크리스트 5개 항목 flag) → 보고서 작성까지 자동으로 수행하며, 결과는 `reports/<기업명>-<yyyymmdd>.md`에 저장된다.
+
+### FnGuide 관련 참고 (2026-08-12 확인)
+FnGuide 컨센서스는 로그인 방식(`FNGUIDE_ID`/`FNGUIDE_PW`)이지만, 이용권이 없는 계정으로는 실제 데이터를 볼 수 없는 것으로 확인됐다. 정식 경로는 **fnspace.com(FnGuide 공식 API, 유료 가입)**의 `FNSPACE_API_KEY`다. 이 키가 없으면 `fetch-fnguide`는 자동으로 건너뛰고 나머지 파이프라인은 정상 진행된다.
 
 ## 레포 구조
 
@@ -25,7 +29,7 @@ AI-wave/
 ├── .env.example                # API 키 자리표시자
 ├── requirements.txt             # lib/ 클라이언트 실행에 필요한 Python 패키지
 ├── .claude/
-│   ├── skills/                 # 데이터 수집 4개(DART/FnGuide/FRED/웹) + 1단계 판단 기준 3개 + 2단계 스크리닝 1개 스킬
+│   ├── skills/                 # check-requirements 1개 + 데이터 수집 4개(DART/FnGuide/FRED/웹) + 1단계 판단 기준 3개 + 2단계 스크리닝 1개 스킬
 │   └── agents/investment-desk.md  # 오케스트레이터 에이전트
 ├── lib/                        # DART/FnGuide/FRED API 클라이언트 (fetch-web은 별도 클라이언트 없이 WebSearch/WebFetch 사용)
 ├── data/cache/                 # 기업별 원자료 캐시 (git 미추적)
@@ -36,9 +40,10 @@ AI-wave/
 
 | 스킬/에이전트 | 상태 |
 | --- | --- |
+| `check-requirements` | ✅ 구현·검증 완료 (DART/FRED 라이브 체크) |
 | `fetch-dart` | ✅ 구현·검증 완료 (실제 API로 삼성전자 테스트) |
 | `fetch-fred` | ✅ 구현·검증 완료 (실제 API로 테스트) |
-| `fetch-fnguide` | ⏳ FnGuide 키 확보 대기, 스텁만 존재 |
+| `fetch-fnguide` | ⏳ 보유 계정에 컨센서스 이용권 없음 확인됨 — FnSpace(fnspace.com) 유료 가입/키 발급 대기, 스텁만 존재 |
 | `fetch-web` | 🔧 스킬 정의 완료 (WebSearch/WebFetch 사용, 로직은 실행 시점에 Claude가 수행) |
 | `judge-retention-pricing-power` / `judge-structural-vs-cyclical` / `judge-underpriced-customer-love` | 🔧 스킬 정의 완료, 대체지표 계산 로직은 TODO |
 | `screen-fundamentals` | 🔧 스킬 정의 완료, 대체지표 계산 로직은 TODO |
@@ -50,6 +55,7 @@ AI-wave/
 
 | 담당자 | 스킬/에이전트 |
 | --- | --- |
+| | `check-requirements` |
 | | `fetch-dart` |
 | | `fetch-fnguide` |
 | | `fetch-fred` |

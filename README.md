@@ -53,7 +53,7 @@ AI-wave/
 | `screen-fundamentals` | ✅ 5개 항목 계산식·임계값 반영 완료 (이자보상배율·ROIC·TAM/시가총액은 데이터 공백으로 일부 Proxy·미구현 상태, 스킬 파일에 명시) |
 | `investment-desk` (오케스트레이터) | ✅ end-to-end 1건 실행 완료(제출물③, BGF리테일) — `reports/BGF리테일-20260812.md`. 실행 중 `dart_client.py`의 CIS/IS 버그 발견·수정 |
 | `structural-cyclical-misclassification-memo` | ✅ 독립형 스킬 완료 (chaemin 기여, `.claude/skills/`로 경로 정리함). `judgment-rules.md` 파이프라인과 별개로 기준②(Structural vs Cyclical) 철학을 자체 Layer A–I 스코어카드·4개 Gate로 채점해 HTML 투자메모를 생성. `references/thesis-tree.md`, `assets/example-memo-onon.html` 포함 |
-| `retention-pricing-power-memo` | ✅ 완료 — 원작자가 먼저 올린 프로토타입 `assets/example-memo-costco.html`을 짝 스킬 구조에 맞춰 `SKILL.md`+`references/thesis-tree.md`(Layer 재가중 포함)로 공식화, 색상 팔레트는 costco 예시 기준(짙은 그린/틸)으로 통일. BGF리테일로 실행 검증(`reports/BGF리테일-retention-pricing-power-memo-20260812.html`, PASS 53/100) |
+| `retention-pricing-power-memo` | ✅ 완료 — 원작자가 올린 공식 `.skill` 패키지(`SKILL.md` + `references/` 7개 문서 + `assets/memo_template.html`)를 `.claude/skills/`로 정리해 채택(제가 먼저 만든 임시 버전은 폐기). 프로토타입 `assets/example-memo-costco.html`도 예시로 유지. BGF리테일로 실행 검증(`reports/BGF리테일_Investment_Memo.md`+`.html`, PASS 39/100, Entry: WAIT) |
 
 ## 기여자 ↔ 스킬 매핑 (1인 1기여)
 
@@ -72,7 +72,7 @@ AI-wave/
 | | `screen-fundamentals` |
 | | `investment-desk` (오케스트레이터) |
 | chaemin | `structural-cyclical-misclassification-memo` |
-| | `retention-pricing-power-memo` — 프로토타입 예시(costco)는 원작자 기여, SKILL.md/thesis-tree.md 공식화는 Claude Code로 완료. 담당자 이름 기입 필요 |
+| | `retention-pricing-power-memo` — SKILL.md·references 7개·프로토타입(costco) 모두 원작자 기여. 담당자 이름 기입 필요 |
 
 ## 완성 기준
 

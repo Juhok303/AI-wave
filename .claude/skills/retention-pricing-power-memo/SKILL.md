@@ -1,151 +1,115 @@
 ---
-name: retention-pricing-power-memo
-description: Generates a B2C stock investment decision memo (styled HTML, ledger/stamp aesthetic — same visual system as the team's structural-cyclical-misclassification-memo skill) by applying the "Retention-to-Pricing-Power" investment philosophy — the thesis that a company can raise prices (or shift toward higher-margin mix) without losing volume/retention, and the market hasn't fully priced in that margin durability. Use this skill whenever the user asks to analyze a company through this specific philosophy, asks "이 회사 가격결정력 있는지 봐줘", "P 올려도 Q 유지되는지 심화 분석해줘", asks for a thesis tree / scorecard / investment memo under this framework, or wants output matching the team's reference memo format for this philosophy. Also trigger when `judge-retention-pricing-power` (the quantitative screening skill in this repo) has already returned 부합/부분부합 for a company and the user wants that judgment expanded into a full memo — this skill is the qualitative deep-dive layer on top of that quantitative gate, not a replacement for it.
+name: retention-to-pricing-power
+description: >
+  Use this skill whenever the user gives a company name or ticker and wants an investment view, a
+  buy/watch/pass/sell call, an Investment Memo, or any deep-dive equity analysis — even if they
+  don't mention "retention" or "pricing power" explicitly. Also trigger on phrases like "이 기업
+  어때", "지금 사도 될까", "투자 관점에서 분석해줘", "Investment Memo 만들어줘", or any request to
+  evaluate a B2C, subscription, membership, consumer-brand, or repeat-purchase company for
+  investment purposes. This skill applies ONE FIXED investment philosophy — high retention
+  converts into pricing power, and the market underestimates the speed and size of that conversion
+  — as the mandatory analytical lens. Do NOT invent a different framework (DCF-only, generic SWOT,
+  simple bull/bear list, etc.) when this skill is applicable. The skill ends by producing two
+  deliverable files, a Markdown Investment Memo and a styled HTML Investment Memo.
 ---
 
-# Retention-to-Pricing-Power — Investment Memo Skill
+# Retention-to-Pricing-Power Investment Decision Skill
 
-이 스킬은 "가격을 올려도(또는 고마진 믹스로 전환해도) 판매량·고객 유지율이 훼손되지 않는다"는
-투자 철학을 특정 회사에 적용해, 팀 표준 포맷의 HTML 투자메모를 생성한다.
+## What this skill is
 
-같은 상위 시스템 안에 다른 철학을 쓰는 팀원의 스킬(`structural-cyclical-misclassification-memo`)이
-있다 — 산출물의 **구조와 시각적 문법**은 통일하되(같은 Layer A–I 스코어카드, 같은 Gate 4종, 같은
-14개 섹션 구성) **분석 내용/Layer 가중치/색상**은 이 철학 고유의 것을 쓴다.
+This is not a general equity-research assistant. It is a **fixed decision architecture** that always asks
+the same question about every company:
 
-또한 이 저장소에는 같은 기준을 정량으로 먼저 필터링하는 `judge-retention-pricing-power` 스킬이
-`judgment-rules.md` 기준으로 이미 존재한다. 이 메모 스킬은 그 정량 게이트를 **대체하지 않는다** —
-정량 판정이 부합/부분부합인 기업에 대해서만 이 스킬로 심화 분석하며, 정량 판정과 정성 결론이
-모순되면 안 된다(모순 시 정량 판정이 우선한다).
+> "이 기업의 높은 Retention이 아직 시장이 충분히 가격에 반영하지 않은 Pricing Power로 전환되고 있는가?"
+> ("Is this company's high retention converting into pricing power that the market has not yet
+> priced in?")
 
-## 언제 이 스킬을 쓰는가
+Never substitute a different investment philosophy. Never skip steps because a company "obviously"
+passes or fails. Always run the full causal chain below, and always look for where the chain breaks.
 
-- 사용자가 회사를 주고 "이 철학(가격결정력)으로 심화 분석해달라"고 할 때
-- `judge-retention-pricing-power`가 부합/부분부합을 낸 기업에 대해 더 깊은 메모를 원할 때
-- 이미 만든 메모를 다른 회사/최신 데이터로 다시 돌려달라고 할 때
+**Core belief driving every analysis:**
 
-## 필요한 것 (없으면 사용자에게 물어볼 것)
+> Retention → Churn 하락/반복구매 → 가격 인상 수용능력 → ASP/Mix 상승 → Gross Margin 개선 →
+> Contribution Margin 개선 → Operating Leverage → EPS/FCF 상향 → Earnings Revision → Multiple Re-rating
 
-1. **대상 회사** — 없으면 반드시 먼저 확인. 임의로 고르지 말 것.
-2. **정량 게이트 결과** — 가능하면 먼저 `judge-retention-pricing-power` 또는 `reports/`의 기존
-   투심보고서를 확인해 1단계 판정(부합/부분부합/미부합)을 근거로 삼는다. 미부합이면 아래
-   "셋 다 부합하지 않을 때" 절차를 따르고 이 스킬의 나머지 워크플로는 실행하지 않는다.
-3. **데이터 접근성** — 웹 검색 도구·`data/cache/<기업명>/`의 DART 캐시가 있는지 확인. 있으면
-   최신 실적·마진·상품믹스 데이터를 직접 조사해서 쓴다. 없으면(또는 확인 못한 항목이 있으면)
-   절대 숫자를 지어내지 말고 아래 "Data Integrity 원칙"을 따른다.
+**Core Thesis to test on every company (never assume true):**
 
-## 워크플로
+> "이 기업은 이미 가격결정권을 보유하고 있거나 초기 신호가 나타나고 있으나, 시장은 여전히 이를
+> Volume/User Growth 중심의 스토리로 가치평가하고 있다."
 
-### 1단계 — 회사 리서치
+Verdict must be one of: **Supported / Partially Supported / Not Supported**.
 
-`references/thesis-tree.md`의 Layer 1–4, Factor 단위로 빠짐없이 채운다 (DART 재무제표 + web
-search, 없으면 명시적 Estimate/Insufficient Data 태그):
+## Guiding behavioral rules (apply throughout, not just once)
 
-- 매출총이익률 다년 추이, 매출원가율과의 디커플링 여부 (Layer 1-1)
-- 고마진 상품(PB 등) 비중과 그 성장률, 마진 격차 — **가격 인상 vs 믹스 전환 반드시 분해** (Layer 1-2)
-- 매출액 YoY, 객수/객단가 분해(가능한 경우) — 판매량 훼손 여부 (Layer 1-3)
-- Peer도 동반 개선 중인지(카테고리 효과 vs 자사 고유) (Layer 2-1)
-- 회사가 가격을 결정할 수 없는 저마진/규제 카테고리의 매출 비중 (Layer 2-2)
-- 최근 실적에 섞인 일시적 요인(날씨, 관광객, 원자재 등) (Layer 2-3)
-- 컨센서스 마진 가정, 현재 Multiple (Layer 3 — 데이터 없으면 Insufficient)
+1. **재무제표 우선순위**: 항상 최신 데이터를 검색해서 사용한다 (web search / 회사 IR, 10-K/10-Q,
+   earnings call, investor day, 신뢰도 높은 산업 데이터·언론, app/web traffic, 소비자 리뷰 순).
+   숫자는 항상 **값 + 기간 + 출처**로 표기한다. 데이터가 없으면 만들지 말고 "Insufficient Data"라고 쓴다.
+   Fact / Estimate / Inference를 명확히 구분한다.
+2. **반증 우선 원칙**: 분석을 시작하기 전에 "이 기업이 이 투자철학에 맞지 않는다는 가장 강한 증거는
+   무엇인가?"를 먼저 묻고, 최소 3개의 반대 근거를 적극적으로 찾은 뒤에 Thesis를 평가한다. PASS로
+   끝나는 것도 정상적인 결과다. Bull case를 만들기 위해 이 스킬이 존재하는 게 아니다.
+3. **인과 전달 확인**: 각 Layer를 독립 체크리스트로 채점하지 말고, 앞 Layer의 결과가 실제로 뒤
+   Layer로 전달되는지 확인한다. 연결이 끊어지는 지점을 반드시 찾아 명시한다.
+4. **추상적 표현 금지**: "브랜드가 강하다", "고객이 만족한다" 같은 표현은 금지. 항상 관찰 가능한
+   데이터(리뷰 평점, NPS, repeat purchase rate, ASP 등)로 뒷받침한다.
+5. **Variant Perception 자기검증**: 시장이 이미 알고 있는 좋은 점을 Variant View로 인정하지 않는다.
+   "정말 시장이 모르는가?"를 항상 먼저 검증한다.
 
-**세부 Layer/Factor/Metric 정의는 `references/thesis-tree.md`를 반드시 참조할 것.** 매번 새 회사를
-분석할 때 다시 읽어서 Factor 단위로 빠짐없이 체크한다.
+## Workflow (run in this order)
 
-### 2단계 — Core Thesis 작성
+1. **Universe Filter** — read `references/layers_a_to_g.md` §Universe Filter first. Output
+   `Framework Fit: High / Medium / Low`. If Low, explain why and stop the deep analysis (still produce
+   a short memo stating the mismatch — don't force a full workflow onto a bad-fit company).
+2. **Data gathering** — before writing any layer, search for the company's latest retention/cohort
+   data, pricing history, ASP/ARPU, margins, and consensus estimates. Use web search liberally; this
+   skill is only as good as the data behind it. Cite value + period + source for every number.
+3. **Layers A → G** — follow `references/layers_a_to_g.md` in order (Demand → Product/Brand →
+   Customer Economics → Competitive Advantage → Distribution → Financial Translation →
+   Variant Perception). Run the **Pricing Power Test** (4 sub-tests) inside Layer C/D per
+   `references/pricing_power_test.md`.
+4. **Financial Transmission Chain** — mark each link Confirmed / Emerging / Broken / Insufficient
+   Data per `references/financial_transmission.md`, and state how far the chain has progressed.
+5. **Variant Perception** — build Market Believes / We Believe / Why Market May Be Wrong / Evidence /
+   Recognition Trigger, then classify into the 6-category self-check per
+   `references/variant_perception.md`. Category 1 never counts as a variant view.
+6. **Catalyst Map, Entry Timing, Valuation, Expected Return, Holding Period, Thesis Break** — follow
+   `references/catalyst_and_entry.md`.
+7. **Scorecard, Gates, Final Verdict** — follow `references/scorecard_and_verdict.md` exactly. Do not
+   award points a gate has blocked. Show score/max + 1-2 line justification for every row.
+8. **Write the memo** — follow the exact structure in `references/output_template.md` (this mirrors
+   the required section 27 format: Snapshot → Thesis Test → Retention Quality → Pricing Power Evidence
+   → Financial Transmission table → Layer A-G table → Variant Perception → Catalyst Map → Valuation →
+   Expected Return → Entry Strategy → Thesis Break → Scorecard → Final Investment Decision).
+9. **Produce deliverable files** — see "Final file output" below. This step is mandatory; a
+   conversational answer alone is not a complete run of this skill.
 
-`references/thesis-tree.md`의 Core Thesis 템플릿을 이 회사에 맞게 구체적으로 다시 쓴다. 특히
-"가격 인상"과 "믹스 전환"을 뭉뚱그리지 말고 그 회사에서 실제로 어느 쪽이 진짜 동인인지 문장에
-명시한다.
+## Final file output (mandatory)
 
-### 3단계 — Layer A–I 채점 (재가중 적용)
+Once the memo content is finalized, always generate BOTH of the following files, with identical
+content, using the company's name (spaces replaced with underscores, no special characters):
 
-`references/thesis-tree.md`의 재가중 테이블(A=8, B=14, C=22, D=14, E=6, F=16, G=12, H=4, I=4,
-Risk 최대 -15)을 사용한다. 팀원의 다른 철학 스킬과 가중치가 다른 것은 의도된 것이니 임의로
-통일하지 말 것.
+- `[Company]_Investment_Memo.md` — the memo exactly as structured in `references/output_template.md`.
+- `[Company]_Investment_Memo.html` — the same content rendered as a polished, IM-style report:
+  the Scorecard, Financial Transmission Chain, Layer A-G table, Catalyst Map, and Valuation/Expected
+  Return sections must render as actual styled tables (not plain text), with the Final Verdict
+  (BUY/WATCH/PASS/SELL) visually prominent near the top (e.g., a colored badge — green=BUY,
+  yellow=WATCH, gray=PASS, red=SELL). Use `assets/memo_template.html` as the base template/CSS;
+  do not reinvent styling from scratch each time.
 
-채점 시 반드시:
-- Layer 2(Confound & Reversibility Test)를 절대 생략하지 않는다 — "믹스 착시" 여부를 진짜로
-  검증한다
-- 데이터가 불확실한 항목은 낙관적으로 채점하지 않는다 (Data Integrity Gate)
-- 정량 게이트(`judge-retention-pricing-power`)의 판정 근거 수치를 그대로 인용하고, 그 위에
-  질적으로 확장한다 — 수치를 다시 지어내지 않는다
+Steps:
+1. Write both files under `/home/claude/` first, then copy final versions into `/mnt/user-data/outputs/`.
+2. Call `present_files` with both paths (.md first, then .html) so the user can open/download them.
+3. Do not add a long post-amble after presenting the files — a one-line summary of the verdict is enough.
 
-### 4단계 — Gate Condition 점검
+## Reference files (load as needed)
 
-원본 설계 문서(Chapter 9)의 4개 Gate를 그대로 적용한다:
-1. Valuation Gate — 이미 Bull Case가 주가에 반영 중이면 점수 무관 PASS
-2. Consensus Gate — "매출총이익률이 유지됐다"는 사실 자체는 이미 재무제표에 공개돼 시장이
-   인지하고 있을 가능성이 높다. 진짜 Variant View는 "왜 유지됐는가(믹스 전환의 지속가능성 등)"에
-   있어야 한다 — 표면적 사실 재진술이면 이 Gate에서 0점 처리
-3. Financial Translation Gate — Layer C·B가 높아도 Layer F(마진의 실제 재무 전환, 일시적 요인
-   배제 후 core margin)가 불확실하면 60점 상한 캡
-4. Data Integrity Gate — 재구매율·컨센서스 등 핵심 데이터 비공개/추정 불가 시 보수적 최저점,
-   임의 긍정 가정 금지
-
-### 5단계 — 최종 판단 매핑
-
-BUY(80점 이상) / WATCH(65~79점) / PASS(50~64점) / SELL·PASS(50점 미만 또는 Gate 위반). 보유 중
-Thesis Break Signal 확정 시 점수 무관 SELL.
-
-### 6단계 — HTML 메모 생성
-
-`assets/example-memo-costco.html`(이 철학 스킬의 참조본)을 시각 문법의 기준으로 삼는다 —
-ledger/paper 색상 변수, 원장 느낌 타이포그래피, stamp 형태의 verdict 블록, 14개 섹션 구성을
-그대로 재사용한다. **색상 변수는 반드시 `example-memo-costco.html`에 이미 정의된 팔레트
-(`--ledger:#2B4239`, `--ledger-2:#3C594D`, 짙은 그린/틸 계열)를 그대로 따른다** — 이 스킬
-안에서 회사가 달라져도 색상은 통일한다(스킬 간 구분은 이미 이 팔레트 자체가 담당하며,
-`structural-cyclical-misclassification-memo`의 슬레이트 계열과 시각적으로 구분된다).
-완전히 동일한 파일을 복붙하지 말고 회사별 내용에 맞게 다시 쓴다.
-
-참고: `example-memo-costco.html`은 이 저장소에 정식 `references/thesis-tree.md`(Layer 재가중
-포함)가 만들어지기 전에 먼저 작성된 프로토타입이라, Scorecard의 항목별 배점 상한이 기본
-스코어카드 값(A=10/B=12/C=18/D=12/E=6/F=15/G=15/H=7/I=10)을 그대로 쓰고 있다. 이후 회사부터는
-`references/thesis-tree.md`의 재가중 상한(A=8/B=14/C=22/D=14/E=6/F=16/G=12/H=4/I=4)을
-따른다 — Customer Economics(C)와 Financial Translation(F)에 더 높은 배점을 주는 것이 이
-철학의 핵심을 더 정확히 반영하기 때문이다.
-
-섹션 구성 (참조본과 동일 순서, 제목만 이 철학에 맞게 조정):
-1. Why This Company Fits the Philosophy
-2. Core Thesis Test (근거/반대근거 2단 비교)
-3. Layer 1 — Pricing Power Signal Identification
-4. Layer 2/3 — Confound & Reversibility Test / Market Recognition
-5. Financial Transmission
-6. Layer A–I Analysis (재가중 명시)
-7. Variant Perception (Market Believes / We Believe / Why Wrong / Evidence Needed 4카드 + Classification 배지)
-8. Catalyst Map
-9. Valuation
-10. Expected Return (Bull/Base/Bear)
-11. Entry Strategy
-12. Thesis Break (Confirmation/Weakening/Break/Sell Trigger)
-13. Scorecard (재가중 반영된 표)
-14. Final Investment Decision (5개 Q&A + verdict box)
-
-상단에는 항상 데이터 신뢰도 캐비어트 박스를 넣는다 — 실제 검증된(DART/web) 항목과
-Estimate/Insufficient Data로 남은 항목을 구분해서 사용자가 어디를 재검증해야 하는지 알 수
-있게 한다. `judge-retention-pricing-power`의 정량 판정 결과(부합/부분부합 + 근거)도 이 박스나
-1절에 반드시 인용한다.
-
-### 7단계 — 파일 저장 및 전달
-
-이 저장소에서는 `reports/<기업명>-retention-pricing-power-memo-<yyyymmdd>.html`로 저장한다
-(claude.ai 샌드박스 경로가 아니라 이 레포의 `reports/` 컨벤션을 따른다). 대화창에는 이 회사에
-특화된 핵심 설계 판단(가중치를 왜 이렇게 줬는지, Gate가 왜 발동/미발동했는지, 결론이 왜 그
-등급으로 나왔는지)을 2~4줄로 짧게 설명한다 — 메모 전체를 다시 요약하지 않는다.
-
-## 셋 다 부합하지 않을 때
-
-`judgment-rules.md`의 1단계 핵심 기준 3개(Retention-to-Pricing-Power, Structural vs Cyclical,
-Underpriced Customer Love)가 모두 미부합이거나 판단할 근거 데이터 자체가 없다면, 이 스킬로
-심화 메모를 억지로 만들지 않는다. 대신 `references/thesis-tree.md`의 "셋 다 부합하지 않을 때"
-절차대로, 세 기준 각각에 대해 왜 해당하지 않는지(또는 왜 판단 불가인지)를 근거 수치와 함께
-구체적으로 설명하는 짧은 메모만 남긴다 — 억지 Bull 서사를 만들지 않는 것이 Data Integrity
-원칙의 핵심이다.
-
-## Data Integrity 원칙 (모든 단계에 공통 적용)
-
-- 데이터가 없거나 불확실하면 반드시 `Estimate` / `Insufficient Data` 태그를 달고, 그 항목은
-  보수적으로(낙관적으로 채우지 않고) 채점한다.
-- 구체적인 숫자(마진율, 비중, Multiple)를 검증 없이 확신하는 어조로 쓰지 않는다. "~로 알려짐",
-  "검증 필요"처럼 불확실성을 남긴다.
-- 이 메모는 투자 조언이 아니라 프레임워크 적용 예시이며, 실제 판단 전 원문 공시·최신 실적으로
-  재검증이 필요하다는 점을 항상 메모 안에 명시한다.
+- `references/layers_a_to_g.md` — Universe Filter + full Layer A-G definitions and required metrics.
+- `references/pricing_power_test.md` — the 4 mandatory pricing-power sub-tests.
+- `references/financial_transmission.md` — the Retention→Re-rating chain and how to mark each link.
+- `references/variant_perception.md` — Market Believes/We Believe structure + 6-way self-check.
+- `references/catalyst_and_entry.md` — Catalyst Map, Entry Timing (4 options), Valuation, Expected
+  Return, Holding Period, Thesis Break/Sell Discipline.
+- `references/scorecard_and_verdict.md` — 100-point scorecard, Gate Conditions, and BUY/WATCH/PASS/SELL
+  thresholds.
+- `references/output_template.md` — the exact memo skeleton to fill in (matches required output format).
+- `assets/memo_template.html` — base HTML/CSS template for the HTML deliverable.

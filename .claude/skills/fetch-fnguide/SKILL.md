@@ -10,7 +10,7 @@ description: FnGuide 컨센서스 데이터(추정 실적, ASP 등)를 개별기
 
 ## 동작
 1. `lib/fnguide_client.py`의 함수를 호출해 FnGuide 컨센서스(매출/이익 추정치, 추정 ASP, 목표주가 등)를 가져온다.
-2. 접근 키/계정 정보는 `.env`의 `FNGUIDE_API_KEY`를 사용한다.
+2. 로그인 계정 정보는 `.env`의 `FNGUIDE_ID`/`FNGUIDE_PW`를 사용한다(공식 API 키가 아니라 로그인 방식).
 3. 결과를 `data/cache/<기업명>/fnguide.json`에 저장한다.
 
 ## 출력

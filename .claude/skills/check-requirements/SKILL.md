@@ -11,7 +11,7 @@ description: 판단을 시작하기 전, 필요한 API 키/로그인 정보가 .
 ## 동작
 1. `python lib/check_requirements.py`를 실행한다(`requirements.txt` 설치 필요).
 2. DART_API_KEY, FRED_API_KEY는 값이 있는지뿐 아니라 실제 API를 호출해 라이브로 동작하는지까지 확인한다(단순 "키가 채워져 있다"가 아니라 "실제로 이 키로 데이터를 가져올 수 있다"를 확인).
-3. FnGuide/FnSpace는 현재 자동화 가능한 경로가 없어(2026-08-12 기준: 보유 계정은 컨센서스 이용권 없음, FnSpace는 별도 유료 가입 필요) 선택 항목으로 표시하고 안내만 출력한다.
+3. FnGuide는 `lib/fnguide_client.py`의 `login()`으로 브라우저 없이(requests + RSA 암호화) 실제 로그인하고, `has_consensus_entitlement()`로 컨센서스 서비스 접근 가능 여부까지 라이브로 확인한다. 로그인은 성공하지만 보유 계정에 이용권이 없어(2026-08-12 기준) 여전히 WARN으로 표시된다 — 이용권을 구매하거나 FnSpace(`FNSPACE_API_KEY`, 별도 유료 가입)로 전환해야 OK로 바뀐다.
 4. 결과를 요약해서 출력한다: 항목별 OK/WARN/FAIL + 안내 메시지.
 
 ## 출력
@@ -21,4 +21,4 @@ description: 판단을 시작하기 전, 필요한 API 키/로그인 정보가 .
 `investment-desk` 에이전트가 기업 판단을 시작하기 전 **가장 먼저** 이 스킬을 호출한다. DART/FRED 중 하나라도 FAIL이면, 나머지 파이프라인(fetch-dart 등)을 실행하지 않고 사용자에게 무엇을 `.env`에 채워야 하는지 안내한 뒤 중단한다.
 
 ## TODO
-- [ ] FnSpace API 키를 실제로 발급받으면 `check_fnguide()`에 라이브 체크 추가
+- [ ] FnSpace API 키를 실제로 발급받으면 `check_fnguide()`에 FnSpace용 라이브 체크 추가

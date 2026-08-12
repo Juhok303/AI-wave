@@ -55,6 +55,30 @@ AI-wave/
 | `screen-fundamentals` | ✅ 5개 항목 계산식·임계값 반영 완료 (이자보상배율·ROIC·TAM/시가총액은 데이터 공백으로 일부 Proxy·미구현 상태, 스킬 파일에 명시) |
 | `investment-desk` (오케스트레이터) | ✅ end-to-end 1건 실행 완료(제출물③, BGF리테일) — `reports/BGF리테일-20260812.md`. 실행 중 `dart_client.py`의 CIS/IS 버그 발견·수정. ⚠️ 이 보고서는 기준①②가 chaemin/pjueun 버전으로 교체되기 **전** 정의로 만들어졌으므로 최신 판단 규칙과 정확히 일치하지 않는다 — 별도로 `reports/BGF리테일_Investment_Memo.md`+`.html`(공식 retention-pricing-power 패키지로 재실행, PASS 39/100, Entry: WAIT)이 생성됐지만 이건 기준① 단독 메모이지 3기준 통합 재실행은 아직임 |
 
+## 공통 데이터 공백 — 시가총액/주가 소스 부재
+
+세 철학 스킬(기준①②③) 전부와 `screen-fundamentals`가 동시에 막혀 있는 공통 병목. 하나만 고치면 여러 곳의 품질이 동시에 올라간다.
+
+### 문제
+이 레포의 데이터 키트(DART/FRED/FnGuide) 중 어느 것도 **현재 주가·시가총액·발행주식수**를 제공하지 않는다.
+- **DART**: `lib/dart_client.py`가 가져오는 건 정기보고서 재무제표(손익계산서·재무상태표)와 공시 목록뿐 — 시세 데이터는 DART API 자체에 없음.
+- **FRED**: 미국 거시지표(CPI/기준금리/소매판매/실업률)만 제공 — 개별 종목 주가와 무관.
+- **FnGuide/FnSpace**: 컨센서스·목표주가 데이터의 정식 경로이나 현재 WARN 상태(이용권 없음, 유료 가입 대기).
+
+### 영향받는 곳
+- `screen-fundamentals`의 "시장성" 항목 — TAM/시가총액 배수를 계산해야 하는데 시가총액 자체가 없어 `web.json` 검색 Proxy에만 의존(스킬 파일의 "알려진 데이터 공백"에 이미 명시돼 있음).
+- `judge-retention-pricing-power`, `judge-structural-vs-cyclical`의 **Valuation 섹션** — 현재 Multiple(PER/EV·EBITDA 등), 역사적 Range, Peer Multiple을 전부 계산해야 하는데 매번 "Insufficient Data"로 빠짐. BGF리테일 실행 사례(`reports/BGF리테일_Investment_Memo.md`)에서 실제로 이 섹션 전체가 Insufficient Data였고, Scorecard의 "I. Valuation" 항목이 매번 최저점 근처로 깎이는 구조적 원인이 됨.
+- `judge-underpriced-customer-love`의 Layer 5(Market Recognition Gap) — `EV/Sales Percentile` 계산에 시가총액이 필요.
+
+### 제안하는 해결 방향
+1. **`pykrx`(또는 동급의 무료 KRX 데이터 라이브러리)를 `requirements.txt`에 추가**한다 — API 키 없이 종목코드로 당일/기간 종가, 시가총액, 발행주식수를 가져올 수 있다. (대안: KRX 정보데이터시스템 정식 API는 별도 가입 필요, 네이버금융 스크레이핑은 유지보수 부담이 더 큼 — pykrx가 가장 낮은 비용.)
+2. **`lib/market_data_client.py` 신설** — `dart_client.py`가 이미 갖고 있는 `stock_code`를 입력받아 `{현재가, 발행주식수, 시가총액, 조회일자}`를 반환하는 함수 하나만 있으면 됨(다른 클라이언트와 동일한 값+기간+출처 원칙 유지).
+3. **새 스킬 `fetch-market-data`**를 만들거나, 기존 `fetch-dart`의 출력(`data/cache/<기업명>/dart.json`)에 `market_data` 필드로 병합한다 — 후자가 캐시 파일 수를 늘리지 않아 더 간단.
+4. **`screen-fundamentals`, `judge-*` 3개 스킬의 Valuation/시장성 관련 서술을 갱신** — 이제 시가총액이 Insufficient Data가 아니라 실측치임을 반영해 "TAM/시총 배수", "PER/PBR/EV·EBITDA" 계산 지시를 구체화한다.
+
+### 우선순위
+`judgment-rules.md` 정합성(README 앞 절 "가장 시급한 문제") 다음으로 이게 두 번째로 시급하다 — 구조가 맞아도 Valuation·시장성 항목이 매번 공백이면 보고서 설득력이 떨어진다.
+
 ## 스킬 구조 개선 가이드 — 기준①(`judge-retention-pricing-power`) 골격에 맞추기
 
 **2026-08-12 업데이트**: 기준②(`judge-structural-vs-cyclical`)는 chaemin의 공식 패키지로 폴더만 정리(이동)됐을 뿐 SKILL.md 내용 자체는 아래 격차와 동일하게 유지되고 있음을 재확인했다. 기준③(`judge-underpriced-customer-love`)도 새로 완성됐지만, 확인해보니 기준①과 같은 격차가 상당수 그대로 있다. 아래를 최신 상태로 갱신한다.

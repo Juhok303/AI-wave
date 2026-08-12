@@ -49,11 +49,13 @@ AI-wave/
 | `fetch-fred` | ✅ 구현·검증 완료 (실제 API로 테스트) |
 | `fetch-fnguide` | ⏳ 보유 계정에 컨센서스 이용권 없음 확인됨 — FnSpace(fnspace.com) 유료 가입/키 발급 대기, 스텁만 존재 |
 | `fetch-web` | 🔧 스킬 정의 완료 (WebSearch/WebFetch 사용, 로직은 실행 시점에 Claude가 수행) |
-| `judge-retention-pricing-power` / `judge-structural-vs-cyclical` / `judge-underpriced-customer-love` | ✅ `judgment-rules.md` 대체지표 정의 확정 + 스킬에 계산식·임계값 반영 완료. 실 데이터로 실행 검증은 아직 |
+| `judge-structural-vs-cyclical` | ✅ chaemin의 `thesis-tree.md`(source of truth)를 파이프라인 데이터로 근사한 축약판으로 재작성 완료(2026-08-12). 실 데이터 실행 검증은 아직 |
+| `judge-retention-pricing-power` | ⚠️ 잠정 버전 — pjueun의 costco 예시 메모에서 로직을 역추출해 재작성(2026-08-12). 정식 SKILL.md/설계문서가 오면 재검토 필요 |
+| `judge-underpriced-customer-love` | ✅ `judgment-rules.md` 대체지표 정의 확정 + 스킬에 계산식·임계값 반영 완료. 실 데이터로 실행 검증은 아직 |
 | `screen-fundamentals` | ✅ 5개 항목 계산식·임계값 반영 완료 (이자보상배율·ROIC·TAM/시가총액은 데이터 공백으로 일부 Proxy·미구현 상태, 스킬 파일에 명시) |
-| `investment-desk` (오케스트레이터) | ✅ end-to-end 1건 실행 완료(제출물③, BGF리테일) — `reports/BGF리테일-20260812.md`. 실행 중 `dart_client.py`의 CIS/IS 버그 발견·수정 |
+| `investment-desk` (오케스트레이터) | ✅ end-to-end 1건 실행 완료(제출물③, BGF리테일) — `reports/BGF리테일-20260812.md`. 실행 중 `dart_client.py`의 CIS/IS 버그 발견·수정. ⚠️ 이 보고서는 기준①②가 chaemin/pjueun 버전으로 교체(2026-08-12)되기 **전** 정의로 만들어졌으므로, 최신 판단 규칙과 정확히 일치하지 않는다 — 재실행 필요 |
 | `structural-cyclical-misclassification-memo` | ✅ 독립형 스킬 완료 (chaemin 기여) — `judgment-rules.md` 파이프라인과 별개로, 기준②(Structural vs Cyclical) 철학을 자체 Layer A–G 스코어카드·Gate 조건으로 채점해 팀 표준 양식 HTML 투자메모를 생성. `references/thesis-tree.md`(Layer/Factor 정의), `assets/example-memo-onon.html`(양식 참조본) 포함 |
-| `retention-pricing-power-memo` | ⚠️ **미완성** — 기준①(Retention-to-Pricing-Power) 예시 산출물 `assets/example-memo-costco.html`만 있음. `structural-cyclical-misclassification-memo`와 짝을 맞추려면 **SKILL.md(워크플로 정의)**와 **references/thesis-tree.md 격 설계문서(Layer/Factor 정의)**가 아직 필요 — 아직 커밋되지 않음, 원작자 확인 대기 |
+| `retention-pricing-power-memo` | ⚠️ **미완성** — 기준①(Retention-to-Pricing-Power) 예시 산출물 `assets/example-memo-costco.html`만 있음. `structural-cyclical-misclassification-memo`와 짝을 맞추려면 **SKILL.md(워크플로 정의)**와 **references/thesis-tree.md 격 설계문서(Layer/Factor 정의)**가 아직 필요 — 아직 커밋되지 않음, 원작자 확인 대기. 이 예시는 `judge-retention-pricing-power`가 로직 역추출 원본으로 참조 중(2026-08-12) |
 
 ## 기여자 ↔ 스킬 매핑 (1인 1기여)
 

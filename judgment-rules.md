@@ -15,25 +15,31 @@
 
 ### 1. Retention-to-Pricing-Power
 
-- **정의**: 가격(P)을 올려도 판매량/고객 유지율(Q)이 유지되는 구조인가 — 즉 가격 인상이 이탈로 이어지지 않는가.
-- **왜 가치가 있다고 보는가**: 가격 비탄력적 수요(=가격을 올려도 이탈하지 않음)는 브랜드력·전환비용·대체재 부재 중 하나 이상을 의미한다. 이런 기업은 원가 상승 국면에서 마진을 방어하고, 매출 성장보다 이익 성장이 빠른 영업 레버리지 구조를 만든다. 시장은 통상 매출 성장률만 보고 "이익의 질(가격 vs 물량 기여도)"을 놓치는 경우가 많아, 이 구조를 먼저 확인하는 것 자체가 초과수익 기회다.
+> ⚠️ **잠정 버전**: pjueun의 정식 SKILL.md/설계문서(thesis-tree 격)가 아직 없어, `.claude/skills/retention-pricing-power-memo/assets/example-memo-costco.html`(pjueun 작성)에서 로직을 역추출해 채운 잠정 정의다. 정식 설계문서가 오면 이 섹션과 `judge-retention-pricing-power`를 함께 재검토한다.
+
+- **정의**: 가격을 올려도 고객이 이탈하지 않는가(Retention 방어)뿐 아니라, 그 가격결정력이 실제 재무 성과(마진·이익)로 전환되고 있는가, 그리고 이 스토리를 시장이 이미 다 알고 가격에 반영했는가(Consensus Gate)까지 함께 판단한다 — Retention 방어 → 재무 전환(Financial Transmission) → 시장 인식 여부의 체인.
+- **왜 가치가 있다고 보는가**: 가격 인상 후에도 갱신율·재구매가 유지된다는 사실 자체는 브랜드력·전환비용의 실증 증거이지만, 이미 널리 알려진 컨센서스 스토리인 경우가 많다(예: 멤버십 갱신율은 대부분의 리포트가 이미 언급). 진짜 초과수익은 가격결정력이 아직 상품마진/영업레버리지로 완전히 전이되지 않았는데 이제 막 전이되기 시작하는 지점 — 시장이 "이미 아는 좋은 점"과 "아직 반영 안 한 지점"을 구분하는 데서 나온다.
 - **대체지표(proxy)**:
-  - **Primary (dart.json만으로 계산, Medium Confidence)**: 매출총이익률(매출총이익/매출액) YoY 변화 + 매출액 YoY 증가율을 함께 본다. 매출원가율이 오르는(원가압박) 국면에서도 매출총이익률이 유지·개선되면 "가격 전가력이 있다"는 신호, 동시에 매출액 YoY가 (+)이면 "P 상승 + Q 유지"가 성립한다고 본다.
-  - **Secondary (fnguide.json 있으면 Primary보다 우선 채택, High Confidence)**: FnGuide 컨센서스의 ASP 추정치 YoY와 판매량/가입자 추정치 YoY를 직접 비교.
-  - **정성 보강 (fetch-web, Low Confidence)**: 최근 2년 내 가격 인상 발표 뉴스 유무 + 그 이후 리뷰·커뮤니티에서 이탈/불매 언급 비중.
-  - **판단 기준**: 매출총이익률 2개년 연속 유지 이상(또는 FnGuide ASP·판매량 동반 상승) **AND** 매출액 YoY (+) → **부합**. 매출총이익률은 개선되나 매출액 정체/감소(가격만 올리고 물량 이탈) → **부분부합**. 매출총이익률 하락 + 매출액 정체/감소 → **미부합**.
-  - 데이터 출처: DART 공시(매출총이익률·매출액 YoY), FnGuide 컨센서스(ASP·판매량 추정치, 있는 경우), 웹 검색(가격 인상 뉴스·리뷰, Proxy).
+  - **Retention 방어 (dart.json + web.json)**: 웹 검색으로 가격 인상 이벤트(시점) 확인 → 그 전후 매출액/매출총이익률 변화로 판매량 이탈 여부를 근사.
+  - **재무 전환 여부 (dart.json)**: 매출총이익률·영업이익률 YoY 추이. Retention은 확인되나 마진에 아직 다 반영되지 않았고 최근 개선 조짐이 있으면(=전이 초기) 더 강한 신호로 본다.
+  - **Consensus Gate 점검 (fetch-web, Low Confidence)**: 이 기업의 "가격결정력/충성도" 스토리가 이미 언론·애널리스트 코멘트에서 반복적으로 다뤄지는 컨센서스인지 확인. 이미 광범위하게 논의 중이면 Variant View가 약하다고 보고 신호를 낮춘다.
+  - **밸류에이션 참고 (fnguide.json, 있는 경우)**: 현재 Multiple이 역사적 평균 대비 이미 프리미엄인지 — 프리미엄이 크면 Gate 발동(이미 반영) 신호로 참고.
+  - **판단 기준**: Retention 방어 확인 **AND** 마진 전이가 아직 시장 컨센서스에 다 반영되지 않은 개선 초기 신호 → **부합**. Retention은 확인되나 이미 컨센서스에 충분히 반영(Consensus Gate 발동) 또는 마진 정체 → **부분부합**. 가격 인상 후 매출·판매량이 뚜렷이 이탈(Retention 자체 실패) → **미부합**.
+  - 데이터 출처: DART 공시(매출총이익률·영업이익률 YoY), 웹 검색(가격 인상 이벤트, 컨센서스 언급 여부, Proxy), FnGuide 컨센서스(Multiple 참고, 있는 경우).
+  - 참고 예시: [`.claude/skills/retention-pricing-power-memo/assets/example-memo-costco.html`](.claude/skills/retention-pricing-power-memo/assets/example-memo-costco.html) (Costco 적용 사례, pjueun).
 
 ### 2. Structural vs Cyclical Misclassification
 
-- **정의**: 시장이 이 기업의 성장을 구조적(secular) 성장인데 경기순환적(cyclical)으로 오분류하고 있는지 (혹은 반대의 경우).
-- **왜 가치가 있다고 보는가**: 시장이 구조적 성장기업을 경기순환주로 오분류하면, 경기 저점 국면에서 밸류에이션이 실제 이익 지속성 대비 과도하게 할인된다. 오분류가 풀리는 시점(리레이팅)에 이익 성장과 별개로 멀티플 확장이라는 추가 alpha가 발생한다. 반대로 순환기업을 구조적 성장으로 오인하면 고평가된 채 방치되어 하락 리스크가 크다 — 어느 방향이든 "시장의 인식 오류"를 먼저 포착하는 것이 초과수익의 원천이다.
-- **대체지표(proxy)**:
-  - **실적 변동성 (dart.json)**: 최근 3개년 매출액의 변동계수(CV = 표준편차/평균). 업종 평균과 비교 가능하면 비교하고, 없으면 자사 히스토리 변동성만으로 판단(변동성이 낮을수록 구조적 성장 신호).
-  - **매크로 동행성 (fred.json)**: 매출액 YoY 성장률 추이와 CPI/소매판매(RSAFS)/실업률(UNRATE) 등 매크로 사이클의 방향이 같이 움직이는지(동행=cyclical) 아니면 무관하게 꾸준한지(비동행=structural) 정성적으로 비교.
-  - **컨센서스 방향성 오차 (fnguide.json, 있는 경우)**: 최근 분기 실적이 컨센서스를 지속적으로 상회/하회하는 방향과, 목표주가·투자의견 멀티플 수준이 그 방향을 따라가고 있는지(오분류가 풀리는 중인지) 비교.
-  - **판단 기준**: 매출 변동성이 낮음 **AND** 매크로 지표와의 동행성이 약함 → 구조적 성장을 시장이 저평가/오분류 중일 가능성, **부합**. 매크로와 강한 동행 + 변동성 큼 → 실제로 경기순환적, **미부합**. fnguide.json 부재 등으로 컨센서스 오차를 확인할 수 없으면 실적 변동성·매크로 동행성만으로 잠정 판단하고 **부분부합**(데이터 제한 명시)으로 낮춰 보고한다.
-  - 데이터 출처: DART 공시(3개년 매출액), FRED(CPI/소매판매/실업률), FnGuide 컨센서스(있는 경우, Estimate Revision 방향).
+> Source of truth: chaemin의 [`.claude/skills/structural-cyclical-misclassification-memo/references/thesis-tree.md`](.claude/skills/structural-cyclical-misclassification-memo/references/thesis-tree.md). 아래는 이 파이프라인(DART/FRED/웹 데이터, 부합/부분부합/미부합 3단 출력)에 맞춘 축약판이며, Layer/Factor의 완전한 정의·재가중 테이블·Gate 조건은 원본 문서를 따른다.
+
+- **정의**: 소비자 행동의 구조적 변화를 시장이 경기순환이나 일시적 유행으로 오인해 Multiple을 잘못 매기고 있는가(또는 반대로 순환적 변화를 구조적으로 오인해 고평가하고 있는가).
+- **왜 가치가 있다고 보는가**: 구조적 성장기업이 경기순환주로 오분류되면 경기 저점에서 밸류에이션이 과도하게 할인되고, 오분류가 풀리는 리레이팅 시점에 이익 성장과 별개인 멀티플 확장 alpha가 발생한다. 이 철학은 확증편향 위험이 특히 크다 — "구조적이다"는 주장은 사후적으로만 완전히 검증되므로, 경기 하방 동행 여부(Cyclical Contamination Test)를 반드시 반증 시도해야 하며 Bear case를 Bull case와 동등한 무게로 다뤄야 한다.
+- **대체지표(proxy)** — thesis-tree.md의 Layer 1/2/3을 우리 데이터 키트로 근사:
+  - **Layer 1 구조적 신호 (dart.json + web.json)**: 최근 3개년 매출액 변동계수(CV, 낮을수록 구조적 신호) + 웹 검색으로 확인되는 성장 동인의 성격(기술/제도 변화처럼 영구적인지, 유행성인지).
+  - **Layer 2 경기 오염 테스트 (dart.json + fred.json)**: 매출 YoY 추이와 CPI/소매판매(RSAFS)/실업률(UNRATE) 등 매크로 사이클의 동행 여부(동행=cyclical 신호, 비동행=structural 신호).
+  - **Layer 3 시장의 프레이밍 (web.json + fnguide.json)**: "구조냐 순환이냐" 논쟁이 이미 언론·실적콜에서 공개적으로 다뤄지고 있는지(Consensus Gate 위험 — 이미 활발한 논쟁이면 Variant View 약화).
+  - **판단 기준**: 매출 변동성 낮음 **AND** 매크로 동행성 약함 **AND** 시장 논쟁이 아직 활발하지 않음(Consensus Gate 미발동) → **부합**(시장이 아직 오분류 중). 매출 변동성은 낮으나 "구조냐 순환이냐" 논쟁이 이미 활발함(Consensus Gate 발동 우려) → **부분부합**. 매크로와 강한 동행 **AND** 변동성 큼 → **미부합**(실제 경기순환적).
+  - 데이터 출처: DART 공시(3개년 매출액), FRED(CPI/소매판매/실업률), 웹 검색(성장 동인 성격, 시장 논쟁 여부, Proxy), FnGuide 컨센서스(있는 경우, Estimate Revision 방향).
 
 ### 3. Underpriced Customer Love (ULRS)
 

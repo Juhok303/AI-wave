@@ -51,7 +51,7 @@ AI-wave/
 | `fetch-web` | 🔧 스킬 정의 완료 (WebSearch/WebFetch 사용, 로직은 실행 시점에 Claude가 수행) |
 | `judge-structural-vs-cyclical` | ✅ chaemin의 공식 패키지(`SKILL.md` + `references/thesis-tree.md` + `assets/example-memo-onon.html`)로 통일 완료(2026-08-12) — jiwoong이 먼저 넣어둔 축약 버전은 폐기, 중복 폴더(`structural-cyclical-misclassification-memo`)는 삭제. `judge-retention-pricing-power`와 동일한 이슈(BUY/WATCH/PASS/SELL 산출, `/mnt/user-data/outputs/` 관례) 있음 |
 | `judge-retention-pricing-power` | ✅ pjueun의 공식 패키지(`SKILL.md` + `references/` 7개 문서 + `assets/` memo_template.html·example-memo-costco.html)로 통일 완료(2026-08-12) — 제가 먼저 쓴 역추출 잠정 버전 및 중복 폴더(`retention-pricing-power-memo`)는 정리·삭제. ⚠️ 다만 이 SKILL.md는 `judgment-rules.md`/`investment-desk` 파이프라인과 무관하게 독립적으로 작성돼(부합/부분부합/미부합이 아니라 BUY/WATCH/PASS/SELL 산출, `judgment-rules.md` 미참조), 파일 출력 경로도 Claude.ai 전용 표현(`/mnt/user-data/outputs/`, `present_files`)이라 Claude Code(`investment-desk`)에서 그대로 호출하면 안 맞는 부분이 있음 — 아래 참고 |
-| `judge-underpriced-customer-love` | ✅ 독립형 스킬로 재작성 완료(2026-08-12) — 사용자가 커밋한 원본 설계 HTML을 `references/underpriced-customer-love-framework.md`(마크다운 변환본)로 정리하고, `judge-retention-pricing-power`/`judge-structural-vs-cyclical`와 같은 형태(Universe Filter→Layer→Gate→Scorecard→메모)로 SKILL.md 재작성. 실제 리서치로 Duolingo(DUOL) 워크드 예시 완성(`assets/example-memo-duolingo.html`, 결과: WATCH, ULRS≈−0.10 — Gap이 이미 대부분 닫혀 매수 신호 아님). 이 스킬은 `investment-desk` 파이프라인용 부합/부분부합/미부합 환산 단계를 SKILL.md 안에 자체적으로 포함하고 있어 다른 둘과 달리 저장 경로 이슈가 없음 |
+| `judge-underpriced-customer-love` | ✅ 기준①(pjueun) 깊이에 맞춰 전면 재작성 완료(2026-08-12) — 아래 "깊이 격차 8가지" 전 항목 반영: Guiding Rules 5개, Universe Filter, 하위테스트 파일 승격(`references/underpricing_gap_test.md`, `references/red_flag_test.md`), Financial Transmission 6단계 체인+링크별 마킹(`references/financial_transmission.md`), Variant Perception 6-category(`references/variant_perception.md`, 기준①과 동일 체계 재사용), Entry Timing 4-category 재매핑(`references/entry_timing.md`), `output_template.md` 14-section 스켈레톤, `.md`+`.html` 이중 산출물. Duolingo(DUOL) 워크드 예시를 새 구조로 재생성(`assets/example-memo-duolingo.md`+`.html`, 결과: WATCH, ULRS≈−0.10, Score 56/100). 파이프라인용 부합/부분부합/미부합 환산 단계도 SKILL.md에 포함 |
 | `screen-fundamentals` | ✅ 5개 항목 계산식·임계값 반영 완료 (이자보상배율·ROIC·TAM/시가총액은 데이터 공백으로 일부 Proxy·미구현 상태, 스킬 파일에 명시) |
 | `investment-desk` (오케스트레이터) | ✅ end-to-end 1건 실행 완료(제출물③, BGF리테일) — `reports/BGF리테일-20260812.md`. 실행 중 `dart_client.py`의 CIS/IS 버그 발견·수정. ⚠️ 이 보고서는 기준①②가 chaemin/pjueun 버전으로 교체되기 **전** 정의로 만들어졌으므로 최신 판단 규칙과 정확히 일치하지 않는다 — 별도로 `reports/BGF리테일_Investment_Memo.md`+`.html`(공식 retention-pricing-power 패키지로 재실행, PASS 39/100, Entry: WAIT)이 생성됐지만 이건 기준① 단독 메모이지 3기준 통합 재실행은 아직임 |
 
@@ -81,7 +81,7 @@ AI-wave/
 
 ## 스킬 구조 개선 가이드 — 기준①(`judge-retention-pricing-power`) 골격에 맞추기
 
-**2026-08-12 업데이트**: 기준②(`judge-structural-vs-cyclical`)는 chaemin의 공식 패키지로 폴더만 정리(이동)됐을 뿐 SKILL.md 내용 자체는 아래 격차와 동일하게 유지되고 있음을 재확인했다. 기준③(`judge-underpriced-customer-love`)도 새로 완성됐지만, 확인해보니 기준①과 같은 격차가 상당수 그대로 있다. 아래를 최신 상태로 갱신한다.
+**2026-08-12 업데이트 (2차)**: 기준③(`judge-underpriced-customer-love`)의 깊이 격차 8가지를 전부 반영 완료. 기준②(`judge-structural-vs-cyclical`, chaemin 작성)는 아직 폴더 이동만 됐을 뿐 아래 격차가 그대로 남아있다 — 다음 작업 대상.
 
 ### ⚠️ 가장 시급한 문제 — 판단 규칙서(`judgment-rules.md`) 정합성
 
@@ -94,26 +94,28 @@ AI-wave/
 
 ### 깊이 격차 8가지 (기준①이 가진 것, 기준②·③에 없는 것)
 
-| # | 기준①에 있는 것 | 기준② 상태 | 기준③ 상태 |
+| # | 기준①에 있는 것 | 기준② 상태 | 기준③ 상태(2026-08-12 반영 완료) |
 |---|---|---|---|
-| 1 | Guiding Behavioral Rules 5개(SKILL.md 최상단, 값+기간+출처/반증우선/인과전달확인/추상적표현금지/Variant자기검증) | ❌ 없음 | ✅ 있음(5개 원칙 명시) |
-| 2 | Universe Filter (Good/Poor fit 판정 → Framework Fit: High/Medium/Low, Low면 축약 종료) | ❌ 없음, 바로 Layer 1 시작 | ✅ 있음(Sector Fit Matrix로 판정) |
-| 3 | 철학 고유 하위 테스트를 별도 파일로 명문화(`pricing_power_test.md`, 4개 테스트) | ❌ Layer 서술에 뭉뚱그려짐 | ❌ `underpriced-customer-love-framework.md` 한 파일에 다 있음, 별도 승격 안 됨 |
-| 4 | Financial Transmission을 9단계 화살표 인과사슬로 명시, 링크별 Confirmed/Emerging/Broken/Insufficient 마킹 | ❌ 표만 있고 명시적 체인 없음 | ❌ ULRS 계산 절차는 있으나 링크별 상태 마킹 체계는 없음 |
-| 5 | Variant Perception 6-category 자기검증(1번은 Variant View로 불인정) | ❌ 자유서술 class-badge만 | ❌ 없음(Market Recognition Gap으로 대체되나 6-category 체계는 아님) |
-| 6 | Entry Timing 4-category 고정(BUY NOW/CONFIRMATION/WEAKNESS/WAIT) | ❌ 자유서술("Buy on Confirmation" 예시적) | ❌ BUY/WATCH/AVOID 3-category로 다름(Confirmation·Weakness 구분 없음) |
-| 7 | `.md` + `.html` 이중 산출물 필수 | ❌ HTML만 | ❌ HTML만(`[Company]_ULRS_Investment_Memo.html`) |
-| 8 | `output_template.md`로 정확한 스켈레톤 고정 | ❌ 없음 | ❌ 없음 |
+| 1 | Guiding Behavioral Rules 5개(SKILL.md 최상단, 값+기간+출처/반증우선/인과전달확인/추상적표현금지/Variant자기검증) | ❌ 없음 | ✅ 있음(5개 원칙 기준①과 동일 형식으로 명시) |
+| 2 | Universe Filter (Good/Poor fit 판정 → Framework Fit: High/Medium/Low, Low면 축약 종료) | ❌ 없음, 바로 Layer 1 시작 | ✅ Sector Fit Matrix로 `Framework Fit: High/Medium/Low` 동일 출력 형식 |
+| 3 | 철학 고유 하위 테스트를 별도 파일로 명문화(`pricing_power_test.md`, 4개 테스트) | ❌ Layer 서술에 뭉뚱그려짐 | ✅ `references/underpricing_gap_test.md`(Gap 공식 5종), `references/red_flag_test.md`(Red Flag 10종)로 승격, 메인 문서는 포인터만 남김 |
+| 4 | Financial Transmission을 9단계 화살표 인과사슬로 명시, 링크별 Confirmed/Emerging/Broken/Insufficient 마킹 | ❌ 표만 있고 명시적 체인 없음 | ✅ `references/financial_transmission.md` — Love→Re-rating 6단계 체인 + 링크별 마킹 |
+| 5 | Variant Perception 6-category 자기검증(1번은 Variant View로 불인정) | ❌ 자유서술 class-badge만 | ✅ `references/variant_perception.md` — 기준①과 동일 6개 카테고리 재사용, Market Recognition Gap에 적용 |
+| 6 | Entry Timing 4-category 고정(BUY NOW/CONFIRMATION/WEAKNESS/WAIT) | ❌ 자유서술("Buy on Confirmation" 예시적) | ✅ `references/entry_timing.md` — 4-category로 통일, 문서 F절 5-stage를 재매핑 |
+| 7 | `.md` + `.html` 이중 산출물 필수 | ❌ HTML만 | ✅ `assets/example-memo-duolingo.md` + `.html` 동시 생성, SKILL.md에 필수로 명시 |
+| 8 | `output_template.md`로 정확한 스켈레톤 고정 | ❌ 없음 | ✅ `references/output_template.md` — 14-section 스켈레톤 |
 
-### 기준②·③ 공통 개선 방안 (기준①과 같은 형식으로)
-1. **SKILL.md 최상단에 Guiding Behavioral Rules 5개** 추가 — 이 철학에 맞게 다시 쓴다. 예) 기준②의 "④ 추상적 표현 금지"는 "'구조적이다'는 판단은 침투율·세대별 채택 데이터로 뒷받침, '느낌상 구조적'은 금지"로. 기준③은 이미 있으니 문구만 기준①과 형식 통일.
-2. **Universe Filter 신설/보강** — 기준②는 아예 신설(예: "신생 상장사라 경기 하방 데이터가 없는가", "침투율 개념이 성립 안 하는 산업인가"). 기준③은 이미 있는 Sector Fit Matrix를 기준①과 같은 출력 형식(`Framework Fit: High/Medium/Low`)으로 맞춘다.
-3. **하위 테스트를 별도 `references/*_test.md` 파일로 승격** — 기준②는 Layer 2의 Historical Macro Sensitivity/Peer Divergence/Growth Decomposition을 `references/cyclical_contamination_test.md`로. 기준③은 문서 H절 Red Flag 10종을 `references/red_flag_test.md`로, E절 Gap 공식 5종을 `references/underpricing_gap_test.md`로 승격.
-4. **Financial Transmission Chain 명문화** — 기준②: `Penetration Rate↑ → Category Volume↑ → Company Revenue↑ → Peer Divergence 확인 → Sell-side 섹터 재분류 → Multiple 확장`. 기준③: `Love↑ → Durability 확인(AND) → Operating Monetization Gap 축소 → Financial Conversion 확인 → Market Recognition Gap 축소 → Re-rating`.
-5. **Variant Perception 6-category 도입** — 기준②·③ 모두 동일 6개 카테고리 체계를 `references/`에 명문화하고 재사용(1번 판정 시 Consensus Gate로 점수 강제 하향).
-6. **Entry Timing을 4-category로 통일** — 기준③의 현재 BUY/WATCH/AVOID 3단계를 BUY NOW/CONFIRMATION/WEAKNESS/WAIT 4단계로 재매핑(문서 F절 Stage 1~5를 4-category에 대응).
-7. **`.md` 버전 추가 생성** — 둘 다 HTML만 생성 중이니 Markdown 버전을 동시에 만들도록 SKILL.md에 추가.
-8. **`references/output_template.md` 신설** — 기준①처럼 채워야 할 정확한 스켈레톤을 못박는다.
+### 기준② 개선 방안 (남은 작업, 기준①③과 같은 형식으로)
+1. **SKILL.md 최상단에 Guiding Behavioral Rules 5개** 추가 — 이 철학에 맞게 다시 쓴다. 예) "④ 추상적 표현 금지"는 "'구조적이다'는 판단은 침투율·세대별 채택 데이터로 뒷받침, '느낌상 구조적'은 금지"로.
+2. **Universe Filter 신설** — 예: "신생 상장사라 경기 하방 데이터가 없는가", "침투율 개념이 성립 안 하는 산업인가"를 판정해 `Framework Fit: High/Medium/Low` 출력.
+3. **하위 테스트를 별도 `references/*_test.md` 파일로 승격** — Layer 2의 Historical Macro Sensitivity/Peer Divergence/Growth Decomposition을 `references/cyclical_contamination_test.md`로.
+4. **Financial Transmission Chain 명문화** — `Penetration Rate↑ → Category Volume↑ → Company Revenue↑ → Peer Divergence 확인 → Sell-side 섹터 재분류 → Multiple 확장`, 링크별 상태 마킹 추가.
+5. **Variant Perception 6-category 도입** — 기준①③과 동일 6개 카테고리 체계를 `references/`에 명문화하고 재사용.
+6. **Entry Timing을 4-category로 통일** — BUY NOW/BUY ON CONFIRMATION/BUY ON WEAKNESS/WAIT로 재매핑.
+7. **`.md` 버전 추가 생성** — HTML만 생성 중이니 Markdown 버전을 동시에 만들도록 SKILL.md에 추가.
+8. **`references/output_template.md` 신설** — 채워야 할 정확한 스켈레톤을 못박는다.
+
+이 8가지는 chaemin이 작성한 SKILL.md/thesis-tree.md를 구조적으로 다시 쓰는 작업이라, 원작자 확인 후 진행하는 게 안전하다(pjueun 패키지를 그대로 통합한 것과 달리, 이건 다른 사람의 콘텐츠를 실질적으로 재작성하는 것).
 
 ## 기여자 ↔ 스킬 매핑 (1인 1기여)
 

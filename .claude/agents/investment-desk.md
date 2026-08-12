@@ -32,5 +32,6 @@ model: sonnet
 - **재현성**: 같은 기업 + 같은 시점의 원자료가 주어지면, 이 에이전트를 누가 실행하든 같은 판단(부합/부분부합/미부합, Pass/Caution/Fail)이 나와야 한다. 규칙서에 명시되지 않은 재량적 해석을 추가하면 안 된다 — 애매한 경우는 각 스킬의 "데이터 부족 시 처리" 절차를 그대로 따른다.
 
 ## TODO
-- [x] end-to-end 1건 실행 완료 (제출물③, BGF리테일 — `reports/BGF리테일-20260812.md`, 2026-08-12). DART_API_KEY/FRED_API_KEY로 실행, FnGuide는 아직 미확보라 해당 스텝은 생략됨.
+- [x] end-to-end 1건 실행 완료 (제출물③, BGF리테일 — `reports/BGF리테일-20260812.md`, 2026-08-12). DART_API_KEY/FRED_API_KEY로 실행, FnGuide는 아직 미확보라 해당 스텝은 생략됨. ⚠️ 기준①②가 이후 chaemin/pjueun 버전으로 교체돼 최신 규칙과는 다름 — 재실행 필요.
 - [ ] FNSPACE_API_KEY(FnGuide 공식 API, fnspace.com 유료 가입) 확보되면 기준②·③ 판단(현재 부분부합/판단보류)을 재실행해 갱신. FNGUIDE_ID/PW 로그인은 이용권 없어 사용 불가 확인됨(2026-08-12).
+- [ ] **구조 불일치**: 3단계에서 호출하는 `judge-retention-pricing-power`(pjueun)와 `judge-structural-vs-cyclical`(chaemin)가 각각 원작자의 공식 독립형 패키지로 교체되면서, 이 문서를 참조하지 않고 부합/부분부합/미부합 대신 BUY/WATCH/PASS/SELL(전자)·BUY/WATCH/PASS/SELL(후자, 문서 매핑 규칙은 judgment-rules.md 기준②에 명시)을 산출하며 별도 Investment Memo 파일(md+html)을 만드는 성격의 스킬이 됐다(`judge-underpriced-customer-love`는 자체적으로 축약 판정을 반환하도록 설계돼 이 문제가 없음). 둘 다 파일 출력 경로도 Claude.ai 관례(`/mnt/user-data/outputs/`, `present_files`)라 이 레포에서 호출 시 `reports/` 경로로 보정이 필요하다. 3단계에서 이 두 스킬을 호출한 뒤 그 Verdict를 부합/부분부합/미부합으로 환산하는 절차(judgment-rules.md에 매핑 규칙은 적어뒀음)를 오케스트레이터가 실제로 따르는지 end-to-end로 검증 필요 — 아직 미검증.

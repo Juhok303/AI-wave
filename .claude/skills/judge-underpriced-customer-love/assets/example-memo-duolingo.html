@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DUOL — Underpriced Customer Love Investment Memo</title>
+<style>
+  :root{
+    --paper:#F5F3EC; --paper-2:#ECE8DA; --ink:#20241F; --ink-soft:#565C51;
+    --rule:#CBC7B4; --ledger:#1F5C4C; --ledger-2:#2C7A63;
+    --gold:#8A6B1E; --bad:#8C3A2B; --bull:#1F5C4C; --bear:#8C3A2B; --neutral:#8A6B1E;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',-apple-system,sans-serif;line-height:1.6;}
+  .sheet{max-width:900px;margin:0 auto;padding:52px 44px 110px;}
+  @media (max-width:640px){.sheet{padding:28px 18px 80px;}}
+
+  .masthead{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px double var(--ledger);padding-bottom:16px;margin-bottom:6px;}
+  .eyebrow{font-family:'Courier New',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ledger-2);margin-bottom:6px;}
+  h1{font-family:Georgia,serif;font-weight:700;font-size:32px;margin:0;letter-spacing:-.01em;}
+  .sub{font-family:Georgia,serif;font-style:italic;color:var(--ink-soft);font-size:14.5px;margin-top:6px;}
+  .ticker-box{font-family:'Courier New',monospace;text-align:right;font-size:12px;color:var(--ink-soft);white-space:nowrap;padding-left:16px;}
+  .ticker-box .tk{font-size:21px;font-weight:600;color:var(--ink);}
+
+  .snapshot{display:grid;grid-template-columns:repeat(4,1fr);margin:26px 0 8px;border:1px solid var(--rule);}
+  .snap-cell{padding:13px 15px;border-right:1px solid var(--rule);}
+  .snap-cell:last-child{border-right:none;}
+  .snap-cell .lbl{font-family:'Courier New',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px;}
+  .snap-cell .val{font-family:Georgia,serif;font-weight:600;font-size:18px;}
+  @media (max-width:640px){.snapshot{grid-template-columns:repeat(2,1fr);}}
+
+  .verdict-row{display:flex;margin:24px 0 32px;border:1px solid var(--rule);background:var(--paper-2);overflow:hidden;}
+  .verdict-main{flex:1;padding:20px 24px;}
+  .verdict-main .lbl{font-family:'Courier New',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+  .one-liner{font-family:Georgia,serif;font-style:italic;font-size:16.5px;margin-top:8px;}
+  .verdict-facts{font-family:'Courier New',monospace;font-size:11.5px;margin-top:12px;color:var(--ink-soft);display:flex;gap:20px;flex-wrap:wrap;}
+  .verdict-facts b{color:var(--ink);}
+  .stamp-wrap{width:150px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-left:1px dashed var(--rule);}
+  .stamp{font-family:'Courier New',monospace;font-weight:700;font-size:20px;letter-spacing:.05em;color:var(--bear);border:3px solid var(--bear);border-radius:4px;padding:7px 12px;transform:rotate(-8deg);opacity:.88;text-align:center;}
+  .stamp .score{display:block;font-size:10.5px;font-weight:500;margin-top:3px;}
+
+  section{margin-top:36px;}
+  .sec-head{display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);padding-bottom:7px;margin-bottom:14px;}
+  .sec-num{font-family:'Courier New',monospace;font-size:12px;color:var(--ledger-2);font-weight:600;min-width:20px;}
+  .sec-head h2{font-family:Georgia,serif;font-size:19.5px;font-weight:600;margin:0;}
+  h3{font-family:Georgia,serif;font-size:14.5px;font-weight:600;font-style:italic;margin:16px 0 8px;color:var(--ledger);}
+  p{margin:0 0 10px;font-size:14px;}
+  .quote-line{font-family:Georgia,serif;font-style:italic;font-size:15px;color:var(--ledger);border-left:2px solid var(--ledger);padding:2px 0 2px 13px;margin:0 0 14px;}
+
+  ul.evid,ol.evid{margin:0 0 12px;padding-left:19px;}
+  ul.evid li,ol.evid li{margin-bottom:5px;font-size:13.5px;}
+  .evid-cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  @media (max-width:640px){.evid-cols{grid-template-columns:1fr;}}
+  .evid-cols h4{font-family:'Courier New',monospace;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 7px;}
+  .evid-cols h4.pro{color:var(--bull);} .evid-cols h4.con{color:var(--bear);}
+
+  table{width:100%;border-collapse:collapse;font-size:12.7px;margin-bottom:14px;}
+  th{font-family:'Courier New',monospace;font-size:10px;letter-spacing:.05em;text-transform:uppercase;text-align:left;color:var(--ink-soft);border-bottom:1px solid var(--ledger);padding:6px 9px;}
+  td{padding:7px 9px;border-bottom:1px solid var(--rule);vertical-align:top;}
+  tr:last-child td{border-bottom:1px solid var(--ledger);}
+  td.num,th.num{text-align:right;font-family:'Courier New',monospace;}
+  .status{font-family:'Courier New',monospace;font-weight:600;white-space:nowrap;}
+  .status.ok{color:var(--bull);} .status.bad{color:var(--bear);} .status.mid{color:var(--neutral);} .status.na{color:var(--ink-soft);}
+  .tag{display:inline-block;font-family:'Courier New',monospace;font-size:9.5px;padding:2px 6px;border-radius:2px;}
+  .tag.bull{background:rgba(31,92,76,.12);color:var(--bull);}
+  .tag.bear{background:rgba(140,58,43,.12);color:var(--bear);}
+  .tag.neutral{background:rgba(138,107,30,.12);color:var(--neutral);}
+
+  .diagnosis{background:var(--paper-2);border:1px solid var(--rule);padding:13px 15px;font-family:Georgia,serif;font-style:italic;font-size:13.7px;margin-top:4px;}
+  .formula{background:#20241F;color:#EFEAD9;padding:14px 18px;border-radius:8px;font-family:'Courier New',monospace;font-size:13px;line-height:1.7;margin:12px 0;overflow-x:auto;}
+  .formula .op{color:#C9A63B;}
+
+  .score-total-row td{font-weight:700;font-family:'Courier New',monospace;}
+  .qa{margin-bottom:12px;} .qa .q{font-family:'Courier New',monospace;font-size:11px;color:var(--ledger-2);margin-bottom:4px;}
+  .qa .a{font-family:Georgia,serif;font-size:14.5px;}
+  .verdict-box{border:2px solid var(--ledger);padding:18px 20px;margin-top:22px;background:var(--paper-2);}
+  .verdict-box .row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dotted var(--rule);font-size:13.5px;}
+  .verdict-box .row:last-child{border-bottom:none;}
+  .verdict-box .row .k{font-family:'Courier New',monospace;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);}
+  .verdict-box .row .v{font-family:Georgia,serif;font-weight:600;text-align:right;max-width:65%;}
+  footer{margin-top:52px;padding-top:14px;border-top:1px solid var(--rule);font-family:'Courier New',monospace;font-size:10px;color:var(--ink-soft);display:flex;justify-content:space-between;}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="masthead">
+    <div>
+      <div class="eyebrow">Investment Memorandum · Underpriced Customer Love (ULRS) Framework</div>
+      <h1>Duolingo, Inc.</h1>
+      <div class="sub">진짜 애착(Love×Durability)은 확인되지만, 그 애착과 전환 능력을 시장이 이미 가격에 반영했는가</div>
+    </div>
+    <div class="ticker-box">
+      <div class="tk">DUOL</div>
+      <div>Forward P/E ~47-49x</div>
+      <div>Forward EV/Sales ~12-16x</div>
+    </div>
+  </div>
+
+  <div class="snapshot">
+    <div class="snap-cell"><div class="lbl">DAU (Q2 2026)</div><div class="val">58.7M</div></div>
+    <div class="snap-cell"><div class="lbl">MAU (Q2 2026)</div><div class="val">140.6M</div></div>
+    <div class="snap-cell"><div class="lbl">Revenue (Q2 2026)</div><div class="val">$298.5M (+18% YoY)</div></div>
+    <div class="snap-cell"><div class="lbl">ULRS</div><div class="val">≈ −0.10</div></div>
+  </div>
+
+  <div class="verdict-row">
+    <div class="verdict-main">
+      <div class="lbl">One-line Investment View</div>
+      <div class="one-liner">Love·Durability는 진짜(DAU/MAU 스티키니스 최상급, 월 리텐션 55%)지만, Conversion_Readiness_Gap이 이미 음수(-0.10~-0.15)다 — 2023년 AI 공포로 EV/Sales가 5배까지 눌렸을 때가 진짜 Underpriced 구간이었고, 지금(12~16배)은 시장이 이미 이 스토리를 가격에 상당 부분 반영한 뒤다.</div>
+      <div class="verdict-facts">
+        <span>Verdict: <b>WATCH → AVOID 근접</b></span>
+        <span>Red Flag: <b>2개 (이미 고평가 + 낮은 진입장벽 우려)</b></span>
+        <span>Entry: <b>신규 매수 보류, Gap 재확대 시 재검토</b></span>
+      </div>
+    </div>
+    <div class="stamp-wrap"><div class="stamp">WATCH<span class="score">ULRS ≈ −0.10</span></div></div>
+  </div>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2>Why This Company Fits the Philosophy</h2></div>
+    <p>Duolingo는 이 프레임워크가 요구하는 세 조건(Love, Durability 시험대, Conversion, Gap)이 모두 실제 사건으로 관측 가능한 드문 사례다. DAU/MAU 스티키니스가 비-소셜 앱 중 최상위권이고, 2025년 4월 "AI-first" 메모 파문은 Durability(반짝 유행 아닌가)를 실제로 시험한 사건이었으며, 2023년 ChatGPT發 공포로 EV/Sales가 5배까지 급락했다가 2026년 12~16배로 회복한 과정 자체가 교과서적인 Gap 개폐 사이클이다. Sector Fit(문서 J절): Consumer Software/Apps = <b>높음</b>.</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2>Layer 1~2 — Love &amp; Durability Evidence</h2></div>
+    <table>
+      <tr><th style="width:20%">지표</th><th>수치</th><th style="width:14%">Confidence</th></tr>
+      <tr><td>DAU/MAU (Stickiness)</td><td>28.6%~40%대 — 교육 카테고리 평균(10~15%)의 2~3배. <i>Fact, 2026</i></td><td>Medium</td></tr>
+      <tr><td>월간 리텐션</td><td>DAU 기준 월 55% 유지(경쟁 대비 우수) — 서구권 이탈률 2020년 47%→2024년 28%로 개선. <i>Fact/Estimate 혼재</i></td><td>Medium</td></tr>
+      <tr><td>DAU 성장률 추이</td><td>2024년 +60%대 YoY → 2025 Q2 +40% → 2025 Q4 +36% → 2026 Q1 +21% — <b>뚜렷한 감속 추세</b>. <i>Fact</i></td><td>High</td></tr>
+      <tr><td>Durability 시험대 — "AI-first" 메모 파문(2025.4)</td><td>이용자 보이콧·SNS 반발 발생, 회사는 정규직 감원 없다고 진화. 파문 직후 분기 DAU 성장은 가이던스 하단(+40%)까지 둔화했으나 붕괴하지 않음 — 매출도 컨센서스 상회. <b>Durability는 "완전 붕괴는 아니지만 흠집 남음"</b>. <i>Fact</i></td><td>High</td></tr>
+      <tr><td>경쟁·Moat</td><td>ChatGPT 등 범용 LLM 튜터가 구조적 대체재 후보로 계속 거론됨 — 게임화(스트릭)·커뮤니티 록인이 대응 근거지만 정량 Moat 지표(전환비용 등)는 <i>Insufficient Data</i>.</td><td>Low</td></tr>
+    </table>
+    <div class="diagnosis">Love는 명확히 강하다(스티키니스·리텐션 최상급). Durability는 "AI-first" 사건으로 한 차례 실제 반증 시도를 거쳤고 완전히 깨지지는 않았지만, DAU 성장 감속 추세 자체는 별개로 계속되고 있어 <b>Durability%ile을 Love%ile보다 낮게(약 55~60)</b> 잡는다 — 기하평균(AND) 구조상 이 격차가 전체 점수를 끌어내린다.</div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">03</span><h2>Layer 3~5 — Gap 3종 (Monetization / Conversion / Recognition)</h2></div>
+    <table>
+      <tr><th>Layer</th><th>핵심 근거</th><th style="width:14%">%ile(추정)</th></tr>
+      <tr><td>3. Operating Monetization</td><td>매출 +18~27% YoY, Adj. EBITDA 마진 ~28~29%로 견조. 유료 구독자 12.5M, 구독 매출이 총매출의 대부분(Q1 2026 $250.9M/$291.97M).</td><td class="num">~70</td></tr>
+      <tr><td>4. Financial Conversion Capacity</td><td>Q1 2026 순이익 +24% YoY였으나 Q2 2026 순이익은 성장 재투자로 $33.2M까지 감소 — 마진 전환이 매 분기 일관되지 않음(Operating Leverage 아직 불안정). LTV/CAC 정량 데이터는 <i>Insufficient Data</i>.</td><td class="num">~60</td></tr>
+      <tr><td>5. Market Recognition</td><td>Forward P/E ~47~49x, Forward EV/Sales ~12~16x로 Peer 중앙값(~9.75x) 상회. 애널리스트 목표가 스프레드($109~$139)도 "AI 성장 스토리를 얼마나 더 낼 수 있는가" 논쟁 — 이미 상당 부분 컨센서스화됨.</td><td class="num">~78</td></tr>
+    </table>
+    <div class="formula">Conversion_Readiness_Gap = (Layer4%ile <span class="op">−</span> Layer5%ile) / 100 = (60 <span class="op">−</span> 78) / 100 = <span class="op">−0.18</span></div>
+    <div class="diagnosis">문서 정의대로 이 값이 음수라는 것은 "전환 능력보다 시장이 이미 더 앞서 있다"는 뜻 — 정확히 자동 배제 신호에 해당한다. 2023년 초(EV/Sales 5배, AI 공포 정점) 시점이었다면 Market Recognition%ile이 훨씬 낮아 Gap이 크게 양수였을 것 — 그때가 이 프레임워크가 찾는 진짜 매수 구간이었고, 지금은 이미 늦었다.</div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">04</span><h2>ULRS 계산</h2></div>
+    <div class="formula">
+      Love%ile ≈ 85, Durability%ile ≈ 57 → √(85 × 57) ≈ <span class="op">69.6</span><br>
+      Conversion_Readiness_Gap ≈ <span class="op">−0.18</span><br>
+      Risk_Penalty% = Red Flag 2개 × 10%p = <span class="op">20%</span><br>
+      ULRS = 69.6 <span class="op">×</span> (−0.18) <span class="op">×</span> (1 <span class="op">−</span> 0.20) ≈ <span class="op">−10.0</span>(스케일 조정 시 ≈ −0.10)
+    </div>
+    <p>Conversion_Readiness_Gap이 이미 음수라 ULRS 부호 자체가 음수로 확정된다 — Love·Durability가 아무리 높아도 "시장이 이미 앞서간" 상태에서는 이 프레임워크상 매수 신호가 될 수 없다(문서 최종 ULRS절, 자동 배제 원칙).</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">05</span><h2>Red Flag 점검 (문서 H절 10종)</h2></div>
+    <table>
+      <tr><th style="width:26%">Red Flag</th><th>판정</th></tr>
+      <tr><td>이미 고평가 (EV/Sales %ile ≥ 80)</td><td><span class="tag bear">발동</span> — Forward EV/Sales 12~16x, Peer 중앙값 상회. Market Recognition Gap 음수 → 배제 신호와 정확히 일치.</td></tr>
+      <tr><td>낮은 진입장벽 (신규 경쟁 + 카테고리 성장 둔화)</td><td><span class="tag bear">발동 우려</span> — 범용 LLM 튜터(ChatGPT 등)가 구조적 대체재로 계속 거론되고, DAU 성장률 자체도 다분기 연속 감속 중.</td></tr>
+      <tr><td>SNS 반짝 유행 / 높은 NPS·낮은 구매빈도 / 할인 의존 성장 / 인위적 성장 등 나머지 7종</td><td><span class="tag neutral">데이터 없음 / 미해당으로 잠정 판단</span> — 마케팅비 YoY, Promo 비중 등은 <i>Insufficient Data</i>로 이번 판단에서 제외(중립 50점 대체 금지 원칙에 따라 Risk_Penalty% 계산에서도 제외).</td></tr>
+    </table>
+    <div class="diagnosis">확인된 Red Flag 2개(이미 고평가, 낮은 진입장벽 우려)만으로도 문서 H절 강제 규칙("Red Flag 2개 이상 → 점수 무관 Avoid")이 발동 조건에 근접한다. 다만 "낮은 진입장벽"은 정량 임계값(신규 브랜드 5개↑ 등)이 아니라 정성 판단이라 100% 확정 Red Flag로 보지 않고, 최종 판정을 AVOID 확정이 아닌 <b>WATCH(AVOID 근접)</b>로 한 단계 완화해 보고한다 — 이 완화 자체도 재량적 판단이므로 근거에 명시한다.</div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">06</span><h2>Catalyst &amp; Entry Timing</h2></div>
+    <table>
+      <tr><th>Stage</th><th>현재 위치</th><th>주요 관찰 KPI</th></tr>
+      <tr><td>1~2. Watchlist / Early Entry</td><td>이미 지남(2023년 AI 공포 저점이 Early Entry 구간이었음)</td><td>—</td></tr>
+      <tr><td>3~4. Main/Late Entry</td><td>이미 지남 — 2024~2026 연속 Beat, 커버리지 확대, Multiple 이미 상승</td><td>Coverage Breadth 증가율(이미 관측됨)</td></tr>
+      <tr><td>5. Fully Priced</td><td><b>현재 위치에 근접</b> — EV/Sales %ile ≥ 75 조건 충족</td><td>Gap ≈ 0 또는 음수(본 메모 확인됨)</td></tr>
+    </table>
+    <p>재진입 조건: (1) DAU 성장률이 다시 가속(감속 추세 반전)하거나, (2) Multiple이 조정되어 Market Recognition%ile이 Financial Conversion%ile 아래로 다시 내려오는 시점(Gap 재양전환).</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">07</span><h2>Holding Period &amp; Exit Rule</h2></div>
+    <div class="evid-cols">
+      <div>
+        <h4 class="pro">재진입 트리거(향후 관찰)</h4>
+        <p style="font-size:13.5px;">Multiple 조정 + DAU 성장률 재가속 동시 확인 시 재평가.</p>
+      </div>
+      <div>
+        <h4 class="con">이미 보유 중이라면 Thesis-break 조건</h4>
+        <p style="font-size:13.5px;">DAU/MAU 스티키니스가 2개 분기 연속 20%p 이상 하락, 또는 AI 대체재로 인한 실질 이탈(리뷰·다운로드 급감)이 확인되는 경우.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">08</span><h2>Scorecard</h2></div>
+    <table>
+      <tr><th>항목</th><th class="num">%ile/점수</th><th>핵심 근거</th></tr>
+      <tr><td>1. Customer Love</td><td class="num">85</td><td>DAU/MAU 스티키니스 최상위권</td></tr>
+      <tr><td>2. Love Durability &amp; Defensibility</td><td class="num">57</td><td>AI-first 파문 생존했으나 DAU 성장 감속 추세 지속</td></tr>
+      <tr><td>3. Operating Monetization Gap</td><td class="num">70</td><td>매출·EBITDA 마진 견조</td></tr>
+      <tr><td>4. Financial Conversion Capacity</td><td class="num">60</td><td>분기별 순이익 전환 일관성 부족</td></tr>
+      <tr><td>5. Market Recognition</td><td class="num">78</td><td>이미 Peer 대비 프리미엄 밸류에이션</td></tr>
+      <tr><td>Risk Penalty</td><td class="num">−20%</td><td>Red Flag 2개(고평가, 진입장벽 우려)</td></tr>
+      <tr class="score-total-row"><td>ULRS</td><td class="num">≈ −0.10</td><td>Conversion_Readiness_Gap 음수로 부호 확정</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">09</span><h2>Final Investment Decision</h2></div>
+    <div class="qa"><div class="q">WHY THIS COMPANY?</div><div class="a">소비자 애착(스티키니스·리텐션)이 정량적으로 가장 투명하게 드러나는 컨슈머 앱 중 하나이자, "Underpriced Love"가 실제로 존재했던(2023년 AI 공포 저점) 드문 실증 사례이기 때문.</div></div>
+    <div class="qa"><div class="q">WHY IS THE MARKET (NO LONGER) WRONG?</div><div class="a">2023년엔 시장이 과도하게 비관적이어서 진짜 Gap이 있었지만, 2026년 현재는 밸류에이션이 이미 상당 부분 회복(EV/Sales 5x→12~16x)돼 그 Gap의 상당 부분이 닫혔다.</div></div>
+    <div class="qa"><div class="q">WHY NOW?</div><div class="a">"지금"은 아니다 — Market Recognition%ile이 Financial Conversion%ile을 이미 앞서는 상태(Gap 음수)라 이 프레임워크의 핵심 조건(시장이 아직 모름)이 성립하지 않는다.</div></div>
+    <div class="qa"><div class="q">WHAT MAKES MONEY (재진입 시)?</div><div class="a">DAU 성장 재가속이 확인되거나, AI 경쟁 우려로 Multiple이 다시 큰 폭으로 조정될 때 재진입하는 경우.</div></div>
+    <div class="qa"><div class="q">WHAT PROVES US WRONG?</div><div class="a">현재 프리미엄 밸류에이션에도 불구하고 DAU 성장이 다시 40%+로 재가속하고 순이익 전환이 매 분기 일관되게 개선된다면, Financial Conversion%ile이 Market Recognition%ile을 다시 추월해 Gap이 재양전환될 수 있다.</div></div>
+
+    <div class="verdict-box">
+      <div class="row"><span class="k">Verdict</span><span class="v">WATCH (AVOID 근접)</span></div>
+      <div class="row"><span class="k">ULRS</span><span class="v">≈ −0.10</span></div>
+      <div class="row"><span class="k">Entry</span><span class="v">신규 매수 보류</span></div>
+      <div class="row"><span class="k">재진입 조건</span><span class="v">DAU 성장 재가속 또는 Multiple 조정으로 Gap 재양전환</span></div>
+      <div class="row"><span class="k">Thesis Break(보유 시)</span><span class="v">스티키니스 2개 분기 연속 20%p↑ 하락</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Underpriced Customer Love (ULRS) Investment Decision Skill</span>
+    <span>Data as of 2026.08 · Sources: DUOL 10-Q/8-K filings, StockTitan, TIKR, StockAnalysis, TechCrunch, CustomerExperienceDive</span>
+  </footer>
+
+</div>
+</body>
+</html>

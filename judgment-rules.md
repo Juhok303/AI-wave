@@ -15,25 +15,23 @@
 
 ### 1. Retention-to-Pricing-Power
 
-- **정의**: 가격(P)을 올려도 판매량/고객 유지율(Q)이 유지되는 구조인가 — 즉 가격 인상이 이탈로 이어지지 않는가.
-- **왜 가치가 있다고 보는가**: 가격 비탄력적 수요(=가격을 올려도 이탈하지 않음)는 브랜드력·전환비용·대체재 부재 중 하나 이상을 의미한다. 이런 기업은 원가 상승 국면에서 마진을 방어하고, 매출 성장보다 이익 성장이 빠른 영업 레버리지 구조를 만든다. 시장은 통상 매출 성장률만 보고 "이익의 질(가격 vs 물량 기여도)"을 놓치는 경우가 많아, 이 구조를 먼저 확인하는 것 자체가 초과수익 기회다.
-- **대체지표(proxy)**:
-  - **Primary (dart.json만으로 계산, Medium Confidence)**: 매출총이익률(매출총이익/매출액) YoY 변화 + 매출액 YoY 증가율을 함께 본다. 매출원가율이 오르는(원가압박) 국면에서도 매출총이익률이 유지·개선되면 "가격 전가력이 있다"는 신호, 동시에 매출액 YoY가 (+)이면 "P 상승 + Q 유지"가 성립한다고 본다.
-  - **Secondary (fnguide.json 있으면 Primary보다 우선 채택, High Confidence)**: FnGuide 컨센서스의 ASP 추정치 YoY와 판매량/가입자 추정치 YoY를 직접 비교.
-  - **정성 보강 (fetch-web, Low Confidence)**: 최근 2년 내 가격 인상 발표 뉴스 유무 + 그 이후 리뷰·커뮤니티에서 이탈/불매 언급 비중.
-  - **판단 기준**: 매출총이익률 2개년 연속 유지 이상(또는 FnGuide ASP·판매량 동반 상승) **AND** 매출액 YoY (+) → **부합**. 매출총이익률은 개선되나 매출액 정체/감소(가격만 올리고 물량 이탈) → **부분부합**. 매출총이익률 하락 + 매출액 정체/감소 → **미부합**.
-  - 데이터 출처: DART 공시(매출총이익률·매출액 YoY), FnGuide 컨센서스(ASP·판매량 추정치, 있는 경우), 웹 검색(가격 인상 뉴스·리뷰, Proxy).
+> Source of truth: `.claude/skills/judge-retention-pricing-power/`(pjueun) — SKILL.md가 곧 이 기준의 정의다. `references/`(Layer A-G, Pricing Power Test, Financial Transmission, Variant Perception, Catalyst/Entry, Scorecard/Gates, Output Template)에 전체 방법론이 있다.
+
+- **정의**: 이 기업의 높은 Retention이 아직 시장이 충분히 가격에 반영하지 않은 Pricing Power로 전환되고 있는가 — Retention → Churn 방어 → 가격 인상 수용 → ASP/Mix 상승 → Gross Margin → Operating Leverage → EPS/FCF → Earnings Revision → Multiple Re-rating의 인과 체인이 실제로 이어지는지, 어디서 끊기는지를 본다.
+- **왜 가치가 있다고 보는가**: 가격 인상 후에도 갱신율·재구매가 유지된다는 사실 자체는 이미 널리 알려진 컨센서스 스토리인 경우가 많다. 진짜 초과수익은 그 가격결정력이 아직 상품마진/영업레버리지로 다 전이되지 않았는데 시장은 여전히 Volume/User Growth 중심으로만 가치평가하고 있는 지점에서 나온다 — 시장이 "이미 아는 좋은 점"과 "아직 반영 안 한 지점"을 구분해야 한다.
+- **판정**: Verdict는 Supported(=부합) / Partially Supported(=부분부합) / Not Supported(=미부합)로 매핑한다. 상세 채점(Layer A-G, Gate 조건, 100점 스코어카드)은 `references/scorecard_and_verdict.md`를 그대로 따른다 — 이 문서에서 별도 임계값을 만들지 않는다.
+- **참고 예시**: [`.claude/skills/judge-retention-pricing-power/assets/example-memo-costco.html`](.claude/skills/judge-retention-pricing-power/assets/example-memo-costco.html) (Costco 적용 사례, pjueun).
+- ⚠️ 이 스킬은 Claude.ai 출력 관례(`/mnt/user-data/outputs/`, `present_files`)로 작성돼 있어 `investment-desk`가 자동 호출할 때는 이 레포의 `reports/` 관례로 저장 경로를 바꿔 적용해야 한다(SKILL.md 자체는 원작자 그대로 유지, 호출 시점에 오케스트레이터가 보정).
 
 ### 2. Structural vs Cyclical Misclassification
 
-- **정의**: 시장이 이 기업의 성장을 구조적(secular) 성장인데 경기순환적(cyclical)으로 오분류하고 있는지 (혹은 반대의 경우).
-- **왜 가치가 있다고 보는가**: 시장이 구조적 성장기업을 경기순환주로 오분류하면, 경기 저점 국면에서 밸류에이션이 실제 이익 지속성 대비 과도하게 할인된다. 오분류가 풀리는 시점(리레이팅)에 이익 성장과 별개로 멀티플 확장이라는 추가 alpha가 발생한다. 반대로 순환기업을 구조적 성장으로 오인하면 고평가된 채 방치되어 하락 리스크가 크다 — 어느 방향이든 "시장의 인식 오류"를 먼저 포착하는 것이 초과수익의 원천이다.
-- **대체지표(proxy)**:
-  - **실적 변동성 (dart.json)**: 최근 3개년 매출액의 변동계수(CV = 표준편차/평균). 업종 평균과 비교 가능하면 비교하고, 없으면 자사 히스토리 변동성만으로 판단(변동성이 낮을수록 구조적 성장 신호).
-  - **매크로 동행성 (fred.json)**: 매출액 YoY 성장률 추이와 CPI/소매판매(RSAFS)/실업률(UNRATE) 등 매크로 사이클의 방향이 같이 움직이는지(동행=cyclical) 아니면 무관하게 꾸준한지(비동행=structural) 정성적으로 비교.
-  - **컨센서스 방향성 오차 (fnguide.json, 있는 경우)**: 최근 분기 실적이 컨센서스를 지속적으로 상회/하회하는 방향과, 목표주가·투자의견 멀티플 수준이 그 방향을 따라가고 있는지(오분류가 풀리는 중인지) 비교.
-  - **판단 기준**: 매출 변동성이 낮음 **AND** 매크로 지표와의 동행성이 약함 → 구조적 성장을 시장이 저평가/오분류 중일 가능성, **부합**. 매크로와 강한 동행 + 변동성 큼 → 실제로 경기순환적, **미부합**. fnguide.json 부재 등으로 컨센서스 오차를 확인할 수 없으면 실적 변동성·매크로 동행성만으로 잠정 판단하고 **부분부합**(데이터 제한 명시)으로 낮춰 보고한다.
-  - 데이터 출처: DART 공시(3개년 매출액), FRED(CPI/소매판매/실업률), FnGuide 컨센서스(있는 경우, Estimate Revision 방향).
+> Source of truth: `.claude/skills/judge-structural-vs-cyclical/`(chaemin) — SKILL.md가 곧 이 기준의 정의다. `references/thesis-tree.md`에 전체 Layer/Factor 정의, 재가중 테이블, Gate 조건이 있다.
+
+- **정의**: 소비자 행동의 구조적 변화를 시장이 경기순환이나 일시적 유행으로 오인해 Multiple을 잘못 매기고 있는가(또는 반대로 순환적 변화를 구조적으로 오인해 고평가하고 있는가).
+- **왜 가치가 있다고 보는가**: 구조적 성장기업이 경기순환주로 오분류되면 경기 저점에서 밸류에이션이 과도하게 할인되고, 오분류가 풀리는 리레이팅 시점에 이익 성장과 별개인 멀티플 확장 alpha가 발생한다. 이 철학은 확증편향 위험이 특히 크다 — "구조적이다"는 주장은 사후적으로만 완전히 검증되므로, 경기 하방 동행 여부(Layer 2, Cyclical Contamination Test)를 반드시 반증 시도해야 하며 Bear case를 Bull case와 동등한 무게로 다뤄야 한다.
+- **판정**: Verdict는 BUY/WATCH/PASS/SELL로 산출되며, 이 기준①③과의 3단 출력(부합/부분부합/미부합)과 맞추려면 BUY·WATCH→부합, PASS→부분부합, SELL(또는 Gate 위반)→미부합으로 환산한다. 상세 채점(Layer A-G 재가중, Gate 4종, 100점 스코어카드)은 `references/thesis-tree.md`의 재가중 테이블을 그대로 따른다.
+- **참고 예시**: [`.claude/skills/judge-structural-vs-cyclical/assets/example-memo-onon.html`](.claude/skills/judge-structural-vs-cyclical/assets/example-memo-onon.html) (chaemin).
+- ⚠️ 이 스킬도 `/mnt/user-data/outputs/` 관례로 작성돼 있어 `investment-desk` 호출 시 `reports/` 관례로 저장 경로를 보정해야 한다(위 기준① 참고).
 
 ### 3. Underpriced Customer Love (ULRS)
 
@@ -46,7 +44,7 @@
   - `Conversion_Readiness_Gap = (Financial Conversion Capacity%ile − Market Recognition%ile) / 100` — 값이 클수록 강한 매수 신호, 음수면 자동 배제
   - `Risk_Penalty% = Red Flag 개수 × 10%p (최대 50%)`, Red Flag 2개 이상이면 점수와 무관하게 강제 Avoid
   - 데이터 출처: DART 공시(매출·마진), FnGuide 컨센서스(Estimate Revision, EV/Sales) + `fetch-web`이 수집하는 리뷰/뉴스 데이터(Proxy, 데이터 신뢰도에 따라 0.6~1.0x 할인, 데이터 없음은 중립(50점) 처리 금지 — weight 배제 후 재정규화)
-  - 상세 방법론(Layer 정의, Gap 공식, Entry Timing, Red Flag 10종, 섹터 적합도): [`docs/underpriced-customer-love-framework.md`](docs/underpriced-customer-love-framework.md)
+  - 상세 방법론(Layer 정의, Gap 공식, Entry Timing, Red Flag 10종, 섹터 적합도): [`.claude/skills/judge-underpriced-customer-love/references/underpriced-customer-love-framework.md`](.claude/skills/judge-underpriced-customer-love/references/underpriced-customer-love-framework.md)
 
 ## 2단계 — 스크리닝 체크리스트
 

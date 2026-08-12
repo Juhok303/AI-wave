@@ -144,21 +144,8 @@ Total Score = Σ(Layer Score × Layer Weight%) − Risk Penalty
 
 ## E. Underpricing / Gap Formula
 
-1. **정규화**: 모든 Metric은 raw 값이 아니라 산업 내 Percentile Rank(0~100)로 변환 후 비교. z-score는 표본 20개 미만 소규모 Peer Group에서만 보조로 병기.
-2. **Peer Group 정의**: 3중 필터 — ① 동일 GICS Sub-industry ② 매출 규모 0.3x~3x ③ 유통채널 유사성(DTC 비중 등)
-3. **산업별 보정**: 절대치 비교 금지, 산업 내 percentile만 비교(Apparel의 GM 40%와 Software의 GM 40%는 의미가 다름)
-
-**핵심 Gap 공식 (5종)**
-
-| Gap | 공식 | 경제적 의미 |
-| --- | --- | --- |
-| Love–Monetization Gap | Layer1 %ile − Layer3 %ile | 애착은 있는데 못 팔고 있음 |
-| Love–Margin Gap | Layer1 %ile − Margin %ile | 애착은 있는데 마진화 안 됨 |
-| Love–Valuation Gap | Layer1 %ile − EV/Sales %ile | 시장이 애착을 가격에 안 넣음 |
-| Durability-adjusted Gap | (Layer1×Layer2 결합) − Layer3 %ile | "가짜 사랑"을 걸러낸 순수 Gap |
-| Conversion-Readiness Gap | Layer4 %ile − Layer5 %ile | 전환 능력은 있는데 시장 기대는 낮음 (가장 강력한 Signal) |
-
-Signal 인정 기준: Gap ≥ 25%p이고, 동시에 최근 2개 분기 연속 Gap 축소 방향일 때만 유효 Signal. Gap이 크지만 정체/확대 중이면 "구조적 실패" 가능성(False Positive 후보).
+Section E는 `references/underpricing_gap_test.md`로 승격됐다 — 정규화 원칙, Peer Group 3중 필터,
+Gap 공식 5종, Signal 유효성 판정 전부 그 문서를 따른다(여기서 중복 서술하지 않는다).
 
 ## F. Entry Timing Framework
 
@@ -185,20 +172,8 @@ Catalyst는 Layer1(Leading) → Layer3(Confirming) → Layer5(시장 반응)의 
 
 ## H. Risk & False Positive Filter
 
-| Red Flag | 정량 기준 | 판정 |
-| --- | --- | --- |
-| SNS 반짝 유행 | Search Trend CV > 0.8 (24M) + Branded Search 급락(3M MoM −30%↑) | 즉시 Watchlist 강등 |
-| 높은 NPS·낮은 구매빈도 | Review %ile ≥ 80, Repeat Purchase %ile < 30 | Love–Behavior Divergence 경고 |
-| TAM 과소 | TAM/현재 Market Cap < 3x | 투자 배제 |
-| 할인 의존 성장 | Promo %/Rev YoY↑ + Revenue Growth↑ 동반 | Full-price Sell-through 확인 필수 |
-| 높은 Retention·높은 CAC | LTV/CAC < 3.0 | Financial Conversion 감점 |
-| Engagement–Revenue 미연결 | Engagement %ile − ARPU %ile > 40%p, 2분기↑ | 구조적 Monetization 실패 가능성 |
-| 낮은 진입장벽 | 2년 내 신규 경쟁 브랜드 5개↑ + 카테고리 성장 둔화 | Moat 점수 대폭 감점 |
-| 가격탄력성 취약 | 가격 인상 후 판매량 유지율 < 85% | WTP 미달, Margin 전환 가능성 낮음 |
-| 이미 고평가 | EV/Sales %ile ≥ 80 | Market Recognition Gap 음수 → 배제 |
-| 인위적 성장 | 마케팅비 %매출 YoY > Revenue YoY | 구매된 성장(Organic 아님) |
-
-강제 규칙: Red Flag 2개 이상 동시 발생 시 Total Score와 무관하게 **Avoid**로 강제 분류.
+Section H는 `references/red_flag_test.md`로 승격됐다 — Red Flag 10종 정량 기준과 강제 AVOID
+규칙(2개 이상 동시 발동 시)은 그 문서를 따른다(여기서 중복 서술하지 않는다).
 
 ## I. Holding Period & Exit Rule
 

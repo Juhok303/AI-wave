@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>BGF리테일 (CU) — Investment Memo</title>
+<style>
+  :root{
+    --ink:#1a1d23; --muted:#5c6370; --bg:#f7f7f5; --card:#ffffff;
+    --line:#e4e2dc; --accent:#1f4d3d;
+    --buy:#1c7c4d; --watch:#b8860b; --pass:#6b6b6b; --sell:#a3272c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Georgia','Noto Serif KR',serif; line-height:1.6;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:48px 32px 96px;}
+  .masthead{border-bottom:3px solid var(--ink); padding-bottom:18px; margin-bottom:28px;}
+  .masthead .kicker{font-family:'Helvetica Neue',Arial,sans-serif; font-size:12px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--muted);}
+  .masthead h1{font-size:30px; margin:6px 0 4px;}
+  .snapshot{display:flex; flex-wrap:wrap; gap:24px; background:var(--card); border:1px solid var(--line);
+    border-radius:10px; padding:20px 24px; margin-bottom:28px;}
+  .snapshot .field{font-family:'Helvetica Neue',Arial,sans-serif; font-size:13px;}
+  .snapshot .field .label{color:var(--muted); text-transform:uppercase; font-size:11px; letter-spacing:.06em;}
+  .snapshot .field .value{font-size:15px; font-weight:600; margin-top:2px;}
+  .badge{display:inline-block; font-family:'Helvetica Neue',Arial,sans-serif; font-weight:700;
+    font-size:13px; letter-spacing:.05em; padding:6px 14px; border-radius:20px; color:#fff;}
+  .badge.buy{background:var(--buy);} .badge.watch{background:var(--watch);}
+  .badge.pass{background:var(--pass);} .badge.sell{background:var(--sell);}
+  .oneliner{font-size:17px; font-style:italic; color:var(--accent); border-left:4px solid var(--accent);
+    padding:6px 16px; margin:0 0 32px;}
+  section{margin-bottom:36px;}
+  h2{font-family:'Helvetica Neue',Arial,sans-serif; font-size:13px; letter-spacing:.1em;
+    text-transform:uppercase; color:#fff; background:var(--ink); display:inline-block;
+    padding:6px 12px; border-radius:4px; margin:0 0 14px;}
+  h3{font-size:15px; margin:18px 0 6px; color:var(--accent);}
+  table{width:100%; border-collapse:collapse; margin:10px 0 4px; font-size:14px;
+    font-family:'Helvetica Neue',Arial,sans-serif; background:var(--card);}
+  th,td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top;}
+  th{background:#eef1ee; font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.03em;}
+  tr:nth-child(even) td{background:#fafaf8;}
+  .status-confirmed{color:var(--buy); font-weight:700;}
+  .status-emerging{color:var(--watch); font-weight:700;}
+  .status-broken{color:var(--sell); font-weight:700;}
+  .status-insufficient{color:var(--muted); font-style:italic;}
+  .verdict-block{background:var(--ink); color:#fff; border-radius:10px; padding:20px 24px; font-family:'Helvetica Neue',Arial,sans-serif;}
+  .verdict-block p{margin:4px 0; font-size:14px;}
+  .verdict-block b{letter-spacing:.03em;}
+  blockquote{border-left:4px solid var(--line); margin:8px 0; padding:6px 14px; color:var(--muted); font-style:italic;}
+  .content-body{white-space:normal;}
+  .footer-note{margin-top:48px; font-family:'Helvetica Neue',Arial,sans-serif; font-size:11px; color:var(--muted);}
+  ol,ul{padding-left:20px;} li{margin-bottom:6px;}
+  .num{text-align:right;}
+  .tag{display:inline-block; font-family:'Helvetica Neue',Arial,sans-serif; font-size:11px; font-weight:700;
+    padding:2px 8px; border-radius:10px; letter-spacing:.03em;}
+  .tag.bull{background:rgba(28,124,77,0.12); color:var(--buy);}
+  .tag.bear{background:rgba(163,39,44,0.12); color:var(--sell);}
+  .tag.neutral{background:rgba(184,134,11,0.14); color:var(--watch);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <div class="kicker">Retention-to-Pricing-Power Investment Memorandum</div>
+    <h1>BGF리테일 (CU)</h1>
+  </div>
+
+  <div class="snapshot">
+    <div class="field"><div class="label">Ticker</div><div class="value">282330</div></div>
+    <div class="field"><div class="label">Current Price</div><div class="value">Insufficient Data</div></div>
+    <div class="field"><div class="label">Market Cap</div><div class="value">Insufficient Data</div></div>
+    <div class="field"><div class="label">Industry</div><div class="value">편의점(Convenience Retail)</div></div>
+    <div class="field"><div class="label">Framework Fit</div><div class="value">Medium</div></div>
+    <div class="field"><div class="label">Final Verdict</div><div class="value"><span class="badge pass">PASS</span></div></div>
+    <div class="field"><div class="label">Entry Timing</div><div class="value">WAIT</div></div>
+    <div class="field"><div class="label">Score</div><div class="value">39 / 100</div></div>
+    <div class="field"><div class="label">Holding Period</div><div class="value">해당 없음</div></div>
+  </div>
+
+  <p class="oneliner">PB(자체브랜드) 상품믹스 전환을 통한 매출총이익률 방어(18.58%→18.69%→18.62%, DART 3개년 실측)는 확인되지만, 그 방어력이 Operating Leverage로 전이되지 못하고 있으며(영업이익률 3.09%→2.80%로 오히려 하락), 재구매율 등 Customer Economics 핵심 데이터가 비공개라 Retention→Pricing Power 인과사슬을 끝까지 확인할 수 없다 — 그리고 이미 확인된 사실조차 DART 공시로 이미 공개돼 있어 진짜 Variant View라 보기 어렵다(Consensus Gate).</p>
+
+  <section>
+    <h2>1. Why This Company Fits / Does Not Fit the Philosophy</h2>
+    <p>BGF리테일(CU)은 편의점이라는 전형적인 반복방문·반복구매 소비모델을 가지고 있어 Universe Filter 기준(Subscription/Membership/Platform/Consumer Brand/Repeat Purchase 모델, 소비재·리테일 포함)에 부합한다 — Framework Fit은 Low가 아니다. 다만 두 가지 구조적 제약이 이 철학의 완결성을 낮춘다. 첫째, 이 회사는 재구매율·코호트 데이터를 직접 공시하지 않아 Layer C(Customer Economics)의 핵심 증거를 추정에 의존해야 한다. 둘째, 담배처럼 정부가 가격을 통제해 회사가 가격결정권을 전혀 행사할 수 없는 카테고리가 매출의 상당 비중을 차지해(정확한 비중은 Estimate), "가격결정력"이라는 주제 자체가 카테고리별로 갈린다 — 담배에는 적용되지 않고 PB·차별화 상품에만 적용된다.</p>
+  </section>
+
+  <section>
+    <h2>2. Core Thesis Test</h2>
+    <blockquote>"이 기업은 이미 Pricing Power를 보유하고 있으나 시장은 이를 충분히 반영하지 않는다."</blockquote>
+    <p><span class="tag neutral">Verdict — Partially Supported</span></p>
+    <h3>핵심 근거 3개</h3>
+    <ol>
+      <li>PB 상품 매출 비중 29.3%(2025년 1~9월), 2023~2025년 3년 연속 두 자릿수 성장(+17.6%/+21.8%/+19.1%) — CU 고유 수치.</li>
+      <li>매출총이익률 18.58%→18.69%→18.62%(제7~9기 DART 실측), 매출액 YoY +6.15%/+4.17% 지속.</li>
+      <li>담배(가격 통제 카테고리) 11년째 4,500원 동결에도 전사 매출총이익률 유지 — 저마진 카테고리 비중 축소 방향 믹스 재편 정황.</li>
+    </ol>
+    <h3>핵심 반대 근거 3개</h3>
+    <ol>
+      <li>영업이익률은 3.09%→2.89%→2.80%로 오히려 하락 — 판관비 증가가 총이익 개선분을 상쇄, Operating Leverage 미확인.</li>
+      <li>경쟁사 GS25도 동반 실적 개선 — 업종 전체 효과일 가능성, 자사 고유 가격결정력 주장이 약화.</li>
+      <li>"매출총이익률 유지"는 이미 DART 공시로 공개된 사실 — Variant Perception Category 1(시장이 이미 아는 좋은 점) 가능성.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>3. Retention Quality</h2>
+    <ul>
+      <li>12M/24M 코호트 재구매율, Retention Curve, Churn율 — <span class="status-insufficient">Insufficient Data</span>(직접 공시 없음, 신뢰할 3자 추정치도 미확보)</li>
+      <li>간접 정황(Proxy, Low Confidence): "신규 출점보다 기존 점포 대형화·우량입지 재배치로 객수·객단가 동반 상승" 보도 — 재구매율 대체지표로는 근거 약함</li>
+    </ul>
+    <p><b>Key question</b>: "Retention이 높기만 한가, 아니면 실제로 Monetize되고 있는가?" — 이번 조사로는 전자조차 직접 확인하지 못함. 이 메모에서 가장 데이터가 약한 Layer.</p>
+  </section>
+
+  <section>
+    <h2>4. Pricing Power Evidence</h2>
+    <table>
+      <tr><th style="width:26%">Test</th><th>결과</th></tr>
+      <tr><td>Test 1 — 실제 가격 인상</td><td><span class="status-insufficient">Insufficient Data</span> — 도시락 등 일부 가격 상승 보도는 있으나 인상률·시점 미확인. 담배는 11년째 4,500원 동결(회사 결정권 없음).</td></tr>
+      <tr><td>Test 2 — 인상 후 Retention/Churn</td><td><span class="status-insufficient">Insufficient Data</span></td></tr>
+      <tr><td>Test 3 — Mix를 통한 가격 인상</td><td><span class="status-confirmed">Confirmed</span> — PB 비중 29.3%, 3년 연속 두 자릿수 성장. 이 메모에서 유일하게 정량 확인된 가격결정력 증거.</td></tr>
+      <tr><td>Test 4 — 경쟁사 대비 Premium(ASP)</td><td><span class="status-insufficient">Insufficient Data</span></td></tr>
+    </table>
+    <p>4개 테스트 중 3개가 Insufficient Data — 확인된 것은 "가격결정력"이라기보다 좁은 의미의 "믹스 전환력"에 가깝다.</p>
+  </section>
+
+  <section>
+    <h2>5. Financial Transmission</h2>
+    <table>
+      <tr><th>단계</th><th>상태</th><th>핵심 근거</th></tr>
+      <tr><td>Retention</td><td class="status-insufficient">? Insufficient</td><td>코호트/재구매율 미공시</td></tr>
+      <tr><td>Churn</td><td class="status-insufficient">? Insufficient</td><td>미공시</td></tr>
+      <tr><td>Frequency</td><td class="status-emerging">🟡 Emerging</td><td>객수·객단가 동반 상승 보도(Proxy)</td></tr>
+      <tr><td>LTV/CAC</td><td class="status-insufficient">? Insufficient</td><td>미공시, 역산 근거 부족</td></tr>
+      <tr><td>Pricing/Mix</td><td class="status-confirmed">✅ Confirmed</td><td>PB 비중 29.3%, 3년 연속 두 자릿수 성장</td></tr>
+      <tr><td>Gross Margin</td><td class="status-confirmed">✅ Confirmed</td><td>18.58%→18.69%→18.62% (DART 3개년)</td></tr>
+      <tr><td>Contribution Margin</td><td class="status-insufficient">? Insufficient</td><td>별도 계정 미공시</td></tr>
+      <tr><td>Operating Leverage</td><td class="status-broken">❌ Broken</td><td>영업이익률 3.09%→2.80% 하락</td></tr>
+      <tr><td>EPS/FCF Revision</td><td class="status-insufficient">? Insufficient</td><td>FnGuide/컨센서스 미확보</td></tr>
+    </table>
+    <p><i>진단</i>: Pricing/Mix·Gross Margin까지는 체인이 확인되나 Operating Leverage에서 끊긴다(Broken). Retention·Churn·LTV/CAC는 애초에 데이터가 없어 체인의 출발점을 검증하지 못했다.</p>
+  </section>
+
+  <section>
+    <h2>6. Layer A–G Analysis</h2>
+    <table>
+      <tr><th style="width:16%">Layer</th><th>핵심 판단</th><th style="width:22%">주요 수치</th><th style="width:12%">Bull/Bear</th></tr>
+      <tr><td>A. Demand</td><td>편의점 4사 점포수 첫 감소(1988년 이후 최초)로 성숙기 정황, 매출은 견조</td><td>매출액 YoY +6.15%/+4.17%</td><td><span class="tag neutral">Neutral</span></td></tr>
+      <tr><td>B. Product/Brand</td><td>PB 브랜드력 확인, 소비자만족도 4개사 중 2위</td><td>PB 비중 29.3%</td><td><span class="tag bull">Bull</span></td></tr>
+      <tr><td>C. Customer Economics</td><td>재구매율·Churn·LTV/CAC 전부 Insufficient — Data Integrity Gate 적용</td><td>매출 YoY(+)만 확인</td><td><span class="tag neutral">Neutral(데이터 부족)</span></td></tr>
+      <tr><td>D. Competitive Advantage</td><td>과점 구조나 낮은 전환비용, "경쟁사 가격공세에도 유지" 증거 없음</td><td>GS25 동반 개선</td><td><span class="tag bear">Bear</span></td></tr>
+      <tr><td>E. Distribution</td><td>점포 대형화·우량입지 재배치</td><td>—</td><td><span class="tag bull">Bull</span></td></tr>
+      <tr><td>F. Financial Translation</td><td>GM 방어에도 Operating Leverage 역행(Broken)</td><td>OPM 3.09%→2.80%</td><td><span class="tag bear">Bear</span></td></tr>
+      <tr><td>G. Expectations</td><td>GM 유지는 이미 공시된 사실 — Category 1 가능성, Consensus Gate 근접</td><td>—</td><td><span class="tag bear">Bear</span></td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>7. Variant Perception</h2>
+    <h3>Market Believes</h3>
+    <p>편의점업은 담배 등 저마진·가격통제 카테고리 비중이 높은 경기방어적 유통업이며, 최근 실적 개선은 폭염·외국인 관광객 급증 같은 일시적 요인에 상당 부분 기댄다는 인식이 이미 널리 퍼져 있다.</p>
+    <h3>We Believe</h3>
+    <p>PB 중심 상품믹스 전환은 일시적 특수와 무관하게 3년째 구조적으로 진행 중이나, Operating Leverage로 전이되지 않고 있다는 사실이 시장의 마진 개선 서사보다 더 중요한 관찰일 수 있다.</p>
+    <h3>Why the Market May Be Wrong</h3>
+    <p>셀사이드가 이 회사를 여전히 담배 중심 저마진 유통업으로 프레이밍하고 있다면 PB 믹스 효과를 과소평가하고 있을 가능성이 있으나, 이 관점 자체도 이미 여러 차례 보도돼 완전히 시장이 모르는 정보는 아니다.</p>
+    <h3>Evidence</h3>
+    <p>PB 매출 비중 29.3%, 3년 연속 두 자릿수 성장률 — 공개 보도 기반(비공개 1차 데이터 아님).</p>
+    <h3>Recognition Trigger</h3>
+    <p>영업이익률이 판관비 레버리지를 동반하며 반등하는 첫 분기 실적 발표.</p>
+    <h3>Variant Classification</h3>
+    <p><b>Category 1(시장이 이미 알고 있는 좋은 점)</b>에 가장 가깝다 — 매출총이익률 방어·PB 성장 수치 모두 이미 공개돼 있어 진짜 Variant View로 보기 어렵다. Consensus Gate가 이를 반영해 Variant Perception 점수를 낮춘다.</p>
+  </section>
+
+  <section>
+    <h2>8. Catalyst Map</h2>
+    <table>
+      <tr><th>Catalyst</th><th>Leading Indicator</th><th>예상 시점</th><th>Earnings Impact</th></tr>
+      <tr><td>영업이익률 반등</td><td>분기 판관비율 추이</td><td>다음 2~3개 분기</td><td>확인 시 Positive</td></tr>
+      <tr><td>PB 비중 30% 돌파 후 성장률</td><td>분기별 PB 매출 비중 공시</td><td>매 분기</td><td>둔화 시 Negative</td></tr>
+      <tr><td>담뱃값 인상 정책 확정</td><td>건강증진부담금 입법 동향</td><td>불확실</td><td>양방향</td></tr>
+      <tr><td>GS25 대비 PB 성장률 비교</td><td>경쟁사 실적 발표</td><td>매 분기</td><td>자사 고유 우위 검증</td></tr>
+      <tr><td>물류 파업 재발</td><td>화물연대 협상 동향</td><td>비정기</td><td>재발 시 Negative</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>9. Valuation</h2>
+    <ul>
+      <li><b>현재 Multiple</b> — <span class="status-insufficient">Insufficient Data</span> (FnGuide/FnSpace·시세 미확보)</li>
+      <li><b>역사적 Range / Peer Multiple</b> — <span class="status-insufficient">Insufficient Data</span></li>
+      <li><b>내재된 기대</b> — 추정 불가</li>
+    </ul>
+    <p>Core Question("현재 가격에 이미 반영돼 있는가")은 Valuation 데이터 부재로 판단 자체가 불가능하다.</p>
+  </section>
+
+  <section>
+    <h2>10. Expected Return</h2>
+    <table>
+      <tr><th>Scenario</th><th>Earnings Growth</th><th>Multiple</th><th>Expected Return</th></tr>
+      <tr><td>Bull</td><td>OPM 반등 + PB 30% 이후에도 두 자릿수 유지</td><td>Re-rating 가능성</td><td class="status-insufficient">Insufficient Data</td></tr>
+      <tr><td>Base</td><td>믹스 전환 지속, OPM 정체</td><td>현 밴드 유지</td><td class="status-insufficient">Insufficient Data</td></tr>
+      <tr><td>Bear</td><td>믹스 여력 소진 + 특수 소멸</td><td>De-rating 가능성</td><td class="status-insufficient">Insufficient Data</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>11. Entry Strategy</h2>
+    <p><b>Decision: WAIT</b></p>
+    <ol>
+      <li>영업이익률 2개 분기 연속 반등 — 매출총이익률 방어분이 실제 이익 레버리지로 전환됨을 확인</li>
+      <li>재구매율·코호트 등 Customer Economics 핵심 데이터 확보 — Layer C 직접 검증 가능해질 것</li>
+      <li>FnGuide/FnSpace 등 컨센서스·Multiple 데이터 확보 — Valuation Gate 판단 가능해질 것</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>12. Thesis Break</h2>
+    <h3>Confirmation Signal</h3>
+    <p>영업이익률 반등, PB 비중 30% 이후에도 두 자릿수 성장 지속, GS25 대비 PB 성장률 우위 확인</p>
+    <h3>Weakening Signal</h3>
+    <p>PB 성장률 한 자릿수 둔화, 영업이익률 정체 지속</p>
+    <h3>Break Signal</h3>
+    <p>매출총이익률 하락 전환, 물류 파업 재발로 매출 차질</p>
+    <h3>Sell Trigger</h3>
+    <p>Break Signal이 2개 분기 이상 연속 확인될 경우(보유 시 기준 — 현재는 신규 후보라 해당 없음)</p>
+  </section>
+
+  <section>
+    <h2>13. Scorecard</h2>
+    <table>
+      <tr><th>항목</th><th class="num">점수</th><th class="num">최대</th><th>핵심 근거</th></tr>
+      <tr><td>A. Structural Demand</td><td class="num">6</td><td class="num">10</td><td>성숙기 정황과 견조한 매출 성장 혼재</td></tr>
+      <tr><td>B. Product/Brand</td><td class="num">9</td><td class="num">12</td><td>PB 브랜드력, 소비자만족도 2위</td></tr>
+      <tr><td>C. Customer Economics</td><td class="num">8</td><td class="num">18</td><td>핵심 데이터 전부 Insufficient — Data Integrity Gate</td></tr>
+      <tr><td>D. Competitive Advantage</td><td class="num">5</td><td class="num">12</td><td>낮은 전환비용, 방어 증거 없음</td></tr>
+      <tr><td>E. Distribution</td><td class="num">4</td><td class="num">6</td><td>안정적 점포망 재배치</td></tr>
+      <tr><td>F. Financial Translation</td><td class="num">5</td><td class="num">15</td><td>Operating Leverage Broken</td></tr>
+      <tr><td>G. Variant Perception</td><td class="num">4</td><td class="num">15</td><td>Consensus Gate 근접(Category 1)</td></tr>
+      <tr><td>H. Catalyst</td><td class="num">4</td><td class="num">7</td><td>PB 공시 트리거 명확</td></tr>
+      <tr><td>I. Valuation</td><td class="num">1</td><td class="num">10</td><td>데이터 전무</td></tr>
+      <tr><td>Risk (감점)</td><td class="num">-7</td><td class="num">-15</td><td>물류 파업·인명피해, 담배 규제 노출, 믹스 여력 소진, 카테고리 동반성장</td></tr>
+      <tr style="font-weight:700;"><td>Total</td><td class="num">39</td><td class="num">100</td><td></td></tr>
+    </table>
+    <p><b>Gate 점검</b> — Valuation Gate: 데이터 부재로 미통과 처리 · Consensus Gate: <b>발동</b>(Category 1) · Financial Translation Gate: <b>발동</b>(F=Broken) · Data Integrity Gate: <b>발동</b>(C 핵심지표 전부 Insufficient). 39점은 PASS 하한(50)에도 못 미치나, 신규 후보이므로 SELL이 아닌 <b>PASS</b>로 분류하고 Entry Timing은 <b>WAIT</b>으로 명시한다.</p>
+  </section>
+
+  <section>
+    <h2>14. Final Investment Decision</h2>
+    <p><b>Why this company?</b> 편의점이라는 전형적 반복구매 리테일이면서, 담배(가격통제)와 PB(자사결정)를 함께 취급해 "가격결정력 vs 믹스 전환"을 분리해 볼 수 있는 사례이기 때문.</p>
+    <p><b>Why is the market wrong?</b> 확실하지 않다. 핵심 증거(매출총이익률 유지, PB 성장)가 이미 공개된 정보라 Category 1에 해당하며, 진짜 Variant View를 입증하지 못했다.</p>
+    <p><b>Why now?</b> "지금"이 아니다. Consensus/Financial Translation/Data Integrity Gate가 모두 발동한 상태다.</p>
+    <p><b>What makes money?</b> 영업이익률이 판관비 레버리지를 동반하며 반등하고, Customer Economics 데이터가 공개돼 Layer C를 검증할 수 있게 될 때.</p>
+    <p><b>What proves us wrong?</b> PB 성장이 30% 이후에도 GS25 대비 우위를 유지하며 영업이익률이 빠르게 반등하고, 재구매율 데이터로 Layer C가 실제로 강함이 확인된다면.</p>
+
+    <div class="verdict-block">
+      <p><b>VERDICT:</b> PASS</p>
+      <p><b>ENTRY:</b> WAIT</p>
+      <p><b>EXPECTED HOLDING PERIOD:</b> 해당 없음</p>
+      <p><b>PRIMARY CATALYST:</b> 영업이익률 반등 또는 Customer Economics 데이터 공개</p>
+      <p><b>THESIS BREAK:</b> 매출총이익률 하락 전환 + 물류 리스크 재발 (보유 시 기준, 현재 미보유)</p>
+    </div>
+  </section>
+
+  <div class="footer-note">
+    Generated under a fixed philosophy: "high retention converts into pricing power, and the market
+    underestimates the speed/size of that conversion." Not financial advice.
+    데이터 출처: DART 정기공시(제7~9기, 2026-08-12 조회), 웹 검색(뉴스 보도, Proxy). FnGuide/FnSpace 미확보.
+  </div>
+</div>
+</body>
+</html>

@@ -16,14 +16,14 @@ model: sonnet
 2. 다음 스킬을 순서대로 호출해 데이터를 수집한다: `fetch-dart`, `fetch-fnguide`(0단계에서 사용 불가로 확인됐으면 건너뛴다), `fetch-fred`, `fetch-web`(뉴스·홈페이지 — 데이터 키트 밖 Proxy 지표용)
 3. **1단계 필터링**: 다음 스킬을 순서대로 호출해 각 핵심 기준에 부합하는지 판단한다: `judge-retention-pricing-power`, `judge-structural-vs-cyclical`, `judge-underpriced-customer-love`. 3개 모두 미부합이면 여기서 판단을 종료하고, 그 사실과 근거만 담아 보고서를 작성한다.
 4. **2단계 스크리닝**: 1단계에서 하나 이상 부합한 경우에만 `screen-fundamentals`를 호출해 시장성·경쟁력·수익성·재무 효율성·ESG 5개 항목을 flag한다.
-5. **보고서 초안 작성**: 결과를 종합해 `reports/<기업명>-<yyyymmdd>.md`에 투심보고서 초안을 작성한다. 보고서에는 다음을 포함한다:
+5. **보고서 초안 작성**: 결과를 종합해 `reports/<기업명>-<yyyymmdd>.html`에 투심보고서 초안을 작성한다. `docs/report-format-reference.md`의 증권사 리포트 양식(표지 스냅샷 박스, verdict 박스, 표 중심 레이아웃)을 따르는 HTML 단일 파일로 만든다(마크다운이 아니다 — `judgment-rules.md` Output 절 참고). 보고서에는 다음을 포함한다:
    - 기업 개요 (1~2문장)
    - 1단계 — 기준별 판단 결과(부합/부분부합/미부합) + 핵심 근거 (기준 3개 각각)
    - 2단계 — 스크리닝 Flag 5개 항목(Pass/Caution/Fail/데이터 없음) + 근거 (1단계에서 미부합이면 이 섹션은 생략)
    - 종합 투자의견
    - 사용한 원자료 출처 (DART/FnGuide/FRED/웹, 조회 시점) — 웹 출처는 URL과 함께 Proxy임을 명시
    - 위 모든 판단 문장에는 `judgment-rules.md`의 어느 조항·임계값을 적용했는지 괄호로 표기한다 (`judgment-rules.md`의 "판단 일관성 원칙" 3번).
-6. **자기검증(Compliance Self-Check)**: 초안을 다시 읽으며 각 판단 문장이 (a) `judgment-rules.md`의 실제 조항에 근거하는지, (b) 그 조항의 임계값을 정확히 적용했는지 확인한다. 근거 없는 서술(단순 정보 나열, 규칙서 밖 주관적 평가)은 삭제하거나 규칙서 조항에 맞게 다시 쓴다. 데이터가 규칙서 기준을 판단하기에 부족하면 결론을 임의로 내지 않고 "판단 보류"로 명시한다. 이 자기검증을 거친 최종본만 `reports/`에 저장한다.
+6. **자기검증(Compliance Self-Check)**: 초안을 다시 읽으며 각 판단 문장이 (a) `judgment-rules.md`의 실제 조항에 근거하는지, (b) 그 조항의 임계값을 정확히 적용했는지 확인한다. 근거 없는 서술(단순 정보 나열, 규칙서 밖 주관적 평가)은 삭제하거나 규칙서 조항에 맞게 다시 쓴다. 데이터가 규칙서 기준을 판단하기에 부족하면 결론을 임의로 내지 않고 "판단 보류"로 명시한다. 이 자기검증을 거친 최종본(HTML)만 `reports/`에 저장한다.
 
 ## 원칙
 
@@ -32,5 +32,6 @@ model: sonnet
 - **재현성**: 같은 기업 + 같은 시점의 원자료가 주어지면, 이 에이전트를 누가 실행하든 같은 판단(부합/부분부합/미부합, Pass/Caution/Fail)이 나와야 한다. 규칙서에 명시되지 않은 재량적 해석을 추가하면 안 된다 — 애매한 경우는 각 스킬의 "데이터 부족 시 처리" 절차를 그대로 따른다.
 
 ## TODO
-- [x] end-to-end 1건 실행 완료 (제출물③, BGF리테일 — `reports/BGF리테일-20260812.md`, 2026-08-12). DART_API_KEY/FRED_API_KEY로 실행, FnGuide는 아직 미확보라 해당 스텝은 생략됨.
+- [x] end-to-end 1건 실행 완료 (제출물③, BGF리테일 — `reports/BGF리테일-20260812.md`, 2026-08-12). DART_API_KEY/FRED_API_KEY로 실행, FnGuide는 아직 미확보라 해당 스텝은 생략됨. ⚠️ 기준①②가 이후 chaemin/pjueun 버전으로 교체돼 최신 규칙과는 다름 — 재실행 필요.
 - [ ] FNSPACE_API_KEY(FnGuide 공식 API, fnspace.com 유료 가입) 확보되면 기준②·③ 판단(현재 부분부합/판단보류)을 재실행해 갱신. FNGUIDE_ID/PW 로그인은 이용권 없어 사용 불가 확인됨(2026-08-12).
+- [ ] **구조 불일치**: 3단계에서 호출하는 `judge-retention-pricing-power`(pjueun)와 `judge-structural-vs-cyclical`(chaemin)가 각각 원작자의 공식 독립형 패키지로 교체되면서, 이 문서를 참조하지 않고 부합/부분부합/미부합 대신 BUY/WATCH/PASS/SELL(전자)·BUY/WATCH/PASS/SELL(후자, 문서 매핑 규칙은 judgment-rules.md 기준②에 명시)을 산출하며 별도 Investment Memo 파일(md+html)을 만드는 성격의 스킬이 됐다(`judge-underpriced-customer-love`는 자체적으로 축약 판정을 반환하도록 설계돼 이 문제가 없음). 둘 다 파일 출력 경로도 Claude.ai 관례(`/mnt/user-data/outputs/`, `present_files`)라 이 레포에서 호출 시 `reports/` 경로로 보정이 필요하다. 3단계에서 이 두 스킬을 호출한 뒤 그 Verdict를 부합/부분부합/미부합으로 환산하는 절차(judgment-rules.md에 매핑 규칙은 적어뒀음)를 오케스트레이터가 실제로 따르는지 end-to-end로 검증 필요 — 아직 미검증.

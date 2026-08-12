@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>{{COMPANY_NAME}} — Underpriced Customer Love (ULRS) Investment Memo</title>
+<style>
+  :root{
+    --ink:#20241F; --muted:#565C51; --bg:#F5F3EC; --card:#ffffff;
+    --line:#CBC7B4; --accent:#1F5C4C;
+    --buy:#1F5C4C; --watch:#8A6B1E; --avoid:#8C3A2B;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:Georgia,'Noto Serif KR',serif; line-height:1.6;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:48px 32px 96px;}
+  .masthead{border-bottom:3px solid var(--ink); padding-bottom:18px; margin-bottom:28px;}
+  .masthead .kicker{font-family:'Courier New',monospace; font-size:12px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--muted);}
+  .masthead h1{font-size:30px; margin:6px 0 4px;}
+  .snapshot{display:flex; flex-wrap:wrap; gap:24px; background:var(--card); border:1px solid var(--line);
+    border-radius:10px; padding:20px 24px; margin-bottom:28px;}
+  .snapshot .field{font-family:'Courier New',monospace; font-size:13px;}
+  .snapshot .field .label{color:var(--muted); text-transform:uppercase; font-size:11px; letter-spacing:.06em;}
+  .snapshot .field .value{font-size:15px; font-weight:600; margin-top:2px;}
+  .badge{display:inline-block; font-family:'Courier New',monospace; font-weight:700;
+    font-size:13px; letter-spacing:.05em; padding:6px 14px; border-radius:20px; color:#fff;}
+  .badge.buy{background:var(--buy);} .badge.watch{background:var(--watch);} .badge.avoid{background:var(--avoid);}
+  .oneliner{font-size:17px; font-style:italic; color:var(--accent); border-left:4px solid var(--accent);
+    padding:6px 16px; margin:0 0 32px;}
+  section{margin-bottom:36px;}
+  h2{font-family:'Courier New',monospace; font-size:13px; letter-spacing:.1em;
+    text-transform:uppercase; color:#fff; background:var(--ink); display:inline-block;
+    padding:6px 12px; border-radius:4px; margin:0 0 14px;}
+  h3{font-size:15px; margin:18px 0 6px; color:var(--accent);}
+  table{width:100%; border-collapse:collapse; margin:10px 0 4px; font-size:13.5px;
+    font-family:'Courier New',monospace; background:var(--card);}
+  th,td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top;}
+  th{background:#ECE8DA; font-weight:700; font-size:11.5px; text-transform:uppercase; letter-spacing:.03em;}
+  tr:nth-child(even) td{background:#FAF8F1;}
+  .status-confirmed{color:var(--buy); font-weight:700;}
+  .status-emerging{color:var(--watch); font-weight:700;}
+  .status-broken{color:var(--avoid); font-weight:700;}
+  .status-insufficient{color:var(--muted); font-style:italic;}
+  .verdict-block{background:var(--ink); color:#fff; border-radius:10px; padding:20px 24px; font-family:'Courier New',monospace;}
+  .verdict-block p{margin:4px 0; font-size:14px;}
+  .verdict-block b{letter-spacing:.03em;}
+  blockquote{border-left:4px solid var(--line); margin:8px 0; padding:6px 14px; color:var(--muted); font-style:italic;}
+  .formula{background:var(--ink); color:#EFEAD9; padding:14px 18px; border-radius:8px; font-family:'Courier New',monospace; font-size:13px; line-height:1.7; margin:12px 0; overflow-x:auto;}
+  .footer-note{margin-top:48px; font-family:'Courier New',monospace; font-size:11px; color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <div class="kicker">Underpriced Customer Love (ULRS) Investment Memorandum</div>
+    <h1>{{COMPANY_NAME}}</h1>
+  </div>
+
+  <div class="snapshot">
+    <div class="field"><div class="label">Ticker</div><div class="value">{{TICKER}}</div></div>
+    <div class="field"><div class="label">Current Price</div><div class="value">{{PRICE}}</div></div>
+    <div class="field"><div class="label">Market Cap</div><div class="value">{{MCAP}}</div></div>
+    <div class="field"><div class="label">Industry</div><div class="value">{{INDUSTRY}}</div></div>
+    <div class="field"><div class="label">Framework Fit</div><div class="value">{{FIT}}</div></div>
+    <div class="field"><div class="label">Final Verdict</div><div class="value"><span class="badge {{VERDICT_CLASS}}">{{VERDICT}}</span></div></div>
+    <div class="field"><div class="label">Entry Timing</div><div class="value">{{ENTRY}}</div></div>
+    <div class="field"><div class="label">ULRS</div><div class="value">{{ULRS}}</div></div>
+    <div class="field"><div class="label">Score</div><div class="value">{{SCORE}} / 100</div></div>
+    <div class="field"><div class="label">Holding Period</div><div class="value">{{HOLDING}}</div></div>
+  </div>
+
+  <p class="oneliner">{{ONE_LINER}}</p>
+
+  <!-- Insert each numbered section (1–14, per references/output_template.md) below as
+       <section><h2>...</h2>...content...</section> -->
+  {{SECTIONS}}
+
+  <div class="footer-note">
+    Generated under a fixed philosophy: "진짜 애착(Love×Durability) + 재무 전환 능력(Conversion) +
+    시장의 미인식(Gap)의 동시 성립." Not financial advice.
+  </div>
+</div>
+</body>
+</html>

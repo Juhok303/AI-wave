@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DUOL — Underpriced Customer Love (ULRS) Investment Memo</title>
+<style>
+  :root{
+    --ink:#20241F; --muted:#565C51; --bg:#F5F3EC; --card:#ffffff;
+    --line:#CBC7B4; --accent:#1F5C4C;
+    --buy:#1F5C4C; --watch:#8A6B1E; --avoid:#8C3A2B;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,'Noto Serif KR',serif;line-height:1.6;}
+  .wrap{max-width:920px;margin:0 auto;padding:48px 32px 96px;}
+  @media (max-width:640px){.wrap{padding:28px 16px 72px;}}
+  .masthead{border-bottom:3px solid var(--ink);padding-bottom:18px;margin-bottom:28px;}
+  .masthead .kicker{font-family:'Courier New',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+  .masthead h1{font-size:30px;margin:6px 0 4px;}
+  .snapshot{display:flex;flex-wrap:wrap;gap:22px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 24px;margin-bottom:28px;}
+  .snapshot .field{font-family:'Courier New',monospace;font-size:13px;}
+  .snapshot .field .label{color:var(--muted);text-transform:uppercase;font-size:11px;letter-spacing:.06em;}
+  .snapshot .field .value{font-size:15px;font-weight:600;margin-top:2px;}
+  .badge{display:inline-block;font-family:'Courier New',monospace;font-weight:700;font-size:13px;letter-spacing:.05em;padding:6px 14px;border-radius:20px;color:#fff;}
+  .badge.watch{background:var(--watch);}
+  .oneliner{font-size:17px;font-style:italic;color:var(--accent);border-left:4px solid var(--accent);padding:6px 16px;margin:0 0 32px;}
+  section{margin-bottom:36px;}
+  h2{font-family:'Courier New',monospace;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--ink);display:inline-block;padding:6px 12px;border-radius:4px;margin:0 0 14px;}
+  h3{font-size:15px;margin:18px 0 6px;color:var(--accent);}
+  p{margin:0 0 10px;font-size:14.5px;}
+  table{width:100%;border-collapse:collapse;margin:10px 0 4px;font-size:13px;font-family:'Courier New',monospace;background:var(--card);}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;}
+  th{background:#ECE8DA;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em;}
+  tr:nth-child(even) td{background:#FAF8F1;}
+  td.num,th.num{text-align:right;}
+  .status-confirmed{color:var(--buy);font-weight:700;}
+  .status-emerging{color:var(--watch);font-weight:700;}
+  .status-broken{color:var(--avoid);font-weight:700;}
+  .status-insufficient{color:var(--muted);font-style:italic;}
+  .verdict-block{background:var(--ink);color:#fff;border-radius:10px;padding:20px 24px;font-family:'Courier New',monospace;}
+  .verdict-block p{margin:4px 0;font-size:14px;}
+  .verdict-block b{letter-spacing:.03em;}
+  blockquote{border-left:4px solid var(--line);margin:8px 0;padding:6px 14px;color:var(--muted);font-style:italic;}
+  .formula{background:var(--ink);color:#EFEAD9;padding:14px 18px;border-radius:8px;font-family:'Courier New',monospace;font-size:13px;line-height:1.7;margin:12px 0;overflow-x:auto;}
+  .formula .op{color:#C9A63B;}
+  .score-total-row td{font-weight:700;}
+  .qa{margin-bottom:12px;}
+  .qa .q{font-family:'Courier New',monospace;font-size:11px;color:var(--accent);margin-bottom:4px;}
+  .qa .a{font-size:14.5px;}
+  .footer-note{margin-top:48px;font-family:'Courier New',monospace;font-size:11px;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <div class="kicker">Underpriced Customer Love (ULRS) Investment Memorandum</div>
+    <h1>Duolingo, Inc.</h1>
+  </div>
+
+  <div class="snapshot">
+    <div class="field"><div class="label">Ticker</div><div class="value">DUOL</div></div>
+    <div class="field"><div class="label">Current Price</div><div class="value">Insufficient Data</div></div>
+    <div class="field"><div class="label">Market Cap</div><div class="value">Insufficient Data</div></div>
+    <div class="field"><div class="label">Industry</div><div class="value">Consumer Software/Apps</div></div>
+    <div class="field"><div class="label">Framework Fit</div><div class="value">High</div></div>
+    <div class="field"><div class="label">Final Verdict</div><div class="value"><span class="badge watch">WATCH</span></div></div>
+    <div class="field"><div class="label">Entry Timing</div><div class="value">WAIT</div></div>
+    <div class="field"><div class="label">ULRS</div><div class="value">≈ −0.10</div></div>
+    <div class="field"><div class="label">Score</div><div class="value">56 / 100</div></div>
+    <div class="field"><div class="label">Holding Period</div><div class="value">신규 진입 보류</div></div>
+  </div>
+
+  <p class="oneliner">Love·Durability는 진짜(DAU/MAU 스티키니스 최상급, 월 리텐션 55%)지만 Conversion-Readiness Gap이 이미 음수다 — 2023년 AI 공포로 EV/Sales가 5배까지 눌렸을 때가 진짜 저평가 구간이었고, 지금(12~16배)은 시장이 이미 상당 부분 반영한 뒤다.</p>
+
+  <section>
+    <h2>1. Why This Company Fits the Philosophy</h2>
+    <p>Duolingo는 Sector Fit Matrix(문서 J절) 기준 Consumer Software/Apps = <b>높음</b>에 해당한다. DAU/MAU가 분기마다 공시되고, 리뷰·소셜 데이터로 Love를 정량 추적할 수 있으며, Monetization Gap이 구독매출/마진으로 명확히 관측된다. 2023년 ChatGPT發 AI 공포로 EV/Sales가 5배까지 급락했다가 2026년 12~16배로 회복한 과정 자체가 이 철학이 찾는 "Gap 개폐 사이클"의 교과서적 사례다.</p>
+  </section>
+
+  <section>
+    <h2>2. Core Thesis Test</h2>
+    <blockquote>"이 기업은 진짜 애착(Love×Durability)을 갖고 있고 그것을 재무 성과로 전환할 능력도 있으나, 시장은 아직 이를 가격에 반영하지 않았다."</blockquote>
+    <p><b>Verdict: Partially Supported</b></p>
+    <table>
+      <tr><th style="width:50%">핵심 근거</th><th>핵심 반대 근거</th></tr>
+      <tr><td>DAU/MAU 스티키니스 28.6~40%대 — 교육 카테고리 평균의 2~3배 (Fact, 2026)</td><td>Forward EV/Sales 12~16x, Peer 중앙값(9.75x) 상회 — 이미 반영 (Fact)</td></tr>
+      <tr><td>월간 DAU 리텐션 55% 유지, 서구권 이탈률 2020년 47%→2024년 28% (Fact/Estimate)</td><td>DAU 성장률 2024 +60%대→2026 Q1 +21%까지 다분기 감속 (Fact)</td></tr>
+      <tr><td>매출 +18~27% YoY, Adj. EBITDA 마진 ~28~29% (Fact)</td><td>2025.4 "AI-first" 메모 파문으로 Durability 실제 흠집(보이콧, 성장 가이던스 하단) (Fact)</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>3. Love &amp; Durability Evidence (Layer 1~2)</h2>
+    <table>
+      <tr><th style="width:26%">지표</th><th>수치</th><th style="width:14%">Confidence</th></tr>
+      <tr><td>DAU/MAU (Stickiness)</td><td>28.6%~40%대 — 교육 카테고리 평균(10~15%)의 2~3배</td><td>Medium</td></tr>
+      <tr><td>월간 리텐션</td><td>DAU 기준 월 55% 유지, 서구권 이탈률 2020년 47%→2024년 28%</td><td>Medium</td></tr>
+      <tr><td>DAU 성장률 추이</td><td>2024 +60%대 → 2025 Q2 +40% → 2025 Q4 +36% → 2026 Q1 +21% — 뚜렷한 감속</td><td>High</td></tr>
+      <tr><td>Durability 시험대("AI-first", 2025.4)</td><td>이용자 보이콧 발생, 정규직 감원 없다고 진화. 성장 가이던스 하단(+40%) 기록했으나 붕괴는 아님</td><td>High</td></tr>
+      <tr><td>경쟁·Moat</td><td>범용 LLM 튜터가 구조적 대체재 후보. 게임화(스트릭) 록인은 있으나 정량 Moat 지표는 Insufficient Data</td><td>Low</td></tr>
+    </table>
+    <p><b>Love%ile ≈ 85, Durability%ile ≈ 57</b> — AND(기하평균) 구조상 이 격차가 전체 점수를 끌어내린다.</p>
+  </section>
+
+  <section>
+    <h2>4. Gap Evidence (Layer 3~5)</h2>
+    <table>
+      <tr><th>Layer</th><th>핵심 근거</th><th class="num" style="width:12%">%ile</th></tr>
+      <tr><td>3. Operating Monetization Gap</td><td>매출 +18~27% YoY, Adj. EBITDA 마진 ~28~29%. 유료 구독자 12.5M</td><td class="num">70</td></tr>
+      <tr><td>4. Financial Conversion Capacity</td><td>Q1 순이익 +24%, Q2 재투자로 $33.2M까지 감소 — 분기별 일관성 부족</td><td class="num">60</td></tr>
+      <tr><td>5. Market Recognition Gap</td><td>Fwd P/E 47~49x, Fwd EV/Sales 12~16x — Peer 중앙값(9.75x) 상회</td><td class="num">78</td></tr>
+    </table>
+    <div class="formula">Conversion_Readiness_Gap = (Layer4%ile <span class="op">−</span> Layer5%ile) / 100 = (60 <span class="op">−</span> 78) / 100 = <span class="op">−0.18</span></div>
+    <p>음수라는 것은 "전환 능력보다 시장이 이미 더 앞서 있다"는 뜻 — 자동 배제 신호에 해당한다.</p>
+  </section>
+
+  <section>
+    <h2>5. Financial Transmission</h2>
+    <table>
+      <tr><th>단계</th><th>상태</th><th>핵심 근거</th></tr>
+      <tr><td>Customer Love</td><td class="status-confirmed">✅ Confirmed</td><td>DAU/MAU 스티키니스 최상위권, 월 리텐션 55%</td></tr>
+      <tr><td>Durability</td><td class="status-emerging">🟡 Emerging</td><td>AI-first 파문 생존, DAU 성장 감속 지속</td></tr>
+      <tr><td>Operating Monetization Gap</td><td class="status-confirmed">✅ Confirmed</td><td>매출·EBITDA 마진 견조, 구독 매출 비중 압도적</td></tr>
+      <tr><td>Financial Conversion Capacity</td><td class="status-emerging">🟡 Emerging</td><td>순이익 전환 분기별 불일치</td></tr>
+      <tr><td>Market Recognition Gap</td><td class="status-broken">❌ Broken</td><td>이미 Peer 대비 프리미엄 밸류에이션</td></tr>
+      <tr><td>Re-rating</td><td class="status-broken">❌ Broken</td><td>Market Recognition 단계 Broken → 추가 Re-rating 여지 제한적</td></tr>
+    </table>
+    <p><i>진단: Love→Durability까지는 확인되나(일부 Emerging), Market Recognition 단계에서 체인이 끊긴다.</i></p>
+  </section>
+
+  <section>
+    <h2>6. Layer 1–5 Analysis</h2>
+    <table>
+      <tr><th>Layer</th><th>핵심 판단</th><th>주요 수치</th><th>Bull/Bear</th></tr>
+      <tr><td>1. Customer Love</td><td>스티키니스 최상위권</td><td>DAU/MAU 28.6~40%대</td><td>Bull</td></tr>
+      <tr><td>2. Love Durability &amp; Defensibility</td><td>AI-first 생존, 성장 감속 지속</td><td>DAU YoY +60%→+21%</td><td>Neutral</td></tr>
+      <tr><td>3. Operating Monetization Gap</td><td>매출·마진 견조</td><td>매출 +18~27%, EBITDA 마진 ~28~29%</td><td>Bull</td></tr>
+      <tr><td>4. Financial Conversion Capacity</td><td>분기별 이익 전환 불일치</td><td>Q1 +24% → Q2 $33.2M</td><td>Neutral</td></tr>
+      <tr><td>5. Market Recognition Gap</td><td>이미 프리미엄 밸류에이션</td><td>Fwd EV/Sales 12~16x vs Peer 9.75x</td><td>Bear</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>7. Variant Perception (Market Recognition Gap)</h2>
+    <table>
+      <tr><th>Market Believes</th><td>AI 경쟁 리스크 완화 + DAU·마진 개선 지속을 이미 가격에 반영(Jefferies 상향, Wedbush Neutral 개시)</td></tr>
+      <tr><th>We Believe</th><td>Love·Durability는 진짜이나 DAU 감속·이익 전환 불일치를 시장이 이미 프리미엄에 반영</td></tr>
+      <tr><th>Why Market May Be Wrong</th><td>반대 방향 가능성(DAU 재가속 시 과소평가였을 수도)은 있으나 현재는 낙관 시나리오에 가깝게 반영됨</td></tr>
+      <tr><th>Evidence</th><td>Fwd EV/Sales 12~16x(Peer 9.75x 상회), 목표가 스프레드 $109~$139</td></tr>
+      <tr><th>Recognition Trigger</th><td>없음(이미 인식됨) — DAU 재가속/Multiple 조정이 새 트리거가 될 수 있음</td></tr>
+    </table>
+    <p><span class="badge watch">Category 1 — 시장이 이미 알고 있는 좋은 점</span> Variant View로 불인정. Red Flag 9("이미 고평가")와 동일 신호로 처리.</p>
+  </section>
+
+  <section>
+    <h2>8. Catalyst Map</h2>
+    <table>
+      <tr><th>Catalyst</th><th>Leading Indicator</th><th>예상 시점</th><th>Earnings Impact</th></tr>
+      <tr><td>DAU 성장률 재가속</td><td>분기별 DAU YoY 반전</td><td>미확정, 매 분기 확인</td><td>확인 시 Positive</td></tr>
+      <tr><td>상품 마진/순이익 전환 안정화</td><td>2개 분기 연속 순이익 성장 재개</td><td>2026 하반기</td><td>확인 시 Positive</td></tr>
+      <tr><td>Multiple 조정</td><td>Peer 대비 프리미엄 축소</td><td>미확정</td><td>Gap 재양전환 시 Positive</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>9. Valuation</h2>
+    <p>현재 Multiple: Forward P/E ~47~49x, Forward EV/Sales ~12~16x. 역사적 Range: 2023년 초 AI 공포 저점 EV/Sales ~5x. Peers: 중앙값 EV/Sales ~9.75x. 절대 시가총액·현재가는 <i>Insufficient Data</i>(이 레포에 시세 데이터 소스 없음). 현재 가격은 애널리스트 목표가 스프레드($109~$139)가 시사하듯 AI 성장 지속 시나리오를 상당 부분 반영.</p>
+  </section>
+
+  <section>
+    <h2>10. Expected Return</h2>
+    <table>
+      <tr><th>Scenario</th><th>Financial Conversion 가정</th><th>Multiple 가정</th><th>Expected Return</th></tr>
+      <tr><td>Bull</td><td>DAU 재가속 + 마진 안정화</td><td>소폭 확대</td><td>Insufficient Data</td></tr>
+      <tr><td>Base</td><td>현재 추세(감속 지속)</td><td>정체</td><td>Insufficient Data</td></tr>
+      <tr><td>Bear</td><td>마진 전환 재차 둔화</td><td>Peer 중앙값(9.75x) 회귀</td><td>Insufficient Data</td></tr>
+    </table>
+    <p style="font-size:12.5px;color:var(--muted);">절대주가 데이터가 없어 정밀 수치 산출 불가 — 방향성만 제공.</p>
+  </section>
+
+  <section>
+    <h2>11. Entry Strategy</h2>
+    <p><b>Decision: WAIT</b></p>
+    <ol>
+      <li>DAU 성장률이 2개 분기 연속 재가속(감속 추세 반전)</li>
+      <li>Multiple 조정으로 Market Recognition%ile이 Financial Conversion%ile 아래로 재하락(Gap 재양전환)</li>
+      <li>위 조건 충족 시 BUY ON CONFIRMATION으로 재평가</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>12. Thesis Break / Exit</h2>
+    <table>
+      <tr><th>Confirmation Signal</th><td>DAU 재가속 + 순이익 전환 안정화 동시 확인</td></tr>
+      <tr><th>Weakening Signal</th><td>DAU 감속 지속 + Multiple 추가 확대</td></tr>
+      <tr><th>Break Signal</th><td>AI 대체재로 인한 실질 이탈(리뷰·다운로드 급감) 또는 스티키니스 급락</td></tr>
+      <tr><th>Sell Trigger</th><td>Break Signal 2개 분기 이상 연속 확인(현재 미보유라 해당 없음)</td></tr>
+    </table>
+    <p>Exit 유형 — Thesis-break: Layer1/2 %ile 2개 분기 연속 20%p↑ 하락. Time-stop: 재진입 후 6개 분기 경과해도 Monetization Gap 미개선.</p>
+  </section>
+
+  <section>
+    <h2>13. Scorecard</h2>
+    <table>
+      <tr><th>Layer</th><th class="num">점수</th><th class="num">최대</th><th>핵심 근거</th></tr>
+      <tr><td>1. Customer Love</td><td class="num">12.75</td><td class="num">15</td><td>Love%ile 85</td></tr>
+      <tr><td>2. Love Durability &amp; Defensibility</td><td class="num">8.55</td><td class="num">15</td><td>Durability%ile 57</td></tr>
+      <tr><td>3. Operating Monetization Gap</td><td class="num">14.0</td><td class="num">20</td><td>Layer3%ile 70</td></tr>
+      <tr><td>4. Financial Conversion Capacity</td><td class="num">12.0</td><td class="num">20</td><td>Layer4%ile 60</td></tr>
+      <tr><td>5. Market Recognition Gap</td><td class="num">11.7</td><td class="num">15</td><td>Layer5%ile 78</td></tr>
+      <tr><td>6. Catalyst 근접성</td><td class="num">3.0</td><td class="num">10</td><td>주요 Catalyst 대부분 이미 반영</td></tr>
+      <tr><td>Risk Penalty</td><td class="num">−6</td><td class="num">−0~15</td><td>Red Flag 2개</td></tr>
+      <tr class="score-total-row"><td>Total</td><td class="num">56.0</td><td class="num">100</td><td></td></tr>
+    </table>
+    <div class="formula">ULRS = √(85 <span class="op">×</span> 57) <span class="op">×</span> (−0.18) <span class="op">×</span> (1 <span class="op">−</span> 0.20) ≈ 69.6 <span class="op">×</span> (−0.18) <span class="op">×</span> 0.80 ≈ <span class="op">−10.0</span> (스케일 조정 시 ≈ −0.10)</div>
+  </section>
+
+  <section>
+    <h2>14. Final Investment Decision</h2>
+    <div class="qa"><div class="q">WHY THIS COMPANY?</div><div class="a">소비자 애착이 정량적으로 가장 투명하게 드러나는 컨슈머 앱 중 하나이자, "Underpriced Love"가 실제로 존재했던(2023년 AI 공포 저점) 드문 실증 사례.</div></div>
+    <div class="qa"><div class="q">WHY IS THE MARKET (NO LONGER) WRONG?</div><div class="a">2023년엔 과도한 비관으로 진짜 Gap이 있었지만, 2026년 현재는 밸류에이션이 이미 상당 부분 회복(EV/Sales 5x→12~16x)돼 Gap의 상당 부분이 닫혔다.</div></div>
+    <div class="qa"><div class="q">WHY NOW?</div><div class="a">"지금"은 아니다 — Market Recognition%ile이 Financial Conversion%ile을 이미 앞서는 상태(Gap 음수).</div></div>
+    <div class="qa"><div class="q">WHAT MAKES MONEY?</div><div class="a">DAU 재가속 확인 또는 AI 경쟁 우려로 Multiple이 큰 폭 조정될 때 재진입.</div></div>
+    <div class="qa"><div class="q">WHAT PROVES US WRONG?</div><div class="a">프리미엄 밸류에이션에도 DAU가 재가속하고 순이익 전환이 매 분기 일관되게 개선되면 Gap이 재양전환될 수 있다.</div></div>
+
+    <div class="verdict-block">
+      <p><b>VERDICT:</b> WATCH (AVOID 근접)</p>
+      <p><b>ULRS:</b> ≈ −0.10</p>
+      <p><b>ENTRY:</b> WAIT</p>
+      <p><b>EXPECTED HOLDING PERIOD:</b> 신규 진입 보류, 재진입 시 1~2년</p>
+      <p><b>PRIMARY CATALYST:</b> DAU 성장 재가속 또는 Multiple 조정</p>
+      <p><b>THESIS BREAK:</b> 스티키니스 2개 분기 연속 20%p↑ 하락</p>
+    </div>
+  </section>
+
+  <div class="footer-note">
+    Generated under a fixed philosophy: "진짜 애착(Love×Durability) + 재무 전환 능력(Conversion) + 시장의 미인식(Gap)의 동시 성립." Data as of 2026.08 · Sources: DUOL 10-Q/8-K filings, StockTitan, TIKR, StockAnalysis, TechCrunch, CustomerExperienceDive. Not financial advice.
+  </div>
+</div>
+</body>
+</html>

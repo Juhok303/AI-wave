@@ -19,32 +19,46 @@ B2C 개별기업에 대한 투자 판단을 자동화하는 Claude Code 기반 �
 
 ```
 AI-wave/
-├── judgment-rules.md          # 판단 규칙서
+├── judgment-rules.md          # 판단 규칙서 (1단계 핵심 기준 3개 + 2단계 스크리닝 체크리스트)
+├── docs/
+│   └── underpriced-customer-love-framework.md  # 기준③(ULRS) 상세 방법론 참고자료
 ├── .env.example                # API 키 자리표시자
 ├── requirements.txt             # lib/ 클라이언트 실행에 필요한 Python 패키지
 ├── .claude/
 │   ├── skills/                 # 데이터 수집 4개(DART/FnGuide/FRED/웹) + 1단계 판단 기준 3개 + 2단계 스크리닝 1개 스킬
 │   └── agents/investment-desk.md  # 오케스트레이터 에이전트
-├── lib/                        # DART/FnGuide/FRED API 클라이언트
+├── lib/                        # DART/FnGuide/FRED API 클라이언트 (fetch-web은 별도 클라이언트 없이 WebSearch/WebFetch 사용)
 ├── data/cache/                 # 기업별 원자료 캐시 (git 미추적)
 └── reports/                    # 실제 판단 결과물
 ```
 
+## 진행 상황
+
+| 스킬/에이전트 | 상태 |
+| --- | --- |
+| `fetch-dart` | ✅ 구현·검증 완료 (실제 API로 삼성전자 테스트) |
+| `fetch-fred` | ✅ 구현·검증 완료 (실제 API로 테스트) |
+| `fetch-fnguide` | ⏳ FnGuide 키 확보 대기, 스텁만 존재 |
+| `fetch-web` | 🔧 스킬 정의 완료 (WebSearch/WebFetch 사용, 로직은 실행 시점에 Claude가 수행) |
+| `judge-retention-pricing-power` / `judge-structural-vs-cyclical` / `judge-underpriced-customer-love` | 🔧 스킬 정의 완료, 대체지표 계산 로직은 TODO |
+| `screen-fundamentals` | 🔧 스킬 정의 완료, 대체지표 계산 로직은 TODO |
+| `investment-desk` (오케스트레이터) | 🔧 실행 순서 정의 완료, end-to-end 실행(제출물③)은 아직 |
+
 ## 기여자 ↔ 스킬 매핑 (1인 1기여)
 
-각 팀원은 스킬 또는 에이전트를 최소 1개 만들어 커밋합니다. 아래 표를 채워 나갑니다.
+각 팀원은 스킬 또는 에이전트를 최소 1개 만들어 커밋합니다. 구현 상태는 위 "진행 상황" 표를 참고하고, 아래는 담당자만 채워 나갑니다.
 
-| 담당자 | 스킬/에이전트 | 상태 |
-| --- | --- | --- |
-| | `fetch-dart` | TODO |
-| | `fetch-fnguide` | TODO |
-| | `fetch-fred` | TODO |
-| | `fetch-web` | TODO |
-| | `judge-retention-pricing-power` | TODO |
-| | `judge-structural-vs-cyclical` | TODO |
-| | `judge-underpriced-customer-love` | TODO |
-| | `screen-fundamentals` | TODO |
-| | `investment-desk` (오케스트레이터) | TODO |
+| 담당자 | 스킬/에이전트 |
+| --- | --- |
+| | `fetch-dart` |
+| | `fetch-fnguide` |
+| | `fetch-fred` |
+| | `fetch-web` |
+| | `judge-retention-pricing-power` |
+| | `judge-structural-vs-cyclical` |
+| | `judge-underpriced-customer-love` |
+| | `screen-fundamentals` |
+| | `investment-desk` (오케스트레이터) |
 
 ## 완성 기준
 

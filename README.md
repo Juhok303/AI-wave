@@ -55,50 +55,41 @@ AI-wave/
 | `screen-fundamentals` | ✅ 5개 항목 계산식·임계값 반영 완료 (이자보상배율·ROIC·TAM/시가총액은 데이터 공백으로 일부 Proxy·미구현 상태, 스킬 파일에 명시) |
 | `investment-desk` (오케스트레이터) | ✅ end-to-end 1건 실행 완료(제출물③, BGF리테일) — `reports/BGF리테일-20260812.md`. 실행 중 `dart_client.py`의 CIS/IS 버그 발견·수정. ⚠️ 이 보고서는 기준①②가 chaemin/pjueun 버전으로 교체되기 **전** 정의로 만들어졌으므로 최신 판단 규칙과 정확히 일치하지 않는다 — 별도로 `reports/BGF리테일_Investment_Memo.md`+`.html`(공식 retention-pricing-power 패키지로 재실행, PASS 39/100, Entry: WAIT)이 생성됐지만 이건 기준① 단독 메모이지 3기준 통합 재실행은 아직임 |
 
-## 스킬 구조 개선 가이드 — 기준①(retention-pricing-power-memo) 골격에 맞추기
+## 스킬 구조 개선 가이드 — 기준①(`judge-retention-pricing-power`) 골격에 맞추기
 
-세 철학 스킬(기준①·②·③)의 **깊이를 통일**하기 위한 가이드. 기준①이 가장 정교하게 설계돼 있어 이를 기준선으로 삼는다. 아래 8개 요소가 기준①에는 있고 기준②에는 없는 것들이며, 앞으로 만들 기준③은 처음부터 이 8개를 갖춰야 한다.
+**2026-08-12 업데이트**: 기준②(`judge-structural-vs-cyclical`)는 chaemin의 공식 패키지로 폴더만 정리(이동)됐을 뿐 SKILL.md 내용 자체는 아래 격차와 동일하게 유지되고 있음을 재확인했다. 기준③(`judge-underpriced-customer-love`)도 새로 완성됐지만, 확인해보니 기준①과 같은 격차가 상당수 그대로 있다. 아래를 최신 상태로 갱신한다.
 
-### 1. Guiding Behavioral Rules (SKILL.md 상단에 명시)
-기준①은 SKILL.md 최상단에 "이 스킬이 매번 지켜야 할 행동원칙" 5개를 명시한다 — ① 데이터는 항상 값+기간+출처로 표기(Fact/Estimate/Inference 구분), ② 반증 우선 원칙(분석 시작 전 반대 근거 최소 3개부터 찾기), ③ 인과 전달 확인(Layer 간 연결이 끊기는 지점을 반드시 명시), ④ 추상적 표현 금지("브랜드가 강하다" 같은 서술을 숫자 없이 쓰지 않기), ⑤ Variant Perception 자기검증("정말 시장이 모르는가?"를 항상 먼저 검증).
-**기준② 개선 방안**: `SKILL.md` 최상단에 같은 형식의 5개 원칙을 이 철학에 맞게 다시 쓴다. 예: "④ 추상적 표현 금지"는 구조적/순환적 철학에서는 "'구조적이다'라는 판단은 반드시 침투율·세대별 채택 데이터 등 수치로 뒷받침, '느낌상 구조적'은 금지"로 구체화.
+### ⚠️ 가장 시급한 문제 — 판단 규칙서(`judgment-rules.md`) 정합성
 
-### 2. Universe Filter (본분석 전 적합성 판정)
-기준①은 본분석 전에 이 철학이 그 기업에 적용 가능한지부터 판정한다 — Good fit(상장·B2C·반복구매 구조)/Poor fit(순수 B2B·원자재 커머디티·가격규제 산업) 조건을 명시적으로 나열하고, `Framework Fit: High/Medium/Low`를 먼저 출력한다. Low면 14섹션 전체를 강행하지 않고 짧은 설명만 남긴다.
-**기준② 개선 방안**: 현재는 Universe Filter 없이 바로 Layer 1 분석을 시작한다. "이 기업이 신생 상장사라 경기 하방 데이터 자체가 없는가", "카테고리 자체가 침투율 개념이 성립하지 않는 산업인가"를 먼저 판정하는 단계를 추가한다.
+세 스킬 깊이를 맞추는 것보다 **이게 먼저 고쳐져야 한다** — "결과물은 판단 규칙서를 최대한 따라가야 한다"는 원칙이 지금 기준①②에서 깨져 있다.
 
-### 3. 철학 고유 하위 테스트를 별도 문서로 명문화
-기준①은 "Pricing Power Test"라는 4개 하위테스트를 `references/pricing_power_test.md`로 분리해 체크리스트화했다(① 실제 가격 인상 여부 ② 인상 후 Retention/Churn 비교 ③ Mix를 통한 가격 인상 ④ 경쟁사 대비 ASP Premium).
-**기준② 개선 방안**: `references/thesis-tree.md` Layer 2(Cyclical Contamination Test)에 이미 있는 내용(Historical Macro Sensitivity, Peer Divergence, Growth Decomposition)을 별도 `references/cyclical_contamination_test.md`로 승격해 기준①과 같은 형식(테스트 번호 + 데이터 요구사항 + "Insufficient Data면 추론 금지")으로 재작성한다.
+- `judge-retention-pricing-power`, `judge-structural-vs-cyclical`는 **`judgment-rules.md`를 전혀 참조하지 않는다.** Verdict를 부합/부분부합/미부합이 아니라 자체 체계(BUY/WATCH/PASS/SELL)로만 산출하고, `judgment-rules.md`에 문서화된 매핑 규칙(Supported→부합 등)을 스킬 파일 자신이 실행하는 절차로 갖고 있지 않다 — 매핑이 규칙서에만 적혀 있고 스킬엔 없어서, `investment-desk`가 실제로 호출했을 때 이 변환을 빠뜨릴 위험이 크다(`investment-desk.md` TODO에 이미 미검증 상태로 남아있음).
+- 두 스킬 모두 파일 출력 경로가 Claude.ai 전용 표현(`/mnt/user-data/outputs/`, `present_files`)으로 돼 있다 — 이 레포(Claude Code)에서 그대로 실행하면 안 맞는다.
+- **반면 `judge-underpriced-customer-love`는 이미 이 문제를 스스로 해결해뒀다** — SKILL.md 10단계에 "이 레포 파이프라인에서 호출될 때만 `judgment-rules.md` 기준③ 표기(부합=ULRS>0 등)로 환산해 반환한다"는 절차가 명시돼 있고, 저장 경로도 이 레포의 `reports/` 관례를 따르도록 돼 있다. **기준①②도 이 방식을 그대로 따라야 한다.**
+- **개선 방안**: 기준①②의 SKILL.md 끝에 기준③과 동일한 형태로 "(이 레포 파이프라인에서 호출될 때만) 축약 판정 반환" 단계를 추가한다 — Verdict(BUY/WATCH/PASS/SELL)를 `judgment-rules.md`가 이미 정의해둔 매핑 규칙 그대로 부합/부분부합/미부합으로 환산해 반환하고, 저장 경로도 `reports/`로 보정한다.
 
-### 4. Financial Transmission Chain을 명시적 인과사슬로
-기준①: `Retention → Churn↓/Frequency↑ → LTV↑ → CAC Payback↓ → Pricing/Mix↑ → Gross Margin↑ → Contribution Margin↑ → Operating Leverage → EPS/FCF Revision → Multiple Re-rating`처럼 9단계 화살표 체인을 문서로 명시하고, 각 링크를 Confirmed/Emerging/Broken/Insufficient Data로 마킹한다.
-**기준② 개선 방안**: 구조적 성장 철학에 맞는 인과사슬을 정의한다. 예: `Penetration Rate↑ → Category Volume↑ → Company Revenue↑ → Peer Divergence 확인 → Sell-side 섹터 재분류 → Multiple 확장`. 지금은 이런 명시적 체인 없이 "Financial Transmission" 섹션에 표만 있다.
+### 깊이 격차 8가지 (기준①이 가진 것, 기준②·③에 없는 것)
 
-### 5. Variant Perception 6-category 자기검증
-기준①: 발견한 관점을 반드시 6개 카테고리 중 하나로 분류한다(1. 시장이 이미 아는 좋은 점 / 2. 알지만 중요도를 낮게 봄 / 3. 아직 인식 못함 / 4. 잘못 해석 / 5. 재무제표 밖 선행지표 / 6. Valuation 미반영 Optionality). **1번은 Variant View로 인정하지 않는다**는 규칙까지 명시.
-**기준② 개선 방안**: 지금은 `class-badge`로 자유서술 분류만 한다("주로 4번이나 6번에 가깝고..."). 6개 카테고리 정의를 `references/`에 명문화하고, 1번 판정 시 Variant Perception 점수를 자동으로 낮추는 규칙(Consensus Gate)을 SKILL.md에 명시적으로 연결한다.
+| # | 기준①에 있는 것 | 기준② 상태 | 기준③ 상태 |
+|---|---|---|---|
+| 1 | Guiding Behavioral Rules 5개(SKILL.md 최상단, 값+기간+출처/반증우선/인과전달확인/추상적표현금지/Variant자기검증) | ❌ 없음 | ✅ 있음(5개 원칙 명시) |
+| 2 | Universe Filter (Good/Poor fit 판정 → Framework Fit: High/Medium/Low, Low면 축약 종료) | ❌ 없음, 바로 Layer 1 시작 | ✅ 있음(Sector Fit Matrix로 판정) |
+| 3 | 철학 고유 하위 테스트를 별도 파일로 명문화(`pricing_power_test.md`, 4개 테스트) | ❌ Layer 서술에 뭉뚱그려짐 | ❌ `underpriced-customer-love-framework.md` 한 파일에 다 있음, 별도 승격 안 됨 |
+| 4 | Financial Transmission을 9단계 화살표 인과사슬로 명시, 링크별 Confirmed/Emerging/Broken/Insufficient 마킹 | ❌ 표만 있고 명시적 체인 없음 | ❌ ULRS 계산 절차는 있으나 링크별 상태 마킹 체계는 없음 |
+| 5 | Variant Perception 6-category 자기검증(1번은 Variant View로 불인정) | ❌ 자유서술 class-badge만 | ❌ 없음(Market Recognition Gap으로 대체되나 6-category 체계는 아님) |
+| 6 | Entry Timing 4-category 고정(BUY NOW/CONFIRMATION/WEAKNESS/WAIT) | ❌ 자유서술("Buy on Confirmation" 예시적) | ❌ BUY/WATCH/AVOID 3-category로 다름(Confirmation·Weakness 구분 없음) |
+| 7 | `.md` + `.html` 이중 산출물 필수 | ❌ HTML만 | ❌ HTML만(`[Company]_ULRS_Investment_Memo.html`) |
+| 8 | `output_template.md`로 정확한 스켈레톤 고정 | ❌ 없음 | ❌ 없음 |
 
-### 6. Entry Timing 4-category 고정
-기준①: BUY NOW / BUY ON CONFIRMATION / BUY ON WEAKNESS / WAIT 중 반드시 하나를 선택하고, 각 카테고리가 뭘 의미하는지 정의돼 있다.
-**기준② 개선 방안**: 지금은 "Buy on Confirmation" 같은 문구를 예시적으로만 쓴다. 4개 카테고리를 고정 용어로 명문화한다.
-
-### 7. 이중 산출물 (.md + .html)
-기준①은 Markdown과 HTML을 **둘 다** 필수로 생성한다(`[Company]_Investment_Memo.md` + `.html`, 동일 내용).
-**기준② 개선 방안**: 지금은 HTML만 생성한다. Markdown 버전도 추가하면 diff 리뷰·재사용성이 좋아진다.
-
-### 8. output_template.md로 정확한 스켈레톤 고정
-기준①은 채워야 할 정확한 마크다운 골격이 `references/output_template.md`로 고정돼 있다.
-**기준② 개선 방안**: 이런 고정 템플릿 파일이 없다 — `references/output_template.md`를 신설해 14섹션 스켈레톤을 못박는다.
-
-### 기준③을 새로 만들 때 (처음부터 이 골격으로)
-`docs/underpriced-customer-love-framework.md`에 이미 있는 소재를 활용하면 대부분 재료가 준비돼 있다:
-- **Universe Filter**: "리뷰·검색량·앱 데이터가 확보 가능한 B2C 소비재/구독/플랫폼"을 Good fit으로.
-- **철학 고유 하위 테스트**: 문서 H절의 Red Flag 10종을 `references/red_flag_test.md`로, E절의 Gap 공식 5종을 `references/underpricing_gap_test.md`로 승격.
-- **Financial Transmission Chain**: `Love↑ → Durability 확인(AND 조건) → Operating Monetization Gap 축소 → Financial Conversion 확인 → Market Recognition Gap 축소 → Re-rating`.
-- **Variant Perception 6-category**: 기준①·②와 동일 체계 재사용.
-- **Entry Timing**: 문서 F절의 Stage 1~5(Watchlist/Early/Main/Late/Fully Priced)를 4-category(BUY NOW/CONFIRMATION/WEAKNESS/WAIT)에 매핑.
-- **이중 산출물 + output_template.md**: 처음부터 포함.
+### 기준②·③ 공통 개선 방안 (기준①과 같은 형식으로)
+1. **SKILL.md 최상단에 Guiding Behavioral Rules 5개** 추가 — 이 철학에 맞게 다시 쓴다. 예) 기준②의 "④ 추상적 표현 금지"는 "'구조적이다'는 판단은 침투율·세대별 채택 데이터로 뒷받침, '느낌상 구조적'은 금지"로. 기준③은 이미 있으니 문구만 기준①과 형식 통일.
+2. **Universe Filter 신설/보강** — 기준②는 아예 신설(예: "신생 상장사라 경기 하방 데이터가 없는가", "침투율 개념이 성립 안 하는 산업인가"). 기준③은 이미 있는 Sector Fit Matrix를 기준①과 같은 출력 형식(`Framework Fit: High/Medium/Low`)으로 맞춘다.
+3. **하위 테스트를 별도 `references/*_test.md` 파일로 승격** — 기준②는 Layer 2의 Historical Macro Sensitivity/Peer Divergence/Growth Decomposition을 `references/cyclical_contamination_test.md`로. 기준③은 문서 H절 Red Flag 10종을 `references/red_flag_test.md`로, E절 Gap 공식 5종을 `references/underpricing_gap_test.md`로 승격.
+4. **Financial Transmission Chain 명문화** — 기준②: `Penetration Rate↑ → Category Volume↑ → Company Revenue↑ → Peer Divergence 확인 → Sell-side 섹터 재분류 → Multiple 확장`. 기준③: `Love↑ → Durability 확인(AND) → Operating Monetization Gap 축소 → Financial Conversion 확인 → Market Recognition Gap 축소 → Re-rating`.
+5. **Variant Perception 6-category 도입** — 기준②·③ 모두 동일 6개 카테고리 체계를 `references/`에 명문화하고 재사용(1번 판정 시 Consensus Gate로 점수 강제 하향).
+6. **Entry Timing을 4-category로 통일** — 기준③의 현재 BUY/WATCH/AVOID 3단계를 BUY NOW/CONFIRMATION/WEAKNESS/WAIT 4단계로 재매핑(문서 F절 Stage 1~5를 4-category에 대응).
+7. **`.md` 버전 추가 생성** — 둘 다 HTML만 생성 중이니 Markdown 버전을 동시에 만들도록 SKILL.md에 추가.
+8. **`references/output_template.md` 신설** — 기준①처럼 채워야 할 정확한 스켈레톤을 못박는다.
 
 ## 기여자 ↔ 스킬 매핑 (1인 1기여)
 

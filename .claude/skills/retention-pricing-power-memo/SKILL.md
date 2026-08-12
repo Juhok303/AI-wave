@@ -89,11 +89,20 @@ Thesis Break Signal 확정 시 점수 무관 SELL.
 
 ### 6단계 — HTML 메모 생성
 
-`assets/example-memo-onon.html`(구조적/순환적 오분류 철학 스킬의 참조본)과 같은 시각 문법을
-재사용한다 (ledger/paper 색상 변수, 원장 느낌 타이포그래피, stamp 형태의 verdict 블록, 14개
-섹션 구성). **색상 변수(`--ledger`, `--ledger-2`, `--stamp`)는 다른 철학 스킬과 시각적으로
-구분되도록 다른 계열(예: 브라운/러스트 계열 — 상품·마진·상거래를 연상시키는 톤)을 쓴다.**
+`assets/example-memo-costco.html`(이 철학 스킬의 참조본)을 시각 문법의 기준으로 삼는다 —
+ledger/paper 색상 변수, 원장 느낌 타이포그래피, stamp 형태의 verdict 블록, 14개 섹션 구성을
+그대로 재사용한다. **색상 변수는 반드시 `example-memo-costco.html`에 이미 정의된 팔레트
+(`--ledger:#2B4239`, `--ledger-2:#3C594D`, 짙은 그린/틸 계열)를 그대로 따른다** — 이 스킬
+안에서 회사가 달라져도 색상은 통일한다(스킬 간 구분은 이미 이 팔레트 자체가 담당하며,
+`structural-cyclical-misclassification-memo`의 슬레이트 계열과 시각적으로 구분된다).
 완전히 동일한 파일을 복붙하지 말고 회사별 내용에 맞게 다시 쓴다.
+
+참고: `example-memo-costco.html`은 이 저장소에 정식 `references/thesis-tree.md`(Layer 재가중
+포함)가 만들어지기 전에 먼저 작성된 프로토타입이라, Scorecard의 항목별 배점 상한이 기본
+스코어카드 값(A=10/B=12/C=18/D=12/E=6/F=15/G=15/H=7/I=10)을 그대로 쓰고 있다. 이후 회사부터는
+`references/thesis-tree.md`의 재가중 상한(A=8/B=14/C=22/D=14/E=6/F=16/G=12/H=4/I=4)을
+따른다 — Customer Economics(C)와 Financial Translation(F)에 더 높은 배점을 주는 것이 이
+철학의 핵심을 더 정확히 반영하기 때문이다.
 
 섹션 구성 (참조본과 동일 순서, 제목만 이 철학에 맞게 조정):
 1. Why This Company Fits the Philosophy

@@ -29,12 +29,16 @@ AI-wave/
 ├── .env.example                # API 키 자리표시자
 ├── requirements.txt             # lib/ 클라이언트 실행에 필요한 Python 패키지
 ├── .claude/
-│   ├── skills/                 # check-requirements 1개 + 데이터 수집 4개(DART/FnGuide/FRED/웹) + 1단계 판단 기준 3개 + 2단계 스크리닝 1개 스킬
+│   ├── skills/                 # check-requirements 1개 + 데이터 수집 4개(DART/FnGuide/FRED/웹) + 1단계 판단 기준 3개 + 2단계 스크리닝 1개 + 독립형 메모 스킬 2개
 │   └── agents/investment-desk.md  # 오케스트레이터 에이전트
 ├── lib/                        # DART/FnGuide/FRED API 클라이언트 (fetch-web은 별도 클라이언트 없이 WebSearch/WebFetch 사용)
 ├── data/cache/                 # 기업별 원자료 캐시 (git 미추적)
 └── reports/                    # 실제 판단 결과물
 ```
+
+### 문서 배치 규칙
+- `docs/`: `judgment-rules.md`(공식 판단 규칙서)가 직접 링크하는 참고자료만 (예: `underpriced-customer-love-framework.md`, `report-format-reference.md`).
+- `.claude/skills/<스킬명>/references/`, `.../assets/`: 그 스킬 하나만 참조하는 설계문서·예시 (judgment-rules.md 파이프라인과 무관한 개인 기여 스킬 전용, 예: `structural-cyclical-misclassification-memo`, `retention-pricing-power-memo`).
 
 ## 진행 상황
 
@@ -48,8 +52,8 @@ AI-wave/
 | `judge-retention-pricing-power` / `judge-structural-vs-cyclical` / `judge-underpriced-customer-love` | ✅ `judgment-rules.md` 대체지표 정의 확정 + 스킬에 계산식·임계값 반영 완료. 실 데이터로 실행 검증은 아직 |
 | `screen-fundamentals` | ✅ 5개 항목 계산식·임계값 반영 완료 (이자보상배율·ROIC·TAM/시가총액은 데이터 공백으로 일부 Proxy·미구현 상태, 스킬 파일에 명시) |
 | `investment-desk` (오케스트레이터) | ✅ end-to-end 1건 실행 완료(제출물③, BGF리테일) — `reports/BGF리테일-20260812.md`. 실행 중 `dart_client.py`의 CIS/IS 버그 발견·수정 |
-| `structural-cyclical-misclassification-memo` | ✅ 팀원 업로드분을 `.claude/skills/`로 정리(경로 참조 오류 수정). 정성 심화 HTML 메모 스킬 — `judge-structural-vs-cyclical`(정량 게이트)과는 별개 레이어 |
-| `retention-pricing-power-memo` | ✅ 신규 작성 완료. 기준①(정량 부합) 위에 Layer A–I 스코어카드·4개 Gate로 심화하는 HTML 메모 스킬 — BGF리테일로 실행 검증(`reports/BGF리테일-retention-pricing-power-memo-20260812.html`, PASS 53/100) |
+| `structural-cyclical-misclassification-memo` | ✅ 독립형 스킬 완료 (chaemin 기여, `.claude/skills/`로 경로 정리함). `judgment-rules.md` 파이프라인과 별개로 기준②(Structural vs Cyclical) 철학을 자체 Layer A–I 스코어카드·4개 Gate로 채점해 HTML 투자메모를 생성. `references/thesis-tree.md`, `assets/example-memo-onon.html` 포함 |
+| `retention-pricing-power-memo` | ✅ 완료 — 원작자가 먼저 올린 프로토타입 `assets/example-memo-costco.html`을 짝 스킬 구조에 맞춰 `SKILL.md`+`references/thesis-tree.md`(Layer 재가중 포함)로 공식화, 색상 팔레트는 costco 예시 기준(짙은 그린/틸)으로 통일. BGF리테일로 실행 검증(`reports/BGF리테일-retention-pricing-power-memo-20260812.html`, PASS 53/100) |
 
 ## 기여자 ↔ 스킬 매핑 (1인 1기여)
 
@@ -67,6 +71,8 @@ AI-wave/
 | | `judge-underpriced-customer-love` |
 | | `screen-fundamentals` |
 | | `investment-desk` (오케스트레이터) |
+| chaemin | `structural-cyclical-misclassification-memo` |
+| | `retention-pricing-power-memo` — 프로토타입 예시(costco)는 원작자 기여, SKILL.md/thesis-tree.md 공식화는 Claude Code로 완료. 담당자 이름 기입 필요 |
 
 ## 완성 기준
 

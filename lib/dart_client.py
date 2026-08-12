@@ -23,9 +23,17 @@ CORP_CODE_CACHE = PROJECT_ROOT / "data" / "cache" / "dart_corp_codes.json"
 # 판단 스킬(judge-*)이 참조하는 손익계산서 핵심 계정.
 INCOME_STATEMENT_ACCOUNTS = ["매출액", "매출원가", "매출총이익", "영업이익"]
 
+# screen-fundamentals(재무 효율성 항목: 이자보상배율)가 참조하는 계정. 이자비용은
+# 재무상태표가 아니라 손익계산서(IS/CIS) 항목이라 income_statement 쪽에서 찾는다.
+# K-IFRS는 계정명을 회사가 자유롭게 정하게 되어 있어("이자비용" 대신 "금융원가"로
+# 공시하는 회사가 많음, 예: BGF리테일) 정확히 일치하는 이름 하나만 찾으면 놓친다 —
+# ACCOUNT_SYNONYMS로 동의어 후보를 모두 찾아 하나의 표준 이름(이자비용)으로 통일한다.
+ACCOUNT_SYNONYMS = {
+    "이자비용": ["이자비용", "금융원가", "이자비용(금융원가)", "금융비용"],
+}
+
 # screen-fundamentals(재무 효율성 항목: 부채비율·유동비율)가 참조하는 재무상태표 핵심 계정.
-# 이자비용은 K-IFRS 연결재무제표 본문에 별도 계정으로 없는 경우가 많아 있으면 수집하되 없어도 무시한다.
-BALANCE_SHEET_ACCOUNTS = ["자산총계", "부채총계", "자본총계", "유동자산", "유동부채", "이자비용"]
+BALANCE_SHEET_ACCOUNTS = ["자산총계", "부채총계", "자본총계", "유동자산", "유동부채"]
 
 # 사업보고서(연간). 반기/분기가 필요하면 11012(반기)/11013(1분기)/11014(3분기)로 교체.
 ANNUAL_REPORT_CODE = "11011"
@@ -120,23 +128,37 @@ def _fetch_financial_statements(corp_code: str, api_key: str, bsns_year: str, re
     return []
 
 
-def _extract_statement_accounts(raw_list: list[dict], sj_divs: list[str], accounts: list[str]) -> dict:
+def _extract_statement_accounts(
+    raw_list: list[dict],
+    sj_divs: list[str],
+    accounts: list[str],
+    synonyms: dict[str, list[str]] | None = None,
+) -> dict:
     """지정한 재무제표 구분(sj_div) 목록에서 계정만 당기/전기/전전기 금액으로 추린다.
 
     손익계산서는 기업마다 "IS"(별도 손익계산서)와 "CIS"(포괄손익계산서 — 손익계산서를
     따로 내지 않고 포괄손익계산서 하나로 공시하는 경우)로 나뉘어 공시되므로 둘 다 검색한다.
     재무상태표는 "BS" 하나만 쓴다. 같은 계정이 여러 sj_div에 있으면 sj_divs 순서상 먼저
     오는 쪽을 채택한다(먼저 채워진 계정은 덮어쓰지 않는다).
+
+    `accounts`의 각 이름은 결과 dict의 키(표준 이름)다. `synonyms`에 등록된 이름은
+    표준 이름 대신 공시상 실제로 쓰였을 수 있는 동의어 후보 목록이며, 그중 먼저
+    매칭되는 것을 채택해 표준 이름으로 저장한다(동의어가 없는 계정은 이름 그대로 매칭).
     """
+    synonyms = synonyms or {}
     result = {}
     for sj_div in sj_divs:
         for row in raw_list:
             if row.get("sj_div") != sj_div:
                 continue
             account_nm = row.get("account_nm", "").strip()
-            if account_nm not in accounts or account_nm in result:
+            matched_account = next(
+                (name for name in accounts if name not in result and account_nm in synonyms.get(name, [name])),
+                None,
+            )
+            if matched_account is None:
                 continue
-            result[account_nm] = {
+            result[matched_account] = {
                 "당기": {"기간": row.get("thstrm_nm"), "금액": _parse_amount(row.get("thstrm_amount"))},
                 "전기": {"기간": row.get("frmtrm_nm"), "금액": _parse_amount(row.get("frmtrm_amount"))},
                 "전전기": {"기간": row.get("bfefrmtrm_nm"), "금액": _parse_amount(row.get("bfefrmtrm_amount"))},
@@ -194,7 +216,12 @@ def get_company_filings(company_name: str, bsns_year: str | None = None) -> dict
     for year in years_to_try:
         raw_list = _fetch_financial_statements(corp_code, api_key, year, ANNUAL_REPORT_CODE)
         if raw_list:
-            income_statement = _extract_statement_accounts(raw_list, ["IS", "CIS"], INCOME_STATEMENT_ACCOUNTS)
+            income_statement = _extract_statement_accounts(
+                raw_list,
+                ["IS", "CIS"],
+                INCOME_STATEMENT_ACCOUNTS + list(ACCOUNT_SYNONYMS),
+                synonyms=ACCOUNT_SYNONYMS,
+            )
             balance_sheet = _extract_statement_accounts(raw_list, ["BS"], BALANCE_SHEET_ACCOUNTS)
             used_year = year
             break

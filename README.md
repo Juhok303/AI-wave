@@ -40,7 +40,7 @@ AI-wave/
 | | `fetch-fred` | TODO |
 | | `judge-retention-pricing-power` | TODO |
 | | `judge-structural-vs-cyclical` | TODO |
-| | `judge-distribution-compounding` | TODO |
+| | `judge-underpriced-customer-love` | TODO |
 | | `investment-desk` (오케스트레이터) | TODO |
 
 ## 완성 기준

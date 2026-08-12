@@ -13,7 +13,7 @@ model: sonnet
 
 1. `judgment-rules.md`를 읽어 현재 판단 기준(정의/대체지표)을 확인한다.
 2. 다음 스킬을 순서대로 호출해 데이터를 수집한다: `fetch-dart`, `fetch-fnguide`, `fetch-fred`
-3. 다음 스킬을 순서대로 호출해 각 기준을 판단한다: `judge-retention-pricing-power`, `judge-structural-vs-cyclical`, `judge-distribution-compounding`
+3. 다음 스킬을 순서대로 호출해 각 기준을 판단한다: `judge-retention-pricing-power`, `judge-structural-vs-cyclical`, `judge-underpriced-customer-love`
 4. 3개 판단 결과를 종합해 `reports/<기업명>-<yyyymmdd>.md`에 투심보고서를 작성한다. 보고서에는 다음을 포함한다:
    - 기업 개요 (1~2문장)
    - 기준별 판단 결과 + 핵심 근거 (기준 3개 각각)

@@ -19,7 +19,14 @@ description: "Underpriced Customer Love (ULRS)" 기준(진짜 애착 + 재무 �
 6. 데이터가 없는 지표는 중립(50점)으로 채우지 말고, 해당 weight를 제외한 뒤 나머지 weight로 재정규화한다.
 
 ## 출력
-- ULRS 값 + 해석(ULRS>0 매수 구간 / ≈0 Watchlist / <0 Avoid) + 핵심 근거(Love/Durability/Gap/Red Flag 요약).
+- ULRS 값 + 해석(ULRS>0 매수 구간 / ≈0 Watchlist / <0 Avoid) + 핵심 근거(Love/Durability/Gap/Red Flag 요약) + 적용한 `judgment-rules.md` 기준③ 공식·임계값(및 `docs/underpriced-customer-love-framework.md`의 어느 절을 참조했는지). 문서에 없는 별도 가중치·임계값을 임의로 쓰지 않는다.
 
-## TODO
-- [ ] Peer Group 정의(동일 GICS Sub-industry + 매출 0.3~3x + 유통채널 유사성) 구현
+## Peer Group 정의 (실전 축소판)
+
+이 레포는 GICS Sub-industry 분류 DB나 업종별 상장사 유니버스 조회 API를 갖고 있지 않다. 따라서 `docs/underpriced-customer-love-framework.md` E절의 3중 필터를 아래처럼 기존 스킬 조합으로 근사한다:
+
+1. `fetch-web`의 "`<기업명>` 경쟁사 OR 신규 브랜드" 검색 결과에서 실제로 언급되는 동종업계 상장사 이름을 5~10개 추린다(비상장 언급은 제외).
+2. 그 후보들 각각에 대해 `fetch-dart`(`get_company_filings`)를 호출해 매출액을 가져온다.
+3. 대상 기업 매출액의 **0.3배~3배** 범위에 드는 회사만 최종 Peer Group으로 채택한다.
+4. Peer Group이 5개 미만이면 Percentile Rank 대신 "Peer 대비 상/중/하" 3단계 정성 평가로 대체하고, 그 사실(표본 부족)을 근거에 명시한다. 5개 이상이면 Percentile Rank를 계산하고, 20개 미만이면 z-score를 보조로 병기한다(문서 E절 원칙).
+5. Peer Group을 구성하지 못하면(경쟁사 정보 자체가 없음) 절대 기준(예: LTV/CAC 등 문서 K절의 Red Flag 임계값)만으로 판단하고 Percentile 기반 항목은 "판단 보류"로 표시한다.

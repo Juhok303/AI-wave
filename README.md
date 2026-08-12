@@ -41,13 +41,13 @@ AI-wave/
 | 스킬/에이전트 | 상태 |
 | --- | --- |
 | `check-requirements` | ✅ 구현·검증 완료 (DART/FRED 라이브 체크) |
-| `fetch-dart` | ✅ 구현·검증 완료 (실제 API로 삼성전자 테스트) |
+| `fetch-dart` | ✅ 구현 완료, 재무상태표 계정(부채총계·자본총계 등) 추가 반영 — BGF리테일 end-to-end 실행으로 검증됨 |
 | `fetch-fred` | ✅ 구현·검증 완료 (실제 API로 테스트) |
 | `fetch-fnguide` | ⏳ 보유 계정에 컨센서스 이용권 없음 확인됨 — FnSpace(fnspace.com) 유료 가입/키 발급 대기, 스텁만 존재 |
 | `fetch-web` | 🔧 스킬 정의 완료 (WebSearch/WebFetch 사용, 로직은 실행 시점에 Claude가 수행) |
-| `judge-retention-pricing-power` / `judge-structural-vs-cyclical` / `judge-underpriced-customer-love` | 🔧 스킬 정의 완료, 대체지표 계산 로직은 TODO |
-| `screen-fundamentals` | 🔧 스킬 정의 완료, 대체지표 계산 로직은 TODO |
-| `investment-desk` (오케스트레이터) | 🔧 실행 순서 정의 완료, end-to-end 실행(제출물③)은 아직 |
+| `judge-retention-pricing-power` / `judge-structural-vs-cyclical` / `judge-underpriced-customer-love` | ✅ `judgment-rules.md` 대체지표 정의 확정 + 스킬에 계산식·임계값 반영 완료. 실 데이터로 실행 검증은 아직 |
+| `screen-fundamentals` | ✅ 5개 항목 계산식·임계값 반영 완료 (이자보상배율·ROIC·TAM/시가총액은 데이터 공백으로 일부 Proxy·미구현 상태, 스킬 파일에 명시) |
+| `investment-desk` (오케스트레이터) | ✅ end-to-end 1건 실행 완료(제출물③, BGF리테일) — `reports/BGF리테일-20260812.md`. 실행 중 `dart_client.py`의 CIS/IS 버그 발견·수정 |
 
 ## 기여자 ↔ 스킬 매핑 (1인 1기여)
 

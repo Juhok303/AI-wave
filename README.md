@@ -29,12 +29,16 @@ AI-wave/
 ├── .env.example                # API 키 자리표시자
 ├── requirements.txt             # lib/ 클라이언트 실행에 필요한 Python 패키지
 ├── .claude/
-│   ├── skills/                 # check-requirements 1개 + 데이터 수집 4개(DART/FnGuide/FRED/웹) + 1단계 판단 기준 3개 + 2단계 스크리닝 1개 + 독립형 메모 스킬 1개
+│   ├── skills/                 # check-requirements 1개 + 데이터 수집 4개(DART/FnGuide/FRED/웹) + 1단계 판단 기준 3개 + 2단계 스크리닝 1개 + 독립형 메모 스킬 2개
 │   └── agents/investment-desk.md  # 오케스트레이터 에이전트
 ├── lib/                        # DART/FnGuide/FRED API 클라이언트 (fetch-web은 별도 클라이언트 없이 WebSearch/WebFetch 사용)
 ├── data/cache/                 # 기업별 원자료 캐시 (git 미추적)
 └── reports/                    # 실제 판단 결과물
 ```
+
+### 문서 배치 규칙
+- `docs/`: `judgment-rules.md`(공식 판단 규칙서)가 직접 링크하는 참고자료만 (예: `underpriced-customer-love-framework.md`, `report-format-reference.md`).
+- `.claude/skills/<스킬명>/references/`, `.../assets/`: 그 스킬 하나만 참조하는 설계문서·예시 (judgment-rules.md 파이프라인과 무관한 개인 기여 스킬 전용, 예: `structural-cyclical-misclassification-memo`, `retention-pricing-power-memo`).
 
 ## 진행 상황
 
@@ -49,6 +53,7 @@ AI-wave/
 | `screen-fundamentals` | ✅ 5개 항목 계산식·임계값 반영 완료 (이자보상배율·ROIC·TAM/시가총액은 데이터 공백으로 일부 Proxy·미구현 상태, 스킬 파일에 명시) |
 | `investment-desk` (오케스트레이터) | ✅ end-to-end 1건 실행 완료(제출물③, BGF리테일) — `reports/BGF리테일-20260812.md`. 실행 중 `dart_client.py`의 CIS/IS 버그 발견·수정 |
 | `structural-cyclical-misclassification-memo` | ✅ 독립형 스킬 완료 (chaemin 기여) — `judgment-rules.md` 파이프라인과 별개로, 기준②(Structural vs Cyclical) 철학을 자체 Layer A–G 스코어카드·Gate 조건으로 채점해 팀 표준 양식 HTML 투자메모를 생성. `references/thesis-tree.md`(Layer/Factor 정의), `assets/example-memo-onon.html`(양식 참조본) 포함 |
+| `retention-pricing-power-memo` | ⚠️ **미완성** — 기준①(Retention-to-Pricing-Power) 예시 산출물 `assets/example-memo-costco.html`만 있음. `structural-cyclical-misclassification-memo`와 짝을 맞추려면 **SKILL.md(워크플로 정의)**와 **references/thesis-tree.md 격 설계문서(Layer/Factor 정의)**가 아직 필요 — 아직 커밋되지 않음, 원작자 확인 대기 |
 
 ## 기여자 ↔ 스킬 매핑 (1인 1기여)
 
@@ -67,6 +72,7 @@ AI-wave/
 | | `screen-fundamentals` |
 | | `investment-desk` (오케스트레이터) |
 | chaemin | `structural-cyclical-misclassification-memo` |
+| (확인 필요) | `retention-pricing-power-memo` — SKILL.md/설계문서 원작자 확인 대기 |
 
 ## 완성 기준
 

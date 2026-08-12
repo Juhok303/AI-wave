@@ -13,7 +13,7 @@ B2C 개별기업에 대한 투자 판단을 자동화하는 Claude Code 기반 �
 1. `.env.example`을 `.env`로 복사하고 `DART_API_KEY`, `FNGUIDE_API_KEY`, `FRED_API_KEY`를 채운다.
 2. Claude Code에서 이 레포를 열고 `investment-desk` 에이전트에게 판단하고 싶은 기업명을 준다.
    (예: "삼성전자 판단해줘")
-3. 에이전트가 데이터 수집 → 3개 기준 판단 → 보고서 작성까지 자동으로 수행하며, 결과는 `reports/<기업명>-<yyyymmdd>.md`에 저장된다.
+3. 에이전트가 데이터 수집 → 1단계(핵심 기준 3가지 필터링) → 2단계(스크리닝 체크리스트 5개 항목 flag) → 보고서 작성까지 자동으로 수행하며, 결과는 `reports/<기업명>-<yyyymmdd>.md`에 저장된다.
 
 ## 레포 구조
 
@@ -22,7 +22,7 @@ AI-wave/
 ├── judgment-rules.md          # 판단 규칙서
 ├── .env.example                # API 키 자리표시자
 ├── .claude/
-│   ├── skills/                 # 데이터 수집 3개 + 판단 기준 3개 스킬
+│   ├── skills/                 # 데이터 수집 3개 + 1단계 판단 기준 3개 + 2단계 스크리닝 1개 스킬
 │   └── agents/investment-desk.md  # 오케스트레이터 에이전트
 ├── lib/                        # DART/FnGuide/FRED API 클라이언트
 ├── data/cache/                 # 기업별 원자료 캐시 (git 미추적)
@@ -41,6 +41,7 @@ AI-wave/
 | | `judge-retention-pricing-power` | TODO |
 | | `judge-structural-vs-cyclical` | TODO |
 | | `judge-underpriced-customer-love` | TODO |
+| | `screen-fundamentals` | TODO |
 | | `investment-desk` (오케스트레이터) | TODO |
 
 ## 완성 기준

@@ -3,6 +3,8 @@
 fetch-dart 스킬이 호출한다. DART_API_KEY는 .env에서 읽는다.
 """
 
+from __future__ import annotations
+
 import io
 import json
 import os
@@ -28,8 +30,10 @@ INCOME_STATEMENT_ACCOUNTS = ["매출액", "매출원가", "매출총이익", "�
 # K-IFRS는 계정명을 회사가 자유롭게 정하게 되어 있어("이자비용" 대신 "금융원가"로
 # 공시하는 회사가 많음, 예: BGF리테일) 정확히 일치하는 이름 하나만 찾으면 놓친다 —
 # ACCOUNT_SYNONYMS로 동의어 후보를 모두 찾아 하나의 표준 이름(이자비용)으로 통일한다.
+# 영업이익도 같은 이유로 동의어가 갈린다("영업이익(손실)"로 표기하는 회사가 있음, 예: 현대백화점).
 ACCOUNT_SYNONYMS = {
     "이자비용": ["이자비용", "금융원가", "이자비용(금융원가)", "금융비용"],
+    "영업이익": ["영업이익", "영업이익(손실)"],
 }
 
 # screen-fundamentals(재무 효율성 항목: 부채비율·유동비율)가 참조하는 재무상태표 핵심 계정.
@@ -219,7 +223,7 @@ def get_company_filings(company_name: str, bsns_year: str | None = None) -> dict
             income_statement = _extract_statement_accounts(
                 raw_list,
                 ["IS", "CIS"],
-                INCOME_STATEMENT_ACCOUNTS + list(ACCOUNT_SYNONYMS),
+                list(dict.fromkeys(INCOME_STATEMENT_ACCOUNTS + list(ACCOUNT_SYNONYMS))),
                 synonyms=ACCOUNT_SYNONYMS,
             )
             balance_sheet = _extract_statement_accounts(raw_list, ["BS"], BALANCE_SHEET_ACCOUNTS)

@@ -35,7 +35,7 @@
   - `Durability%ile`: Retention Decay Rate, Switching Cost Proxy, 신규 진입자 침투 속도
   - `Conversion_Readiness_Gap = (Financial Conversion Capacity%ile − Market Recognition%ile) / 100` — 값이 클수록 강한 매수 신호, 음수면 자동 배제
   - `Risk_Penalty% = Red Flag 개수 × 10%p (최대 50%)`, Red Flag 2개 이상이면 점수와 무관하게 강제 Avoid
-  - 데이터 출처: DART 공시(매출·마진), FnGuide 컨센서스(Estimate Revision, EV/Sales) + 리뷰/검색량/앱 데이터(Proxy, 데이터 신뢰도에 따라 0.6~1.0x 할인, 데이터 없음은 중립(50점) 처리 금지 — weight 배제 후 재정규화)
+  - 데이터 출처: DART 공시(매출·마진), FnGuide 컨센서스(Estimate Revision, EV/Sales) + `fetch-web`이 수집하는 리뷰/뉴스 데이터(Proxy, 데이터 신뢰도에 따라 0.6~1.0x 할인, 데이터 없음은 중립(50점) 처리 금지 — weight 배제 후 재정규화)
   - 상세 방법론(Layer 정의, Gap 공식, Entry Timing, Red Flag 10종, 섹터 적합도): [`docs/underpriced-customer-love-framework.md`](docs/underpriced-customer-love-framework.md)
 
 ## 2단계 — 스크리닝 체크리스트
@@ -50,7 +50,7 @@
 | 재무 효율성 | 자본을 효율적으로 운용하는가 | ROIC, 부채비율, 이자보상배율, 자산회전율 | 이자보상배율 &lt; 1이 2개 분기 연속 → Fail |
 | ESG 부합 여부 | 지배구조·환경·사회 리스크가 투자를 저해할 수준인가 | 공시된 ESG 등급(있는 경우), 지배구조 관련 소송/제재 이력 | 최근 1년 내 중대 ESG 제재·소송 이력 → Caution/Fail |
 
-데이터 출처: 시장성/경쟁력/수익성/재무효율성은 DART 공시·FnGuide 업종 비교로 대부분 커버 가능. ESG와 일부 경쟁력 지표(신규 경쟁사 동향)는 데이터 키트 밖 정보(뉴스, 외부 ESG 평가)가 필요해 Proxy로 표시한다.
+데이터 출처: 시장성/경쟁력/수익성/재무효율성은 DART 공시·FnGuide 업종 비교로 대부분 커버 가능. ESG와 일부 경쟁력 지표(신규 경쟁사 동향)는 데이터 키트 밖 정보(뉴스, 외부 ESG 평가, `fetch-web` 스킬이 수집)가 필요해 Proxy로 표시한다.
 
 ## Output
 

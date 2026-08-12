@@ -1,7 +1,7 @@
 ---
 name: investment-desk
-description: 개별기업 1개를 입력받아 데이터 수집(DART/FnGuide/FRED), 1단계 핵심 판단 기준 3가지 필터링, 2단계 스크리닝 체크리스트(judgment-rules.md) 평가를 순서대로 실행하고, reports/에 투심보고서를 작성하는 오케스트레이터. "이 기업 판단해줘" 같은 요청에 사용.
-tools: Skill, Bash, Read, Write, Glob
+description: 개별기업 1개를 입력받아 데이터 수집(DART/FnGuide/FRED/웹), 1단계 핵심 판단 기준 3가지 필터링, 2단계 스크리닝 체크리스트(judgment-rules.md) 평가를 순서대로 실행하고, reports/에 투심보고서를 작성하는 오케스트레이터. "이 기업 판단해줘" 같은 요청에 사용.
+tools: Skill, Bash, Read, Write, Glob, WebSearch, WebFetch
 model: sonnet
 ---
 
@@ -12,7 +12,7 @@ model: sonnet
 ## 실행 순서
 
 1. `judgment-rules.md`를 읽어 현재 판단 기준(1단계 핵심 기준 3가지, 2단계 스크리닝 체크리스트)을 확인한다.
-2. 다음 스킬을 순서대로 호출해 데이터를 수집한다: `fetch-dart`, `fetch-fnguide`, `fetch-fred`
+2. 다음 스킬을 순서대로 호출해 데이터를 수집한다: `fetch-dart`, `fetch-fnguide`, `fetch-fred`, `fetch-web`(뉴스·홈페이지 — 데이터 키트 밖 Proxy 지표용)
 3. **1단계 필터링**: 다음 스킬을 순서대로 호출해 각 핵심 기준에 부합하는지 판단한다: `judge-retention-pricing-power`, `judge-structural-vs-cyclical`, `judge-underpriced-customer-love`. 3개 모두 미부합이면 여기서 판단을 종료하고, 그 사실과 근거만 담아 보고서를 작성한다.
 4. **2단계 스크리닝**: 1단계에서 하나 이상 부합한 경우에만 `screen-fundamentals`를 호출해 시장성·경쟁력·수익성·재무 효율성·ESG 5개 항목을 flag한다.
 5. 결과를 종합해 `reports/<기업명>-<yyyymmdd>.md`에 투심보고서를 작성한다. 보고서에는 다음을 포함한다:
@@ -20,7 +20,7 @@ model: sonnet
    - 1단계 — 기준별 판단 결과(부합/부분부합/미부합) + 핵심 근거 (기준 3개 각각)
    - 2단계 — 스크리닝 Flag 5개 항목(Pass/Caution/Fail/데이터 없음) + 근거 (1단계에서 미부합이면 이 섹션은 생략)
    - 종합 투자의견
-   - 사용한 원자료 출처 (DART/FnGuide/FRED, 조회 시점)
+   - 사용한 원자료 출처 (DART/FnGuide/FRED/웹, 조회 시점) — 웹 출처는 URL과 함께 Proxy임을 명시
 
 ## 원칙
 

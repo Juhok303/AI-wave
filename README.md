@@ -23,7 +23,7 @@ AI-wave/
 ├── .env.example                # API 키 자리표시자
 ├── requirements.txt             # lib/ 클라이언트 실행에 필요한 Python 패키지
 ├── .claude/
-│   ├── skills/                 # 데이터 수집 3개 + 1단계 판단 기준 3개 + 2단계 스크리닝 1개 스킬
+│   ├── skills/                 # 데이터 수집 4개(DART/FnGuide/FRED/웹) + 1단계 판단 기준 3개 + 2단계 스크리닝 1개 스킬
 │   └── agents/investment-desk.md  # 오케스트레이터 에이전트
 ├── lib/                        # DART/FnGuide/FRED API 클라이언트
 ├── data/cache/                 # 기업별 원자료 캐시 (git 미추적)
@@ -39,6 +39,7 @@ AI-wave/
 | | `fetch-dart` | TODO |
 | | `fetch-fnguide` | TODO |
 | | `fetch-fred` | TODO |
+| | `fetch-web` | TODO |
 | | `judge-retention-pricing-power` | TODO |
 | | `judge-structural-vs-cyclical` | TODO |
 | | `judge-underpriced-customer-love` | TODO |

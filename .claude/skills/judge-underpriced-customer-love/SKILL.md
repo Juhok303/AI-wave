@@ -6,12 +6,12 @@ description: "Underpriced Customer Love (ULRS)" 기준(진짜 애착 + 재무 �
 # judge-underpriced-customer-love
 
 ## 입력
-- `data/cache/<기업명>/dart.json`, `data/cache/<기업명>/fnguide.json`
+- `data/cache/<기업명>/dart.json`, `data/cache/<기업명>/fnguide.json`, `data/cache/<기업명>/web.json`(리뷰·뉴스 등 Proxy 원자료)
 - `judgment-rules.md`의 "3. Underpriced Customer Love (ULRS)" 섹션
 - `docs/underpriced-customer-love-framework.md` (Layer별 지표 정의, Red Flag 10종, Sector Fit)
 
 ## 동작
-1. Love%ile — 재구매율, 리뷰 볼륨 증가율, DAU/MAU, 브랜드 검색점유율 변화를 수집한다(대부분 DART/FnGuide 밖의 리뷰·검색량·앱 데이터이므로 Proxy로 표시하고 신뢰도에 따라 0.6~1.0x 할인).
+1. Love%ile — 재구매율, 리뷰 볼륨 증가율, DAU/MAU, 브랜드 검색점유율 변화를 수집한다(`web.json`의 리뷰·검색량·앱 데이터는 DART/FnGuide 밖 Proxy이므로 신뢰도에 따라 0.6~1.0x 할인).
 2. Durability%ile — Retention Decay Rate, Switching Cost, 신규 진입자 침투 속도를 판단한다.
 3. Conversion_Readiness_Gap — DART/FnGuide 원자료로 Financial Conversion Capacity(LTV/CAC, FCF Conversion 등)와 Market Recognition(Estimate Revision, EV/Sales Percentile)을 각각 산출해 Gap을 계산한다.
 4. `docs/underpriced-customer-love-framework.md`의 H절 Red Flag 10종을 점검해 Risk_Penalty%를 산출한다. Red Flag 2개 이상이면 즉시 Avoid로 판정하고 나머지 계산은 생략해도 된다.
@@ -22,5 +22,4 @@ description: "Underpriced Customer Love (ULRS)" 기준(진짜 애착 + 재무 �
 - ULRS 값 + 해석(ULRS>0 매수 구간 / ≈0 Watchlist / <0 Avoid) + 핵심 근거(Love/Durability/Gap/Red Flag 요약).
 
 ## TODO
-- [ ] 리뷰·검색량·앱 데이터 등 데이터 키트(DART/FnGuide/FRED) 밖의 Proxy 데이터 소스 확정
 - [ ] Peer Group 정의(동일 GICS Sub-industry + 매출 0.3~3x + 유통채널 유사성) 구현

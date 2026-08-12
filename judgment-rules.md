@@ -52,7 +52,7 @@
   - `Conversion_Readiness_Gap = (Financial Conversion Capacity%ile − Market Recognition%ile) / 100` — 값이 클수록 강한 매수 신호, 음수면 자동 배제
   - `Risk_Penalty% = Red Flag 개수 × 10%p (최대 50%)`, Red Flag 2개 이상이면 점수와 무관하게 강제 Avoid
   - 데이터 출처: DART 공시(매출·마진), FnGuide 컨센서스(Estimate Revision, EV/Sales) + `fetch-web`이 수집하는 리뷰/뉴스 데이터(Proxy, 데이터 신뢰도에 따라 0.6~1.0x 할인, 데이터 없음은 중립(50점) 처리 금지 — weight 배제 후 재정규화)
-  - 상세 방법론(Layer 정의, Gap 공식, Entry Timing, Red Flag 10종, 섹터 적합도): [`docs/underpriced-customer-love-framework.md`](docs/underpriced-customer-love-framework.md)
+  - 상세 방법론(Layer 정의, Gap 공식, Entry Timing, Red Flag 10종, 섹터 적합도): [`.claude/skills/judge-underpriced-customer-love/references/underpriced-customer-love-framework.md`](.claude/skills/judge-underpriced-customer-love/references/underpriced-customer-love-framework.md)
 
 ## 2단계 — 스크리닝 체크리스트
 

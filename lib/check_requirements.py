@@ -10,6 +10,9 @@ from dotenv import load_dotenv
 
 import fnguide_client
 
+if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+    sys.stdout.reconfigure(encoding="utf-8")
+
 load_dotenv()
 
 SAMSUNG_CORP_CODE = "00126380"  # 라이브 체크용 샘플 corp_code (삼성전자)

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>삼성전자 (005930) — 투심보고서</title>
+<style>
+  :root{
+    --navy:#0B2E4F; --navy-2:#164A78; --accent:#1F6FB2; --paper:#FFFFFF; --panel:#F4F7FA;
+    --line:#DCE3EA; --ink:#1A1F26; --ink-soft:#5A6472;
+    --pass:#1C7C4D; --partial:#B8860B; --fail:#A3272C; --neutral:#6B6B6B;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--panel); color:var(--ink); font-family:'Malgun Gothic','Segoe UI',sans-serif; line-height:1.65;}
+  .sheet{max-width:960px; margin:0 auto; background:var(--paper); padding:0 0 60px;}
+  .masthead{background:var(--navy); color:#fff; padding:28px 40px 22px;}
+  .masthead .eyebrow{font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#9FC3E0; margin-bottom:6px;}
+  .masthead h1{margin:0; font-size:30px; font-weight:700;}
+  .masthead .sub{font-size:14px; color:#CFE0EE; margin-top:6px;}
+  .masthead .date{font-size:12px; color:#9FC3E0; margin-top:14px;}
+
+  .snapshot{display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--line); margin:24px 40px 0;}
+  .snap-cell{padding:14px 16px; border-right:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .snap-cell:nth-child(4n){border-right:none;}
+  .snap-cell .lbl{font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:4px;}
+  .snap-cell .val{font-size:17px; font-weight:700; color:var(--navy);}
+
+  .verdict-bar{margin:18px 40px 0; border:2px solid var(--navy); background:var(--panel); padding:18px 22px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;}
+  .verdict-bar .headline{font-size:15.5px; font-style:italic; color:var(--navy-2); max-width:640px;}
+  .verdict-chip{font-weight:700; font-size:14px; padding:8px 18px; border-radius:4px; color:#fff; white-space:nowrap;}
+  .verdict-chip.watch{background:var(--partial);}
+  .verdict-chip.pass{background:var(--neutral);}
+  .verdict-chip.buy{background:var(--pass);}
+
+  section{margin:34px 40px 0;}
+  h2{font-size:18px; color:var(--navy); border-bottom:2px solid var(--navy); padding-bottom:8px; margin:0 0 14px;}
+  h3{font-size:14.5px; color:var(--navy-2); margin:16px 0 6px;}
+  p{margin:0 0 10px; font-size:13.8px;}
+  table{width:100%; border-collapse:collapse; font-size:13px; margin:8px 0 14px;}
+  th{background:var(--navy); color:#fff; font-size:11.5px; text-align:left; padding:7px 9px; letter-spacing:.02em;}
+  td{padding:7px 9px; border-bottom:1px solid var(--line); vertical-align:top;}
+  tr:nth-child(even) td{background:#FAFBFC;}
+  td.num, th.num{text-align:right;}
+  .flag{font-weight:700; padding:2px 8px; border-radius:3px; font-size:12px; color:#fff; display:inline-block;}
+  .flag.ok{background:var(--pass);} .flag.caution{background:var(--partial);} .flag.fail{background:var(--fail);} .flag.na{background:var(--neutral);}
+  .fit-badge{display:inline-block; font-weight:700; font-size:12.5px; padding:3px 10px; border-radius:3px; color:#fff;}
+  .fit-badge.buy{background:var(--pass);} .fit-badge.watch{background:var(--partial);} .fit-badge.pass{background:var(--neutral);} .fit-badge.avoid{background:var(--fail);}
+  .cite{font-size:11.5px; color:var(--ink-soft); font-style:italic;}
+  .criterion-box{border:1px solid var(--line); margin-bottom:22px;}
+  .criterion-head{background:var(--panel); padding:12px 18px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line);}
+  .criterion-head h3{margin:0; font-size:15px;}
+  .criterion-body{padding:14px 18px;}
+  .est{color:var(--ink-soft); font-style:italic; font-size:12px;}
+  footer{margin:40px 40px 0; padding-top:16px; border-top:1px solid var(--line); font-size:11px; color:var(--ink-soft);}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="masthead">
+    <div class="eyebrow">투심보고서 · investment-desk (judgment-rules.md 기준)</div>
+    <h1>삼성전자 (005930)</h1>
+    <div class="sub">DS(반도체)·MX(모바일)·VD/DA(가전) 복합 사업 구조 — AI발 메모리 슈퍼사이클과 소비자 가전 브랜드 지위가 공존하는 대형 B2B+B2C 복합기업</div>
+    <div class="date">작성일 2026-08-12 · KOSPI</div>
+  </div>
+
+  <div class="snapshot">
+    <div class="snap-cell"><div class="lbl">현재주가 (2026-08-12)</div><div class="val">258,000원 <span class="est">(뉴스 Proxy)</span></div></div>
+    <div class="snap-cell"><div class="lbl">시가총액 (2026-08-07 기준가)</div><div class="val">약 1,350조원 <span class="est">(뉴스 Proxy)</span></div></div>
+    <div class="snap-cell"><div class="lbl">1단계 종합</div><div class="val">1개 기준 부합, 1개 부분부합</div></div>
+    <div class="snap-cell"><div class="lbl">2단계 스크리닝</div><div class="val">Fail 없음, Caution 2건</div></div>
+  </div>
+
+  <div class="verdict-bar">
+    <div class="headline">AI발 HBM 슈퍼사이클로 가격결정력·구조적 성장 신호가 뚜렷하나, 파운드리 경쟁 열위와 목표주가 선반영 가능성이 확신을 제한한다 — 관찰 지속이 합리적이다.</div>
+    <div class="verdict-chip watch">평가 대상 — 관찰(WATCH)</div>
+  </div>
+
+  <section>
+    <h2>기업 개요</h2>
+    <p>삼성전자는 메모리반도체(DRAM·NAND·HBM)와 파운드리를 담당하는 DS부문, 갤럭시 스마트폰의 MX부문, TV·가전의 VD/DA부문으로 구성된 글로벌 전자기업이다. 최근 실적 변동의 핵심 동력은 AI 데이터센터向 HBM(고대역폭메모리) 수요 급증에 따른 메모리 가격 상승 사이클이며, 소비자 부문(갤럭시)은 별도로 견조한 브랜드 지위를 유지하고 있다.</p>
+  </section>
+
+  <section>
+    <h2>1단계 — 핵심 판단 기준 3개</h2>
+
+    <div class="criterion-box">
+      <div class="criterion-head">
+        <h3>① Retention-to-Pricing-Power <span class="cite">(judge-retention-pricing-power, pjueun 프레임워크)</span></h3>
+        <span class="fit-badge buy">BUY → 부합</span>
+      </div>
+      <div class="criterion-body">
+        <p><b>Core Thesis</b>: "삼성전자는 이미 HBM/메모리 가격결정권을 보유하고 있으나 시장은 이를 Volume(생산능력) 중심 스토리로만 가치평가한다" — <b>Verdict: Supported</b></p>
+        <table>
+          <tr><th style="width:20%">Pricing Power Test</th><th>결과</th></tr>
+          <tr><td>Test 1 — 실제 가격 인상</td><td>HBM 공급부족으로 삼성·SK가 가격결정 주도권 유지 중이라는 보도 다수 확인 <span class="cite">(머니투데이 2026-08-06)</span> — Confirmed(Medium)</td></tr>
+          <tr><td>Test 2 — 인상 후 Retention/Churn</td><td>엔비디아향 HBM4E 공급을 유지·확대 중(요구 스펙 충족 유일 공급사) — 이탈 없이 오히려 채택 확대 <span class="cite">(글로벌이코노믹 2026-05)</span></td></tr>
+          <tr><td>Test 3 — Mix를 통한 가격 인상</td><td>HBM4E(고성능·고가) 비중 확대가 명확한 Mix Premiumization — Confirmed</td></tr>
+          <tr><td>Test 4 — 경쟁사 대비 Premium</td><td>Peer(SK하이닉스) ASP 직접비교 데이터는 <span class="est">Insufficient Data</span>, 다만 "메모리 3사 중 파운드리까지 갖춘 유일한 기업"이라는 기술 차별화는 확인</td></tr>
+        </table>
+        <p><b>Financial Transmission</b>: Gross Margin(매출총이익률 30.3%→38.0%→39.4%, FY23~25 DART 실측) → Operating Leverage(영업이익률 2.5%→10.9%→13.1%) → <b>2Q26 분기 영업이익 89.4조원(컨센서스 85~86조원 대비 3~4조원 상회 어닝서프라이즈)</b>까지 체인이 뚜렷하게 확인(Confirmed) — 이 철학에서 가장 깨끗하게 통과하는 구간.</p>
+        <p><b>Gate 점검</b>: Consensus Gate 주의 필요 — 목표주가가 이미 48만~55만원까지 공격적으로 상향된 상태(<span class="cite">Low Confidence, 3자 정리글</span>)라 "시장이 아직 모른다"는 주장이 약할 수 있음. 다만 현재주가(25.8만원) 대비 목표주가 괴리가 여전히 커(약 +85~110%) 완전히 반영됐다고 보기도 어려움 — Gate 부분 발동으로 처리.</p>
+      </div>
+    </div>
+
+    <div class="criterion-box">
+      <div class="criterion-head">
+        <h3>② Structural vs Cyclical Misclassification <span class="cite">(judge-structural-vs-cyclical, chaemin 프레임워크)</span></h3>
+        <span class="fit-badge watch">WATCH → 부분부합</span>
+      </div>
+      <div class="criterion-body">
+        <p><b>Core Thesis</b>: "AI발 메모리 수요 확대는 경기순환적 반도체 업사이클이 아니라 구조적 전환이며, 시장은 과거 downcycle 패턴을 근거로 이를 순환적으로 오분류하고 있다" — <b>Verdict: Partially Supported</b></p>
+        <table>
+          <tr><th style="width:20%">Layer</th><th>판단</th><th style="width:12%">Read</th></tr>
+          <tr><td>Layer 1 — Structural Signal</td><td>AI 데이터센터 투자발 HBM 수요는 GPU-메모리 아키텍처 결합이라는 기술적·구조적 동인 — 단순 유행과는 성격이 다름</td><td class="fit-badge buy">Bull</td></tr>
+          <tr><td>Layer 2 — Cyclical Contamination Test</td><td>메모리 산업은 역사적으로 2018·2023 등 반복적 boom-bust 사이클을 겪어왔음(기저율 불리) — 이번 상승도 증설 후 재고조정으로 이어질 표준적 사이클일 위험을 배제 못함. 이자보상배율이 FY23(0.52배)엔 1 미만이었다는 사실 자체가 "직전 다운사이클이 실재했다"는 반증</td><td class="fit-badge pass">Bear(반증 성립)</td></tr>
+          <tr><td>Layer 2 — Peer Divergence</td><td>SK하이닉스도 HBM 선두권으로 동반 호황 — 업계 전체 효과일 가능성이 커 "삼성 고유의 구조적 우위"라는 주장이 약해짐</td><td class="fit-badge pass">Neutral</td></tr>
+          <tr><td>Layer 2 — 반대 신호(파운드리)</td><td>TSMC 파운드리 점유율 72.3% vs 삼성 6.5%(격차 확대) — 반도체 전체가 아니라 "메모리만" 구조적이고 "비메모리(파운드리)"는 오히려 구조적으로 밀리는 중, 사업부별로 결론이 갈림</td><td class="fit-badge avoid">Bear</td></tr>
+          <tr><td>Layer 3 — Market Framing</td><td>"2026년은 AI 중심 구조적 성장 단계로 완전히 진입"이라는 표현이 이미 다수 매체·리포트에 널리 퍼져 있음 — Consensus Gate 위험 높음</td><td class="fit-badge avoid">Bear(Consensus)</td></tr>
+        </table>
+        <p><b>진단</b>: 메모리/HBM 부문은 구조적 전환 증거가 강하지만, (1) 메모리 산업 자체의 boom-bust 기저율 리스크, (2) 파운드리 부문의 명백한 구조적 열위, (3) "구조적 슈퍼사이클"이라는 프레임 자체가 이미 시장에 상당히 알려져 있다는 점에서 <b>순수 부합보다는 부분부합</b>이 정직한 결론이다.</p>
+      </div>
+    </div>
+
+    <div class="criterion-box">
+      <div class="criterion-head">
+        <h3>③ Underpriced Customer Love (ULRS) <span class="cite">(judge-underpriced-customer-love 프레임워크)</span></h3>
+        <span class="fit-badge avoid">AVOID → 미부합 (Universe Filter Low fit)</span>
+      </div>
+      <div class="criterion-body">
+        <p><b>Universe Filter 판정: Low fit</b> — 이 철학이 왜 삼성전자에는 잘 안 맞는지 구체적으로 설명한다.</p>
+        <ul>
+          <li>ULRS 철학의 핵심은 "소비자 애착(Love) → 재무 전환(Conversion) → 시장 미인식(Gap)"인데, 삼성전자의 현재 밸류에이션·실적 변동을 실제로 움직이는 동력은 <b>B2B 메모리/HBM 가격 사이클</b>이다(2Q26 영업이익 89.4조원 서프라이즈의 근원은 소비자 애착이 아니라 반도체 가격). 소비자 부문(갤럭시)의 Love 신호가 강하더라도, 그것이 회사 전체 Gap의 주된 원천이 아니다.</li>
+          <li>갤럭시 자체의 Love 신호(한국 재구매의향 96%, 글로벌 점유율 19~20% 1위)는 실제로 존재하지만, 이미 수년간 널리 알려진 "삼성 = 스마트폰 1위"라는 사실이라 Market Recognition Gap이 이미 대부분 닫혀 있을 가능성이 높다 — Variant Perception 관점에서 Category 1(시장이 이미 아는 좋은 점)에 해당.</li>
+          <li>회사 전체 단위로 Financial Conversion Capacity와 Market Recognition의 Gap을 계산하려 해도, 그 Gap을 만드는 진짜 동인이 반도체 사이클이라 이 철학의 인과구조(Love→Conversion→Gap)와 어긋난다.</li>
+        </ul>
+        <p>따라서 전사 단위로는 이 철학을 억지로 적용해 점수를 산출하지 않고 <b>미부합(Low fit)</b>으로 판정한다. 갤럭시 사업부만 별도 분사 기업처럼 분석한다면 재검토 여지가 있으나, 현재 판단 대상은 삼성전자 전사이므로 이 판단을 유지한다.</p>
+      </div>
+    </div>
+
+    <p><b>1단계 종합</b>: 3개 기준 중 1개 부합(①) + 1개 부분부합(②)로, 하나 이상 부합하는 기준이 있어 2단계 스크리닝으로 진행한다 (<span class="cite">judgment-rules.md 1단계 원칙: "하나 이상 부합하는 기준이 있으면 다음 단계로 넘어간다"</span>).</p>
+  </section>
+
+  <section>
+    <h2>2단계 — 스크리닝 체크리스트</h2>
+    <table>
+      <tr><th style="width:14%">항목</th><th style="width:10%">Flag</th><th>근거</th></tr>
+      <tr><td>시장성</td><td><span class="flag na">데이터 없음</span></td><td>TAM 추정치를 이번 조사로 확보하지 못함(글로벌 메모리+파운드리+모바일+가전 복합 산업이라 단일 TAM 정의 자체가 어려움). 시가총액은 뉴스 Proxy로 확인(약 1,350조원)했으나 TAM 대비 배수는 계산 불가.</td></tr>
+      <tr><td>경쟁력</td><td><span class="flag caution">Caution</span></td><td>사업부별로 극명하게 갈림 — 메모리/HBM은 엔비디아향 유일 공급 요건 충족 등 최상급 경쟁력 확인(Pass 수준). 반면 파운드리는 TSMC 대비 점유율 격차가 72.3%p→65.8%p 확대(2026 1분기) — 신규 경쟁 브랜드 유입은 아니지만 기존 1위 사업자와의 격차 확대가 카테고리 성장 둔화에 준하는 리스크로 판단해 Caution 부여 (<span class="cite">2단계 표 "경쟁력" 행 취지 준용</span>).</td></tr>
+      <tr><td>수익성</td><td><span class="flag ok">Pass</span></td><td>매출총이익률 30.3%→38.0%→39.4%(FY23~25), 영업이익률 2.5%→10.9%→13.1%로 뚜렷한 개선 추세. 연속 적자 없음 — Flag 기준("영업적자 2개 분기 이상 지속 → Fail") 미해당.</td></tr>
+      <tr><td>재무 효율성</td><td><span class="flag ok">Pass</span></td><td>이자보상배율 0.52배(FY23)→2.52배(FY24)→3.72배(FY25) — FY23엔 1 미만이었으나 최근 2개년 연속 1 이상으로 개선. 부채비율도 25.4%→27.9%→29.9%로 매우 낮은 수준 유지. 연간 데이터 기준 대체 판단(분기 데이터 아님)임을 명시.</td></tr>
+      <tr><td>ESG 부합 여부</td><td><span class="flag caution">Caution</span></td><td>2026년 5~6월 DS부문 특별경영성과급(10년 적용) 관련 주주 소송 리스크 — 이사회 결의·대표이사 승인 없이 처리됐다는 주주단체 문제제기 및 무효 소송 예고. 최근 1년 내 발생한 지배구조 관련 사안으로 "중대"로 판단해 Caution 부여 (<span class="cite">2단계 표 "ESG 부합 여부" 행: "최근 1년 내 중대 이력 → Caution/Fail"</span>).</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>재무 요약 (DART 정기공시 실측)</h2>
+    <table>
+      <tr><th>12월 결산 (십억원)</th><th class="num">FY2023 (제55기)</th><th class="num">FY2024 (제56기)</th><th class="num">FY2025 (제57기)</th></tr>
+      <tr><td>매출액</td><td class="num">258,935</td><td class="num">300,871</td><td class="num">333,606</td></tr>
+      <tr><td>매출총이익</td><td class="num">78,547</td><td class="num">114,309</td><td class="num">131,370</td></tr>
+      <tr><td>매출총이익률</td><td class="num">30.3%</td><td class="num">38.0%</td><td class="num">39.4%</td></tr>
+      <tr><td>영업이익</td><td class="num">6,567</td><td class="num">32,726</td><td class="num">43,601</td></tr>
+      <tr><td>영업이익률</td><td class="num">2.5%</td><td class="num">10.9%</td><td class="num">13.1%</td></tr>
+      <tr><td>이자비용</td><td class="num">12,646</td><td class="num">12,986</td><td class="num">11,734</td></tr>
+      <tr><td>이자보상배율</td><td class="num">0.52배</td><td class="num">2.52배</td><td class="num">3.72배</td></tr>
+      <tr><td>부채비율</td><td class="num">25.4%</td><td class="num">27.9%</td><td class="num">29.9%</td></tr>
+      <tr><td>유동비율</td><td class="num">258.8%</td><td class="num">243.3%</td><td class="num">232.7%</td></tr>
+    </table>
+    <p class="est">참고(Low Confidence, 뉴스 Proxy·DART 미검증): 2026년 2분기(비정기) 매출 171조원, 영업이익 89.4조원 — 위 FY2025 연간 실적을 이미 훌쩍 상회하는 수준으로, 2026년 상반기 들어 반도체 슈퍼사이클이 더 강화됐음을 시사한다. 당기순이익·세전이익은 현재 `dart_client.py`가 수집하는 계정 목록에 없어 이번 보고서에 포함하지 못했다(알려진 데이터 공백).</p>
+  </section>
+
+  <section>
+    <h2>종합 투자의견</h2>
+    <p>삼성전자는 1단계 기준①(Retention-to-Pricing-Power)에서 가장 뚜렷하게 부합했다 — HBM 가격결정력이 Gross Margin과 Operating Leverage로 실제 전이되는 인과사슬이 DART 실측 데이터와 2Q26 어닝서프라이즈로 이중 확인됐다. 기준②(Structural vs Cyclical)는 메모리 부문의 구조적 전환 증거는 강하나, 메모리 산업 특유의 boom-bust 기저율과 파운드리 부문의 명백한 구조적 열위가 뒤섞여 있어 부분부합에 그쳤다. 기준③(ULRS)은 이 철학의 인과구조(소비자 애착→전환→시장 미인식)가 삼성전자의 실제 밸류에이션 동력(반도체 사이클)과 맞지 않아 Universe Filter 단계에서 미부합으로 판정했다.</p>
+    <p>2단계 스크리닝에서는 중대한 Fail은 없었으나, <b>파운드리 경쟁력 열위</b>와 <b>2026년 특별성과급 관련 주주 소송 리스크</b> 두 가지가 Caution으로 남았다. 목표주가 컨센서스(48만~55만원, Low Confidence)와 현재주가(25.8만원) 사이의 큰 괴리는 상방 여력을 시사하지만, 그만큼 "이미 시장이 안다"는 Consensus Gate 리스크와 "메모리 사이클은 항상 되돌아간다"는 기저율 리스크를 동시에 안고 있다. 데이터 공백(시가총액의 정식 소스 부재, 당기순이익 미수집, FnGuide 컨센서스 부재)을 감안하면, 이번 판단은 <b>"관찰 대상(WATCH)"</b>으로 분류하는 것이 규칙서의 원칙(추측으로 결론을 내지 않는다)에 부합한다.</p>
+  </section>
+
+  <section>
+    <h2>사용한 원자료 출처</h2>
+    <ul>
+      <li><b>DART</b>: <code>data/cache/삼성전자/dart.json</code> — 사업보고서(제55~57기) 손익계산서·재무상태표, 2026-08-12 조회.</li>
+      <li><b>FRED</b>: <code>data/cache/삼성전자/fred.json</code> — CPI/기준금리/소매판매/실업률(미국 지표, 참고용, 국가 불일치로 기준② 판단에 제한적으로만 반영).</li>
+      <li><b>FnGuide/FnSpace</b>: 미확보(이용권 없음, 2026-08-12 `check-requirements` 확인).</li>
+      <li><b>웹 검색(Proxy)</b>: <code>data/cache/삼성전자/web.json</code> — 시가총액·주가(톱스타뉴스 2026-08-07/08-12), HBM 가격결정력(머니투데이 2026-08-06, 글로벌이코노믹 2026-05), 목표주가 컨센서스(딜바다닷컴 정리글, Low Confidence), 갤럭시 재구매의향(뉴스1), 2Q26 실적(삼성 뉴스룸 공식 발표), 파운드리 경쟁(서울신문 2026-06-12), ESG 리스크(한국경제 2026-06, 비즈한국). 각 URL·요약·신뢰도는 web.json에 기록.</li>
+    </ul>
+  </section>
+
+  <footer>
+    이 보고서는 <code>judgment-rules.md</code> 판단 규칙서와 <code>.claude/skills/judge-retention-pricing-power</code>·<code>judge-structural-vs-cyclical</code>·<code>judge-underpriced-customer-love</code>·<code>screen-fundamentals</code> 스킬을 <code>investment-desk</code> 오케스트레이터가 종합해 생성했다. 투자 조언이 아니며, 실제 투자 판단 전 원문 공시·최신 컨센서스로 재검증이 필요하다. 데이터 공백(시가총액 정식 소스 부재, FnGuide 미확보)이 있는 상태에서의 잠정 판단임을 명시한다.
+  </footer>
+
+</div>
+</body>
+</html>

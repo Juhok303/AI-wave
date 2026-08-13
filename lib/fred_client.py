@@ -3,6 +3,8 @@
 fetch-fred 스킬이 호출한다. FRED_API_KEY는 .env에서 읽는다.
 """
 
+from __future__ import annotations
+
 import os
 from datetime import datetime, timezone
 

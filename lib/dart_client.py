@@ -68,7 +68,13 @@ def _load_corp_codes(api_key: str, force_refresh: bool = False) -> list[dict]:
         )
 
     CORP_CODE_CACHE.parent.mkdir(parents=True, exist_ok=True)
-    CORP_CODE_CACHE.write_text(json.dumps(companies, ensure_ascii=False), encoding="utf-8")
+    # 병렬로 여러 investment-desk 서브에이전트가 동시에 캐시가 없는 상태로 시작하면
+    # 각자 다운로드해 동시에 쓸 수 있다 — 임시 파일에 쓰고 원자적으로 rename해서
+    # 절반만 쓰인 JSON을 다른 프로세스가 읽는 걸 방지한다(느린 쪽이 이겨도 무해:
+    # 내용은 어차피 동일한 DART corpCode.xml에서 나온 값이라 충돌이 아니라 중복 다운로드일 뿐).
+    tmp_path = CORP_CODE_CACHE.with_suffix(f".tmp-{os.getpid()}")
+    tmp_path.write_text(json.dumps(companies, ensure_ascii=False), encoding="utf-8")
+    os.replace(tmp_path, CORP_CODE_CACHE)
     return companies
 
 

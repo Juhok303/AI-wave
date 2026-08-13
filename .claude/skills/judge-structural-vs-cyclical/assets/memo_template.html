@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONON — Structural vs. Cyclical Misclassification Investment Memo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,500&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F1E8;
+    --paper-2:#ECE7D9;
+    --ink:#1E2320;
+    --ink-soft:#4A5049;
+    --rule:#C9C2AE;
+    --ledger:#26343B;
+    --ledger-2:#3B5561;
+    --gold:#9C7A2B;
+    --red:#8C3A2B;
+    --stamp:#9C7A2B;
+    --bull:#3C6B4A;
+    --bear:#8C3A2B;
+    --neutral:#9C7A2B;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    background-image:
+      repeating-linear-gradient(180deg, rgba(0,0,0,0.015) 0px, rgba(0,0,0,0.015) 1px, transparent 1px, transparent 34px);
+    color:var(--ink);
+    font-family:'Inter', -apple-system, sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .sheet{max-width:880px; margin:0 auto; padding:56px 48px 120px;}
+  @media (max-width:640px){.sheet{padding:32px 20px 80px;}}
+
+  .disclaimer{
+    background:var(--paper-2); border:1px dashed var(--rule); border-radius:2px;
+    padding:12px 16px; font-family:'IBM Plex Mono',monospace; font-size:11px;
+    color:var(--ink-soft); margin-bottom:22px; line-height:1.6;
+  }
+  .disclaimer b{color:var(--red);}
+
+  .masthead{display:flex; justify-content:space-between; align-items:flex-start; border-bottom:3px double var(--ledger); padding-bottom:18px; margin-bottom:6px;}
+  .masthead-left .eyebrow{font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ledger-2); margin-bottom:6px;}
+  .masthead-left h1{font-family:'Source Serif 4', serif; font-weight:700; font-size:34px; line-height:1.15; margin:0; letter-spacing:-0.01em;}
+  .masthead-left .sub{font-family:'Source Serif 4', serif; font-style:italic; color:var(--ink-soft); font-size:15px; margin-top:6px;}
+  .ticker-box{font-family:'IBM Plex Mono', monospace; text-align:right; font-size:12px; color:var(--ink-soft); white-space:nowrap; padding-left:20px;}
+  .ticker-box .tk{font-size:22px; font-weight:600; color:var(--ink); letter-spacing:0.02em;}
+  .ticker-box .px{font-size:12.5px; margin-top:4px; color:var(--red);}
+
+  .snapshot{display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin:28px 0 8px; border:1px solid var(--rule);}
+  .snap-cell{padding:14px 16px; border-right:1px solid var(--rule);}
+  .snap-cell:last-child{border-right:none;}
+  .snap-cell .lbl{font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:5px;}
+  .snap-cell .val{font-family:'Source Serif 4', serif; font-weight:600; font-size:19px;}
+  @media (max-width:640px){.snapshot{grid-template-columns:repeat(2,1fr);}}
+
+  .verdict-row{position:relative; display:flex; gap:0; margin:26px 0 34px; border:1px solid var(--rule); background:var(--paper-2); overflow:hidden;}
+  .verdict-main{flex:1; padding:22px 26px;}
+  .verdict-main .lbl{font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-soft);}
+  .one-liner{font-family:'Source Serif 4', serif; font-style:italic; font-size:17px; line-height:1.55; margin-top:8px; color:var(--ink);}
+  .verdict-facts{font-family:'IBM Plex Mono', monospace; font-size:12px; margin-top:14px; color:var(--ink-soft); display:flex; gap:22px; flex-wrap:wrap;}
+  .verdict-facts b{color:var(--ink); font-weight:600;}
+  .stamp-wrap{width:150px; flex-shrink:0; display:flex; align-items:center; justify-content:center; border-left:1px dashed var(--rule); background:radial-gradient(circle at 50% 50%, rgba(156,122,43,0.05), transparent 70%);}
+  .stamp{font-family:'IBM Plex Mono', monospace; font-weight:700; font-size:22px; letter-spacing:0.06em; color:var(--stamp); border:3px solid var(--stamp); border-radius:4px; padding:8px 14px; transform:rotate(-8deg); opacity:0.88; text-align:center;}
+  .stamp .score{display:block; font-size:11px; font-weight:500; margin-top:3px; letter-spacing:0.08em;}
+
+  section{margin-top:40px;}
+  .sec-head{display:flex; align-items:baseline; gap:12px; border-bottom:1px solid var(--rule); padding-bottom:8px; margin-bottom:16px;}
+  .sec-num{font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--ledger-2); font-weight:600; min-width:22px;}
+  .sec-head h2{font-family:'Source Serif 4', serif; font-size:21px; font-weight:600; margin:0; letter-spacing:-0.01em;}
+  h3{font-family:'Source Serif 4', serif; font-size:15px; font-weight:600; font-style:italic; margin:18px 0 8px; color:var(--ledger);}
+  h4.tree-h{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.04em; color:var(--ledger-2); text-transform:uppercase; margin:0 0 6px;}
+  p{margin:0 0 12px; font-size:14.5px; color:var(--ink);}
+  .quote-line{font-family:'Source Serif 4', serif; font-style:italic; font-size:15.5px; color:var(--ledger); border-left:2px solid var(--ledger); padding:2px 0 2px 14px; margin:0 0 16px;}
+
+  ol.evid, ul.evid{margin:0 0 14px; padding-left:20px;}
+  ol.evid li, ul.evid li{margin-bottom:6px; font-size:14px;}
+  .pro{color:var(--ledger);}
+  .con{color:var(--red);}
+  .evid-cols{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  @media (max-width:640px){.evid-cols{grid-template-columns:1fr;}}
+  .evid-cols h4{font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; margin:0 0 8px;}
+  .evid-cols h4.pro{color:var(--ledger);}
+  .evid-cols h4.con{color:var(--red);}
+
+  table{width:100%; border-collapse:collapse; font-size:13px; margin-bottom:16px;}
+  th{font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; text-align:left; color:var(--ink-soft); border-bottom:1px solid var(--ledger); padding:7px 10px;}
+  td{padding:8px 10px; border-bottom:1px solid var(--rule); vertical-align:top;}
+  tr:last-child td{border-bottom:1px solid var(--ledger);}
+  td.num, th.num{text-align:right; font-family:'IBM Plex Mono', monospace;}
+  .status{font-family:'IBM Plex Mono', monospace; font-weight:600; white-space:nowrap;}
+  .status.ok{color:var(--bull);}
+  .status.bad{color:var(--bear);}
+  .status.mid{color:var(--neutral);}
+  .status.na{color:var(--ink-soft);}
+  .tag{display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:10px; padding:2px 6px; border-radius:2px; letter-spacing:0.04em;}
+  .tag.bull{background:rgba(60,107,74,0.12); color:var(--bull);}
+  .tag.bear{background:rgba(140,58,43,0.12); color:var(--bear);}
+  .tag.neutral{background:rgba(156,122,43,0.12); color:var(--neutral);}
+  .tag.est{background:rgba(74,80,73,0.1); color:var(--ink-soft); font-style:italic;}
+
+  .diagnosis{background:var(--paper-2); border:1px solid var(--rule); padding:14px 16px; font-family:'Source Serif 4', serif; font-style:italic; font-size:14.5px; color:var(--ink); margin-top:4px;}
+
+  .tree-box{border:1px solid var(--rule); background:var(--paper-2); padding:16px 20px; margin-bottom:16px;}
+  .tree-box .factor{font-size:13.5px; margin:6px 0 2px; font-weight:600; color:var(--ledger);}
+  .tree-box .metric{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft); margin:0 0 8px 14px;}
+  .tree-box .metric::before{content:"▸ "; color:var(--gold);}
+
+  .vp-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:14px;}
+  @media (max-width:640px){.vp-grid{grid-template-columns:1fr;}}
+  .vp-card{border:1px solid var(--rule); padding:14px 16px;}
+  .vp-card h4{font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 8px;}
+  .vp-card p{font-size:13.5px; margin:0;}
+  .class-badge{display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:11.5px; font-weight:600; background:rgba(156,122,43,0.14); color:var(--neutral); border:1px solid var(--neutral); padding:5px 10px; margin-top:6px;}
+
+  .score-total-row td{font-weight:700; font-family:'IBM Plex Mono', monospace;}
+
+  .qa{margin-bottom:14px;}
+  .qa .q{font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--ledger-2); letter-spacing:0.02em; margin-bottom:4px;}
+  .qa .a{font-family:'Source Serif 4', serif; font-size:15px;}
+
+  .verdict-box{border:2px solid var(--ledger); padding:20px 22px; margin-top:24px; background:var(--paper-2);}
+  .verdict-box .row{display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dotted var(--rule); font-size:14px;}
+  .verdict-box .row:last-child{border-bottom:none;}
+  .verdict-box .row .k{font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-soft);}
+  .verdict-box .row .v{font-family:'Source Serif 4', serif; font-weight:600; text-align:right; max-width:65%;}
+
+  footer{margin-top:56px; padding-top:16px; border-top:1px solid var(--rule); font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--ink-soft); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+</style>
+<title>{{TICKER}} — Structural vs. Cyclical Misclassification Investment Memo</title>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="disclaimer">
+    <b>Data Integrity Caveat</b> — 실시간 검색/공시로 검증된 항목과 Estimate·Insufficient Data로
+    남은 항목을 구분해 표기했다. 이 메모는 투자 조언이 아니라 프레임워크 적용 예시이며, 실제 판단
+    전 원문 10-K/10-Q/실적발표로 재검증이 필요하다.
+  </div>
+
+  <div class="masthead">
+    <div class="masthead-left">
+      <div class="eyebrow">Structural vs. Cyclical Misclassification — Investment Memo</div>
+      <h1>{{COMPANY_NAME}}</h1>
+      <div class="sub">{{ONE_LINE_PHILOSOPHY_TAG}}</div>
+    </div>
+    <div class="ticker-box">
+      <div class="tk">{{TICKER}}</div>
+      <div class="px">{{CURRENT_PRICE}}</div>
+    </div>
+  </div>
+
+  <div class="snapshot">
+    <div class="snap-cell"><div class="lbl">Market Cap</div><div class="val">{{MARKET_CAP}}</div></div>
+    <div class="snap-cell"><div class="lbl">Industry</div><div class="val">{{INDUSTRY}}</div></div>
+    <div class="snap-cell"><div class="lbl">Framework Fit</div><div class="val">{{FRAMEWORK_FIT}}</div></div>
+    <div class="snap-cell"><div class="lbl">Score</div><div class="val">{{SCORE}} / 100</div></div>
+  </div>
+
+  <!-- Verdict stamp: swap --stamp/--bull/--bear per verdict color if desired -->
+  <div class="verdict-row">
+    <div class="verdict-main">
+      <div class="lbl">One-line Investment View</div>
+      <p class="one-liner">{{ONE_LINER}}</p>
+      <div class="verdict-facts">
+        <span>Entry: <b>{{ENTRY_TIMING}}</b></span>
+        <span>Holding Period: <b>{{HOLDING_PERIOD}}</b></span>
+        <span>Primary Catalyst: <b>{{PRIMARY_CATALYST}}</b></span>
+      </div>
+    </div>
+    <div class="stamp-wrap">
+      <div class="stamp">{{VERDICT}}<span class="score">{{SCORE}} / 100</span></div>
+    </div>
+  </div>
+
+  <!-- 0/1. Why This Company Fits -->
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2>Why This Company Fits the Philosophy</h2></div>
+    <p>{{SECTION_1_FIT_EXPLANATION}}</p>
+  </section>
+
+  <!-- 2. Core Thesis Test -->
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2>Core Thesis Test</h2></div>
+    <p class="quote-line">{{CORE_THESIS_STATEMENT}}</p>
+    <p><b>Verdict:</b> {{CORE_THESIS_VERDICT}} <span style="color:var(--ink-soft);">(Supported / Partially Supported / Not Supported)</span></p>
+    <div class="evid-cols">
+      <div>
+        <h4 class="pro">핵심 근거</h4>
+        <ul class="evid pro">
+          <li>{{SUPPORTING_EVIDENCE_1}}</li>
+          <li>{{SUPPORTING_EVIDENCE_2}}</li>
+          <li>{{SUPPORTING_EVIDENCE_3}}</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="con">핵심 반대 근거</h4>
+        <ul class="evid con">
+          <li>{{OPPOSING_EVIDENCE_1}}</li>
+          <li>{{OPPOSING_EVIDENCE_2}}</li>
+          <li>{{OPPOSING_EVIDENCE_3}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Layer 1 — Structural Signal -->
+  <section>
+    <div class="sec-head"><span class="sec-num">03</span><h2>Layer 1 — Structural Signal Identification</h2></div>
+    <div class="tree-box">
+      <div class="factor">Factor 1-1: Penetration Rate Trajectory</div>
+      <div class="metric">{{PENETRATION_METRIC}}</div>
+      <div class="factor">Factor 1-2: Cross-generational Adoption Gap</div>
+      <div class="metric">{{ADOPTION_GAP_METRIC}}</div>
+      <div class="factor">Factor 1-3: Structural Driver Permanence</div>
+      <div class="metric">{{DRIVER_PERMANENCE_METRIC}}</div>
+    </div>
+  </section>
+
+  <!-- 4. Layer 2/3 — Cyclical Contamination & Market Framing -->
+  <section>
+    <div class="sec-head"><span class="sec-num">04</span><h2>Layer 2/3 — Cyclical Contamination & Market Framing Test</h2></div>
+    <div class="tree-box">
+      <div class="factor">Test 1 — Historical Macro Sensitivity</div>
+      <div class="metric">{{MACRO_SENSITIVITY_RESULT}}</div>
+      <div class="factor">Test 2 — Peer Divergence</div>
+      <div class="metric">{{PEER_DIVERGENCE_RESULT}}</div>
+      <div class="factor">Test 3 — Growth Decomposition (Volume vs Price/Cost)</div>
+      <div class="metric">{{GROWTH_DECOMPOSITION_RESULT}}</div>
+      <div class="factor">Sell-side Sector Classification / Multiple-Fundamental Mismatch</div>
+      <div class="metric">{{SELLSIDE_CLASSIFICATION_RESULT}}</div>
+    </div>
+  </section>
+
+  <!-- 5. Financial Transmission -->
+  <section>
+    <div class="sec-head"><span class="sec-num">05</span><h2>Financial Transmission</h2></div>
+    <table>
+      <tr><th>단계</th><th>상태</th><th>핵심 근거</th></tr>
+      <tr><td>Penetration/Adoption</td><td class="status {{STATUS_CLASS_1}}">{{STATUS_1}}</td><td>{{EVIDENCE_1}}</td></tr>
+      <tr><td>Category Volume</td><td class="status {{STATUS_CLASS_2}}">{{STATUS_2}}</td><td>{{EVIDENCE_2}}</td></tr>
+      <tr><td>Company Revenue (Volume-driven)</td><td class="status {{STATUS_CLASS_3}}">{{STATUS_3}}</td><td>{{EVIDENCE_3}}</td></tr>
+      <tr><td>Peer Divergence</td><td class="status {{STATUS_CLASS_4}}">{{STATUS_4}}</td><td>{{EVIDENCE_4}}</td></tr>
+      <tr><td>Sell-side 재분류</td><td class="status {{STATUS_CLASS_5}}">{{STATUS_5}}</td><td>{{EVIDENCE_5}}</td></tr>
+      <tr><td>Multiple Re-rating</td><td class="status {{STATUS_CLASS_6}}">{{STATUS_6}}</td><td>{{EVIDENCE_6}}</td></tr>
+    </table>
+    <div class="diagnosis">{{CHAIN_PROGRESS_DIAGNOSIS}}</div>
+  </section>
+
+  <!-- 6. Layer A-G -->
+  <section>
+    <div class="sec-head"><span class="sec-num">06</span><h2>Layer A–G Analysis <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);font-weight:400;">(재가중: A=18, G=18)</span></h2></div>
+    <table>
+      <tr><th style="width:18%">Layer</th><th>핵심 판단</th><th style="width:14%">Bull/Bear</th></tr>
+      <tr><td>A. Structural Demand</td><td>{{LAYER_A_JUDGMENT}}</td><td>{{LAYER_A_TAG}}</td></tr>
+      <tr><td>B. Product/Brand</td><td>{{LAYER_B_JUDGMENT}}</td><td>{{LAYER_B_TAG}}</td></tr>
+      <tr><td>C. Customer Economics</td><td>{{LAYER_C_JUDGMENT}}</td><td>{{LAYER_C_TAG}}</td></tr>
+      <tr><td>D. Competitive Advantage</td><td>{{LAYER_D_JUDGMENT}}</td><td>{{LAYER_D_TAG}}</td></tr>
+      <tr><td>E. Distribution</td><td>{{LAYER_E_JUDGMENT}}</td><td>{{LAYER_E_TAG}}</td></tr>
+      <tr><td>F. Financial Translation</td><td>{{LAYER_F_JUDGMENT}}</td><td>{{LAYER_F_TAG}}</td></tr>
+      <tr><td>G. Variant Perception</td><td>{{LAYER_G_JUDGMENT}}</td><td>{{LAYER_G_TAG}}</td></tr>
+    </table>
+  </section>
+
+  <!-- 7. Variant Perception -->
+  <section>
+    <div class="sec-head"><span class="sec-num">07</span><h2>Variant Perception</h2></div>
+    <div class="vp-grid">
+      <div class="vp-card"><h4>Market Believes</h4><p>{{MARKET_BELIEVES}}</p></div>
+      <div class="vp-card"><h4>We Believe</h4><p>{{WE_BELIEVE}}</p></div>
+      <div class="vp-card"><h4>Why Market May Be Wrong</h4><p>{{WHY_MARKET_WRONG}}</p></div>
+      <div class="vp-card"><h4>Evidence Needed</h4><p>{{EVIDENCE_NEEDED}}</p></div>
+    </div>
+    <span class="class-badge">Classification — {{VARIANT_CLASSIFICATION_1_TO_6}}</span>
+  </section>
+
+  <!-- 8. Catalyst -->
+  <section>
+    <div class="sec-head"><span class="sec-num">08</span><h2>Catalyst Map</h2></div>
+    <table>
+      <tr><th>Catalyst</th><th>Leading Indicator</th><th>예상 시점</th><th>Earnings Impact</th></tr>
+      <tr><td>{{CATALYST_1}}</td><td>{{LEADING_INDICATOR_1}}</td><td>{{TIMING_1}}</td><td>{{IMPACT_1}}</td></tr>
+      <tr><td>{{CATALYST_2}}</td><td>{{LEADING_INDICATOR_2}}</td><td>{{TIMING_2}}</td><td>{{IMPACT_2}}</td></tr>
+      <tr><td>{{CATALYST_3}}</td><td>{{LEADING_INDICATOR_3}}</td><td>{{TIMING_3}}</td><td>{{IMPACT_3}}</td></tr>
+    </table>
+  </section>
+
+  <!-- 9. Valuation -->
+  <section>
+    <div class="sec-head"><span class="sec-num">09</span><h2>Valuation</h2></div>
+    <ul class="evid">
+      <li><b>현재 Multiple</b> — {{CURRENT_MULTIPLE}}</li>
+      <li><b>역사적 Range</b> — {{HISTORICAL_RANGE}}</li>
+      <li><b>Peers</b> — {{PEER_MULTIPLE}}</li>
+      <li><b>내재된 기대</b> — {{IMPLIED_EXPECTATION}}</li>
+    </ul>
+  </section>
+
+  <!-- 10. Expected Return -->
+  <section>
+    <div class="sec-head"><span class="sec-num">10</span><h2>Expected Return <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);font-weight:400;">(정성적 Estimate)</span></h2></div>
+    <table>
+      <tr><th>Scenario</th><th>구조/순환 판정</th><th>Multiple 반응</th><th>Expected Return</th></tr>
+      <tr><td>Bull</td><td>{{BULL_CLASSIFICATION}}</td><td>{{BULL_MULTIPLE}}</td><td>{{BULL_RETURN}}</td></tr>
+      <tr><td>Base</td><td>{{BASE_CLASSIFICATION}}</td><td>{{BASE_MULTIPLE}}</td><td>{{BASE_RETURN}}</td></tr>
+      <tr><td>Bear</td><td>{{BEAR_CLASSIFICATION}}</td><td>{{BEAR_MULTIPLE}}</td><td>{{BEAR_RETURN}}</td></tr>
+    </table>
+  </section>
+
+  <!-- 11. Entry Strategy -->
+  <section>
+    <div class="sec-head"><span class="sec-num">11</span><h2>Entry Strategy</h2></div>
+    <p><span class="tag neutral">Decision — {{ENTRY_TIMING}}</span> <span style="font-size:12px;color:var(--ink-soft);">(BUY NOW / BUY ON CONFIRMATION / BUY ON WEAKNESS / WAIT)</span></p>
+    <ol class="evid">
+      <li>{{ENTRY_CONDITION_1}}</li>
+      <li>{{ENTRY_CONDITION_2}}</li>
+      <li>{{ENTRY_CONDITION_3}}</li>
+    </ol>
+  </section>
+
+  <!-- 12. Thesis Break -->
+  <section>
+    <div class="sec-head"><span class="sec-num">12</span><h2>Thesis Break</h2></div>
+    <div class="evid-cols">
+      <div>
+        <h4 class="pro">Confirmation Signal</h4>
+        <p style="font-size:14px;">{{CONFIRMATION_SIGNAL}}</p>
+        <h4 class="pro" style="margin-top:16px;">Weakening Signal</h4>
+        <p style="font-size:14px;">{{WEAKENING_SIGNAL}}</p>
+      </div>
+      <div>
+        <h4 class="con">Break Signal</h4>
+        <p style="font-size:14px;">{{BREAK_SIGNAL}}</p>
+        <h4 class="con" style="margin-top:16px;">Sell Trigger</h4>
+        <p style="font-size:14px;">{{SELL_TRIGGER}}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. Scorecard -->
+  <section>
+    <div class="sec-head"><span class="sec-num">13</span><h2>Scorecard</h2></div>
+    <table>
+      <tr><th>항목</th><th class="num">점수</th><th class="num">최대</th><th>핵심 근거</th></tr>
+      <tr><td>A. Structural Demand</td><td class="num">{{SCORE_A}}</td><td class="num">18</td><td>{{REASON_A}}</td></tr>
+      <tr><td>B. Product/Brand</td><td class="num">{{SCORE_B}}</td><td class="num">10</td><td>{{REASON_B}}</td></tr>
+      <tr><td>C. Customer Economics</td><td class="num">{{SCORE_C}}</td><td class="num">12</td><td>{{REASON_C}}</td></tr>
+      <tr><td>D. Competitive Advantage</td><td class="num">{{SCORE_D}}</td><td class="num">10</td><td>{{REASON_D}}</td></tr>
+      <tr><td>E. Distribution</td><td class="num">{{SCORE_E}}</td><td class="num">8</td><td>{{REASON_E}}</td></tr>
+      <tr><td>F. Financial Translation</td><td class="num">{{SCORE_F}}</td><td class="num">12</td><td>{{REASON_F}}</td></tr>
+      <tr><td>G. Variant Perception</td><td class="num">{{SCORE_G}}</td><td class="num">18</td><td>{{REASON_G}}</td></tr>
+      <tr><td>H. Catalyst</td><td class="num">{{SCORE_H}}</td><td class="num">6</td><td>{{REASON_H}}</td></tr>
+      <tr><td>I. Valuation</td><td class="num">{{SCORE_I}}</td><td class="num">6</td><td>{{REASON_I}}</td></tr>
+      <tr><td>Risk (감점)</td><td class="num">{{SCORE_RISK}}</td><td class="num">-15</td><td>{{REASON_RISK}}</td></tr>
+      <tr class="score-total-row"><td>Total</td><td class="num">{{SCORE}}</td><td class="num">100</td><td></td></tr>
+    </table>
+  </section>
+
+  <!-- 14. Final Decision -->
+  <section>
+    <div class="sec-head"><span class="sec-num">14</span><h2>Final Investment Decision</h2></div>
+    <div class="qa"><div class="q">WHY THIS COMPANY?</div><div class="a">{{WHY_THIS_COMPANY}}</div></div>
+    <div class="qa"><div class="q">WHY IS THE MARKET WRONG?</div><div class="a">{{WHY_MARKET_WRONG_ANSWER}}</div></div>
+    <div class="qa"><div class="q">WHY NOW?</div><div class="a">{{WHY_NOW}}</div></div>
+    <div class="qa"><div class="q">WHAT MAKES MONEY?</div><div class="a">{{WHAT_MAKES_MONEY}}</div></div>
+    <div class="qa"><div class="q">WHAT PROVES US WRONG?</div><div class="a">{{WHAT_PROVES_WRONG}}</div></div>
+
+    <div class="verdict-box">
+      <div class="row"><span class="k">Verdict</span><span class="v">{{VERDICT}}</span></div>
+      <div class="row"><span class="k">Entry</span><span class="v">{{ENTRY_TIMING}}</span></div>
+      <div class="row"><span class="k">Expected Holding Period</span><span class="v">{{HOLDING_PERIOD}}</span></div>
+      <div class="row"><span class="k">Primary Catalyst</span><span class="v">{{PRIMARY_CATALYST}}</span></div>
+      <div class="row"><span class="k">Thesis Break</span><span class="v">{{THESIS_BREAK_SUMMARY}}</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Structural vs. Cyclical Misclassification Investment Decision Skill</span>
+    <span>{{DATA_AS_OF_AND_SOURCES}}</span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -265,6 +265,77 @@
   .criterion .link-out { font-size: 13px; margin-top: 10px; }
   .criterion .link-out a { color: var(--link); }
 
+  /* ---- 개별 보고서 원문 클래스(신세계·현대백화점·롯데쇼핑과 markup이 다른 한화갤러리아/광주신세계 대응) ---- */
+  .crit-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .score-badge {
+    font-family: "D2Coding", monospace;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    background: var(--paper-panel-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    padding: 3px 8px;
+  }
+  table.screen caption { display: none; }
+  table.screen th {
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+    padding: 0 12px 8px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  table.screen td { padding: 12px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.screen tr:last-child td { border-bottom: 1px solid var(--line-strong); }
+  table.screen td.item { font-weight: 700; white-space: nowrap; font-family: "Noto Serif KR", "Batang", ui-serif, serif; }
+  table.screen td.flag { white-space: nowrap; }
+  table.screen td.basis { color: var(--ink-soft); line-height: 1.65; }
+  .chip { display: inline-block; font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; padding: 3px 9px; border-radius: 3px; border: 1.5px solid currentColor; }
+  .chip.pass { color: var(--forest-ink); }
+  .chip.none { color: var(--ink-faint); border-style: dashed; }
+
+  /* ---- 개별 보고서 접기/펼치기 ---- */
+  details.report-embed {
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    margin-bottom: 14px;
+    background: var(--paper-panel);
+    overflow: hidden;
+  }
+  details.report-embed > summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  details.report-embed > summary::-webkit-details-marker { display: none; }
+  details.report-embed > summary .re-name {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 16.5px;
+  }
+  details.report-embed > summary .re-code { font-size: 12.5px; color: var(--ink-faint); }
+  details.report-embed > summary .chevron {
+    margin-left: auto;
+    color: var(--ink-faint);
+    font-family: "D2Coding", monospace;
+    transition: transform 0.15s ease;
+  }
+  details.report-embed[open] > summary .chevron { transform: rotate(90deg); }
+  details.report-embed > summary:hover { background: var(--paper-panel-2); }
+  .re-body {
+    padding: 6px 24px 28px;
+    border-top: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .re-body header.letterhead { padding-top: 16px; }
+
   .opinion {
     background: var(--paper-panel);
     border: 1px solid var(--line-strong);
@@ -415,14 +486,670 @@
       <span class="eyebrow">개별 보고서</span>
       <h2>기업별 상세 판단</h2>
     </div>
-    <p class="note" style="margin-bottom:14px;">각 기업의 Layer별 근거, Gate 발동 내역, 원자료 출처, Compliance Self-Check는 아래 개별 보고서에 전부 있다.</p>
-    <ul>
-      <li><a href="신세계-20260813.html">신세계-20260813.html</a></li>
-      <li><a href="현대백화점-20260813.html">현대백화점-20260813.html</a></li>
-      <li><a href="롯데쇼핑-20260813.html">롯데쇼핑-20260813.html</a></li>
-      <li><a href="한화갤러리아-20260813.html">한화갤러리아-20260813.html</a></li>
-      <li><a href="광주신세계-20260813.html">광주신세계-20260813.html</a></li>
-    </ul>
+    <p class="note" style="margin-bottom:14px;">각 기업의 Layer별 근거, Gate 발동 내역, 원자료 출처, Compliance Self-Check가 아래에 전체 원문 그대로 접혀 있다 — 클릭하면 펼쳐진다. 별도 파일로도 열 수 있다(각 카드 안 링크).</p>
+
+    <details class="report-embed">
+      <summary>
+        <span class="re-name">신세계</span>
+        <span class="re-code mono">004170</span>
+        <span class="stamp fail">투자 매력 없음</span>
+        <span class="chevron">&#9656;</span>
+      </summary>
+      <div class="re-body">
+        <p class="link-out"><a href="신세계-20260813.html">별도 파일로 열기 ↗</a></p>
+
+        <header class="letterhead">
+          <div class="titles">
+            <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 (Score+Gate 아키텍처)</div>
+            <h1>신세계</h1>
+            <div class="code mono">종목코드 004170 · 코스피 · 백화점 산업 비교 대상</div>
+          </div>
+          <div class="meta">
+            작성일 <b>2026-08-13</b><br>
+            작성 도구 <b><span class="mono">investment-desk</span></b><br>
+            DART 조회 <b>corp_code 00136378</b>
+          </div>
+        </header>
+
+        <p class="overview">신세계는 롯데·현대와 함께 국내 백화점 3사 과점 구조에 속한 오프라인 소매(B2C) 유통기업으로, 백화점(본점·강남점 등 전국 13개 점포) 및 면세업을 핵심 사업으로 영위한다. DART 사업보고서 기준 제69기(FY2025) 별도 매출액 6조 9,295억원, 영업이익 4,800억원을 기록했다. Scope Gate 판단: 주력 매출이 소비자 대상 백화점·면세 소매업이므로 B2C 스코프에 해당해 판단을 진행했다.</p>
+
+        <div class="verdict-strip">
+          <span class="stamp stamp-lg fail">투자 매력 없음 · 3개 기준 전부 미부합</span>
+        </div>
+
+        <section class="stage">
+          <div class="stage-head">
+            <span class="eyebrow">STAGE 1</span>
+            <h2>핵심 판단 기준 3개</h2>
+          </div>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score 4/100 · Verdict: PASS</div>
+              </div>
+            </div>
+            <p class="figs mono">매출총이익률 60.63% → 61.68% → 60.51% (제67→68→69기) · 영업이익률 10.07% → 7.26% → 6.93%(3개년 연속 하락) · 매출원가 YoY +8.69% &gt; 매출액 YoY +5.47%</p>
+            <p>Layer C(Customer Economics: 리텐션·CAC·LTV)와 Pricing Power Test 4개 서브테스트(가격 인상 이력, 인상 전후 리텐션 유지, Mix를 통한 가격 상승, 경쟁사 대비 ASP 프리미엄)가 전부 데이터 부재(Insufficient Data)로 Data Integrity Gate가 발동했다. "명품관 확장·프리미엄 Mix 전환" 서술(웹 뉴스)은 존재하나 실제 매출총이익률·영업이익률은 오히려 3개년 연속 하락해 Financial Transmission Chain이 Gross Margin 단계에서 끊긴다(Financial Translation Gate 발동). 현재가(721,000원)가 52주 최고가(722,000원)에 근접해 있어 "명품·면세 개선" 스토리가 이미 상당 부분 가격에 반영된 것으로 판단, Variant Perception이 Category 1(시장이 이미 아는 좋은 점)로 분류돼 Consensus Gate도 발동했다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준① "Verdict 매핑" — PASS(Gate 위반 포함) → 미부합. <span class="mono">judge-retention-pricing-power/references/scorecard_and_verdict.md</span> Consensus Gate·Data Integrity Gate·Financial Translation Gate·Valuation Gate(확인 불가로 미통과 처리) 다중 발동</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 별도재무제표(Primary, Medium) · FnGuide/FnSpace 미확보(이번 실행 서브에이전트 툴셋에 MCP 함수 미노출, 리텐션·컨센서스 지표 판단 보류) · web.json 명품관 확장·시세(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>② Structural vs Cyclical Misclassification</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score ≈15/100 · Verdict: PASS</div>
+              </div>
+            </div>
+            <p class="figs mono">매출액 YoY 3.36%(68기) → 5.47%(69기) · 2026년 1분기 연결 매출 YoY +10.9%(웹, 분기·연결 vs 연간·별도라 직접 비교 불가) · 영업이익률 10.07% → 7.26% → 6.93%(3개년 연속 하락)</p>
+            <p>Cyclical Contamination Test 결과, Test 1(한국 매크로 동행 여부)은 FRED 캐시가 미국 지표(CPI·기준금리·소매판매·실업률)만 포함해 판단 보류로 처리했다. Test 3(Growth Decomposition)에서 최근 실적 개선 서술이 "중국 단체관광객 무비자 시행에 따른 방한객 증가"(정책 변수)와 "럭셔리 초격차"(Mix/Price 축)에 집중돼 있는데, 정작 연간 영업이익률은 3개년 연속 하락해 순수 Volume 중심의 구조적 전환으로 보기 어렵다 — 구조와 순환이 뒤섞여 분리되지 않는다는 결론이다. Test 2(Peer Divergence)는 정량 데이터가 없으나, 롯데·현대·신세계 3사가 동시에 명품관·이커머스 확장 전략을 펴고 있다는 정성 근거(웹 뉴스)가 오히려 Divergence 부재 방향을 시사한다. Financial Transmission Chain은 Company Revenue 단계에서부터 Broken이며, 그 이후 Peer Divergence·Sell-side 재분류·Multiple Re-rating은 데이터 없음으로 판단 보류다. 현재가가 52주 최고가권에 있어 Variant Perception도 Category 1로 분류돼 Consensus Gate가 발동했다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준② "Verdict 매핑" — PASS(Score 50&ndash;64 또는 Gate 위반) → 미부합. <span class="mono">judge-structural-vs-cyclical/references/cyclical_contamination_test.md</span>·<span class="mono">scorecard_and_verdict.md</span> Valuation·Consensus·Financial Translation·Data Integrity Gate 4개 전부 발동</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 3개년 매출·영업이익(Primary, Medium) · FRED(미국 CPI·기준금리·소매판매·실업률, 국가 불일치로 Low, 참고용) · web.json 업계 경쟁·정책 동향(Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>③ Underpriced Customer Love (ULRS)</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score ≈5&ndash;10/100 · Verdict: AVOID</div>
+              </div>
+            </div>
+            <p class="figs mono">한계영업이익률(ΔEBIT/ΔRev) 68기 구간 음수, 69기 구간 0에 근접 · 이자보상배율 ≈1.80배(69기) · 점포 수 롯데 30 &gt; 현대 16 &gt; 신세계 13(3사 중 최소)</p>
+            <p>Layer 1(Customer Love)·Layer 2(Durability)의 핵심 정량 지표(재구매율, 리뷰 스코어 추이, Retention Decay, Switching Cost)가 전부 데이터 없음이라 Durability Gate 통과를 확인할 근거가 없다(Layer2 ≥40 입증 불가 → 60점 상한 적용 대상). Layer 3(Operating Monetization Gap)의 유일한 실측치인 영업이익률이 3개년 연속 하락(10.1%→7.3%→6.9%)했고, Layer 4(Financial Conversion Capacity)의 한계영업이익률도 음수~0에 근접해 영업레버리지가 작동하지 않는다. Layer 5(Market Recognition Gap)는 컨센서스·Peer 데이터 부재로 완전 판단 보류이며, ULRS 진단 공식(Conversion_Readiness_Gap)도 Layer4·5 Percentile 부재로 산출 자체가 불가해 Market Recognition Gate 통과를 확인할 수 없다. Red Flag 10종 중 9개가 "확인 불가"(임의로 미해당 처리하지 않음)로, 이 자체가 Data Integrity Gate를 발동시킨다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준③ "Verdict 매핑" — AVOID(Score 50&ndash;64 또는 Gate 위반, Red Flag 2개↑ 포함) → 미부합. <span class="mono">judge-underpriced-customer-love/references/scorecard_and_verdict.md</span> Durability Gate·Market Recognition Gate·Data Integrity Gate 미통과</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 마진·이자비용 데이터(Primary, Medium) · web.json 점포 수·경쟁 구도(Proxy, Medium) · FnGuide/FnSpace 미확보(Market Recognition Gap 산정 불가, 중립 처리 금지 원칙에 따라 감점 처리)</dd>
+            </dl>
+          </article>
+
+          <p class="stage-summary terminal">1단계 종합 — 기준①·②·③ 모두 미부합(각 PASS/PASS/AVOID → 미부합 환산)이다. <span class="mono">judgment-rules.md</span> "3개 모두 미부합이면 그 시점에 투자 매력이 없는 것으로 보고 판단을 종료한다" 조항에 따라 2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)은 실행하지 않는다.</p>
+        </section>
+
+        <div class="opinion">
+          <h2>종합 투자의견</h2>
+          <p>1단계 핵심 판단 기준 3개(Retention-to-Pricing-Power, Structural vs Cyclical, Underpriced Customer Love) 모두 미부합으로 판정됐다. 공통적으로 (1) 명품관 확장·면세 방한객 증가 등 긍정적 서술은 다수 확인되나 정작 매출총이익률·영업이익률은 최근 3개년 연속 하락해 "프리미엄화 → 가격결정력 → 마진 확장"이라는 핵심 인과 체인이 재무제표에서 검증되지 않았고, (2) 현재가가 52주 최고가권(721,000원/722,000원)에 있어 알려진 호재가 이미 상당 부분 주가에 반영된 것으로 판단되며, (3) 점포 수 기준 3사 중 최소 규모라는 경쟁 열위와 리텐션·재구매율 등 소비자 애착 정량 지표 부재가 겹쳐 어느 기준도 정량 임계값(Score 50 이상 또는 각 Gate 통과)을 충족하지 못했다.</p>
+          <p><span class="mono">judgment-rules.md</span> "1단계" 절의 "3개 모두 미부합이면 투자 매력이 없는 것으로 보고 판단을 종료한다"는 규정에 따라, 이번 데이터 시점(2026-08-13) 기준 신세계는 이 판단 규칙서상 투자 매력이 없는 것으로 결론짓는다. 단, FnGuide/FnSpace 컨센서스와 리텐션·재구매율 등 핵심 지표가 이번 실행에서 다수 미확보됐다는 점을 고려하면 이 결론은 "데이터가 부족해 부합 근거를 찾지 못했다"는 성격이 크며, 해당 데이터가 확보되면 재실행이 필요하다.</p>
+          <div class="conclusion">
+            <p>세 기준 모두 미부합 — 규칙서 조항에 따라 판단을 종료한다. 2단계 스크리닝은 실행하지 않았다.</p>
+            <span class="stamp fail">투자 매력 없음</span>
+          </div>
+        </div>
+
+        <section class="sources">
+          <h2>사용한 원자료 출처</h2>
+          <ol>
+            <li><b>DART</b> — <span class="mono">data/cache/신세계/dart.json</span>, 사업보고서(제67&ndash;69기) 별도 손익계산서·재무상태표, corp_code 00136378, 2026-08-13 조회.</li>
+            <li><b>FRED</b> — <span class="mono">data/cache/신세계/fred.json</span>, CPI·기준금리(FEDFUNDS)·소매판매(RSAFS)·실업률(UNRATE), 미국 지표, 2026-08-13 조회. 국가 불일치로 Low Confidence, 참고용.</li>
+            <li><b>FnGuide/FnSpace</b> — 미확보. fnspace MCP 플러그인은 연결 상태였으나 이번 서브에이전트 세션의 툴 목록에 <span class="mono">mcp__fnspace__*</span> 함수가 노출되지 않아 컨센서스·추정실적·목표주가 데이터를 수집하지 못했다. 세 기준 판단 모두에서 이 공백을 명시하고 관련 하위 지표를 판단 보류 처리했다.</li>
+            <li><b>Tripadvisor</b> (Proxy) — 신세계백화점 본점 이용 후기, 2026-08-13 수집. 정성적 호평(식품매장)·부정 피드백(명품관 동선) 혼재, 수치화된 재구매율·NPS 지표 아님. Low&ndash;Medium Confidence.</li>
+            <li><b>나무위키</b> (Proxy) — 신세계백화점 본점·강남점 문서, 2026-08-13 수집. 명품관·식품관 확장 서술. Low Confidence(위키형 매체).</li>
+            <li><b>Daum(연합 등 통신기사 재게재)</b> (Proxy) — "매장 더 크게… 판 커진 백화점 '명품관 전쟁'"(2026-07-28), 명동 디올 부티크 복층 확장 등. Medium Confidence.</li>
+            <li><b>한국경제</b> (Proxy) — 2026년 1분기 연결 실적(매출 YoY +10.9%, 영업이익 YoY +49.5%, 순이익 YoY +108.9%) 및 상반기 백화점 명품 매출 YoY +30%대 서술. 분기·연결 기준이라 DART 연간·별도 수치와 직접 비교하지 않고 참고용으로만 사용. Medium Confidence.</li>
+            <li><b>인사이트코리아</b> (Proxy) — "현대·신세계·롯데百, 이커머스 전면 재편" 기사, 점포 수(롯데30·현대16·신세계13) 및 3사 이커머스 재편 전략. Medium Confidence.</li>
+            <li><b>아시아경제</b> (Proxy) — "[단독]'계열 분리' 신세계百, 자사몰 결제 도입…이커머스 재진출" 기사, 비욘드 신세계 재출시(2025-07) 서술. Medium Confidence.</li>
+            <li><b>Daum Finance</b> (Proxy) — <span class="mono">data/cache/신세계/web.json</span> market_data, 2026-08-13 조회. 시가총액 약 6조 8,099억원, 현재가 721,000원(+5.26%), 52주 160,800원~722,000원. Medium Confidence(3rd-party 웹, 공식 API 아님).</li>
+            <li><b>브런치(ESG 동향 정리 게시물)</b> (Proxy) — 신세계㈜ 자체의 중대 소송·제재 이력은 검색상 확인되지 않음(데이터 없음, Pass로 임의 격상하지 않음). 계열사 신세계I&amp;C의 KCGS ESG A등급(3년 연속)은 별도 법인이라 참고용으로만 표기. Low&ndash;Medium Confidence.</li>
+          </ol>
+        </section>
+
+        <div class="compliance">
+          <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+          <ul>
+            <li>세 기준 모두 각 스킬의 100점 Score+Gate 아키텍처(<span class="mono">references/scorecard_and_verdict.md</span>)로 산출된 최종 Verdict(PASS/PASS/AVOID)를 <span class="mono">judgment-rules.md</span> 기준①②③의 매핑 조항 그대로 적용해 미부합으로 환산했다 — 임의 재량 해석을 추가하지 않았다.</li>
+            <li>3개 기준 모두 미부합이므로 <span class="mono">judgment-rules.md</span> 1단계 규정에 따라 2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)을 실행하지 않았다.</li>
+            <li>FnGuide/FnSpace 데이터 미확보를 세 기준 판단 각각에서 명시했고, 해당 데이터에 의존하는 하위 지표(Market Recognition Gap, 컨센서스 오차, Valuation 배수 등)는 임의로 추정하지 않고 판단 보류·감점 처리했다(재현성 원칙 2번).</li>
+            <li>2026년 1분기 연결 실적(YoY +49.5% 영업이익 등)은 분기·연결 기준이라 DART에서 확보한 연간·별도 기준 수치와 집계 범위가 달라 직접 비교·상쇄에 사용하지 않고 참고용으로만 인용했다 — 서로 다른 집계 기준을 섞어 결론을 내리지 않기 위함이다.</li>
+            <li>모든 판단 문장에 적용한 <span class="mono">judgment-rules.md</span> 조항·스킬 Gate 이름을 괄호/각주로 명시했다(판단 일관성 원칙 3번).</li>
+            <li>이 보고서는 "백화점 산업" 비교의 일부로 실행됐으며, 산업 순위표에서는 "탈락(투자 매력 없음)" 목록에 사유와 함께 기재되어야 한다(<span class="mono">judgment-rules.md</span> "산업/섹터 비교 — 순위 산정" 절).</li>
+          </ul>
+        </div>
+
+        <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13</footer>
+      </div>
+    </details>
+
+    <details class="report-embed">
+      <summary>
+        <span class="re-name">현대백화점</span>
+        <span class="re-code mono">069960</span>
+        <span class="stamp fail">투자 매력 없음</span>
+        <span class="chevron">&#9656;</span>
+      </summary>
+      <div class="re-body">
+        <p class="link-out"><a href="현대백화점-20260813.html">별도 파일로 열기 ↗</a></p>
+
+        <header class="letterhead">
+          <div class="titles">
+            <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 (Score+Gate 아키텍처)</div>
+            <h1>현대백화점</h1>
+            <div class="code mono">종목코드 069960 · 코스피 · 백화점 산업 비교 대상</div>
+          </div>
+          <div class="meta">
+            작성일 <b>2026-08-13</b><br>
+            작성 도구 <b><span class="mono">investment-desk</span></b><br>
+            DART 조회 <b>corp_code 00428251</b>
+          </div>
+        </header>
+
+        <p class="overview">현대백화점은 롯데·신세계와 함께 국내 백화점 3사 과점 구조에 속한 오프라인 소매(B2C) 유통기업으로, DART 사업보고서 기준 제24기(FY2025) 연결 매출액 4조 2,303억원, 영업이익 3,779억원을 기록했다. Scope Gate 판단: 주력 매출이 소비자 대상 백화점 소매업이므로 B2C 스코프에 해당해 판단을 진행했다.</p>
+
+        <div class="verdict-strip">
+          <span class="stamp stamp-lg fail">투자 매력 없음 · 3개 기준 전부 미부합</span>
+        </div>
+
+        <section class="stage">
+          <div class="stage-head">
+            <span class="eyebrow">STAGE 1</span>
+            <h2>핵심 판단 기준 3개</h2>
+          </div>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score 14/100 · Verdict: PASS</div>
+              </div>
+            </div>
+            <p class="figs mono">영업이익률 7.21% → 6.78% → 8.93% (제22→23→24기) · 매출액 YoY 전기 &minus;0.47% · 당기 +1.02%</p>
+            <p>Layer C(Customer Economics)와 Pricing Power Test 4개 서브테스트(가격 인상 이력, 인상 전후 리텐션, Mix/업셀, 경쟁사 대비 ASP) 전부가 데이터 부재(Insufficient Data)로, Financial Transmission Chain이 출발점(Retention)부터 끊겨 있어 FY2025 마진 개선을 가격전가력에 귀속시킬 인과 근거가 없다. Variant Perception도 "백화점 오프라인 구조적 저성장" 컨센서스 범위를 벗어나지 못해 Category 1(시장이 이미 아는 좋은 점)로 분류돼 Consensus Gate가 발동했다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준① "Verdict 매핑" — PASS(Gate 위반 포함) → 미부합. <span class="mono">judge-retention-pricing-power/references/scorecard_and_verdict.md</span> Consensus Gate·Data Integrity Gate·Financial Translation Gate 다중 발동</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 연결재무제표(Primary, Medium) · FnGuide/FnSpace 미확보(이번 실행 MCP 툴 미노출, 컨센서스·리텐션 지표 판단 보류) · web.json 출점계획(Proxy, 간접 근거)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>② Structural vs Cyclical Misclassification</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score 14/100 · Verdict: PASS</div>
+              </div>
+            </div>
+            <p class="figs mono">3개년 매출액 4.2075조 / 4.1876조(&minus;0.47%) / 4.2303조원(+1.02%) · 영업이익 3,035억 → 2,840억 → 3,779억원(+33.1%)</p>
+            <p>Cyclical Contamination Test 결과, Peer Divergence 테스트는 Broken(백화점 3사 매출 신장률 21.7% YoY 동반 성장 확인, 자사 고유의 구조적 괴리 근거 없음) 판정이고, Growth Decomposition 결과 매출은 3년간 사실상 정체(CAGR 약 0.3%)인데 영업이익 급증은 매출원가 절감·이자비용 감소(101.7십억←109.9십억, &minus;7.5%)가 주도해 Volume(구조적) 축이 아닌 Cost/금융비용(순환적) 축에서 발생한 것으로 확인됐다. 반증 시도(Bear case) 결과 핵심 테제가 지지되지 않았다. Variant Perception 역시 "더현대 신드롬/백화점 위기론" 범위를 벗어나지 못해 Consensus Gate가 발동했다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준② "Verdict 매핑" — PASS(Score 50&ndash;64 또는 Gate 위반) → 미부합. <span class="mono">judge-structural-vs-cyclical/references/cyclical_contamination_test.md</span> Peer Divergence Broken, Consensus Gate·Data Integrity Gate 발동</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 3개년 매출·영업이익·이자비용(Primary, Medium) · FRED(미국 CPI·기준금리·소매판매·실업률, 국가 불일치로 Low, 참고용) · web.json 업계 경쟁동향(Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>③ Underpriced Customer Love (ULRS)</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score ≈41/100 · Verdict: AVOID</div>
+              </div>
+            </div>
+            <p class="figs mono">한국소비자원 백화점 만족도(2025.09, 5점 만점): 현대 3.85 vs 신세계 3.83 vs 롯데 3.75(격차 0.02점)</p>
+            <p>유일한 실측 Love 지표(소비자원 만족도 1위)도 경쟁사와 사실상 동률이라 강한 애착의 증거로 보기 어렵다. Durability Layer는 리텐션 감쇠·스위칭코스트 데이터 부재에 더해 복수 백화점 카드 병행 보유가 흔하고 온라인 유통 대체 위협이 상존해 40점 미만으로 산정, Durability Gate가 발동했다(이 자체로 Total Score 60점 상한 적용 대상). Market Recognition Gap(Layer 5)은 컨센서스 데이터 부재로 산정 불가해 중립(50점) 처리하지 않고 보수적으로 0점 처리했다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준③ "Verdict 매핑" — AVOID(Score 50&ndash;64 또는 Gate 위반, Red Flag 2개↑ 포함) → 미부합. <span class="mono">judge-underpriced-customer-love/references/scorecard_and_verdict.md</span> Durability Gate·Market Recognition Gate 미통과</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>web.json 소비자원 만족도조사(Medium, Proxy) · DART 마진 데이터(Primary, Medium) · FnGuide/FnSpace 미확보(Market Recognition Gap 산정 불가, 중립 처리 금지 원칙에 따라 감점 처리)</dd>
+            </dl>
+          </article>
+
+          <p class="stage-summary terminal">1단계 종합 — 기준①·②·③ 모두 미부합(각 PASS/PASS/AVOID → 미부합 환산)이다. <span class="mono">judgment-rules.md</span> "3개 모두 미부합이면 그 시점에 투자 매력이 없는 것으로 보고 판단을 종료한다" 조항에 따라 2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)은 실행하지 않는다.</p>
+        </section>
+
+        <div class="opinion">
+          <h2>종합 투자의견</h2>
+          <p>1단계 핵심 판단 기준 3개(Retention-to-Pricing-Power, Structural vs Cyclical, Underpriced Customer Love) 모두 미부합으로 판정됐다. 공통적으로 (1) 매출이 3개년간 사실상 정체된 상태에서 최근 영업이익 개선이 매출총이익률·가격전가력이 아니라 원가·이자비용 절감에 주로 기인하는 것으로 확인됐고, (2) 백화점 3사가 동반 성장(YoY +21.7%)하는 국면이라 현대백화점 고유의 구조적 우위·가격결정력·소비자 애착 우위를 뒷받침할 근거가 부족했으며, (3) 소비자 만족도(1위)·출점계획(더현대 오모테산도·부산·광주)은 긍정적 정황이나 세 기준 어느 것도 정량 임계값(Score 50 이상 또는 각 Gate 통과)을 충족하지 못했다.</p>
+          <p><span class="mono">judgment-rules.md</span> "1단계" 절의 "3개 모두 미부합이면 투자 매력이 없는 것으로 보고 판단을 종료한다"는 규정에 따라, 이번 데이터 시점(2026-08-13) 기준 현대백화점은 이 판단 규칙서상 투자 매력이 없는 것으로 결론짓는다. 단, FnGuide/FnSpace 컨센서스와 리텐션·재구매율 등 핵심 지표가 이번 실행에서 다수 미확보됐다는 점을 고려하면 이 결론은 "데이터가 부족해 부합 근거를 찾지 못했다"는 성격이 크며, 해당 데이터가 확보되면 재실행이 필요하다.</p>
+          <div class="conclusion">
+            <p>세 기준 모두 미부합 — 규칙서 조항에 따라 판단을 종료한다. 2단계 스크리닝은 실행하지 않았다.</p>
+            <span class="stamp fail">투자 매력 없음</span>
+          </div>
+        </div>
+
+        <section class="sources">
+          <h2>사용한 원자료 출처</h2>
+          <ol>
+            <li><b>DART</b> — <span class="mono">data/cache/현대백화점/dart.json</span>, 사업보고서(제22&ndash;24기) 연결 손익계산서·재무상태표, corp_code 00428251, 2026-08-13 조회.</li>
+            <li><b>FRED</b> — <span class="mono">data/cache/현대백화점/fred.json</span>, CPI·기준금리(FEDFUNDS)·소매판매(RSAFS)·실업률(UNRATE), 미국 지표, 2026-08-13 조회. 국가 불일치로 Low Confidence, 참고용.</li>
+            <li><b>FnGuide/FnSpace</b> — 미확보. fnspace MCP 플러그인은 연결 상태였으나 이번 서브에이전트 세션의 툴 목록에 <span class="mono">mcp__fnspace__*</span> 함수가 노출되지 않아 컨센서스·추정실적·목표주가 데이터를 수집하지 못했다. 세 기준 판단 모두에서 이 공백을 명시하고 관련 하위 지표를 판단 보류 처리했다.</li>
+            <li><b>alphasquare.co.kr</b> (Proxy) — <span class="mono">data/cache/현대백화점/web.json</span> market_data, 2026-08-13 조회. 시가총액 2조 2,535억원, 현재가 146,500원, 52주 최고/최저가. Medium Confidence(3rd-party 웹, 공식 API 아님).</li>
+            <li><b>다음뉴스(한국소비자원 조사 인용)</b> (Proxy) — 백화점 3사 소비자 만족도 조사(2025-09), 현대 3.85점 1위(신세계 3.83, 롯데 3.75). Medium Confidence.</li>
+            <li><b>Teamblind</b> (Proxy) — 현대백화점 직원 리뷰. 소비자 애착 지표로 직접 사용 불가해 참고용으로만 표기, Low Confidence.</li>
+            <li><b>thesmileinfo.com</b> (Proxy) — "2026 유통업 대전환 분석"(2026-01), 더현대 오모테산도(도쿄, 2026)·더현대 부산(2027)·더현대 광주(2028) 등 출점 계획. Medium Confidence.</li>
+            <li><b>alphabiz.co.kr</b> (Proxy) — 현대백화점그룹 ESG 등급 A+(2년 연속) 기사. 최근 1년 내 중대 ESG 제재·소송 이력은 검색상 확인되지 않음(데이터 없음, Pass로 임의 격상하지 않음). Medium Confidence.</li>
+            <li><b>CEO매거진</b> (Proxy) — 백화점 3사(롯데·신세계·현대) 경쟁 구도 및 매출 신장률(2026-04 YoY +21.7%, 유통업 평균 대비 3배) 기사. Medium Confidence.</li>
+          </ol>
+        </section>
+
+        <div class="compliance">
+          <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+          <ul>
+            <li>세 기준 모두 각 스킬의 100점 Score+Gate 아키텍처(<span class="mono">references/scorecard_and_verdict.md</span>)로 산출된 최종 Verdict(PASS/PASS/AVOID)를 <span class="mono">judgment-rules.md</span> 기준①②③의 매핑 조항 그대로 적용해 미부합으로 환산했다 — 임의 재량 해석을 추가하지 않았다.</li>
+            <li>3개 기준 모두 미부합이므로 <span class="mono">judgment-rules.md</span> 1단계 규정에 따라 2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)을 실행하지 않았다.</li>
+            <li>FnGuide/FnSpace 데이터 미확보를 세 기준 판단 각각에서 명시했고, 해당 데이터에 의존하는 하위 지표(Market Recognition Gap, 컨센서스 오차, Valuation 배수 등)는 임의로 추정하지 않고 판단 보류·감점 처리했다(재현성 원칙 2번).</li>
+            <li>모든 판단 문장에 적용한 <span class="mono">judgment-rules.md</span> 조항·스킬 Gate 이름을 괄호/각주로 명시했다(판단 일관성 원칙 3번).</li>
+            <li>이 보고서는 "백화점 산업" 비교의 일부로 실행됐으며, 산업 순위표에서는 "탈락(투자 매력 없음)" 목록에 사유와 함께 기재되어야 한다(<span class="mono">judgment-rules.md</span> "산업/섹터 비교 — 순위 산정" 절).</li>
+          </ul>
+        </div>
+
+        <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13</footer>
+      </div>
+    </details>
+
+    <details class="report-embed">
+      <summary>
+        <span class="re-name">롯데쇼핑</span>
+        <span class="re-code mono">023530</span>
+        <span class="stamp fail">투자 매력 없음</span>
+        <span class="chevron">&#9656;</span>
+      </summary>
+      <div class="re-body">
+        <p class="link-out"><a href="롯데쇼핑-20260813.html">별도 파일로 열기 ↗</a></p>
+
+        <header class="letterhead">
+          <div class="titles">
+            <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 (Score+Gate 아키텍처)</div>
+            <h1>롯데쇼핑</h1>
+            <div class="code mono">종목코드 023530 · 코스피 · 백화점 산업 비교 대상</div>
+          </div>
+          <div class="meta">
+            작성일 <b>2026-08-13</b><br>
+            작성 도구 <b><span class="mono">investment-desk</span></b><br>
+            DART 조회 <b>corp_code 00120526</b>
+          </div>
+        </header>
+
+        <p class="overview">롯데쇼핑은 백화점을 핵심 이익원으로 하되 마트·슈퍼·이커머스(롯데온)·하이마트 등을 겸하는 복합 유통기업(지주형 사업구조)으로, DART 사업보고서 기준 제56기(FY2025) 연결 매출액 13조 7,383.5억원, 영업이익 5,470.4억원을 기록했다. Scope Gate 판단: 사업부가 다각화돼 있으나 전 사업부 매출이 최종소비자 대상 판매(B2C)이므로 B2C 스코프에 해당해 판단을 진행했다. 다만 백화점 외 마트/이커머스가 상당 비중을 차지하는 복합 유통기업이라는 사업 구조의 복합성은 아래 판단 근거 전반에 반영했다.</p>
+
+        <div class="verdict-strip">
+          <span class="stamp stamp-lg fail">투자 매력 없음 · 3개 기준 전부 미부합</span>
+        </div>
+
+        <section class="stage">
+          <div class="stage-head">
+            <span class="eyebrow">STAGE 1</span>
+            <h2>핵심 판단 기준 3개</h2>
+          </div>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score 17/100 · Verdict: PASS</div>
+              </div>
+            </div>
+            <p class="figs mono">매출총이익률 46.54% → 48.15% → 48.51% (FY2023&ndash;2025) · 영업이익 5,084.0억 → 4,731.1억 → 5,470.4억원 · 이자비용 7,398.5억 → 9,326.9억 → 6,886.0억원(3개년 모두 영업이익 &lt; 이자비용)</p>
+            <p>Layer C(Customer Economics: 재구매율·L.POINT 갱신율·CAC/LTV)와 Pricing Power Test 4개 서브테스트 중 3개(가격 인상 이력, 인상 전후 리텐션, 경쟁사 대비 ASP)가 데이터 부재(Insufficient Data)로 판단 보류됐다. 매출총이익률은 3개년 연속 개선됐으나 Financial Transmission Chain은 Retention 단계부터 실증되지 않아 이 개선을 가격전가력에 귀속시킬 인과 근거가 없다. 결정적으로 2026년 2분기 영업이익 서프라이즈(YoY +121%, 2026-08-07 발표) 직후 오히려 컨센서스 목표주가가 227,500원(7/16)에서 183,214원(8/13)까지 급락해 Variant Perception이 Category 1(시장이 이미 아는 정보)로 분류되며 Consensus Gate가 발동했다. 3개년 연속 이자보상배율 &lt;1x(영업이익이 이자비용을 상회하지 못함)로 Risk 차감도 반영됐다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준① "판정" — PASS(또는 Gate 위반) → 미부합. <span class="mono">judge-retention-pricing-power/references/scorecard_and_verdict.md</span> Consensus Gate·Data Integrity Gate·Financial Translation Gate·Valuation Gate 다중 발동</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 연결재무제표(Primary, Medium) · FnGuide/FnSpace 목표주가·투자의견 컨센서스(Medium, 재배포 금지 원칙에 따라 도출값만 사용) · web.json 실적 뉴스(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>② Structural vs Cyclical Misclassification</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score ≈18/100 · Verdict: PASS</div>
+              </div>
+            </div>
+            <p class="figs mono">3개년 연결매출 14.556조 → 13.987조 → 13.738조원(연속 감소, 누적 &minus;5.6%) · 백화점 부문 매출 YoY &minus;0.5%(2020년 이후 4년 만의 역성장) · 2Q26 영업이익 +121.2%YoY vs 매출 +4.0%YoY</p>
+            <p>Cyclical Contamination Test의 Growth Decomposition 결과, 2026년 상반기 영업이익 급증(1Q +70.6%, 2Q +121.2% YoY)은 매출 성장(Volume)이 아니라 원가·이자비용 절감(이자비용 &minus;26.2% YoY 등)에서 주로 설명돼 오염(Contamination)이 확인됐다 — Financial Transmission Chain이 "Company Revenue(Volume-driven)" 단계에서 이미 끊긴 상태다. Historical Macro Sensitivity·Peer Divergence 테스트는 한국 매크로·경쟁사(신세계·현대) 재무 원자료 부재로 판단 보류됐고(Data Integrity Gate), 3사 모두 유사한 이커머스 재편 전략을 동시 추진 중이라 롯데 고유의 구조적 우위 근거도 약하다. Variant Perception 역시 실적 발표 직후 목표주가가 하향(228,214원→183,214원, 6주간 &minus;19.7%)되며 Consensus Gate가 발동했다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준② "판정" — PASS(Score 50&ndash;64 또는 Gate 위반) → 미부합. <span class="mono">judge-structural-vs-cyclical/references/scorecard_and_verdict.md</span> Data Integrity Gate·Financial Translation Gate·Consensus Gate 발동(원점수 자체도 WATCH 하한 65점 크게 미달)</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 3개년 매출·영업이익·이자비용(Primary, Medium) · FRED(미국 CPI·기준금리·소매판매·실업률, 국가 불일치로 Low, 참고용) · FnGuide/FnSpace 목표주가 컨센서스(Medium) · web.json 업계 동향(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>③ Underpriced Customer Love (ULRS)</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score ≈25/100 · Verdict: AVOID</div>
+              </div>
+            </div>
+            <p class="figs mono">NCSI 백화점 부문 고객만족도 1위 탈환(2026, 4년 만) · ROE(지배) 0.51%(FY25) → 2.25%(26E) → 2.73%(27E) · 목표주가 228,214원(7/27) → 183,214원(8/13, &minus;19.7%)</p>
+            <p>Universe Filter상 이 철학이 겨냥하는 리뷰볼륨·DAU/MAU 등 소비자앱 행동데이터가 백화점 복합유통업 특성상 구조적으로 희박해 Framework Fit이 Low~Medium으로 판정됐다. 유일한 실측 Love 지표(NCSI 1위 탈환)도 재구매율·코호트 등 정량 근거 없이 정성적 보도에 그친다. Financial Conversion Capacity(Layer 4)는 3년 연속 매출 감소와 자본비용을 크게 하회하는 ROE(0.51~2.73%)로 취약하고, Market Recognition Gap(Layer 5)은 "NCSI 1위"·"2분기 영업이익 +121%"가 이미 다수 언론과 15개 증권사 커버리지로 공개된 정보(Category 1)라 Consensus Gate가 발동해 0점 처리됐다. Red Flag 10종 중 확정 발동은 없었으나(Gate 자체는 통과) 확인 불가 항목이 다수라 Data Integrity 우려가 병기된다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준③ "판정" — AVOID(Score 50&ndash;64 또는 Gate 위반, Red Flag 2개↑ 포함) → 미부합. <span class="mono">judge-underpriced-customer-love/references/scorecard_and_verdict.md</span> Durability Gate·Consensus Gate 발동</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>web.json NCSI 고객만족도 기사(Proxy, Medium) · DART 마진 데이터(Primary, Medium) · FnGuide/FnSpace 목표주가·ROE 추정(Medium) · Peer(신세계·현대) percentile 데이터 미확보로 Gap Test 5종 판단 보류</dd>
+            </dl>
+          </article>
+
+          <p class="stage-summary terminal">1단계 종합 — 기준①·②·③ 모두 미부합(각 PASS/PASS/AVOID → 미부합 환산)이다. <span class="mono">judgment-rules.md</span> "3개 모두 미부합이면 그 시점에 투자 매력이 없는 것으로 보고 판단을 종료한다" 조항에 따라 2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)은 실행하지 않는다.</p>
+        </section>
+
+        <div class="opinion">
+          <h2>종합 투자의견</h2>
+          <p>1단계 핵심 판단 기준 3개(Retention-to-Pricing-Power, Structural vs Cyclical, Underpriced Customer Love) 모두 미부합으로 판정됐다. 공통적으로 (1) 2026년 상반기 영업이익 서프라이즈(1Q +70.6%, 2Q +121.2% YoY)가 매출 성장(Volume)이 아니라 원가·이자비용 절감에서 주로 설명돼 구조적 가격결정력·구조적 성장 테제를 뒷받침하지 못했고, (2) 3개년 연속 연결매출 감소(누적 &minus;5.6%)와 이자보상배율 &lt;1x가 지속돼 Pricing Power/Financial Conversion이 실현되더라도 금융비용에 잠식될 리스크가 확인됐으며, (3) NCSI 고객만족도 1위 탈환·2분기 실적 서프라이즈 등 긍정적 뉴스가 있었으나 실적 발표 직후 오히려 컨센서스 목표주가가 급락(6주간 &minus;19.7%)해 세 기준 모두에서 Variant Perception이 "시장이 이미 아는 정보"(Category 1)로 분류되며 Consensus Gate가 발동했다.</p>
+          <p><span class="mono">judgment-rules.md</span> "1단계" 절의 "3개 모두 미부합이면 투자 매력이 없는 것으로 보고 판단을 종료한다"는 규정에 따라, 이번 데이터 시점(2026-08-13) 기준 롯데쇼핑은 이 판단 규칙서상 투자 매력이 없는 것으로 결론짓는다. 다만 이 결론은 Retention/Churn/코호트 등 다수 하위 지표가 데이터 부재로 판단 보류된 상태에서 도출된 것이라는 한계가 있으며, 백화점 부문 단독의 최근 반등(2026년 1~2분기)이 이커머스·하이마트 등 비핵심 사업부의 구조적 약점을 상쇄할 만큼 지속 가능한지는 후속 분기 데이터로 재검증이 필요하다.</p>
+          <div class="conclusion">
+            <p>세 기준 모두 미부합 — 규칙서 조항에 따라 판단을 종료한다. 2단계 스크리닝은 실행하지 않았다.</p>
+            <span class="stamp fail">투자 매력 없음</span>
+          </div>
+        </div>
+
+        <section class="sources">
+          <h2>사용한 원자료 출처</h2>
+          <ol>
+            <li><b>DART</b> — <span class="mono">data/cache/롯데쇼핑/dart.json</span>, 사업보고서(제54&ndash;56기) 연결 손익계산서·재무상태표, corp_code 00120526, 2026-08-13 조회.</li>
+            <li><b>FRED</b> — <span class="mono">data/cache/롯데쇼핑/fred.json</span>, CPI·기준금리(FEDFUNDS)·소매판매(RSAFS)·실업률(UNRATE), 미국 지표, 2026-08-13 조회. 국가 불일치로 Low Confidence, 참고용.</li>
+            <li><b>FnGuide/FnSpace</b> — <span class="mono">data/cache/롯데쇼핑/fnguide.json</span>, fnspace MCP(2026-08-15 만료 예정 임시 공유 키)로 확정재무(2023&ndash;2025)·목표주가/투자의견 컨센서스(2026-07~08 일별)·추정실적(2025&ndash;2027E)·Forward 12M 지표 조회, 2026-08-13. 원시 데이터 재배포 금지 원칙에 따라 도출 비율·추세만 보고서에 반영.</li>
+            <li><b>한경 마켓(markets.hankyung.com)</b> (Proxy) — <span class="mono">data/cache/롯데쇼핑/web.json</span> market_data, 2026-08-13 조회. 시가총액 약 5.4~5.5조원, 주가 99,700원(2026-08-07 장마감). Medium Confidence(3rd-party 웹, 공식 API 아님).</li>
+            <li><b>newspim</b> (Proxy) — 2026년 2분기 실적(영업이익 899억원, YoY +121.2%) 기사, 2026-08-07. Medium Confidence.</li>
+            <li><b>inthenews</b> (Proxy) — 2026년 2분기 실적 보도(백화점 부문 견인), 2026-08-07. Medium Confidence.</li>
+            <li><b>kukinews</b> (Proxy) — 2026년 1분기 실적(영업이익 YoY +70.6%) 및 e커머스·하이마트 수익성 과제 지적 기사, 2026-05-11. Medium Confidence.</li>
+            <li><b>이투데이(etoday)</b> (Proxy) — 롯데백화점 NCSI 백화점 부문 고객만족도 1위 탈환(4년 만) 기사. Medium Confidence.</li>
+            <li><b>서울경제(sedaily)</b> (Proxy) — 위 NCSI 1위 탈환 사실 재확인 기사. Medium Confidence.</li>
+            <li><b>기업모니터(comp.wisereport.co.kr)</b> (Proxy) — 롯데쇼핑 경쟁사분석, 백화점 선호도(신세계 1위)·점포수 비교. Medium Confidence.</li>
+            <li><b>인사이트코리아(insightkorea)</b> (Proxy) — 현대·신세계·롯데百 이커머스 재편 전략 비교 기사. Medium Confidence.</li>
+            <li><b>데일리e뉴스(dailyenews)</b> (Proxy) — 롯데쇼핑 ESG 등급(KCGS 7년 연속 우수등급, 6년 연속 통합 A등급) 기사. Medium Confidence.</li>
+            <li><b>서울타임즈뉴스(seoultimes)</b> (Proxy) — 롯데홈쇼핑(계열사) 경영권 관련 태광산업과의 소송 진행 기사 — 롯데쇼핑 본체가 아닌 계열사 관련 소송임에 유의. Medium Confidence.</li>
+          </ol>
+        </section>
+
+        <div class="compliance">
+          <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+          <ul>
+            <li>세 기준 모두 각 스킬의 100점 Score+Gate 아키텍처(<span class="mono">references/scorecard_and_verdict.md</span>)로 산출된 최종 Verdict(PASS/PASS/AVOID)를 <span class="mono">judgment-rules.md</span> 기준①②③의 매핑 조항 그대로 적용해 미부합으로 환산했다 — 임의 재량 해석을 추가하지 않았다.</li>
+            <li>3개 기준 모두 미부합이므로 <span class="mono">judgment-rules.md</span> 1단계 규정에 따라 2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)을 실행하지 않았다.</li>
+            <li>Retention/Churn/코호트·경쟁사(신세계·현대) 재무 원자료·한국 매크로 지표 등 다수 하위 지표가 데이터 부재로 판단 보류됐음을 세 기준 판단 각각에서 명시했고, 중립(50점) 임의 처리 대신 보수적 채점 원칙을 따랐다(재현성 원칙 2번).</li>
+            <li>모든 판단 문장에 적용한 <span class="mono">judgment-rules.md</span> 조항·스킬 Gate 이름을 괄호/각주로 명시했다(판단 일관성 원칙 3번).</li>
+            <li>이 보고서는 "백화점 산업" 비교의 일부로 실행됐으며, 산업 순위표에서는 "탈락(투자 매력 없음)" 목록에 사유와 함께 기재되어야 한다(<span class="mono">judgment-rules.md</span> "산업/섹터 비교 — 순위 산정" 절).</li>
+          </ul>
+        </div>
+
+        <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13</footer>
+      </div>
+    </details>
+
+    <details class="report-embed">
+      <summary>
+        <span class="re-name">한화갤러리아</span>
+        <span class="re-code mono">452260</span>
+        <span class="stamp fail">투자 매력 없음</span>
+        <span class="chevron">&#9656;</span>
+      </summary>
+      <div class="re-body">
+        <p class="link-out"><a href="한화갤러리아-20260813.html">별도 파일로 열기 ↗</a></p>
+
+        <header class="letterhead">
+          <div class="titles">
+            <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준</div>
+            <h1>한화갤러리아</h1>
+            <div class="code mono">종목코드 452260 · 코스피</div>
+          </div>
+          <div class="meta">
+            작성일 <b>2026-08-13</b><br>
+            작성 도구 <b><span class="mono">investment-desk</span></b> (백화점 산업 비교 서브에이전트)<br>
+            DART 조회 <b>corp_code 01722437</b>
+          </div>
+        </header>
+
+        <p class="overview">한화갤러리아는 2023년 한화솔루션에서 인적분할로 설립된 백화점·유통 전문기업으로, 압구정 명품관을 포함한 백화점 5개 점포를 운영한다(주력 매출 90% 이상이 백화점 부문 — B2C). 2025년(제3기) 매출액 약 5,751억원, 영업이익 94.1억원을 기록했으며, 롯데·신세계·현대백화점 대비 규모(총거래액 약 2.7조원)가 업계 최하위 수준이다.</p>
+
+        <div class="verdict-strip">
+          <span class="stamp stamp-lg fail">투자 매력 없음 · PASS</span>
+        </div>
+
+        <section class="stage">
+          <div class="stage-head">
+            <span class="eyebrow">STAGE 1</span>
+            <h2>핵심 판단 기준 3개</h2>
+          </div>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+              <span class="score mono">Score ≈ 10/100</span>
+              <span class="stamp fail">미부합</span>
+            </div>
+            <p class="figs mono">매출총이익률 73.8% → 67.8% → 61.8% (제1→2→3기, 3년 연속 하락)<br>영업이익 98.2억 → 33.9억 → 94.1억원 · 이자비용 207.6억 → 265.9억 → 293.8억원<br>PER(POR) 약 650배 (업계 평균 15&ndash;30배)</p>
+            <p>`judge-retention-pricing-power` 스킬의 100점 스코어카드(Layer A&ndash;G)를 적용한 결과 Score ≈10/100으로, Financial Translation Gate(매출총이익률 3개년 연속 하락 + 최근 분기 영업이익 급감)와 Valuation Gate(PER 650배로 이미 M&A·지배구조 재료를 과도 반영)가 동시에 위반돼 최종 Verdict <b>PASS</b>가 확정됐다. Retention이 Pricing Power로 전환되는 인과 체인이 오히려 역방향(원가율 상승 → 마진 압축)으로 나타나 규칙서 정의(Retention↑ → Gross Margin↑ → Multiple Re-rating)와 정반대다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">기준① 판정 — "`scorecard_and_verdict.md`의 최종 Verdict 기준, PASS(또는 Gate 위반) → 미부합"</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 재무제표(Primary, Medium) · web.json 이초's Seconds 기사(밸류에이션·수익성, Medium) · FnGuide/FnSpace 미확보(컨센서스·코호트 데이터 없음, Low)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>② Structural vs Cyclical Misclassification</h3>
+              <span class="score mono">Score ≈ 1/100</span>
+              <span class="stamp fail">미부합</span>
+            </div>
+            <p class="figs mono">부채비율 144.3% (+9.1%p YoY) · 단기차입금 +90% YoY<br>총거래액 약 2.7조원 (롯데 14.2조 · 신세계 13.3조 · 현대백화점 9.1조 대비 최하위)<br>압구정 명품관 1개 점포가 거래액 40%↑ 차지</p>
+            <p>`judge-structural-vs-cyclical` 스킬의 Layer A&ndash;G 및 Cyclical Contamination Test를 적용한 결과, 국내 명품/백화점 소비의 구조적 침투율을 입증할 데이터가 캐시에 없어(FRED는 미국 지표) Layer A(구조적 수요)를 구조적으로 판정할 근거가 부재했다. 관찰 가능한 유일한 신호는 회사 고유의 경쟁 열위(점포 5개, 단일 점포 집중)와 재무 번역 단절(매출 소폭 증가에도 영업이익·순손실 급격 악화)이며, 4개 Gate(Valuation·Consensus·Financial Translation·Data Integrity) 모두 위반돼 Score ≈1/100, 최종 Verdict <b>PASS</b>.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">기준② 판정 — "`scorecard_and_verdict.md`의 최종 Verdict 기준, PASS(Score 50~64 또는 Gate 위반) → 미부합"</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 3개년 재무제표(Primary, Medium) · FRED 매크로(미국 지표, Low&ndash;국가 불일치) · web.json 업계 총거래액 비교(Medium) · FnGuide 미확보</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>③ Underpriced Customer Love (ULRS)</h3>
+              <span class="score mono">Score ≈ 6&ndash;15/100</span>
+              <span class="stamp fail">미부합</span>
+            </div>
+            <p class="figs mono">ULRS(진단 지표) ≈ &minus;8 (음수) · Red Flag 확정 1건(밸류에이션 과열, POR 650배)<br>리뷰 볼륨·재구매율·DAU 등 Love%ile 핵심 지표 데이터 없음</p>
+            <p>`judge-underpriced-customer-love` 스킬의 Score+Gate 아키텍처(Layer 1&ndash;5 + Catalyst) 적용 결과 Score 6&ndash;15/100으로 AVOID(50&ndash;64) 구간에도 못 미친다. Market Recognition Gate(전환 능력은 낮은데 밸류에이션은 이미 고평가)와 Consensus Gate(컨센서스 부재로 진정한 Variant View 제시 불가)가 위반됐다. "고객 애착은 있는데 시장이 아직 모른다"는 이 기준의 핵심 가설과 반대로, 애착 지표 자체가 확인되지 않는 채 시장은 이미 과열(POR 650배) 상태다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">기준③ 판정 — "`scorecard_and_verdict.md`의 Score+Gate, AVOID(Score 50~64 또는 Gate 위반) → 미부합"</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>web.json — 소비자 리뷰 볼륨 데이터 확인 안 됨(Low, 데이터 없음으로 처리) · DART 재무(Medium) · FnGuide 미확보(Market Recognition%ile 산출 불가)</dd>
+            </dl>
+          </article>
+
+          <p class="stage-summary">1단계 종합 — 3개 기준 모두 <b>미부합</b>(①PASS·②PASS·③AVOID, 각 Gate 위반 포함)이다. judgment-rules.md "3개 모두 미부합이면 그 시점에 투자 매력이 없는 것으로 보고 판단을 종료한다"에 따라 <b>2단계 스크리닝은 실행하지 않는다.</b></p>
+        </section>
+
+        <div class="opinion">
+          <h2>종합 투자의견</h2>
+          <p>한화갤러리아는 1단계 핵심 판단 기준 3개(Retention-to-Pricing-Power, Structural vs Cyclical, Underpriced Customer Love) 모두에서 미부합 판정을 받았다. 공통적으로 확인되는 문제는 (1) 매출총이익률의 3년 연속 하락과 이자비용이 영업이익을 상회하는 수준의 재무 압박, (2) 압구정 명품관 1개 점포에 40% 이상 집중된 극단적 사업 편중과 업계 최하위권 규모, (3) 현재 주가가 본업 펀더멘털이 아니라 F&B 자회사 매각차익·최대주주 변경 같은 투기적 재료(PER 약 650배)에 의존하고 있다는 점이다.</p>
+          <p>FnGuide/FnSpace 컨센서스 데이터를 이번 실행에서 확보하지 못해(MCP 도구 미제공) 목표주가 괴리율·코호트 리텐션 등 일부 근거는 데이터 부족으로 반영하지 못했다 — 이 공백이 결론을 뒤집을 가능성은 낮다고 판단하나(3개 기준 모두 Gate 다수 위반으로 이미 명확히 미부합), 추후 FnGuide 확보 시 재검증이 필요하다.</p>
+          <div class="conclusion">
+            <p>1단계에서 판단이 종료되어 2단계 스크리닝을 진행하지 않았다. 규칙서 기준상 <b>투자 매력 없음</b>으로 판단한다 — 백화점 산업 비교 순위표에서는 "탈락(투자 매력 없음)" 목록으로 분류한다.</p>
+            <span class="stamp fail">PASS</span>
+          </div>
+        </div>
+
+        <section class="sources">
+          <h2>사용한 원자료 출처</h2>
+          <ol>
+            <li><b>DART</b> — <span class="mono">data/cache/한화갤러리아/dart.json</span>, 사업보고서(제1&ndash;3기) 재무제표, corp_code 01722437, 2026-08-13 조회.</li>
+            <li><b>FRED</b> — <span class="mono">data/cache/한화갤러리아/fred.json</span>, CPI·기준금리·소매판매(RSAFS)·실업률(미국 지표), 2026-08-13 조회. 국가 불일치로 참고용(Low Confidence).</li>
+            <li><b>FnGuide/FnSpace</b> — 미확보. 상위 세션에서는 <span class="mono">plugin:fnspace:fnspace</span> MCP 연결이 확인됐으나, 이 서브에이전트(투자 판단 서브에이전트)의 툴 목록에 <span class="mono">mcp__fnspace__*</span> 도구가 포함되지 않아 이번 실행에서는 직접 호출하지 못했다. 컨센서스·목표주가·추정실적·코호트 데이터는 전량 "데이터 없음"으로 처리했다.</li>
+            <li><b>뉴스웨이</b> — <a href="https://www.newsway.co.kr/news/view?ud=2026061811190314570" target="_blank" rel="noopener">"압구정 명품관 의존 한화갤러리아···본업 경쟁력 과제"</a>, 2026-08-13 수집(Proxy, Medium).</li>
+            <li><b>이초's Seconds</b> — <a href="https://etseconds.com/%ec%a3%bc%ec%8b%9d%ec%a0%95%eb%b3%b4/19700" target="_blank" rel="noopener">"한화갤러리아(452260) 주가 전망: 심각한 수익성 악화에 따른 재무제표 분석 및 밸류에이션 진단"</a>, 2026-08-13 수집(Proxy, Medium — 2025년 3분기 누적 실적·밸류에이션 근거).</li>
+            <li><b>더벨</b> — <a href="https://www.thebell.co.kr/front/newsview.asp?key=202512181716368120107052" target="_blank" rel="noopener">"파이브가이즈 '3배 차익' 한화갤러리아, 백화점 올인"</a>, 2026-08-13 수집(Proxy, Medium — 신사업 매각·전략 방향).</li>
+            <li><b>Google Finance</b> — <span class="mono">google.com/finance/quote/452260:KRX</span>, 2026-08-13 수집(Proxy, Medium — 시가총액/주가, fnguide.com·sedaily.com·stockplus.com과 교차확인했으나 값 편차 있음).</li>
+            <li><b>한화갤러리아 ESG 정보 페이지</b> — <span class="mono">hanwhagalleria.co.kr/management/esg-information.html</span>, 2026-08-13 수집(1차 소스이나 회사 자체 발간 자료, Medium — 페이지 존재만 확인, 중대 소송·제재 이력은 검색으로 확인 안 됨).</li>
+            <li><b>잡플래닛</b> — <span class="mono">jobplanet.co.kr/companies/47965/reviews</span>, 2026-08-13 수집(Low — 재직자 리뷰로 소비자 애착도 Proxy로 사용 불가, ULRS Love%ile 산정에는 미반영).</li>
+          </ol>
+        </section>
+
+        <div class="compliance">
+          <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+          <ul>
+            <li>3개 기준 모두 미부합 판정은 각 판단 스킬(judge-retention-pricing-power, judge-structural-vs-cyclical, judge-underpriced-customer-love)의 100점 스코어카드 + Gate 결과를 judgment-rules.md에 명시된 매핑 규칙(BUY/WATCH/PASS·AVOID → 부합/부분부합/미부합)으로 그대로 환산한 것이며, 오케스트레이터가 임의로 등급을 조정하지 않았다.</li>
+            <li>2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)은 "1단계에서 하나 이상 기준에 부합한 경우에만" 실행한다는 조항에 따라 이번 건에서는 생략했다.</li>
+            <li>FnGuide/FnSpace 데이터는 이 서브에이전트의 툴 제약으로 수집하지 못했다는 사실을 추측으로 채우지 않고 "데이터 없음"으로 명시했다(재현성 원칙 2번, "데이터 부족 시 처리" 절차 준수).</li>
+            <li>시가총액은 검색 소스마다 값이 상이해(3,935억/2,722억/6,494억원) 가장 최근 시점(2026-08-07) 값을 채택하고 편차를 본문·출처에 병기했다 — 임의로 하나만 골라 불확실성을 숨기지 않았다.</li>
+            <li>웹 검색 출처는 "웹 검색"으로 뭉치지 않고 뉴스웨이·이초's Seconds·더벨·Google Finance·한화갤러리아 ESG 페이지·잡플래닛을 각각 개별 항목으로 나열했다(Output 절 지침 준수).</li>
+          </ul>
+        </div>
+
+        <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13 · 백화점 산업 비교의 일부로 실행</footer>
+      </div>
+    </details>
+
+    <details class="report-embed">
+      <summary>
+        <span class="re-name">광주신세계</span>
+        <span class="re-code mono">037710</span>
+        <span class="stamp fail">투자 매력 없음</span>
+        <span class="chevron">&#9656;</span>
+      </summary>
+      <div class="re-body">
+        <p class="link-out"><a href="광주신세계-20260813.html">별도 파일로 열기 ↗</a></p>
+
+        <header class="letterhead">
+          <div class="titles">
+            <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 · 백화점 산업 비교 구성원</div>
+            <h1>광주신세계</h1>
+            <div class="code mono">종목코드 037710 · 코스피</div>
+          </div>
+          <div class="meta">
+            작성일 <b>2026-08-13</b><br>
+            작성 도구 <b><span class="mono">investment-desk</span></b><br>
+            DART 조회 <b>corp_code 00220561</b>
+          </div>
+        </header>
+
+        <p class="overview">광주신세계는 광주광역시 유스퀘어(고속버스터미널) 부속 건물에서 백화점을 운영하는 호남 지역 대표 유통기업이다(1995년 개점). 롯데백화점 광주점을 제외하면 지역 내 실질적 경쟁 점포가 없어 2007년 이후 호남 매출 1위를 유지하고 있으며, 루이비통·디올·몽클레르·티파니·델보 등 전라도 단독 명품 매장을 다수 보유한다. 2025년(제31기) 매출액 1,842억원, 영업이익 524.7억원(영업이익률 약 28.5%)을 기록했고, 현재 유스퀘어 부지 복합개발("더 그레이트 광주", 공공기여금 1,497억원, 2028년 개점 목표)을 위한 대규모 확장 투자를 진행 중이다.</p>
+
+        <div class="verdict-strip">
+          <span class="stamp stamp-lg fail">투자 매력 없음 · PASS</span>
+        </div>
+
+        <section class="stage">
+          <div class="stage-head">
+            <span class="eyebrow">STAGE 1</span>
+            <h2>핵심 판단 기준 3개</h2>
+          </div>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 8/100</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">매출액 YoY +2.22%(제29→30기) → +0.35%(제30→31기)<br>매출총이익률 90.78% → 91.02% → 91.30%<br>영업이익률 30.57% → 28.51% → 28.48%<br>이자보상배율 60.3x → 22.1x → 12.0x</p>
+            <p>Framework Fit부터 Low로 판정됐다 — 광주신세계는 입점 브랜드의 매출에서 수수료를 받는 백화점 운영사라, 자사 상품·서비스에 대한 재구매율·Cohort Retention·멤버십 데이터가 DART/FnGuide/web 어디에도 없다(Customer Economics Layer 사실상 공백). 매출 성장은 사실상 정체(+0.35% YoY)인데 영업이익률은 오히려 하락(30.57%→28.48%)해 Financial Translation 체인이 Operating Leverage 단계에서 끊긴다(Broken). 부채총계가 2년 만에 약 3.5배 급증(1,153억→3,976억)하고 이자보상배율이 60.3배에서 12.0배로 급락하는 추세도 확인됐다. `references/scorecard_and_verdict.md`의 100점 스코어카드(Layer A&ndash;G, 4개 Gate)에서 Score 8/100, Consensus Gate·Financial Translation Gate·Data Integrity Gate가 동시 발동해 최종 Verdict <b>PASS</b>가 산출됐다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준① 판정 — "최종 Verdict 매핑: BUY→부합, WATCH→부분부합, PASS(또는 Gate 위반)→미부합" · `judge-retention-pricing-power` Layer A&ndash;G, Pricing Power Test, Financial Transmission, Scorecard&amp;Verdict 4개 Gate</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART(Primary, Medium) · FnGuide/FnSpace 이번 실행 조회 불가(MCP 미연결, 컨센서스 관련 항목 데이터 없음 처리) · web.json(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>② Structural vs Cyclical Misclassification</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 16/100</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">매출액 3개년 1,795.9억 → 1,835.8억 → 1,842.1억원(성장률 +2.22%→+0.35%, 뚜렷한 둔화)<br>부채총계 1,152.6억 → 3,909.6억 → 3,975.9억원(약 3.5배 급증)<br>유동비율 310.5% → 59.7% → 40.2%(급락)</p>
+            <p>Framework Fit은 Medium으로 판정됐다(럭셔리 소비 확대·무신사 스탠다드 입점을 통한 신규 고객층 확장 시도는 일부 "카테고리 침투" 서사에 부합하나, 핵심은 매출 성장 정체 + 대규모 물리적 확장(CapEx)이라는 재무적 요인에 가깝다). Growth Decomposition 테스트에서 매출 성장 둔화와 재무 구조 급격 악화(이자비용 9.1억→43.6억, 부채 3.5배 증가)가 유스퀘어 복합개발 자금조달이라는 정책적·재무적 요인에서 기인함이 확인돼 "구조적 수요 확대" 서사를 뒷받침하지 못했다(재무 노이즈 오염 판정). 2028년 더현대 광주(현대백화점) 출점 예정은 지역독점 프리미엄의 지속가능성에 대한 명확한 Bear 근거(Layer D 반증)다. 시장(언론)이 이미 광주신세계의 소외·유동성 리스크를 인지하고 있어 "시장이 오분류했다"는 차별화된 시각(Variant View)도 확인되지 않았다(Consensus Gate 발동). Score 16/100, Consensus/Financial Translation/Data Integrity 3개 Gate 동시 발동으로 최종 Verdict <b>PASS</b>.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준② 판정 — "BUY(Score&ge;80)→부합, WATCH(65&ndash;79)→부분부합, PASS(50&ndash;64 또는 Gate 위반)→미부합" · `judge-structural-vs-cyclical` Cyclical Contamination Test, Financial Transmission, Variant Perception, Scorecard&amp;Verdict</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART(Primary, Medium) · FRED(미국 매크로, Low&mdash;국가 불일치로 한국 백화점 경기 사이클 직접 검증 불가, 한국 자체 매크로 데이터는 이 레포 데이터 키트에 없음) · FnGuide 이번 실행 조회 불가 · web.json(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>③ Underpriced Customer Love (ULRS)</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 약 25&ndash;30/100</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">Layer 1(Love) 정량지표 전무 · Layer 3(Monetization) 매출총이익률 90.8%&rarr;91.3% · Layer 4(Financial Conversion) 제29&rarr;30기 영업이익 549.0억&rarr;523.3억(감소, Incremental Margin 음수)</p>
+            <p>Framework Fit이 Low로 판정됐다 &mdash; ULRS가 요구하는 핵심 Love 지표(12M 재구매율, 리뷰 볼륨 증가율 YoY, DAU/MAU, 브랜드 검색점유율 변화)는 오프라인 실물 유통업 구조상 관측이 불가능하고, 이번 데이터 수집으로도 전혀 확보되지 않았다(중립 50점으로 대체하지 않고 데이터 없음으로 처리). 유일하게 확인된 강점(매출총이익률 90%대)은 소비자 애착이 아니라 백화점 특유의 수수료 매출 인식 구조에서 기인한다. 오히려 확인된 재무 신호는 부정적이다 &mdash; 매출 +2.2% 증가에도 영업이익은 감소했고(Financial Conversion Capacity 약화), 이자비용·유동부채 급증으로 재무 부담이 커졌다. FnGuide 컨센서스 부재로 Market Recognition Gate(Conversion_Readiness_Gap)를 산출할 근거가 없어 "시장이 아직 모른다"는 핵심 조건도 입증하지 못했다. Red Flag 10종 중 "발동" 확인된 항목은 없어 강제 Avoid는 아니지만, Score+Gate 임계값(50&ndash;64 또는 Gate 위반 = AVOID)에 따라 <b>AVOID</b>로 귀결됐다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준③ 판정 — "BUY(Score&ge;80)→부합, WATCH(65&ndash;79)→부분부합, AVOID(50&ndash;64 또는 Gate 위반)→미부합" · `judge-underpriced-customer-love` Market Recognition Gate·Durability Gate·Red Flag Test·K절 데이터 신뢰도 원칙</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART(Primary, Medium) · FnGuide 이번 실행 조회 불가(Market Recognition Gate 산출 불가) · web.json(Proxy, Medium&mdash;정량 Love 지표는 미확보)</dd>
+            </dl>
+          </article>
+
+          <p class="stage-summary">1단계 종합 &mdash; 기준①·②·③ 모두 <b>미부합</b>(judgment-rules.md "1단계" 절: "3개 모두 미부합이면 그 시점에 투자 매력이 없는 것으로 보고 판단을 종료한다"). 2단계 스크리닝 체크리스트는 실행하지 않는다.</p>
+        </section>
+
+        <div class="opinion">
+          <h2>종합 투자의견</h2>
+          <p>광주신세계는 호남 지역 백화점 시장에서 사실상 독점적 지위를 유지하며 업계 최고 수준의 영업이익률(약 28&ndash;30%)을 기록하는 재무적으로 견조한 기업이다. 그러나 이 레포의 판단 규칙서(judgment-rules.md) 1단계 핵심 기준 3개&mdash;가격전가력(Retention-to-Pricing-Power), 구조적/경기순환 오분류(Structural vs Cyclical), 저평가된 고객 애착(Underpriced Customer Love)&mdash;에 각각 적용했을 때 세 기준 모두 미부합으로 판정됐다. 공통적으로 (1) 이 회사는 자사 상품에 대한 반복구매·재구독 관계가 아니라 입점 브랜드 수수료 구조라 세 철학이 요구하는 소비자 단위 정량 지표(재구매율, Cohort Retention, 리뷰·DAU 기반 애착도)를 근본적으로 관측하기 어렵고(Framework Fit Low&sim;Medium), (2) 확인 가능한 재무 데이터 자체도 매출 성장 정체, 영업이익률 소폭 하락, 대규모 확장 투자에 따른 부채·이자비용 급증(3년간 부채 약 3.5배, 이자비용 약 4.8배 증가)과 유동비율 급락(310%&rarr;40%)이라는 부정적 신호를 보였다. 2028년 더현대 광주(현대백화점) 출점 예정은 현재의 지역 독점 프리미엄이 향후 약화될 수 있는 구체적 리스크다.</p>
+          <div class="conclusion">
+            <p>세 기준 모두 미부합으로 1단계에서 판단이 종료되어 2단계 스크리닝(시장성/경쟁력/수익성/재무효율성/ESG)은 실행하지 않았다. 백화점 산업 비교에서는 &ldquo;탈락(투자 매력 없음)&rdquo; 목록으로 분류하는 것이 규칙서에 부합한다&mdash;재무 기초체력과 지역 독점적 지위 자체를 부정하는 것이 아니라, 이 도구가 적용하는 세 가지 특정 투자철학(가격전가력·구조적 오분류·저평가된 고객 애착) 렌즈에는 맞지 않는다는 의미다. FnGuide/FnSpace 컨센서스가 확보되면 기준①·②·③(특히 Consensus Gate·Market Recognition Gate)을 재실행해 갱신이 필요하다.</p>
+            <span class="stamp fail">투자 매력 없음</span>
+          </div>
+        </div>
+
+        <section class="sources">
+          <h2>사용한 원자료 출처</h2>
+          <ol>
+            <li><b>DART</b> &mdash; <span class="mono">data/cache/광주신세계/dart.json</span>, 사업보고서(제29&ndash;31기) 재무제표, corp_code 00220561, 2026-08-13 조회. 원본 계정명 "수익(매출액)"이 fetch-dart 스킬의 기본 동의어 목록에 없어 raw API 응답에서 수동 확인 후 매출액 필드로 보정 저장(<span class="mono">_note</span> 필드 기록, 동일 DART API 원자료).</li>
+            <li><b>FRED</b> &mdash; <span class="mono">data/cache/광주신세계/fred.json</span>, CPI·기준금리·소매판매(RSAFS)·실업률(미국 지표), 2026-08-13 조회. 국가 불일치로 참고용(Low Confidence).</li>
+            <li><b>FnGuide/FnSpace</b> &mdash; 이번 실행에서 조회 불가(fnspace MCP 도구가 이 서브에이전트 세션에 연결되지 않음). 컨센서스·목표주가·추정실적 관련 판단은 전부 데이터 없음으로 처리.</li>
+            <li><b>다음뉴스</b> &mdash; <a href="https://v.daum.net/v/20251022194757676?f=p" target="_blank" rel="noopener">광주전남 상장사 시황 기사</a>(2025-10-22), 시가총액 약 2,423억원 확인(Proxy, Medium).</li>
+            <li><b>공감신문</b> &mdash; <a href="https://www.gokorea.kr/news/articleView.html?idxno=94528" target="_blank" rel="noopener">주가 동향 기사</a>, 주가 약 203,000원(2026-08-11 기준, Proxy, Medium).</li>
+            <li><b>나무위키</b> &mdash; <a href="https://namu.wiki/w/%EA%B4%91%EC%A3%BC%EC%8B%A0%EC%84%B8%EA%B3%84%EB%B0%B1%ED%99%94%EC%A0%90" target="_blank" rel="noopener">광주신세계백화점 문서</a>, 개점 연혁·명품 입점 현황·호남 매출 1위 지위 확인(Proxy, Medium).</li>
+            <li><b>kjmbc</b> &mdash; <a href="https://kjmbc.co.kr/article/n78d4c_vAP2v4l" target="_blank" rel="noopener">광주 신세계 확장 본격화 기사</a>, 유스퀘어 복합개발 진행 현황(Proxy, Medium).</li>
+            <li><b>서울신문</b> &mdash; <a href="https://www.seoul.co.kr/news/economy/2026/02/03/20260203500290" target="_blank" rel="noopener">공공기여금 1,497억 확정 기사</a>, 확장 개점 목표 2028년(Proxy, Medium).</li>
+            <li><b>뉴시스</b> &mdash; <a href="https://www.newsis.com/view/NISX20250723_0003262848" target="_blank" rel="noopener">유스퀘어 문화관 철거 착수 기사</a>(Proxy, Medium).</li>
+            <li><b>무신사 뉴스룸</b> &mdash; <a href="https://newsroom.musinsa.com/newsroom-menu/2026-0408" target="_blank" rel="noopener">무신사 스탠다드 광주점 입점 발표</a>, 2026-04-16 오픈(Proxy, Medium).</li>
+            <li><b>IB토마토</b> &mdash; <a href="https://www.ibtomato.com/ExternalView.aspx?type=1&no=11816" target="_blank" rel="noopener">신세계 광주드림 ③ 순위 경쟁 기사</a>, 2028년 더현대 광주 출점 예정·경쟁 심화 리스크(Proxy, Medium).</li>
+            <li><b>전남일보</b> &mdash; <a href="https://m.jnilbo.com/76535859747" target="_blank" rel="noopener">광주신세계 ESG 활동 강화 기사</a>, 개점 30주년 ESG 활동 발표(Proxy, Medium). 중대 ESG 제재·소송 이력은 검색상 확인되지 않음(데이터 없음, Pass로 임의 격상하지 않음).</li>
+          </ol>
+        </section>
+
+        <div class="compliance">
+          <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+          <ul>
+            <li>기준①·②·③ 모두 각 스킬의 100점 Score+Gate 아키텍처(`references/scorecard_and_verdict.md`, 기준별)를 그대로 따라 산출된 최종 Verdict(PASS/PASS/AVOID)를 judgment-rules.md의 매핑 규칙 그대로 적용해 미부합으로 환산했으며, 오케스트레이터가 임의로 등급을 조정하지 않았다.</li>
+            <li>FnGuide/FnSpace 데이터가 이번 서브에이전트 세션에서 조회 불가했던 부분(컨센서스, 목표주가, Market Recognition Gap)은 전부 "데이터 없음"으로 명시했고, 중립값(50점 등)으로 임의 대체하지 않았다.</li>
+            <li>DART 원본 계정명 "수익(매출액)"을 매출액으로 보정한 것은 fetch-dart 스킬의 동의어 목록 누락을 raw API 응답(동일 DART 원자료)으로 보완한 것이며, 수치를 추정·가공하지 않았다(dart.json <span class="mono">_note</span> 필드에 기록).</li>
+            <li>1단계에서 3개 기준이 모두 미부합으로 판정됨에 따라 judgment-rules.md "1단계" 절 규정대로 2단계 스크리닝(screen-fundamentals)은 호출하지 않았다.</li>
+            <li>한국 자체 매크로 사이클 데이터(기준②)와 소비자 애착 정량 지표(기준③)는 이 레포 데이터 키트 밖의 공백으로, 판단 보류가 아닌 "확인 가능한 범위 내에서 보수적으로 채점"으로 처리된 부분을 본문에 명시했다.</li>
+          </ul>
+        </div>
+
+        <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13 · 백화점 산업 비교의 일부로 실행됨</footer>
+      </div>
+    </details>
   </section>
 
   <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13</footer>

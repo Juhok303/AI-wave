@@ -45,6 +45,37 @@ model: sonnet
    - 종합 투자의견
    - 사용한 원자료 출처 — **"어느 fetch 스킬로 가져왔나"가 아니라 실제 출처 매체 단위로 개별 나열한다.** DART, FRED는 각각 1개 항목. FnGuide/FnSpace도 1개 항목. `fetch-web`으로 수집한 건 "웹 검색"이라는 이름으로 뭉치지 말고, `web.json`에 기록된 언론사·사이트명 각각을 DART/FRED와 동급인 개별 최상위 항목으로 나열한다(예: "Yahoo Finance", "나무위키", "ConsumerAffairs"를 각각 별도 항목으로 — "웹 검색: Yahoo Finance, 나무위키..." 처럼 하나로 묶지 않는다). 각 항목에 조회 시점을 표기하고, 데이터 키트 밖 출처(웹 매체)는 Proxy임을 명시한다.
    - 위 모든 판단 문장에는 `judgment-rules.md`의 어느 조항·임계값을 적용했는지 괄호로 표기한다 (`judgment-rules.md`의 "판단 일관성 원칙" 3번).
+
+**UI/UX**
+최종 HTML 리포트를 작성할 때는 반드시 아래를 지킨다:
+
+1. <head>에 다음을 정확히 이 순서로 삽입한다:
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+   <link rel="stylesheet" href="report-assets/design-system.css">
+
+2. report-assets/design-system.css에 이미 정의된 클래스만 사용한다.
+   새로운 색상 hex 값이나 폰트를 <style> 블록에 직접 추가하지 않는다.
+   (report-assets/REPORT_DESIGN_GUIDE.md의 컴포넌트 목록을 참고할 것)
+
+3. 판정/상태 표시는 항상 buy(초록,긍정)/watch(호박,관찰·부분)/
+   avoid(빨강,부정)/na(회색,해당없음) 4색 의미체계를 따른다.
+
+4. 구조는 항상: <div class="sheet"> 안에
+   .hero (좌: 텍스트, 우: .term 스냅샷 패널) →
+   .stat-strip (핵심 지표 4개) →
+   <section> 반복 (판단기준/스크리닝/재무/최종의견 등, 프레임워크에 맞게 구성) →
+   footer
+   순서를 따른다. 상단 네비게이션 바는 넣지 않는다.
+
+5. 히어로의 .term 패널은 .term-kv 포맷(라벨-값, 문법기호 없음)만 쓴다.
+   JSON 문법({}, "", : ,)을 그대로 노출하지 않는다.
+
+6. 근거가 되는 세부 표(Test/Layer 분석처럼 밀도 높은 표)는 <details>로
+   기본적으로 접어두고, 결론 문장과 배지만 먼저 보이게 한다.
+   
 8. **자기검증(Compliance Self-Check)**: 초안을 다시 읽으며 각 판단 문장이 (a) `judgment-rules.md`의 실제 조항에 근거하는지, (b) 그 조항의 임계값을 정확히 적용했는지 확인한다. 근거 없는 서술(단순 정보 나열, 규칙서 밖 주관적 평가)은 삭제하거나 규칙서 조항에 맞게 다시 쓴다. 데이터가 규칙서 기준을 판단하기에 부족하면 결론을 임의로 내지 않고 "판단 보류"로 명시한다. 이 자기검증을 거친 최종본(HTML)만 `reports/`에 저장한다.
 
 ## 원칙

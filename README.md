@@ -77,13 +77,14 @@ AI-wave/
 - `judge-retention-pricing-power`, `judge-structural-vs-cyclical`의 **Valuation 섹션** — 현재 Multiple(PER/EV·EBITDA 등), 역사적 Range, Peer Multiple을 전부 계산해야 하는데 매번 "Insufficient Data"로 빠짐. BGF리테일 실행 사례(`reports/BGF리테일_Investment_Memo.md`)에서 실제로 이 섹션 전체가 Insufficient Data였고, Scorecard의 "I. Valuation" 항목이 매번 최저점 근처로 깎이는 구조적 원인이 됨.
 - `judge-underpriced-customer-love`의 Layer 5(Market Recognition Gap) — `EV/Sales Percentile` 계산에 시가총액이 필요.
 
-### 진행 상황 (2026-08-13)
+### 진행 상황 (2026-08-13, 잠정 해결)
 - **`pykrx` 시도 → 막힘**: `.venv`를 새로 만들어(전역 anaconda의 numpy/matplotlib ABI 충돌 회피) `pykrx`를 설치·실행했으나, KRX 데이터 엔드포인트가 세션 쿠키를 정상적으로 받아온 뒤에도 `400 LOGOUT`을 반환한다 — 알려진 pykrx/KRX anti-bot 이슈로 보이며, 헤더 한두 개 고치는 수준으로 해결되지 않았다.
-- **방향 전환(팀 결정)**: 스크래핑 대신 **KRX 정보데이터시스템 공식 API**(`openapi.krx.co.kr` 또는 공공데이터포털의 `금융위원회_주식시세정보`)로 전환하기로 함 — DART/FRED와 같은 "공식 API + 키 발급" 패턴. 다만 KRX Data Marketplace는 인증키 신청 후 **관리자 승인 대기**가 필요해 DART만큼 즉시 발급되지 않을 수 있다(공공데이터포털 쪽이 보통 더 빠름).
-- **미해결**: 아직 키 미발급 — 발급되면 `lib/market_data_client.py` 신설(다른 클라이언트와 동일한 값+기간+출처 원칙), `fetch-dart` 출력에 `market_data` 필드로 병합, `screen-fundamentals`/`judge-*` 3개 스킬의 Valuation·시장성 서술 갱신까지 이어서 진행.
+- **KRX Open API 키 발급됨 → 아직 미승인**: `openapi.krx.co.kr` 인증키는 받았고 서버 인증까지는 통과하지만(`data-dbg.krx.co.kr` 실측), 시세 API 서비스 자체의 활용신청·관리자 승인이 아직이라 `401 Unauthorized API Call`. 승인 대기 중.
+- **잠정 해결(팀 결정, 2026-08-13)**: KRX 승인을 기다리는 대신 `fetch-web`이 웹 검색으로 시가총액/현재가를 가져와 `web.json`의 `market_data` 필드에 채우도록 구현 완료 — `screen-fundamentals`(시장성)와 `judge-underpriced-customer-love`(Valuation)가 이미 이 필드를 참조하도록 연결됨. Medium Confidence(3rd-party 웹, 공식 API 아님)로 명시.
+- **남은 일**: KRX API 승인되면 `lib/market_data_client.py`를 신설해 그쪽 값을 우선 채택(웹 검색은 보조/검증용으로 격하). `judge-retention-pricing-power`/`judge-structural-vs-cyclical`(pjueun/chaemin 스킬)는 원래도 "웹 검색을 적극 활용하라"는 지침이 있어 별도 수정 없이도 시가총액을 스스로 찾을 수 있지만, 실제로 잘 찾는지는 재실행해서 확인 필요.
 
 ### 우선순위
-`judgment-rules.md` 정합성 다음으로 이게 두 번째로 시급하다 — 구조가 맞아도 Valuation·시장성 항목이 매번 공백이면 보고서 설득력이 떨어진다.
+`judgment-rules.md` 정합성 다음으로 이게 두 번째로 시급했고, 웹 검색 기반으로 잠정 해결됐다 — 다만 Medium Confidence 데이터라는 한계는 남아있다.
 
 ## 스킬 구조 개선 가이드 — 기준①(`judge-retention-pricing-power`) 골격에 맞추기
 

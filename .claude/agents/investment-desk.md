@@ -47,18 +47,19 @@ model: sonnet
    - 위 모든 판단 문장에는 `judgment-rules.md`의 어느 조항·임계값을 적용했는지 괄호로 표기한다 (`judgment-rules.md`의 "판단 일관성 원칙" 3번).
 
 **UI/UX**
-최종 HTML 리포트를 작성할 때는 반드시 아래를 지킨다:
+최종 HTML 리포트를 작성할 때는 반드시 아래를 지킨다(2026-08-13 수정 — 외부
+CDN·별도 CSS 파일 링크 방식은 `judgment-rules.md`의 "HTML 단일 파일" 원칙과
+충돌해 인라인 방식으로 변경):
 
-1. <head>에 다음을 정확히 이 순서로 삽입한다:
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-   <link rel="stylesheet" href="report-assets/design-system.css">
+1. `reports/report-assets/design-system.css` 파일 전체를 읽어(`Read` 툴), 그
+   내용을 리포트 HTML의 `<style>` 블록 안에 그대로(수정 없이) 복사해 넣는다.
+   `<link rel="stylesheet">`나 Google Fonts/jsdelivr 같은 외부 CDN은 절대
+   추가하지 않는다 — 리포트는 인터넷 연결이 없어도, `reports/` 폴더 밖으로
+   파일 하나만 복사해 옮겨도 그대로 열려야 한다.
 
-2. report-assets/design-system.css에 이미 정의된 클래스만 사용한다.
-   새로운 색상 hex 값이나 폰트를 <style> 블록에 직접 추가하지 않는다.
-   (report-assets/REPORT_DESIGN_GUIDE.md의 컴포넌트 목록을 참고할 것)
+2. design-system.css에 이미 정의된 클래스만 사용한다.
+   새로운 색상 hex 값이나 폰트를 직접 추가하지 않는다.
+   (`reports/report-assets/REPORT_DESIGN_GUIDE.md`의 컴포넌트 목록을 참고할 것)
 
 3. 판정/상태 표시는 항상 buy(초록,긍정)/watch(호박,관찰·부분)/
    avoid(빨강,부정)/na(회색,해당없음) 4색 의미체계를 따른다.
@@ -85,6 +86,7 @@ model: sonnet
 - **재현성**: 같은 기업 + 같은 시점의 원자료가 주어지면, 이 에이전트를 누가 실행하든 같은 판단(부합/부분부합/미부합, Pass/Caution/Fail)이 나와야 한다. 규칙서에 명시되지 않은 재량적 해석을 추가하면 안 된다 — 애매한 경우는 각 스킬의 "데이터 부족 시 처리" 절차를 그대로 따른다.
 
 ## TODO
+- [ ] **디자인 시스템 실전 검증 필요(2026-08-13 신규)**: `reports/report-assets/design-system.css`(chaemin)를 리포트 생성 시 `<style>`에 인라인하는 방식으로 막 도입했다 — 아직 이 방식으로 실제 리포트를 생성해본 적이 없다(백화점 5개 리포트는 이 도입 전에 만들어져 구 인라인 스타일 그대로). 다음 실행에서 (1) design-system.css를 실제로 잘 읽어서 인라인하는지, (2) 클래스 체계(`.hero`/`.gate`/`.badge` 등)로 기존 보고서 내용(3개 기준+2단계 스크리닝+출처+컴플라이언스)을 다 표현할 수 있는지, (3) 인라인 후에도 여전히 자기완결 단일 파일인지(외부 링크 없는지) 확인할 것.
 - [ ] **속도 최적화 실측 필요(2026-08-13 신규)**: 4단계 데이터 수집 병렬화 + 5단계 간이 모드(전체 메모 생략)를 추가했다 — 실제로 10분→5분 근처까지 줄어드는지 기업 1~2개로 시간을 재서 검증할 것. 간이 모드가 의도대로 파일 생성을 건너뛰는지(3개 스킬 모두)도 함께 확인.
 - [ ] **병렬 서브에이전트 디스패치(2026-08-13 신규, 2단계)** — (1) 산업 입력 시 기업별 `investment-desk` 서브에이전트 병렬 디스패치, (2) 기업 1건 판단 안에서 3개 기준(`judge-*`)의 `general-purpose` 서브에이전트 병렬 디스패치. 둘 다 실제 실행 검증 안 됨. 특히 산업 입력(위 1단계)과 기준 병렬화(5단계)가 겹치면 **중첩 병렬**이 된다(기업 N개 × 기준 3개 = 최대 3N개 서브에이전트 동시 실행) — DART/FRED/FnSpace API 레이트리밋, `dart_corp_codes.json` 캐시 경합(원자적 쓰기로 이미 완화), 비용 폭증 여부를 소규모(기업 2~3개)로 먼저 검증할 것.
 - [x] end-to-end 1건 실행 완료 (제출물③, BGF리테일 — `reports/BGF리테일-20260812.md`, 2026-08-12). DART_API_KEY/FRED_API_KEY로 실행, FnGuide는 아직 미확보라 해당 스텝은 생략됨. ⚠️ 기준①②가 이후 chaemin/pjueun 버전으로 교체돼 최신 규칙과는 다름 — 재실행 필요.

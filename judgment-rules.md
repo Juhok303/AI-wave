@@ -48,7 +48,7 @@
   - `Conversion_Readiness_Gap = (Financial Conversion Capacity%ile − Market Recognition%ile) / 100` — 값이 클수록 강한 매수 신호, 음수면 자동 배제
   - `Risk_Penalty% = Red Flag 개수 × 10%p (최대 50%)`, Red Flag 2개 이상이면 점수와 무관하게 강제 Avoid
   - 데이터 출처: DART 공시(매출·마진), FnGuide 컨센서스(Estimate Revision, EV/Sales) + `fetch-web`이 수집하는 리뷰/뉴스 데이터(Proxy, 데이터 신뢰도에 따라 0.6~1.0x 할인, 데이터 없음은 중립(50점) 처리 금지 — weight 배제 후 재정규화)
-- **판정**: `references/underpriced-customer-love-framework.md`의 최종 판단(ULRS>0 → BUY / ULRS≈0 → WATCH / ULRS<0 또는 Red Flag 2개↑ → AVOID)을 기준①②와 동일한 규칙으로 환산한다 — **BUY → 부합**, **WATCH → 부분부합**, **AVOID → 미부합**. 100점 스코어카드(문서 D절)는 참고 지표로 함께 산출하되, 최종 판정은 ULRS 부호를 따른다(원문 설계 그대로).
+- **판정**: `references/scorecard_and_verdict.md`의 **최종 Verdict**(100점 스코어카드 + 5개 Gate 적용 후 나오는 판정 — 기준①②와 동일한 Score+Gate 임계값 아키텍처, 2026-08-13부터 적용)를 기준으로 매핑한다 — **BUY(Score ≥80, 전 Gate 통과) → 부합**, **WATCH(Score 65~79) → 부분부합**, **AVOID(Score 50~64 또는 Gate 위반, Red Flag 2개↑ 포함) → 미부합**. ULRS 공식은 폐기하지 않고 Market Recognition Gate 판정 근거·Entry Timing 산정용 진단 지표로 남는다(더 이상 ULRS 부호가 Verdict를 직접 정하지 않는다).
 - **참고 예시**: [`.claude/skills/judge-underpriced-customer-love/assets/example-memo-duolingo.html`](.claude/skills/judge-underpriced-customer-love/assets/example-memo-duolingo.html) (Duolingo 적용 사례).
 - 상세 방법론(Layer 정의, Gap 공식, Entry Timing, Red Flag 10종, 섹터 적합도): [`.claude/skills/judge-underpriced-customer-love/references/underpriced-customer-love-framework.md`](.claude/skills/judge-underpriced-customer-love/references/underpriced-customer-love-framework.md)
 

@@ -36,7 +36,9 @@ Never substitute a different philosophy. Never skip a Layer because a company "o
 > 아직 이를 가격에 반영하지 않았다."
 
 Verdict must be one of: **Supported / Partially Supported / Not Supported** (Core Thesis Test) →
-최종적으로 **BUY / WATCH / AVOID** (Final Verdict, Gate 적용 후).
+최종적으로 **BUY / WATCH / AVOID** (Final Verdict, `references/scorecard_and_verdict.md`의
+Score+Gate 임계값 적용 후 — 기준①②와 동일 아키텍처, 2026-08-13부터 ULRS 부호가 아니라 이 방식이
+Verdict를 정한다).
 
 전체 방법론(Layer 정의, Gap 공식, Red Flag, Sector Fit, ULRS 공식 유도)은
 `references/underpriced-customer-love-framework.md`에 있다 — 매 분석마다 요약만 보지 말고 다시 읽는다.
@@ -82,20 +84,24 @@ Verdict must be one of: **Supported / Partially Supported / Not Supported** (Cor
    Market Believes/We Believe/Why Wrong/Evidence/Recognition Trigger를 쓰고, 6-category로 분류한다
    (Category 1이면 Variant View 불인정).
 7. **Red Flag Gate** — `references/red_flag_test.md` 10종을 전부 점검한다. 2개 이상이면 즉시 AVOID.
-8. **ULRS 계산** — `ULRS = √(Love%ile × Durability%ile) × Conversion_Readiness_Gap × (1 −
-   Risk_Penalty%)`. 게이트 규칙(Durability Layer <40점이면 Total Score 상한 60점)도 함께 적용.
+8. **ULRS 계산(진단 지표)** — `ULRS = √(Love%ile × Durability%ile) × Conversion_Readiness_Gap ×
+   (1 − Risk_Penalty%)`. Verdict를 직접 정하지 않는다 — Market Recognition Gate 판정 근거와 Entry
+   Timing/Expected Return 산정에 쓰인다(`references/scorecard_and_verdict.md` 참고).
 9. **Catalyst, Entry Timing, Valuation, Expected Return, Holding Period, Exit** —
    `references/entry_timing.md`를 따른다. Entry Timing은 반드시 BUY NOW / BUY ON CONFIRMATION /
    BUY ON WEAKNESS / WAIT 중 하나로 확정한다.
-10. **Scorecard, Gates, Final Verdict** — 100점 스코어카드(문서 D절)를 채우되, **최종 Verdict는
-    ULRS 부호**(>0 BUY, ≈0 WATCH, <0 또는 Red Flag 2개↑ AVOID)로 정한다. 어느 쪽이든 근거를 명시.
+10. **Scorecard, Gates, Final Verdict** — `references/scorecard_and_verdict.md`를 정확히 따른다.
+    100점 스코어카드를 채우고 5개 Gate(Market Recognition/Consensus/Durability/Red Flag/Data
+    Integrity)를 점검한 뒤, Score+Gate 임계값(BUY ≥80·전 Gate 통과, WATCH 65~79, AVOID 50~64 또는
+    Gate 위반)으로 **최종 Verdict**를 정한다 — Gate가 막은 점수는 주지 않는다. 모든 행에 점수/최대
+    + 1-2줄 근거를 남긴다.
 11. **메모 작성** — `references/output_template.md`의 정확한 스켈레톤을 채운다. `.md`와 `.html`
     모두 같은 구조를 쓴다.
 12. **산출물 생성** — 아래 "Final file output" 참조. **필수 단계다** — 대화창 답변만으로는 완료가
     아니다.
 13. **(이 레포 파이프라인에서 호출될 때만) 축약 판정 반환** — `investment-desk`가 1단계 필터링용으로
-    호출한 경우, 위 결과를 `judgment-rules.md` 기준③ 매핑(BUY→부합, WATCH→부분부합, AVOID→미부합)
-    으로 환산해 짧게 반환한다. 두 출력(전체 메모 vs 파이프라인용 축약 판정)은 같은 계산에서
+    호출한 경우, `references/scorecard_and_verdict.md`의 매핑(BUY→부합, WATCH→부분부합, AVOID→
+    미부합)으로 환산해 짧게 반환한다. 두 출력(전체 메모 vs 파이프라인용 축약 판정)은 같은 계산에서
     나와야 한다.
 
 ## Peer Group 축소판 (이 레포는 GICS DB가 없음)
@@ -108,8 +114,10 @@ Verdict must be one of: **Supported / Partially Supported / Not Supported** (Cor
 ## Reference files (load as needed)
 
 - `references/underpriced-customer-love-framework.md` — Universe Filter(J절) + 전체 Layer 1-5
-  정의(C절) + 100점 Scorecard(D절) + Entry Timing 5-stage 원본(F절) + Catalyst(G절) + Holding/Exit
-  (I절) + Core Version(K절) + ULRS 공식 유도.
+  정의(C절) + Entry Timing 5-stage 원본(F절) + Catalyst(G절) + Holding/Exit(I절) + Core
+  Version(K절) + ULRS 공식 유도(진단 지표로서의 역할).
+- `references/scorecard_and_verdict.md` — 100점 스코어카드(재가중), Gate 5종, Final Verdict
+  임계값(BUY/WATCH/AVOID) — 기준①②와 동일 아키텍처. **최종 Verdict는 이 문서가 정한다.**
 - `references/underpricing_gap_test.md` — 정규화 원칙, Peer Group 3중 필터, Gap 공식 5종.
 - `references/red_flag_test.md` — Red Flag 10종 + 강제 AVOID 규칙.
 - `references/financial_transmission.md` — Love→Re-rating 6단계 체인, 링크별 마킹 방법.

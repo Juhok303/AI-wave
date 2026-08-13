@@ -121,26 +121,11 @@ Gap 정의(핵심): "Love가 높음에도 위 지표들의 Peer Percentile이 �
 
 ## D. 100점 Scorecard
 
-가중치는 "이 Layer가 얼마나 직접적으로/빠르게 주가 re-rating에 연결되는가"를 기준으로 배분.
-
-| Layer | 가중치 | 배분 논리 |
-| --- | --- | --- |
-| 1. Customer Love | 15 | 필요조건이지만 그 자체로는 주가와 직결 안 됨(가장 흔한 착시 원인) |
-| 2. Love Durability & Defensibility | 15 | Love가 진짜인지 검증하는 게이트. 낮으면 이후 Layer 전체에 페널티 |
-| 3. Operating Monetization Gap | 20 | 이 Thesis의 핵심 — Gap이 클수록 잠재 alpha 큼 |
-| 4. Financial Conversion Capacity | 20 | Gap이 실제 재무성과로 "전환될 능력"이 있는지가 성패를 가름 |
-| 5. Market Recognition Gap | 15 | 아무리 좋아도 시장이 이미 안다면 alpha 없음 (핵심 절제 조건) |
-| 6. Catalyst 근접성 | 10 | 전환 시점의 가시성 — Holding Period와 IRR에 직결 |
-| Risk Penalty | −0~15 | False Positive Red Flag 개수·강도에 비례 차감 |
-
-```
-Layer Score = Σ(Metric Peer Percentile × Metric Weight)      [0~100]
-Total Score = Σ(Layer Score × Layer Weight%) − Risk Penalty
-```
+Section D는 `references/scorecard_and_verdict.md`로 승격됐다(2026-08-13) — 100점 스코어카드
+가중치, Gate 5종, Final Verdict 임계값(Score+Gate 기반, 기준①②와 동일 아키텍처), ULRS의
+새 역할(진단 지표로 격하)까지 전부 그 문서를 따른다(여기서 중복 서술하지 않는다).
 
 각 Metric 행은 `Raw Metric | YoY 변화 | 3Y Trend | Peer Median 대비 차이 | Peer Percentile | Weight | Score`를 모두 채운다.
-
-게이트 규칙: Layer2(Durability)가 40점 미만이면 총점이 아무리 높아도 Total Score에 상한(cap) 60점을 적용한다 — 일시적 유행을 "저평가된 사랑"으로 오판하는 것을 구조적으로 차단.
 
 ## E. Underpricing / Gap Formula
 
@@ -245,12 +230,13 @@ ULRS = [ (Love × Durability)^0.5 ] × Conversion_Readiness_Gap × (1 − Risk_P
 
 - `Love` = Layer1 Percentile (0~100), Customer Love 강도
 - `Durability` = Layer2 Percentile (0~100), 애착의 지속가능성/방어력. 기하평균을 쓰는 이유 — 산술평균은 "Love=100, Durability=0"인 반짝 유행주도 50점을 줘버려 False Positive를 못 거른다. 하나라도 낮으면 전체가 크게 깎이는 AND 조건 구조가 필요.
-- `Conversion_Readiness_Gap` = (Layer4 %ile − Layer5 %ile)/100 — "전환 능력은 있는데 시장은 아직 모른다"의 크기. 음수(시장이 이미 앞서감)면 ULRS 자체가 음수가 되어 자동 배제 신호가 됨.
+- `Conversion_Readiness_Gap` = (Layer4 %ile − Layer5 %ile)/100 — "전환 능력은 있는데 시장은 아직 모른다"의 크기. 음수(시장이 이미 앞서감)면 ULRS 자체가 음수가 됨.
 - `Risk_Penalty%` = H절 Red Flag 개수 × 10%p (최대 50%)
 
-**해석**
-- ULRS > 0 (값 클수록): Love가 진짜(Durability 확인)이며, 회사는 재무 전환 능력이 있는데 시장은 아직 반영 안 함 — 최적 매수 구간
-- ULRS ≈ 0: Gap이 이미 닫혔거나 전환 능력 자체가 미증명 — Watchlist
-- ULRS < 0: 시장이 이미 더 낙관적이거나 Love/Durability 자체가 약함 — Avoid
+**⚠️ ULRS는 더 이상 Final Verdict를 직접 정하지 않는다(2026-08-13 개편)** — 기준①②와 판정
+아키텍처를 통일하기 위해, 최종 Verdict는 이제 `references/scorecard_and_verdict.md`의 Score+Gate
+임계값이 정한다. ULRS는 그 문서의 Market Recognition Gate 판정 근거 수치이자 Entry Timing/
+Expected Return 산정용 진단 지표로 남는다 — 부호 해석(양수=매수 신호, 음수=배제 신호)은 그대로
+유효하지만, "ULRS 부호 = Verdict"라는 예전 규칙은 폐기됐다.
 
-이 Thesis의 본질은 "좋은 기업 찾기"가 아니라 **① 진짜 애착(Love×Durability) ② 그것을 돈으로 바꿀 능력(Conversion) ③ 그런데 시장은 아직 모름(Gap)**이라는 세 조건의 동시 성립이다. ULRS는 이 세 조건을 곱셈 구조로 강제하여, 어느 한 조건이라도 무너지면 전체 점수가 급격히 낮아지도록 설계했다.
+이 Thesis의 본질은 "좋은 기업 찾기"가 아니라 **① 진짜 애착(Love×Durability) ② 그것을 돈으로 바꿀 능력(Conversion) ③ 그런데 시장은 아직 모름(Gap)**이라는 세 조건의 동시 성립이다. ULRS는 이 세 조건을 곱셈 구조로 강제하여, 어느 한 조건이라도 무너지면 전체 지표가 급격히 낮아지도록 설계했다 — 이제 이 신호는 `scorecard_and_verdict.md`의 Market Recognition Gate를 통해 Verdict에 반영된다.

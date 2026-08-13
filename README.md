@@ -2,6 +2,10 @@
 
 B2C 개별기업에 대한 투자 판단을 자동화하는 Claude Code 기반 투자 데스크.
 
+> 팀 콜라보레이터가 아닌 사람(또는 이 레포를 Claude Code 밖에서, 다른 에이전트로 쓰는 사람)이라면
+> [`AGENTS.md`](AGENTS.md)를 먼저 보는 게 낫다 — README를 안 읽어도 에이전트가 이 레포의 판단
+> 규칙을 지키도록 만든 짧은 안내다.
+
 ## 제출물 3종
 
 1. **판단 규칙서** — [`judgment-rules.md`](judgment-rules.md)

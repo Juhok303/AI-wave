@@ -1,0 +1,522 @@
+<title>Puma 투심메모</title>
+<style>
+  :root {
+    --paper: #efeae0;
+    --paper-panel: #e6dfcf;
+    --paper-panel-2: #ded5c0;
+    --ink: #23241f;
+    --ink-soft: #5c5646;
+    --ink-faint: #8a8270;
+    --line: #c7bc9f;
+    --line-strong: #a89b77;
+    --forest: #2f5233;
+    --forest-ink: #24401f;
+    --brass: #8a6a1f;
+    --brass-ink: #6b5216;
+    --wine: #7d2036;
+    --wine-ink: #611829;
+    --navy: #2a3a52;
+    --link: #4a4530;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1a1813;
+      --paper-panel: #221f18;
+      --paper-panel-2: #2a261d;
+      --ink: #e9e2cf;
+      --ink-soft: #b9ae93;
+      --ink-faint: #857c65;
+      --line: #4a4433;
+      --line-strong: #6b6248;
+      --forest: #6fae74;
+      --forest-ink: #8fc793;
+      --brass: #d1a94a;
+      --brass-ink: #e0bd6c;
+      --wine: #d9748a;
+      --wine-ink: #e493a5;
+      --navy: #9fb3cc;
+      --link: #cbbf8e;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1a1813;
+    --paper-panel: #221f18;
+    --paper-panel-2: #2a261d;
+    --ink: #e9e2cf;
+    --ink-soft: #b9ae93;
+    --ink-faint: #857c65;
+    --line: #4a4433;
+    --line-strong: #6b6248;
+    --forest: #6fae74;
+    --forest-ink: #8fc793;
+    --brass: #d1a94a;
+    --brass-ink: #e0bd6c;
+    --wine: #d9748a;
+    --wine-ink: #e493a5;
+    --navy: #9fb3cc;
+    --link: #cbbf8e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin: 0;
+    padding: 48px 20px 96px;
+  }
+
+  .sheet {
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  .serif {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+  }
+
+  .mono {
+    font-family: "D2Coding", "Consolas", "SFMono-Regular", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  /* ---- Letterhead ---- */
+  header.letterhead {
+    border-top: 3px double var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 22px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  header.letterhead .titles h1 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 4px 0 6px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  header.letterhead .code {
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  header.letterhead .meta {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    white-space: nowrap;
+  }
+
+  header.letterhead .meta b { color: var(--ink); }
+
+  /* ---- Verdict stamp ---- */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid currentColor;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    transform: rotate(-2.5deg);
+    white-space: nowrap;
+    mix-blend-mode: multiply;
+  }
+  :root:not([data-theme="light"]) .stamp,
+  :root[data-theme="dark"] .stamp {
+    mix-blend-mode: screen;
+  }
+
+  .stamp.pass, .stamp.fit { color: var(--forest-ink); }
+  .stamp.partial { color: var(--brass-ink); }
+  .stamp.fail, .stamp.no-fit { color: var(--wine-ink); }
+  .stamp.hold { color: var(--ink-faint); border-style: dashed; }
+
+  .stamp-lg {
+    font-size: 22px;
+    padding: 12px 26px;
+    border-width: 3px;
+    border-radius: 8px;
+    transform: rotate(-3deg);
+  }
+
+  /* ---- Overview ---- */
+  .overview {
+    padding: 20px 0 8px;
+    color: var(--ink-soft);
+  }
+
+  /* ---- Verdict summary strip ---- */
+  .verdict-strip {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0 30px;
+  }
+
+  /* ---- Section ---- */
+  section.stage {
+    margin-top: 8px;
+  }
+
+  .stage > .stage-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+
+  .stage-head h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  /* ---- Criterion card ---- */
+  .criterion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px 20px;
+    margin-bottom: 16px;
+  }
+
+  .criterion .crit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .criterion h3 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .criterion .score {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .criterion dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 14px;
+    margin: 12px 0 0;
+  }
+
+  .criterion dt {
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .criterion dd {
+    margin: 0;
+    font-size: 14.5px;
+  }
+
+  .criterion .figs {
+    font-size: 14.5px;
+    background: var(--paper-panel-2);
+    border-left: 3px solid var(--line-strong);
+    padding: 9px 13px;
+    margin: 4px 0 12px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .criterion .clause {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .stage-summary {
+    font-size: 14px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--line-strong);
+    padding: 8px 14px;
+    margin: 4px 0 44px;
+  }
+
+  .stage-summary.terminal {
+    border-left-color: var(--wine-ink);
+    color: var(--wine-ink);
+    font-weight: 600;
+  }
+
+  /* ---- Opinion panel ---- */
+  .opinion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 24px 26px;
+    margin-bottom: 44px;
+    position: relative;
+  }
+
+  .opinion h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0 0 12px;
+  }
+
+  .opinion p { margin: 0 0 12px; }
+  .opinion p:last-child { margin-bottom: 0; }
+
+  .opinion .conclusion {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .opinion .conclusion p { flex: 1; min-width: 240px; margin: 0; }
+
+  /* ---- Sources ---- */
+  .sources {
+    font-size: 13.2px;
+    color: var(--ink-soft);
+  }
+
+  .sources h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 17px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+
+  .sources ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .sources li { margin-bottom: 10px; }
+  .sources li b { color: var(--ink); }
+  .sources a { color: var(--link); }
+  .sources a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+  /* ---- Compliance ledger ---- */
+  .compliance {
+    margin-top: 40px;
+    border-top: 3px double var(--line-strong);
+    padding-top: 18px;
+  }
+
+  .compliance h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 15px;
+    margin: 0 0 12px;
+    color: var(--ink-soft);
+  }
+
+  .compliance ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .compliance li {
+    padding: 7px 0 7px 24px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .compliance li:last-child { border-bottom: none; }
+
+  .compliance li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    color: var(--forest-ink);
+    font-family: "D2Coding", monospace;
+  }
+
+  footer.colophon {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin-top: 40px;
+    letter-spacing: 0.04em;
+  }
+
+  a { color: var(--link); }
+
+  @media (max-width: 560px) {
+    header.letterhead { flex-direction: column; }
+    header.letterhead .meta { text-align: left; }
+    .criterion .crit-head { flex-direction: column; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="letterhead">
+    <div class="titles">
+      <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 (Score+Gate 아키텍처)</div>
+      <h1>Puma (푸마)</h1>
+      <div class="code mono">PUM.DE / ETR: PUMG / OTC: PMMAF · 독일 프랑크푸르트증권거래소 · 스포츠웨어(신발·의류) 산업</div>
+    </div>
+    <div class="meta">
+      작성일 <b>2026-08-13</b><br>
+      작성 도구 <b><span class="mono">investment-desk</span></b><br>
+      DART 조회 <b>대상 아님(비상장·해외)</b>
+    </div>
+  </header>
+
+  <p class="overview">Puma SE는 독일에 본사를 둔 세계 3위권 스포츠웨어(신발·의류·액세서리) 브랜드로, 축구·러닝·트레이닝 등 퍼포먼스 카테고리와 패션 콜라보레이션 기반 "Sport-Style" 카테고리를 소비자에게 직접 판매하는 대표적인 B2C 기업이다. Scope Gate 판단: 주력 매출이 최종 소비자 대상 신발·의류 판매이므로 B2C 스코프에 해당해 판단을 진행했다. 다만 한국 기업이 아니라 DART(전자공시) 및 FnGuide/FnSpace(한국 상장 종목 전용 컨센서스) 커버리지 밖이며, 이번 판단은 FRED 매크로 지표와 웹 검색(뉴스·리뷰·시세) Proxy 자료로만 진행했다.</p>
+
+  <div class="verdict-strip">
+    <span class="stamp stamp-lg fail">투자 매력 없음 · 3개 기준 전부 미부합</span>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">STAGE 1</span>
+      <h2>핵심 판단 기준 3개</h2>
+    </div>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score ≈9&ndash;12/100 · Verdict: PASS</div>
+        </div>
+      </div>
+      <p class="figs mono">매출총이익률 +180bp(Q2 2026, YoY) — 원가절감·관세환급·채널믹스 효과로 설명(가격결정력 아님) · 매출액 2024 -2.4% → 2025 -13.1% → 2026 Q2 organic -9.4% · 시장점유율: Nike 27% &gt; Adidas 13% &gt; Puma(3위)</p>
+      <p>Layer C(Customer Economics: 리텐션·CAC·LTV)와 Pricing Power Test 4개 서브테스트(가격 인상 이력, 인상 전후 리텐션 유지, Mix를 통한 가격 상승, 경쟁사 대비 ASP 프리미엄)가 DART/FnGuide 공백으로 전부 데이터 부재(Insufficient Data) 처리돼 Data Integrity Gate가 발동했다. 유일하게 확인된 매출총이익률 개선(+180bp)도 웹 원문 자체가 "원가절감·관세환급·채널믹스"로 설명해 가격결정력이 아닌 비용 효과로 판단, Financial Transmission Chain이 Retention 단계부터 확인 불가해 Financial Translation Gate가 발동했다. Nike·Adidas에 이은 3위 지위이며 Hoka·On 등 신흥 브랜드에 점유율을 잠식당하는 국면이라 Pricing Power를 방어할 경쟁우위 근거도 없다. "Puma Reset"·CEO 교체 서사는 2025~2026년 공식 IR로 이미 시장에 공개된 내용이라 Variant Perception이 Category 1(시장이 이미 아는 내용)로 분류돼 Consensus Gate도 발동했다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준① "판정" — PASS(Gate 위반 포함) → 미부합. <span class="mono">judge-retention-pricing-power/references/scorecard_and_verdict.md</span> Data Integrity Gate·Consensus Gate·Financial Translation Gate 다중 발동</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART/FnGuide 대상 아님(NOT_APPLICABLE, 한국 전용 데이터 소스) · web.json Q2 2026 실적·경쟁 구도 서술(Proxy, Medium)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>② Structural vs Cyclical Misclassification</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score ≈19&ndash;25/100 · Verdict: PASS</div>
+        </div>
+      </div>
+      <p class="figs mono">매출액 YoY 2022 +24.4% → 2023 +1.6% → 2024 -2.4% → 2025 -13.1% → 2026 Q2 organic -9.4%(3년 연속·가속화된 역성장) · Peer 2024 신발 매출 YoY: Hoka +68%, On Running +54% · 인력 감축 총 1,400명(전체 법인 인력 약 13%)</p>
+      <p>Framework Fit은 Medium으로 판단했다(상장 이력은 길지만 캐시에 과거 경기 하방기 실적 데이터가 없어 검증력 제한). Cyclical Contamination Test 1(Historical Macro Sensitivity)은 과거 경기 하방기(2008·2020) 실적 데이터가 캐시에 없어 판단 보류(Insufficient Data, Data Integrity Gate 발동). Test 2(Peer Divergence)는 명확히 확인됐으나 방향이 Bear다 — Hoka(+68%)·On(+54%)이 급성장하는 동안 Puma는 3년 연속·가속화된 역성장을 보여, 카테고리(퍼포먼스 러닝) 자체는 구조적으로 성장 중이고 그 수혜가 Puma가 아닌 경쟁사로 이동하고 있음을 시사한다 — 즉 Financial Transmission Chain은 "Category Volume↑" 단계까지는 확인되나 "Company Revenue↑" 단계에서 끊긴다(고유 경쟁열위 신호). Test 3(Growth Decomposition)에서 매출총이익률 개선은 자발적 채널 정리(오프프라이스 축소) 효과이지만, Reset 착수 10개월 후에도 organic -9.4%의 낙폭이 유지돼 채널 정리만으로 설명되지 않는 저변 수요 약화가 의심된다. "2025=Reset, 2026=Transition, 2027=회복" 서사는 IR·실적콜에서 이미 반복 공개된 컨센서스 프레이밍이라 Variant Perception이 Category 1로 분류돼 Consensus Gate가 발동했다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준② "판정" — PASS(Score 50&ndash;64 또는 Gate 위반) → 미부합. <span class="mono">judge-structural-vs-cyclical/references/cyclical_contamination_test.md</span> Test 1&ndash;3, <span class="mono">scorecard_and_verdict.md</span> Data Integrity Gate·Consensus Gate 발동</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART/FnGuide 대상 아님(NOT_APPLICABLE) · FRED(미국 CPI·기준금리·소매판매·실업률, Puma는 독일 기업이라 국가 불일치로 Low, 참고용) · web.json 매출 추이·경쟁사 동향·구조조정 서술(Proxy, Medium)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>③ Underpriced Customer Love (ULRS)</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score ≈22&ndash;23/100 · Verdict: AVOID</div>
+        </div>
+      </div>
+      <p class="figs mono">Layer1(Love) ≈35/100 · Layer2(Durability) ≈20/100(Durability Gate 발동, 60점 상한) · Red Flag 발동 0개(6개 항목은 데이터 없음으로 확인 불가 처리, 감점 반영) · EBIT Q2 2026 -0.53억 EUR 적자 지속</p>
+      <p>Layer1(Customer Love)은 Trustpilot 등 리뷰 요약상 "제품 품질은 긍정적이나 배송·CS 불만 다수, 뚜렷한 팬덤형 애착(재구매·자발적 옹호) 근거는 미확인"으로 약하고, 정량 지표(재구매율·NPS)가 없어 Low-confidence 정성 Proxy에만 의존했다. Layer2(Durability)는 2024~2025년 2년 연속 매출 역성장, 2026년 2분기 organic -9.4%, Hoka·On 등 신흥 브랜드의 점유율 잠식, CEO 교체 후 대규모 구조조정이라는 반증이 뚜렷해 낮게 채점했고, Durability Gate(Layer2&lt;40점)가 발동해 Total Score가 60점 상한으로 캡핑됐다 — Love가 있어도 지속성이 검증되지 않은 전형적 오판 위험 사례다. Red Flag 10종 중 명확히 발동한 항목은 0개이나(TAM 과소·이미 고평가 등은 미발동), 나머지 6개는 데이터 부재로 "확인 불가" 처리해 긍정 가정 없이 보수적으로 감점 반영했다. "Puma Reset"·CEO 교체·마진 개선 서사는 2025~2026년 공식 보도자료로 이미 공개된 정보라 Market Recognition Gap이 0으로 강제되며(Consensus Gate 발동), Layer4(Financial Conversion)도 EBIT 적자가 지속돼 전환 능력이 미입증 상태다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준③ "판정" — AVOID(Score 50&ndash;64 또는 Gate 위반, Red Flag 2개↑ 포함) → 미부합. <span class="mono">judge-underpriced-customer-love/references/scorecard_and_verdict.md</span> Durability Gate·Consensus Gate·Data Integrity Gate 미통과</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART/FnGuide 대상 아님(NOT_APPLICABLE, Market Recognition Gap 산정 불가·중립 처리 금지 원칙에 따라 감점 처리) · web.json 리뷰 요약·매출·구조조정 서술(Proxy, Low&ndash;Medium)</dd>
+      </dl>
+    </article>
+
+    <p class="stage-summary terminal">1단계 종합 — 기준①·②·③ 모두 미부합(각 PASS/PASS/AVOID → 미부합 환산)이다. <span class="mono">judgment-rules.md</span> "3개 모두 미부합이면 그 시점에 투자 매력이 없는 것으로 보고 판단을 종료한다" 조항에 따라 2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)은 실행하지 않는다.</p>
+  </section>
+
+  <div class="opinion">
+    <h2>종합 투자의견</h2>
+    <p>1단계 핵심 판단 기준 3개(Retention-to-Pricing-Power, Structural vs Cyclical, Underpriced Customer Love) 모두 미부합으로 판정됐다. 공통적으로 (1) 매출총이익률 개선(+180bp)이 확인되지만 원가절감·관세환급·채널믹스 효과로 설명돼 가격결정력에 의한 마진 확장이라는 인과 체인이 검증되지 않았고, (2) 2024~2026년 3년 연속·가속화된 매출 역성장(-2.4% → -13.1% → -9.4%)이 Hoka(+68%)·On(+54%) 등 신흥 경쟁사의 급성장과 대비되어 "시장이 오인한 순환적 부진"이 아니라 자사 고유의 경쟁열위·브랜드 약화 신호로 판단되며, (3) "Puma Reset" 구조조정·CEO 교체·2027년 회복 목표는 이미 2025~2026년 공식 IR로 시장에 공개된 서사라 어느 기준에서도 시장 미인식(Variant Perception/Market Recognition Gap)을 인정할 근거가 없었다. 세 기준 모두 정량 임계값(Score 50 이상 또는 각 Gate 통과)을 충족하지 못했다.</p>
+    <p><span class="mono">judgment-rules.md</span> "1단계" 절의 "3개 모두 미부합이면 투자 매력이 없는 것으로 보고 판단을 종료한다"는 규정에 따라, 이번 데이터 시점(2026-08-13) 기준 Puma는 이 판단 규칙서상 투자 매력이 없는 것으로 결론짓는다. 단, Puma는 한국 상장 기업이 아니라 DART·FnGuide/FnSpace(리텐션·컨센서스·목표주가 등 핵심 정량 지표의 주 출처)가 원천적으로 커버하지 않는 대상이라, 이번 결론은 "정량 근거가 충분해 명확히 미부합"이라기보다 "데이터 공백 속에서도 확인된 웹 Proxy 자료(3년 연속 매출 역성장, Peer 대비 열위, 이미 공개된 턴어라운드 서사)가 일관되게 부정적이었다"는 성격이 크다. 향후 Puma의 공식 재무제표(연차보고서)·컨센서스 데이터를 별도로 확보해 재실행하면 결론이 보완될 수 있다.</p>
+    <div class="conclusion">
+      <p>세 기준 모두 미부합 — 규칙서 조항에 따라 판단을 종료한다. 2단계 스크리닝은 실행하지 않았다.</p>
+      <span class="stamp fail">투자 매력 없음</span>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h2>사용한 원자료 출처</h2>
+    <ol>
+      <li><b>DART</b> — 대상 아님. Puma SE는 독일 상장 기업으로 한국 DART 공시 대상이 아니다(<span class="mono">data/cache/Puma/dart.json</span>, <span class="mono">lib/dart_client.py "Puma"</span> 실행 결과 corp_code 마스터 목록에서 매칭 실패, 2026-08-13 확인).</li>
+      <li><b>FRED</b> — <span class="mono">data/cache/Puma/fred.json</span>, CPI(CPIAUCSL)·기준금리(FEDFUNDS)·소매판매(RSAFS)·실업률(UNRATE), 미국 지표, 2026-08-13 조회. Puma는 독일 기업이라 국가 불일치로 Low Confidence, 참고용.</li>
+      <li><b>FnGuide/FnSpace</b> — 대상 아님. fnspace-mcp는 한국거래소(KRX) 상장 종목 전용 컨센서스 소스라 독일 상장 기업인 Puma는 커버리지 밖이며, 이번 서브에이전트 세션에도 <span class="mono">mcp__fnspace__*</span> 도구가 노출되지 않았다(<span class="mono">data/cache/Puma/fnguide.json</span> 참고). 리텐션·목표주가·컨센서스 지표 전부 판단 보류 처리했다.</li>
+      <li><b>companiesmarketcap.com</b> (Proxy) — Puma SE 시가총액, 2026-08-07 기준 약 4.00B EUR. Medium Confidence(3rd-party 웹, 공식 API 아님).</li>
+      <li><b>Yahoo Finance</b> (Proxy) — PUM.DE 주가(27.13 EUR, 2026-08-07 종가), 52주 범위(15.30~30.31 EUR). Medium Confidence.</li>
+      <li><b>SGB Media (sgbonline.com)</b> (Proxy) — "EXEC: Puma Narrows Q2 Loss, Sales Slump 9 Percent" 기사, 2026년 2분기 organic 매출 -9.4%, EBIT 적자 축소(-1.091억→-0.531억 EUR) 서술. Medium Confidence.</li>
+      <li><b>Investing.com</b> (Proxy) — "PUMA Q2 2026 slides: margins expand amid sales decline" 기사, 매출총이익률 +180bp(원가절감·관세환급·채널믹스 효과) 서술. Medium Confidence.</li>
+      <li><b>PUMA 공식 뉴스룸(about.puma.com)</b> (Proxy, 회사 자체 발표) — "PUMA completes reset in 2025; 2026 designated as transition year" 보도자료, CEO 교체·구조조정·2027년 성장 복귀 목표 서술. Medium Confidence(회사 자체 발표라 낙관 편향 가능성 감안).</li>
+      <li><b>SGB Media(구조조정 상세)</b> (Proxy) — 900명(+기존 500명, 총 약 13%) 인력 감축, 오프프라이스 채널 축소 등 Reset 세부 내용. Medium Confidence.</li>
+      <li><b>Trustpilot</b> (Proxy) — puma.com 고객 리뷰, 제품 품질 긍정 평가와 배송·CS 불만 혼재. Low&ndash;Medium Confidence(정성 리뷰 요약).</li>
+      <li><b>Thingtesting</b> (Proxy) — Puma 브랜드 리뷰 요약, 2026. Low Confidence.</li>
+      <li><b>Running Shoes Guru (runningshoesguru.com)</b> (Proxy) — Puma 러닝화 35건 리뷰 요약, 2026-08. Low Confidence.</li>
+      <li><b>WWD(wwd.com)</b> (Proxy) — "Nike, Adidas, Puma and More Athletic Brands Race to Win 2026" 및 "Puma Q2 H1 Earnings 2026" 기사, 경쟁 구도·매출 역성장 서술. Medium Confidence.</li>
+      <li><b>Draper's Online (drapersonline.com)</b> (Proxy) — "The trainer brands taking market share from Nike and Adidas" 기사, Hoka·On 등 신흥 브랜드의 점유율 잠식 서술. Medium Confidence.</li>
+      <li><b>ECDB (ecdb.com)</b> (Proxy) — Puma 연도별 매출 추이(2022~2025), Company & Revenue 데이터. Medium Confidence.</li>
+      <li><b>Good On You (goodonyou.eco)</b> (Proxy) — Puma 노동권 "Good" 등급, 지속가능성 평가. Low&ndash;Medium Confidence.</li>
+      <li><b>Fair Labor Association (fairlabor.org)</b> (Proxy) — Puma SE 최종 생산단계 FLA 인증 회원사 정보. Medium Confidence.</li>
+    </ol>
+  </section>
+
+  <div class="compliance">
+    <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+    <ul>
+      <li>세 기준 모두 각 스킬의 100점 Score+Gate 아키텍처(<span class="mono">references/scorecard_and_verdict.md</span>)로 산출된 최종 Verdict(PASS/PASS/AVOID)를 <span class="mono">judgment-rules.md</span> 기준①②③의 매핑 조항 그대로 적용해 미부합으로 환산했다 — 임의 재량 해석을 추가하지 않았다.</li>
+      <li>3개 기준 모두 미부합이므로 <span class="mono">judgment-rules.md</span> 1단계 규정에 따라 2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)을 실행하지 않았다.</li>
+      <li>Puma는 한국 상장 기업이 아니라 DART·FnGuide/FnSpace가 원천적으로 커버하지 않는 대상임을 세 기준 판단 모두에서 명시했고, 해당 데이터에 의존하는 하위 지표(리텐션·CAC·LTV, Market Recognition Gap, 컨센서스 목표주가 등)는 임의로 추정하지 않고 판단 보류·감점 처리했다(재현성 원칙 2번, Data Integrity Gate).</li>
+      <li>Q2 2026 매출총이익률 개선(+180bp)은 회사 측 설명(원가절감·관세환급·채널믹스)을 그대로 인용해 "가격결정력에 의한 마진 확장"으로 임의 해석하지 않았다.</li>
+      <li>FRED 데이터는 미국 지표이고 Puma는 독일 기업이라 국가 불일치가 있음을 명시하고 참고용(Low Confidence)으로만 사용했다 — 서로 다른 지리적 기준을 섞어 결론을 내리지 않기 위함이다.</li>
+      <li>모든 판단 문장에 적용한 <span class="mono">judgment-rules.md</span> 조항·스킬 Gate 이름을 괄호/각주로 명시했다(판단 일관성 원칙 3번).</li>
+    </ul>
+  </div>
+
+  <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13</footer>
+
+</div>

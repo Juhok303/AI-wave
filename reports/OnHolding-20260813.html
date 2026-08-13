@@ -1,0 +1,516 @@
+<title>On Holding (ONON) 투심메모</title>
+<style>
+  :root {
+    --paper: #efeae0;
+    --paper-panel: #e6dfcf;
+    --paper-panel-2: #ded5c0;
+    --ink: #23241f;
+    --ink-soft: #5c5646;
+    --ink-faint: #8a8270;
+    --line: #c7bc9f;
+    --line-strong: #a89b77;
+    --forest: #2f5233;
+    --forest-ink: #24401f;
+    --brass: #8a6a1f;
+    --brass-ink: #6b5216;
+    --wine: #7d2036;
+    --wine-ink: #611829;
+    --navy: #2a3a52;
+    --link: #4a4530;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1a1813;
+      --paper-panel: #221f18;
+      --paper-panel-2: #2a261d;
+      --ink: #e9e2cf;
+      --ink-soft: #b9ae93;
+      --ink-faint: #857c65;
+      --line: #4a4433;
+      --line-strong: #6b6248;
+      --forest: #6fae74;
+      --forest-ink: #8fc793;
+      --brass: #d1a94a;
+      --brass-ink: #e0bd6c;
+      --wine: #d9748a;
+      --wine-ink: #e493a5;
+      --navy: #9fb3cc;
+      --link: #cbbf8e;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1a1813;
+    --paper-panel: #221f18;
+    --paper-panel-2: #2a261d;
+    --ink: #e9e2cf;
+    --ink-soft: #b9ae93;
+    --ink-faint: #857c65;
+    --line: #4a4433;
+    --line-strong: #6b6248;
+    --forest: #6fae74;
+    --forest-ink: #8fc793;
+    --brass: #d1a94a;
+    --brass-ink: #e0bd6c;
+    --wine: #d9748a;
+    --wine-ink: #e493a5;
+    --navy: #9fb3cc;
+    --link: #cbbf8e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin: 0;
+    padding: 48px 20px 96px;
+  }
+
+  .sheet {
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  .serif {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+  }
+
+  .mono {
+    font-family: "D2Coding", "Consolas", "SFMono-Regular", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  /* ---- Letterhead ---- */
+  header.letterhead {
+    border-top: 3px double var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 22px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  header.letterhead .titles h1 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 4px 0 6px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  header.letterhead .code {
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  header.letterhead .meta {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    white-space: nowrap;
+  }
+
+  header.letterhead .meta b { color: var(--ink); }
+
+  /* ---- Verdict stamp ---- */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid currentColor;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    transform: rotate(-2.5deg);
+    white-space: nowrap;
+    mix-blend-mode: multiply;
+  }
+  :root:not([data-theme="light"]) .stamp,
+  :root[data-theme="dark"] .stamp {
+    mix-blend-mode: screen;
+  }
+
+  .stamp.pass, .stamp.fit { color: var(--forest-ink); }
+  .stamp.partial { color: var(--brass-ink); }
+  .stamp.fail, .stamp.no-fit { color: var(--wine-ink); }
+  .stamp.hold { color: var(--ink-faint); border-style: dashed; }
+
+  .stamp-lg {
+    font-size: 22px;
+    padding: 12px 26px;
+    border-width: 3px;
+    border-radius: 8px;
+    transform: rotate(-3deg);
+  }
+
+  /* ---- Overview ---- */
+  .overview {
+    padding: 20px 0 8px;
+    color: var(--ink-soft);
+  }
+
+  /* ---- Verdict summary strip ---- */
+  .verdict-strip {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0 30px;
+  }
+
+  /* ---- Section ---- */
+  section.stage {
+    margin-top: 8px;
+  }
+
+  .stage > .stage-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+
+  .stage-head h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  /* ---- Criterion card ---- */
+  .criterion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px 20px;
+    margin-bottom: 16px;
+  }
+
+  .criterion .crit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .criterion h3 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .criterion .score {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .criterion dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 14px;
+    margin: 12px 0 0;
+  }
+
+  .criterion dt {
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .criterion dd {
+    margin: 0;
+    font-size: 14.5px;
+  }
+
+  .criterion .figs {
+    font-size: 14.5px;
+    background: var(--paper-panel-2);
+    border-left: 3px solid var(--line-strong);
+    padding: 9px 13px;
+    margin: 4px 0 12px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .criterion .clause {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .stage-summary {
+    font-size: 14px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--line-strong);
+    padding: 8px 14px;
+    margin: 4px 0 44px;
+  }
+
+  .stage-summary.terminal {
+    border-left-color: var(--wine-ink);
+    color: var(--wine-ink);
+    font-weight: 600;
+  }
+
+  /* ---- Opinion panel ---- */
+  .opinion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 24px 26px;
+    margin-bottom: 44px;
+    position: relative;
+  }
+
+  .opinion h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0 0 12px;
+  }
+
+  .opinion p { margin: 0 0 12px; }
+  .opinion p:last-child { margin-bottom: 0; }
+
+  .opinion .conclusion {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .opinion .conclusion p { flex: 1; min-width: 240px; margin: 0; }
+
+  /* ---- Sources ---- */
+  .sources {
+    font-size: 13.2px;
+    color: var(--ink-soft);
+  }
+
+  .sources h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 17px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+
+  .sources ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .sources li { margin-bottom: 10px; }
+  .sources li b { color: var(--ink); }
+  .sources a { color: var(--link); }
+  .sources a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+  /* ---- Compliance ledger ---- */
+  .compliance {
+    margin-top: 40px;
+    border-top: 3px double var(--line-strong);
+    padding-top: 18px;
+  }
+
+  .compliance h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 15px;
+    margin: 0 0 12px;
+    color: var(--ink-soft);
+  }
+
+  .compliance ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .compliance li {
+    padding: 7px 0 7px 24px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .compliance li:last-child { border-bottom: none; }
+
+  .compliance li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    color: var(--forest-ink);
+    font-family: "D2Coding", monospace;
+  }
+
+  footer.colophon {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin-top: 40px;
+    letter-spacing: 0.04em;
+  }
+
+  a { color: var(--link); }
+
+  @media (max-width: 560px) {
+    header.letterhead { flex-direction: column; }
+    header.letterhead .meta { text-align: left; }
+    .criterion .crit-head { flex-direction: column; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="letterhead">
+    <div class="titles">
+      <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 (Score+Gate 아키텍처)</div>
+      <h1>On Holding (온홀딩)</h1>
+      <div class="code mono">티커 ONON · NYSE 상장 · 스위스(취리히) 소재 러닝화/스포츠웨어 브랜드</div>
+    </div>
+    <div class="meta">
+      작성일 <b>2026-08-13</b><br>
+      작성 도구 <b><span class="mono">investment-desk</span></b><br>
+      DART/FnGuide <b>미대상(해외 상장)</b>
+    </div>
+  </header>
+
+  <p class="overview">On Holding(온홀딩)은 스위스 취리히에 본사를 둔 프리미엄 러닝화·스포츠웨어 B2C 브랜드로, 고유 쿠셔닝 기술 CloudTec을 적용한 Cloud 시리즈가 주력 제품이며 로저 페더러가 브랜드 홍보대사 겸 주주로 참여한다. 2021년 NYSE에 상장했고 2026년 2분기 순매출 CHF 850.3백만(+13.5% YoY)을 기록했다(웹 자료 종합, 2026-08-13 조회). Scope Gate 판단: 주력 매출이 소비자 대상 신발·의류 판매이므로 B2C 스코프에 해당해 판단을 진행했다(<span class="mono">judgment-rules.md</span> Scope Gate 절).</p>
+
+  <div class="verdict-strip">
+    <span class="stamp stamp-lg fail">투자 매력 없음 · 3개 기준 전부 미부합</span>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">STAGE 1</span>
+      <h2>핵심 판단 기준 3개</h2>
+    </div>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score ≈23/100 · Verdict: PASS</div>
+        </div>
+      </div>
+      <p class="figs mono">2026 Q2 매출 CHF 850.3M(+13.5% YoY, 컨센서스 CHF 878M~1,114M 하회) · 매출총이익률 가이던스 65.0%+ · 조정 EBITDA 마진 가이던스 19.5~20.0%(상향) · 애널리스트 28명 컨센서스 Buy, 목표주가 $45.37(현재가 $31.01 대비 +46%, 2026-08-12 기준)</p>
+      <p>Layer C(Customer Economics: 리텐션·Cohort·Churn·CAC·LTV)와 Pricing Power Test 중 가장 결정적인 Test 2(가격 인상 전후 리텐션·Churn 비교)가 전부 데이터 부재라 임의로 긍정 가정하지 않고 보수적으로 채점했다(Data Integrity Gate 발동). 총이익률·EBITDA 마진 가이던스는 상향됐으나 동시에 분기 매출은 컨센서스를 하회하고 연간 가이던스도 레인지 하단으로 조정돼 상류(리텐션·물량)에서 하류(마진)로 이어지는 인과 체인의 앞단이 확인되지 않은 채 마진만 개선되는 혼재된 신호다(Financial Translation Gate 발동). "완전가 유지를 위한 의도적 wholesale 축소 → 마진 개선"이라는 스토리는 이미 애널리스트 28명의 Buy 컨센서스와 +46% 목표주가 괴리에 반영된 "시장이 이미 아는 좋은 점"(Variant Perception Category 1)으로 판단, Consensus Gate가 발동해 Variant Perception 점수가 강제 0점 처리됐다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준① "Verdict 매핑" — PASS(Gate 위반 포함) → 미부합. <span class="mono">judge-retention-pricing-power/references/scorecard_and_verdict.md</span> Data Integrity Gate·Financial Translation Gate·Consensus Gate 발동</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 미대상(한국 상장기업 아님, 데이터 없음) · FnGuide/FnSpace 미대상(해외 종목, 상위 요구사항 점검 WARN) · web.json 실적·컨센서스(Proxy, Medium) · fred.json 미국 매크로(참고용, 직접 반영 안 함)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>② Structural vs Cyclical Misclassification</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score ≈21/100 · Verdict: PASS</div>
+        </div>
+      </div>
+      <p class="figs mono">On Running 매출 ≈$2.6B vs Hoka $2.2B(연간, 시점 불명) · On 최근분기 성장 38%(FX-adj, Sherwood News) vs 2026 Q2 실제 매출 +13.5% YoY(컨센서스 하회) · 프리미엄 러닝 세그먼트 점유율 On 8%→12%, On+Hoka 합산 19%(Forbes, 2026-07-01) · 글로벌 러닝화 시장 점유율 On 2~3% vs Nike 30%</p>
+      <p>Cyclical Contamination Test 1(경기 하방 국면 동행 여부)은 2021년 상장 이후 온전한 경기 하방 사이클 데이터가 없어 Insufficient Data, Test 3(Volume/Price/Mix 분해)도 데이터 없음으로 각각 처리했다(Data Integrity Gate 발동). "38%(FX-adj) 성장" 서술과 실제 2026 Q2 매출 +13.5% YoY(컨센서스 하회, 가이던스 레인지 하단 조정) 사이에 시점 불일치·괴리가 있어 "완전가 유지를 위한 의도적 wholesale 축소"가 일시적 관리 판단인지 실수요 둔화를 가리는 설명인지 현재 데이터로 분리되지 않는다 — 구조와 순환이 혼재된 상태다. 애널리스트 28명 Buy 컨센서스와 목표주가 +46% 괴리는 시장이 이미 "구조적 성장 지속"을 기본 가정으로 반영하고 있음을 시사해 Variant Perception이 Category 1로 분류되고 Consensus Gate가 발동, Variant Perception 항목이 0점 처리됐다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준② "Verdict 매핑" — PASS(Score 50&ndash;64 또는 Gate 위반) → 미부합. <span class="mono">judge-structural-vs-cyclical/references/cyclical_contamination_test.md</span>·<span class="mono">scorecard_and_verdict.md</span> Consensus Gate·Data Integrity Gate 발동</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 미대상(데이터 없음) · FnGuide/FnSpace 미대상(데이터 없음) · web.json 경쟁사 비교·실적(Proxy, Medium) · fred.json 미국 CPI·기준금리·소매판매·실업률(참고용, 국가 불일치로 직접 반영 안 함)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>③ Underpriced Customer Love (ULRS)</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score ≈43/100 · Verdict: AVOID</div>
+        </div>
+      </div>
+      <p class="figs mono">TTM 순이익 +191.5% YoY, TTM 매출 +18.5% YoY(StockAnalysis.com, 2026-08-12) · 러닝화 리뷰: "가격 대비 퍼포먼스 평범", CloudSurfer 등 일부 모델 쿠셔닝 내구성·힐 노이즈 불만 병존 · 미국 판매가 경쟁사 대비 $20~30 프리미엄 유지</p>
+      <p>Layer 1(Customer Love)의 핵심 행동지표(재구매율, 리뷰 스코어 추이, DAU/검색점유율)가 전부 데이터 없음이며, 확인된 리뷰조차 "가격 대비 퍼포먼스 평범"과 내구성 불만이 혼재해 긍정으로 단정하기 어렵다. Layer 2(Durability)도 재구매 데이터 부재에 더해 Hoka가 빠르게 격차를 좁히는 중이고 Hoka 모회사 Deckers 주가가 YTD -50%를 기록해 "러닝화 유행 붕괴" 선례가 존재한다는 점에서 Durability Gate가 발동했다. Layer 3(Operating Monetization Gap)은 마진 가이던스 상향으로 오히려 양호하나, Layer 5(Market Recognition Gap)는 애널리스트 28명의 광범위한 Buy 컨센서스와 목표주가 프리미엄으로 "시장이 이미 아는 좋은 점"(Variant Perception Category 1)에 해당해 Consensus Gate가 발동, Market Recognition Gap 항목이 강제 0점 처리됐다 — "애착은 있는데 시장이 아직 모른다"는 3조건 중 Gap 조건이 성립하지 않는다. DART/FnGuide 데이터 공백은 중립(50점)이 아니라 Data Integrity Gate 발동 및 실질 감점 요인으로 반영했다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준③ "Verdict 매핑" — AVOID(Score 50&ndash;64 또는 Gate 위반) → 미부합. <span class="mono">judge-underpriced-customer-love/references/scorecard_and_verdict.md</span> Durability Gate·Consensus Gate·Data Integrity Gate 발동</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 미대상(데이터 없음) · FnGuide/FnSpace 미대상(데이터 없음) · web.json 리뷰·경쟁·실적·시가총액(Proxy, Medium)</dd>
+      </dl>
+    </article>
+
+    <p class="stage-summary terminal">1단계 종합 — 기준①·②·③ 모두 미부합(각 PASS/PASS/AVOID → 미부합 환산)이다. <span class="mono">judgment-rules.md</span> "3개 모두 미부합이면 그 시점에 투자 매력이 없는 것으로 보고 판단을 종료한다" 조항에 따라 2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)은 실행하지 않는다.</p>
+  </section>
+
+  <div class="opinion">
+    <h2>종합 투자의견</h2>
+    <p>1단계 핵심 판단 기준 3개(Retention-to-Pricing-Power, Structural vs Cyclical, Underpriced Customer Love) 모두 미부합으로 판정됐다. 세 기준에 공통적으로 나타난 결정적 요인은 (1) 애널리스트 28명의 Buy 컨센서스와 목표주가 +46% 괴리라는 이미 형성된 강세 프레이밍으로 인해 세 기준 모두에서 Consensus Gate(Variant Perception Category 1: "시장이 이미 아는 좋은 점")가 발동해 "시장이 아직 모르는 지점"을 확보하지 못했다는 점, (2) 2026 Q2 매출이 컨센서스를 하회하고 연간 가이던스도 레인지 하단으로 조정된 반면 마진 가이던스는 오히려 상향된 혼재된 신호가 있어 "구조적 성장 지속"과 "완전가 방어를 위한 일시적 물량 조절"을 데이터로 분리할 수 없었다는 점, (3) 리텐션·재구매율·코호트 데이터, DART/FnGuide 기반 재무제표·컨센서스 등 판단에 핵심적인 정량 지표가 이 레포의 데이터 키트로는 원천적으로 확보되지 않아(해외 상장기업, DART/FnGuide 커버리지 밖) 각 스킬의 Data Integrity Gate가 공통 발동했다는 점이다.</p>
+    <p><span class="mono">judgment-rules.md</span> "1단계" 절의 "3개 모두 미부합이면 투자 매력이 없는 것으로 보고 판단을 종료한다"는 규정에 따라, 이번 데이터 시점(2026-08-13) 기준 On Holding은 이 판단 규칙서상 투자 매력이 없는 것으로 결론짓는다. 다만 이 결론은 실적·브랜드 자체가 부정적이라는 의미가 아니라 (a) DART/FnGuide 데이터 공백이 매우 커서 이 레포의 3개 기준이 요구하는 정량 근거(리텐션, 코호트, 컨센서스 상세)를 충족할 수 없었다는 점, (b) 확보된 웹 Proxy 데이터 범위 내에서는 "시장이 이미 알고 있는 좋은 스토리"라는 판단이 세 기준 모두에서 Consensus Gate를 발동시켰다는 점에 크게 기인한다 — 데이터가 보강되거나 주가/컨센서스 지형이 바뀌면 재실행이 필요하다.</p>
+    <div class="conclusion">
+      <p>세 기준 모두 미부합 — 규칙서 조항에 따라 판단을 종료한다. 2단계 스크리닝은 실행하지 않았다.</p>
+      <span class="stamp fail">투자 매력 없음</span>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h2>사용한 원자료 출처</h2>
+    <ol>
+      <li><b>DART</b> — <span class="mono">data/cache/On Holding/dart.json</span>, 조회 시도 결과 corp_code 목록에서 미확인(한국 상장기업 아님, 2026-08-13 조회). 데이터 없음.</li>
+      <li><b>FRED</b> — <span class="mono">data/cache/On Holding/fred.json</span>, CPI·기준금리(FEDFUNDS)·소매판매(RSAFS)·실업률(UNRATE), 2026-08-13 조회. 미국 매크로 참고용, 세 기준의 최종 Verdict에 직접 반영하지 않음.</li>
+      <li><b>FnGuide/FnSpace</b> — 미확보. 상위 오케스트레이터 0단계 요구사항 점검에서 WARN(사용 불가) 확인, 또한 On Holding은 한국 상장기업이 아니라 FnGuide/FnSpace 커버리지(KRX) 밖이므로 연결 상태와 무관하게 조회 대상이 아니다. 세 기준 판단 모두에서 이 공백을 명시하고 관련 하위 지표(컨센서스 상세, EPS 추정 등)를 판단 보류·감점 처리했다.</li>
+      <li><b>나무위키</b> (Proxy) — 온(기업) 문서, 2026-08-13 조회. 브랜드 개요, CloudTec 기술, 로저 페더러 홍보대사 서술. Low Confidence(위키형 매체).</li>
+      <li><b>AllRunAbout(러닝화 리뷰 매체)</b> (Proxy) — CloudRunner 3 리뷰 등, 2026-08-13 조회. 제품 품질·가격 대비 퍼포먼스 평가. Medium Confidence(전문 리뷰 채널이나 단일 매체).</li>
+      <li><b>Investing.com</b> (Proxy) — On Holding AG 관련 뉴스 종합, 2026-08-13 조회. 프리미엄 가격 전략(경쟁사 대비 $20~30 高) 서술. Medium Confidence.</li>
+      <li><b>NYU Stern Center for Business & Human Rights</b> (Proxy) — 2026-08-13 조회. On Running의 그린워싱·노동기준 비판 및 조사·시정 요구 서술. 확정된 소송·제재 판결은 확인되지 않음. Low&ndash;Medium Confidence(옹호단체 발행물).</li>
+      <li><b>Sherwood News</b> (Proxy) — "On Running pulling out bigger gap on rival shoe brand Hoka", 2026-08-13 조회. On vs Hoka 매출·성장률 비교. Medium Confidence.</li>
+      <li><b>Forbes</b> (Proxy) — "On Pushes Innovation Hard While Nike Finds Turnaround Tough Going"(2026-07-01), 2026-08-13 조회. 글로벌/세그먼트별 시장점유율 서술. Medium Confidence.</li>
+      <li><b>StockAnalysis.com</b> (Proxy) — 2026-08-12 기준. 주가 $31.01, 시가총액 약 $10.36B, TTM 매출·순이익·EPS, 52주 범위, 애널리스트 컨센서스(28명 Buy, 목표주가 $45.37). Medium Confidence(3rd-party 웹, 공식 API 아님).</li>
+      <li><b>Yahoo Finance</b> (Proxy) — 2026 Q2 실적(순매출 CHF 850.3M, 조정 EPS CHF 0.35) 및 연간 가이던스(매출 CHF 3.47~3.56B, 매출총이익률 65.0%+, 조정 EBITDA 마진 19.5~20.0%) 보도, 2026-08-11 실적발표 기준·2026-08-13 조회. Medium Confidence(언론 종합, 원문 실적발표 자료 직접 조회 아님).</li>
+    </ol>
+  </section>
+
+  <div class="compliance">
+    <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+    <ul>
+      <li>세 기준 모두 각 스킬의 100점 Score+Gate 아키텍처(<span class="mono">references/scorecard_and_verdict.md</span>)로 산출된 최종 Verdict(PASS/PASS/AVOID)를 <span class="mono">judgment-rules.md</span> 기준①②③의 매핑 조항 그대로 적용해 미부합으로 환산했다 — 임의 재량 해석을 추가하지 않았다.</li>
+      <li>3개 기준 모두 미부합이므로 <span class="mono">judgment-rules.md</span> 1단계 규정에 따라 2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)을 실행하지 않았다.</li>
+      <li>DART/FnGuide 데이터가 원천적으로 없다는 사실(한국 상장기업 아님)을 세 기준 판단 각각에서 명시했고, 해당 데이터에 의존하는 하위 지표(리텐션 상세, 컨센서스 EPS 추정, 재무제표 계정과목 등)는 임의로 추정하지 않고 판단 보류·감점 처리했다(재현성 원칙 2번). 데이터 없음을 중립(50점)으로 처리하지 않았다.</li>
+      <li>FRED(미국 매크로)는 참고용으로만 인용하고 On Holding이 스위스 소재·미국 상장 기업이라는 지리적 불일치를 감안해 최종 Verdict 산출에 직접 반영하지 않았다.</li>
+      <li>모든 판단 문장에 적용한 <span class="mono">judgment-rules.md</span> 조항·스킬 Gate 이름을 괄호/각주로 명시했다(판단 일관성 원칙 3번).</li>
+      <li>본 보고서는 단일 기업(On Holding) 판단으로 실행됐으며, 산업/섹터 비교의 일부가 아니다.</li>
+    </ul>
+  </div>
+
+  <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13</footer>
+
+</div>

@@ -1,0 +1,497 @@
+<title>Nike 투심메모</title>
+<style>
+  :root {
+    --paper: #efeae0;
+    --paper-panel: #e6dfcf;
+    --paper-panel-2: #ded5c0;
+    --ink: #23241f;
+    --ink-soft: #5c5646;
+    --ink-faint: #8a8270;
+    --line: #c7bc9f;
+    --line-strong: #a89b77;
+    --forest: #2f5233;
+    --forest-ink: #24401f;
+    --brass: #8a6a1f;
+    --brass-ink: #6b5216;
+    --wine: #7d2036;
+    --wine-ink: #611829;
+    --navy: #2a3a52;
+    --link: #4a4530;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1a1813;
+      --paper-panel: #221f18;
+      --paper-panel-2: #2a261d;
+      --ink: #e9e2cf;
+      --ink-soft: #b9ae93;
+      --ink-faint: #857c65;
+      --line: #4a4433;
+      --line-strong: #6b6248;
+      --forest: #6fae74;
+      --forest-ink: #8fc793;
+      --brass: #d1a94a;
+      --brass-ink: #e0bd6c;
+      --wine: #d9748a;
+      --wine-ink: #e493a5;
+      --navy: #9fb3cc;
+      --link: #cbbf8e;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1a1813;
+    --paper-panel: #221f18;
+    --paper-panel-2: #2a261d;
+    --ink: #e9e2cf;
+    --ink-soft: #b9ae93;
+    --ink-faint: #857c65;
+    --line: #4a4433;
+    --line-strong: #6b6248;
+    --forest: #6fae74;
+    --forest-ink: #8fc793;
+    --brass: #d1a94a;
+    --brass-ink: #e0bd6c;
+    --wine: #d9748a;
+    --wine-ink: #e493a5;
+    --navy: #9fb3cc;
+    --link: #cbbf8e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin: 0;
+    padding: 48px 20px 96px;
+  }
+
+  .sheet { max-width: 740px; margin: 0 auto; }
+
+  .serif { font-family: "Noto Serif KR", "Batang", ui-serif, serif; }
+
+  .mono {
+    font-family: "D2Coding", "Consolas", "SFMono-Regular", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  header.letterhead {
+    border-top: 3px double var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 22px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  header.letterhead .titles h1 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 4px 0 6px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  header.letterhead .code { color: var(--ink-soft); font-size: 14px; }
+
+  header.letterhead .meta {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    white-space: nowrap;
+  }
+
+  header.letterhead .meta b { color: var(--ink); }
+
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid currentColor;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    transform: rotate(-2.5deg);
+    white-space: nowrap;
+    mix-blend-mode: multiply;
+  }
+  :root:not([data-theme="light"]) .stamp,
+  :root[data-theme="dark"] .stamp { mix-blend-mode: screen; }
+
+  .stamp.pass, .stamp.fit { color: var(--forest-ink); }
+  .stamp.partial { color: var(--brass-ink); }
+  .stamp.fail, .stamp.no-fit { color: var(--wine-ink); }
+  .stamp.hold { color: var(--ink-faint); border-style: dashed; }
+
+  .stamp-lg {
+    font-size: 22px;
+    padding: 12px 26px;
+    border-width: 3px;
+    border-radius: 8px;
+    transform: rotate(-3deg);
+  }
+
+  .overview { padding: 20px 0 8px; color: var(--ink-soft); }
+
+  .verdict-strip { display: flex; justify-content: center; padding: 6px 0 30px; }
+
+  section.stage { margin-top: 8px; }
+
+  .stage > .stage-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+
+  .stage-head h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .criterion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px 20px;
+    margin-bottom: 16px;
+  }
+
+  .criterion .crit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .criterion h3 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .crit-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+  .score-badge {
+    font-family: "D2Coding", monospace;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    background: var(--paper-panel-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    padding: 3px 8px;
+  }
+
+  .criterion dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 14px;
+    margin: 12px 0 0;
+  }
+
+  .criterion dt {
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .criterion dd { margin: 0; font-size: 14.5px; }
+
+  .criterion .figs {
+    font-size: 14.5px;
+    background: var(--paper-panel-2);
+    border-left: 3px solid var(--line-strong);
+    padding: 9px 13px;
+    margin: 4px 0 12px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .criterion .clause { font-size: 13px; color: var(--ink-soft); font-style: italic; }
+
+  .stage-summary {
+    font-size: 14px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--line-strong);
+    padding: 8px 14px;
+    margin: 4px 0 44px;
+  }
+
+  .table-wrap { overflow-x: auto; margin-bottom: 44px; }
+
+  table.screen {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.8px;
+    min-width: 620px;
+  }
+
+  table.screen th {
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+    padding: 0 12px 8px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  table.screen td { padding: 12px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.screen tr:last-child td { border-bottom: 1px solid var(--line-strong); }
+  table.screen td.item { font-weight: 700; white-space: nowrap; font-family: "Noto Serif KR", "Batang", ui-serif, serif; }
+
+  .chip {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 3px 9px;
+    border-radius: 3px;
+    border: 1.5px solid currentColor;
+  }
+  .chip.none { color: var(--ink-faint); border-style: dashed; }
+
+  .opinion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 24px 26px;
+    margin-bottom: 44px;
+    position: relative;
+  }
+
+  .opinion h2 { font-family: "Noto Serif KR", "Batang", ui-serif, serif; font-size: 19px; margin: 0 0 12px; }
+  .opinion p { margin: 0 0 12px; }
+  .opinion p:last-child { margin-bottom: 0; }
+
+  .opinion .conclusion {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .opinion .conclusion p { flex: 1; min-width: 240px; margin: 0; }
+
+  .sources { font-size: 13.2px; color: var(--ink-soft); }
+
+  .sources h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 17px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+
+  .sources ol { margin: 0; padding-left: 20px; }
+  .sources li { margin-bottom: 10px; }
+  .sources li b { color: var(--ink); }
+  .sources a { color: var(--link); }
+  .sources a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+  .compliance {
+    margin-top: 40px;
+    border-top: 3px double var(--line-strong);
+    padding-top: 18px;
+  }
+
+  .compliance h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 15px;
+    margin: 0 0 12px;
+    color: var(--ink-soft);
+  }
+
+  .compliance ul { list-style: none; margin: 0; padding: 0; font-size: 13px; color: var(--ink-soft); }
+  .compliance li { padding: 7px 0 7px 24px; border-bottom: 1px solid var(--line); position: relative; }
+  .compliance li:last-child { border-bottom: none; }
+  .compliance li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    color: var(--forest-ink);
+    font-family: "D2Coding", monospace;
+  }
+
+  footer.colophon {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin-top: 40px;
+    letter-spacing: 0.04em;
+  }
+
+  a { color: var(--link); }
+
+  @media (max-width: 560px) {
+    header.letterhead { flex-direction: column; }
+    header.letterhead .meta { text-align: left; }
+    .criterion .crit-head { flex-direction: column; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="letterhead">
+    <div class="titles">
+      <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 · 개별기업 판단</div>
+      <h1>Nike, Inc. (나이키)</h1>
+      <div class="code mono">티커 NKE · NYSE 상장</div>
+    </div>
+    <div class="meta">
+      작성일 <b>2026-08-13</b><br>
+      작성 도구 <b><span class="mono">investment-desk</span></b><br>
+      DART/FnGuide 커버리지 <b>해당 없음(미국 상장사)</b>
+    </div>
+  </header>
+
+  <p class="overview">Nike, Inc.(나이키)는 미국 오리건주에 본사를 둔 세계 최대 스포츠 신발·의류 브랜드로, 자체 브랜드 제품을 소비자에게 직접 판매(Nike Direct/DTC)하거나 도소매 유통망을 통해 판매하는 명확한 B2C 기업이다. FY2026(2025.6~2026.5) 전체 순이익 30억 1,100만 달러(EPS $2.10)를 기록했고, 글로벌 스포츠웨어 시장에서 매출 기준 약 27%의 점유율로 1위 지위를 유지하고 있으나, 최근 분기 China 매출 급감과 On·Hoka·Lululemon 등 신흥 브랜드의 빠른 잠식이 동시에 진행 중이다.</p>
+
+  <div class="verdict-strip">
+    <span class="stamp stamp-lg fail">투자 매력 없음 · PASS/AVOID</span>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">STAGE 1</span>
+      <h2>핵심 판단 기준 3개</h2>
+    </div>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+        <div class="crit-badges">
+          <span class="score-badge">Score 12/100</span>
+          <span class="stamp fail">미부합</span>
+        </div>
+      </div>
+      <p class="figs mono">FY2026 Q4 순매출 $10.97B (YoY &minus;1% reported / &minus;4% FX&#8209;neutral)<br>FY2026 전체 순이익 $3.11B(EPS $2.10) &lt; 전년 $3.22B(EPS $2.16)<br>Q4 총이익률 +8.9%p(관세 환급 일회성 요인, EPS 기여 +$0.52)</p>
+      <p>Framework Fit은 High(B2C·반복구매·멤버십 구조)로 판정됐으나, Retention&rarr;Pricing Power 인과 체인이 Financial Translation 단계에서 역행했다 &mdash; FY2026 순이익·EPS가 전년 대비 오히려 감소했고, 유일한 마진 개선(Q4 총이익률 +8.9%p)은 구조적 Pricing/Mix 개선이 아니라 IEEPA 관세 환급이라는 일회성 요인이다. 재구매/코호트 리텐션·CAC/LTV·ASP 등 Pricing Power Test 4개 하위 테스트 중 3개가 데이터 부재로 Insufficient Data 처리됐다(중립값으로 채우지 않음). Variant Perception 검증에서도 시장이 이미 아는 점(로열티 수치, China 약세, 경쟁 심화, 관세 리스크)만 확인돼 Category 1로 분류됐다. 결과적으로 Data Integrity Gate·Financial Translation Gate·Consensus Gate가 동시 발동해 최종 Verdict <b>PASS</b>(Score 12/100)로 귀결됐다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">judgment-rules.md 기준① 판정 &mdash; "최종 Verdict 매핑: BUY&rarr;부합, WATCH&rarr;부분부합, PASS(또는 Gate 위반)&rarr;미부합" · `judge-retention-pricing-power` Layer A&ndash;G, Pricing Power Test, Financial Transmission, Variant Perception, Scorecard&amp;Verdict 4개 Gate</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 해당 없음(미국 상장사, 한국 공시 대상 아님) · FnGuide/FnSpace 해당 없음(한국 상장사 전용 커버리지) · web.json(Proxy, Medium) · 재무 수치는 Nike 공개 FY2026 Q4 실적발표 보도(CNBC·WWD) 기반</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>② Structural vs Cyclical Misclassification</h3>
+        <div class="crit-badges">
+          <span class="score-badge">Score 약 17&ndash;25/100</span>
+          <span class="stamp fail">미부합</span>
+        </div>
+      </div>
+      <p class="figs mono">FY2026 Q4 매출 YoY &minus;1%(reported) / &minus;4%(FX&#8209;neutral) · Greater China Q4 &minus;17%<br>On Running 3년 +285%(연매출 $3.2B) · Hoka 연 +45% · Lululemon 5년 +220%($10.6B)<br>주가 $40.51(2026&#8209;08&#8209;12, 52주 고점 $80.17 대비 &minus;50%↑)</p>
+      <p>Framework Fit은 Medium으로 판정됐다 &mdash; "구조냐 순환이냐" 논쟁 자체는 성립하지만, DART/FnGuide 공백으로 Nike 자체의 다년 매출 히스토리를 이 캐시만으로 확인할 수 없었다. Cyclical Contamination Test에서 (1) Historical Macro Sensitivity는 Nike 자체 시계열 데이터 부재로 Insufficient Data 처리됐고, (2) Peer Divergence 테스트는 오히려 Nike에 불리한 방향으로 확인됐다 &mdash; 가장 빠르게 성장하는 프리미엄 러닝·여성 카테고리에서 On·Hoka·Lululemon이 Nike보다 훨씬 빠르게 성장 중이다. (3) Growth Decomposition에서는 FY2026 Q4 마진 개선이 관세 환급이라는 정책적 일시 요인과 뒤섞여 있어 "구조적 강점을 시장이 순환으로 오인" 방향의 서사를 뒷받침하지 못했다. Financial Transmission 체인은 Penetration&rarr;Company Revenue 단계에서 이미 끊겼고(매출 감소 중), 주가는 52주 고점 대비 이미 &minus;50% 이상 de&#8209;rating된 상태로 시장이 이미 리스크를 반영한 것으로 보인다. Variant Perception도 Category 1(시장이 이미 아는 점)로 분류돼 Consensus Gate가 발동했고, Data Integrity Gate도 함께 발동해 최종 Verdict <b>PASS</b>로 귀결됐다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">judgment-rules.md 기준② 판정 &mdash; "BUY(Score&ge;80)&rarr;부합, WATCH(65&ndash;79)&rarr;부분부합, PASS(50&ndash;64 또는 Gate 위반)&rarr;미부합" · `judge-structural-vs-cyclical` Cyclical Contamination Test(Test 1&ndash;3), Financial Transmission, Variant Perception, Scorecard&amp;Verdict</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 해당 없음 · FRED(미국 매크로 24개월, CPI·기준금리·소매판매·실업률, Medium&mdash;Nike가 실제 미국 상장·매출 비중 큰 기업이라 기준①②와 국가 일치) · FnGuide 해당 없음 · web.json(Proxy, Medium)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>③ Underpriced Customer Love (ULRS)</h3>
+        <div class="crit-badges">
+          <span class="score-badge">Score 약 10.9&ndash;12.5/100</span>
+          <span class="stamp fail">미부합</span>
+        </div>
+      </div>
+      <p class="figs mono">자가인식 충성고객 83% · UBS 로열티 1위 67% · NPS 36(업계 평균 41 하회)<br>Financial Conversion Capacity(Layer4) = 0(데이터 전무) · Market Recognition Gap(Layer5) = 0(Consensus Gate 강제)<br>Conversion&#8209;Readiness Gap &asymp; &minus;0.11(음수) · ULRS(진단 지표) &asymp; &minus;1.43</p>
+      <p>Framework Fit은 Medium으로 판정됐다(Apparel/Fashion 섹터, 유행성 False Positive 위험 有). Layer 1(Customer Love)은 자가신고 로열티 지표(83%, UBS 1위)와 정량 지표(NPS 36, 업계 평균 이하)가 상충했고, 재구매율·Cohort Retention·DAU/MAU 등 핵심 정량 데이터는 전무했다. Layer 2(Durability)에서 유일하게 확보된 정량 경쟁 근거(On·Hoka·Lululemon의 빠른 카테고리 잠식)가 오히려 Moat 약화를 시사했다. Layer 4(Financial Conversion Capacity)는 LTV/CAC·FCF Conversion·ROIC 등 데이터 전무로 0점, Layer 5(Market Recognition Gap)는 FnGuide 컨센서스 공백과 Variant View Category 1 분류로 Consensus Gate가 발동해 0점 강제됐다. 그 결과 Conversion&#8209;Readiness Gap이 음수(&asymp;&minus;0.11)로 Market Recognition Gate를 위반했다. Red Flag 10종 중 명확히 발동 확인된 항목은 없었으나(강제 Avoid 사유는 아님), Score+Gate 임계값(50&ndash;64 또는 Gate 위반 = AVOID)에 따라 최종 Verdict <b>AVOID</b>(Score 약 10.9&ndash;12.5/100)로 귀결됐다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">judgment-rules.md 기준③ 판정 &mdash; "BUY(Score&ge;80)&rarr;부합, WATCH(65&ndash;79)&rarr;부분부합, AVOID(50&ndash;64 또는 Gate 위반)&rarr;미부합" · `judge-underpriced-customer-love` Market Recognition Gate·Consensus Gate·Durability Gate·Red Flag Test·K절 데이터 신뢰도 원칙</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 해당 없음 · FnGuide 해당 없음(Market Recognition Gate 산출 근거 공백) · web.json(Proxy, Medium&mdash;일부 Love 지표는 자가신고 서베이 기반으로 신뢰도 낮음)</dd>
+      </dl>
+    </article>
+
+    <p class="stage-summary">1단계 종합 &mdash; 기준①·②·③ 모두 <b>미부합</b>(judgment-rules.md "1단계" 절: "3개 모두 미부합이면 그 시점에 투자 매력이 없는 것으로 보고 판단을 종료한다"). 2단계 스크리닝 체크리스트는 실행하지 않는다.</p>
+  </section>
+
+  <div class="opinion">
+    <h2>종합 투자의견</h2>
+    <p>Nike는 여전히 글로벌 스포츠웨어 시장 점유율 27%로 압도적 1위 지위를 유지하고 있으나, 이 레포의 판단 규칙서(judgment-rules.md) 1단계 핵심 기준 3개&mdash;가격전가력(Retention-to-Pricing-Power), 구조적/경기순환 오분류(Structural vs Cyclical), 저평가된 고객 애착(Underpriced Customer Love)&mdash;에 각각 적용했을 때 세 기준 모두 미부합으로 판정됐다. 세 판단이 공통적으로 짚어낸 근거는 (1) FY2026 순이익·EPS가 전년 대비 오히려 감소하고 있어 매출/브랜드 강점이 재무 성과로 전이되지 않는다는 점(Financial Translation 단절), (2) Greater China 매출 -17% 급감과 On·Hoka·Lululemon 등 신흥 브랜드가 가장 빠르게 성장하는 카테고리(프리미엄 러닝·여성)에서 Nike보다 훨씬 빠르게 침투하고 있다는 점(Durability/경쟁우위 약화), (3) 이 모든 리스크가 이미 언론·셀사이드에 공개적으로 논의되고 있어 "시장이 아직 모르는 지점"이라는 세 철학 공통의 핵심 조건(Variant View)을 입증하지 못했다는 점(Consensus Gate 반복 발동)이다.</p>
+    <div class="conclusion">
+      <p>세 기준 모두 미부합으로 1단계에서 판단이 종료되어 2단계 스크리닝(시장성/경쟁력/수익성/재무효율성/ESG)은 실행하지 않았다. Nike의 시장 지배력·브랜드력 자체를 부정하는 것이 아니라, 이 도구가 적용하는 세 가지 특정 투자철학(가격전가력·구조적 오분류·저평가된 고객 애착) 렌즈에는 현재 시점에서 맞지 않는다는 의미다. 이 판단은 한국 DART/FnGuide 데이터 공백(미국 상장사라 커버 대상 아님) 상태에서 FRED 매크로와 웹 Proxy 데이터만으로 도출된 것으로, 확인 가능한 재무 신호(순이익·EPS 역성장, China 급감, 경쟁 잠식) 자체가 이미 부정적 방향을 일관되게 뒷받침했다.</p>
+      <span class="stamp fail">투자 매력 없음</span>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h2>사용한 원자료 출처</h2>
+    <ol>
+      <li><b>DART</b> &mdash; <span class="mono">data/cache/Nike/dart.json</span>. Nike, Inc.는 미국 NYSE 상장기업으로 한국 DART(전자공시시스템) 공시 대상이 아니다. `python lib/dart_client.py "Nike"` 실행 결과 corp_code 마스터 목록에서 매칭되는 기업을 찾지 못함(2026-08-13 조회 시도).</li>
+      <li><b>FRED</b> &mdash; <span class="mono">data/cache/Nike/fred.json</span>, CPI(소비자물가지수)·기준금리·소매판매(RSAFS)·실업률 24개월(2024-08~2026-07), 2026-08-13 조회. Nike가 미국 상장·매출 비중이 큰 기업이라 국가 일치(Medium&ndash;High Confidence).</li>
+      <li><b>FnGuide/FnSpace</b> &mdash; <span class="mono">data/cache/Nike/fnguide.json</span>. fnspace MCP 연결(plugin:fnspace:fnspace)은 정상이나 한국 상장사 전용 커버리지라 Nike는 조회 대상이 아님(2026-08-13 확인). 컨센서스·목표주가·Estimate Revision 관련 판단은 전부 데이터 없음으로 처리.</li>
+      <li><b>CNBC</b> &mdash; <a href="https://www.cnbc.com/2026/06/30/nike-nke-q4-2026-earnings.html" target="_blank" rel="noopener">Nike (NKE) Q4 2026 earnings</a>(2026-06-30), FY2026 Q4 매출·EPS 실적(Proxy, Medium).</li>
+      <li><b>WWD(Footwear News)</b> &mdash; <a href="https://wwd.com/footwear-news/shoe-industry-news/nike-nke-q4-2026-earnings-tariff-refunds-converse-1239048640/" target="_blank" rel="noopener">Nike NKE Q4 2026 Earnings: Tariff Refunds Bolster Income</a>, FY2026 전체 순이익·EPS, 관세 환급 영향, Greater China 매출 감소(Proxy, Medium).</li>
+      <li><b>GuruFocus</b> &mdash; <a href="https://www.gurufocus.com/term/mktcap/NKE" target="_blank" rel="noopener">NKE Market Cap</a>, 시가총액·PER 확인(2026-08-13 조회, Proxy, Medium).</li>
+      <li><b>CompaniesMarketCap</b> &mdash; <a href="https://companiesmarketcap.com/nike/marketcap/" target="_blank" rel="noopener">Nike (NKE) Market capitalization</a>(2026-08-13 조회, Proxy, Medium).</li>
+      <li><b>MacroTrends</b> &mdash; <a href="https://www.macrotrends.net/stocks/charts/NKE/nike/market-cap" target="_blank" rel="noopener">NIKE Market Cap 2012-2026</a>, 52주 주가 범위 확인(Proxy, Medium).</li>
+      <li><b>Nector</b> &mdash; <a href="https://www.nector.io/blog/customer-loyalty-the-nike-approach" target="_blank" rel="noopener">Nike Brand Loyalty: Benefits of Nike Loyalty Program</a>, 자가신고 로열티 83%, UBS 서베이 1위(67%), 멤버십 1억명·멤버 지출 3배(Proxy, Low&ndash;Medium&mdash;자가신고 서베이 기반).</li>
+      <li><b>Comparably</b> &mdash; <a href="https://www.comparably.com/brands/nike" target="_blank" rel="noopener">Nike NPS &amp; Customer Reviews</a>, NPS 36점(업계 평균 41점), 제품 품질 4.3/5(Proxy, Medium).</li>
+      <li><b>ConsumerAffairs</b> &mdash; <a href="https://www.consumeraffairs.com/sporting_goods/nike.html" target="_blank" rel="noopener">Nike Reviews from Real Customers</a>, 신발 긍정/의류 품질·핏 불만 혼재 리뷰(Proxy, Medium).</li>
+      <li><b>FinancialContent</b> &mdash; <a href="https://markets.financialcontent.com/stocks/article/finterra-2026-4-15-nike-inc-nke-2026-feature-the-swooshs-struggle-for-the-crown" target="_blank" rel="noopener">NIKE, Inc. (NKE) 2026 Feature: The Swoosh's Struggle for the Crown</a>, 글로벌 스포츠웨어 시장 규모·점유율(Nike 27%, Adidas 14%), On/Hoka/Lululemon 성장률(Proxy, Medium).</li>
+      <li><b>iTiger</b> &mdash; <a href="https://www.itiger.com/hant/news/2514016342" target="_blank" rel="noopener">Adidas targets larger US market share as Nike struggles</a>, Adidas 리트로 트렌드 반등 및 Nike DTC 공백 침투(Proxy, Medium).</li>
+      <li><b>U.S. EEOC(공식기관)</b> &mdash; <a href="https://www.eeoc.gov/newsroom/eeoc-files-subpoena-enforcement-action-against-nike" target="_blank" rel="noopener">EEOC Files Subpoena Enforcement Action Against NIKE</a>, DEI 관련 역차별 의혹 조사(Primary, Medium&ndash;High).</li>
+      <li><b>Baltimore Sun</b> &mdash; <a href="https://www.baltimoresun.com/2026/08/12/eeoc-nike-investigation/" target="_blank" rel="noopener">Civil rights agency moves to drop subpoena action against Nike</a>(2026-08-12), EEOC 소환장 소송 취하 방향 보도 &mdash; 중대 제재·확정 판결로 이어지지 않은 상태(Proxy, Medium).</li>
+      <li><b>Yahoo News</b> &mdash; <a href="https://www.yahoo.com/news/nike-supply-chain-workers-continue-221311235.html" target="_blank" rel="noopener">Nike's Supply Chain Workers Continue to 'Fight the Heist'</a>, 동남아·남아시아 공급망 노동 민원 지속(Proxy, Medium).</li>
+    </ol>
+  </section>
+
+  <div class="compliance">
+    <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+    <ul>
+      <li>Scope Gate: Nike는 소비자 대상 신발·의류 판매가 주력인 명백한 B2C 기업으로 판정해(judgment-rules.md Scope Gate) 데이터 수집·판단 단계를 정상 진행했다.</li>
+      <li>기준①·②·③ 모두 각 스킬의 100점 Score+Gate 아키텍처(`references/scorecard_and_verdict.md`, 기준별)를 그대로 따라 산출된 최종 Verdict(PASS/PASS/AVOID)를 judgment-rules.md의 매핑 규칙 그대로 적용해 미부합으로 환산했으며, 오케스트레이터가 임의로 등급을 조정하지 않았다.</li>
+      <li>DART/FnGuide 데이터는 Nike가 미국 상장사라 원천적으로 커버리지 밖임을 각 판단 스킬과 본 보고서 모두 명시했고, 해당 공백을 중립값(50점 등)으로 임의 대체하지 않았다 &mdash; 각 스킬의 "데이터 부족 시 처리"(Data Integrity Gate, weight 배제 후 재정규화 등) 절차를 그대로 따랐다.</li>
+      <li>1단계에서 3개 기준이 모두 미부합으로 판정됨에 따라 judgment-rules.md "1단계" 절 규정대로 2단계 스크리닝(screen-fundamentals)은 호출하지 않았다.</li>
+      <li>웹 Proxy 데이터(자가신고 로열티 서베이 등)는 Low&ndash;Medium Confidence로 명시했고, 이를 근거로 결론을 과도하게 낙관적으로 격상하지 않았다.</li>
+    </ul>
+  </div>
+
+  <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13</footer>
+
+</div>

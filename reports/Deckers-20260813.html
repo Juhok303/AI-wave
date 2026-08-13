@@ -1,0 +1,514 @@
+<title>Deckers Brands 투심메모</title>
+<style>
+  :root {
+    --paper: #efeae0;
+    --paper-panel: #e6dfcf;
+    --paper-panel-2: #ded5c0;
+    --ink: #23241f;
+    --ink-soft: #5c5646;
+    --ink-faint: #8a8270;
+    --line: #c7bc9f;
+    --line-strong: #a89b77;
+    --forest: #2f5233;
+    --forest-ink: #24401f;
+    --brass: #8a6a1f;
+    --brass-ink: #6b5216;
+    --wine: #7d2036;
+    --wine-ink: #611829;
+    --navy: #2a3a52;
+    --link: #4a4530;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1a1813;
+      --paper-panel: #221f18;
+      --paper-panel-2: #2a261d;
+      --ink: #e9e2cf;
+      --ink-soft: #b9ae93;
+      --ink-faint: #857c65;
+      --line: #4a4433;
+      --line-strong: #6b6248;
+      --forest: #6fae74;
+      --forest-ink: #8fc793;
+      --brass: #d1a94a;
+      --brass-ink: #e0bd6c;
+      --wine: #d9748a;
+      --wine-ink: #e493a5;
+      --navy: #9fb3cc;
+      --link: #cbbf8e;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1a1813;
+    --paper-panel: #221f18;
+    --paper-panel-2: #2a261d;
+    --ink: #e9e2cf;
+    --ink-soft: #b9ae93;
+    --ink-faint: #857c65;
+    --line: #4a4433;
+    --line-strong: #6b6248;
+    --forest: #6fae74;
+    --forest-ink: #8fc793;
+    --brass: #d1a94a;
+    --brass-ink: #e0bd6c;
+    --wine: #d9748a;
+    --wine-ink: #e493a5;
+    --navy: #9fb3cc;
+    --link: #cbbf8e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin: 0;
+    padding: 48px 20px 96px;
+  }
+
+  .sheet {
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  .serif {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+  }
+
+  .mono {
+    font-family: "D2Coding", "Consolas", "SFMono-Regular", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  /* ---- Letterhead ---- */
+  header.letterhead {
+    border-top: 3px double var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 22px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  header.letterhead .titles h1 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 4px 0 6px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  header.letterhead .code {
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  header.letterhead .meta {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    white-space: nowrap;
+  }
+
+  header.letterhead .meta b { color: var(--ink); }
+
+  /* ---- Verdict stamp ---- */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid currentColor;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    transform: rotate(-2.5deg);
+    white-space: nowrap;
+    mix-blend-mode: multiply;
+  }
+  :root:not([data-theme="light"]) .stamp,
+  :root[data-theme="dark"] .stamp {
+    mix-blend-mode: screen;
+  }
+
+  .stamp.pass, .stamp.fit { color: var(--forest-ink); }
+  .stamp.partial { color: var(--brass-ink); }
+  .stamp.fail, .stamp.no-fit { color: var(--wine-ink); }
+  .stamp.hold { color: var(--ink-faint); border-style: dashed; }
+
+  .stamp-lg {
+    font-size: 20px;
+    padding: 12px 26px;
+    border-width: 3px;
+    border-radius: 8px;
+    transform: rotate(-3deg);
+  }
+
+  /* ---- Overview ---- */
+  .overview {
+    padding: 20px 0 8px;
+    color: var(--ink-soft);
+  }
+
+  /* ---- Verdict summary strip ---- */
+  .verdict-strip {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0 30px;
+  }
+
+  /* ---- Section ---- */
+  section.stage {
+    margin-top: 8px;
+  }
+
+  .stage > .stage-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+
+  .stage-head h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  /* ---- Criterion card ---- */
+  .criterion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px 20px;
+    margin-bottom: 16px;
+  }
+
+  .criterion .crit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .criterion h3 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .criterion .score {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .criterion dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 14px;
+    margin: 12px 0 0;
+  }
+
+  .criterion dt {
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .criterion dd {
+    margin: 0;
+    font-size: 14.5px;
+  }
+
+  .criterion .figs {
+    font-size: 14.5px;
+    background: var(--paper-panel-2);
+    border-left: 3px solid var(--line-strong);
+    padding: 9px 13px;
+    margin: 4px 0 12px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .criterion .clause {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .stage-summary {
+    font-size: 14px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--line-strong);
+    padding: 8px 14px;
+    margin: 4px 0 44px;
+  }
+
+  .stage-summary.terminal {
+    border-left-color: var(--wine-ink);
+    color: var(--wine-ink);
+    font-weight: 600;
+  }
+
+  /* ---- Opinion panel ---- */
+  .opinion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 24px 26px;
+    margin-bottom: 44px;
+    position: relative;
+  }
+
+  .opinion h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0 0 12px;
+  }
+
+  .opinion p { margin: 0 0 12px; }
+  .opinion p:last-child { margin-bottom: 0; }
+
+  .opinion .conclusion {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .opinion .conclusion p { flex: 1; min-width: 240px; margin: 0; }
+
+  /* ---- Sources ---- */
+  .sources {
+    font-size: 13.2px;
+    color: var(--ink-soft);
+  }
+
+  .sources h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 17px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+
+  .sources ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .sources li { margin-bottom: 10px; }
+  .sources li b { color: var(--ink); }
+  .sources a { color: var(--link); }
+  .sources a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+  /* ---- Compliance ledger ---- */
+  .compliance {
+    margin-top: 40px;
+    border-top: 3px double var(--line-strong);
+    padding-top: 18px;
+  }
+
+  .compliance h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 15px;
+    margin: 0 0 12px;
+    color: var(--ink-soft);
+  }
+
+  .compliance ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .compliance li {
+    padding: 7px 0 7px 24px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .compliance li:last-child { border-bottom: none; }
+
+  .compliance li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    color: var(--forest-ink);
+    font-family: "D2Coding", monospace;
+  }
+
+  footer.colophon {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin-top: 40px;
+    letter-spacing: 0.04em;
+  }
+
+  a { color: var(--link); }
+
+  @media (max-width: 560px) {
+    header.letterhead { flex-direction: column; }
+    header.letterhead .meta { text-align: left; }
+    .criterion .crit-head { flex-direction: column; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="letterhead">
+    <div class="titles">
+      <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 (Score+Gate 아키텍처)</div>
+      <h1>Deckers Brands (데커스 브랜즈)</h1>
+      <div class="code mono">NYSE: DECK · Deckers Outdoor Corporation · 스포츠웨어(신발) 산업 · HOKA / UGG / Teva 브랜드 보유</div>
+    </div>
+    <div class="meta">
+      작성일 <b>2026-08-13</b><br>
+      작성 도구 <b><span class="mono">investment-desk</span></b><br>
+      DART 조회 <b>대상 아님(비상장·해외)</b>
+    </div>
+  </header>
+
+  <p class="overview">Deckers Outdoor Corporation(Deckers Brands)은 미국 캘리포니아에 본사를 둔 신발 기업으로, 러닝화 브랜드 HOKA와 부츠/캐주얼 브랜드 UGG를 자체 D2C(온라인·리테일 매장)와 도매(wholesale) 채널을 통해 최종 소비자에게 직접 판매한다. Scope Gate 판단: 주력 매출이 최종 소비자 대상 신발·의류 판매(FY2026 HOKA $2.59B, UGG $2.74B, 합산 $5.47B의 대부분)이므로 B2C 스코프에 해당해 판단을 진행했다. 다만 한국 기업이 아니라 DART(전자공시) 및 FnGuide/FnSpace(한국 상장 종목 전용 컨센서스) 커버리지 밖이며, 상위 오케스트레이터의 <span class="mono">check-requirements</span> 단계에서 FnGuide/FnSpace는 WARN(사용 불가)으로 이미 확인돼 이번 판단은 FRED 매크로 지표와 웹 검색(뉴스·리뷰·IR 발표·시세) Proxy 자료로만 진행했다.</p>
+
+  <div class="verdict-strip">
+    <span class="stamp stamp-lg fail">미부합 · 핵심 기준 3개 전부 미부합</span>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">STAGE 1</span>
+      <h2>핵심 판단 기준 3개</h2>
+    </div>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score 30/100 · Verdict: PASS</div>
+        </div>
+      </div>
+      <p class="figs mono">Pricing Power Test 4개 중 확인 1개·Insufficient 2개·반대신호 1개(Wholesale +12% &gt; DTC +6%) · 매출총이익률 57.9%&rarr;57.7%(-20bp, 방어 수준·확대 아님) · FY27 EPS 가이던스 성장률이 매출 성장률보다 낮음(Operating Leverage 역전)</p>
+      <p>Universe Filter: Framework Fit Medium(반복구매형 B2C 브랜드이나 구독/멤버십형이 아니라 Retention·Cohort가 구조적으로 공시되지 않는 업종). Pricing Power Test(<span class="mono">references/pricing_power_test.md</span>) 4개 중 Test1(가격인상 발표)만 확인됐고, Test2(인상 후 Retention 유지)·Test4(Peer 대비 ASP Premium)는 Insufficient Data, Test3(Mix를 통한 가격상승)은 오히려 Wholesale이 DTC보다 빠르게 성장해 반대 신호로 나타났다. Financial Transmission Chain은 Retention&rarr;Churn&rarr;Frequency 단계가 데이터 부재로 판단 불가(🔘), Pricing/Mix는 약한 Emerging(🟡), Gross Margin은 방어됐으나 -20bp로 확대가 아닌 방어 수준(🟡), Operating Leverage는 FY27 EPS 가이던스 성장률(+4~6%)이 매출 성장률(+7~8%)을 밑돌아 오히려 역행(❌)으로 마킹됐다. 확보한 좋은 소식(관세 $185M 상쇄, 마진 방어, 완판 판매)은 전부 이미 IR 공식 발표·주요 금융매체로 공개된 정보라 Variant Perception Category 1(시장이 이미 아는 좋은 점)로 분류돼 Consensus Gate가 발동, Layer G(Variant Perception) 점수가 0으로 강제됐다. Customer Economics(Cohort Retention/Churn/CAC/LTV) 데이터가 전무해 Data Integrity Gate도 함께 발동했다. Score 30/100은 WATCH 임계 65에 크게 못 미치고 Gate 3개(Consensus/Financial Translation/Data Integrity) 위반이 겹쳐, 고득점 여부와 무관하게 PASS로 귀결된다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준① "판정" — PASS(또는 Gate 위반) → 미부합. <span class="mono">judge-retention-pricing-power/references/scorecard_and_verdict.md</span> Consensus Gate·Financial Translation Gate·Data Integrity Gate 발동, <span class="mono">references/pricing_power_test.md</span> Test 1&ndash;4</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 대상 아님 · FnGuide/FnSpace WARN(수집 안 됨) · web.json 실적·가격정책·경쟁동향 서술(Proxy, Medium) + 보완 WebSearch(Forward P/E 12.8&ndash;15x, 업종 16.6x)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>② Structural vs Cyclical Misclassification</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score 24/100 · Verdict: PASS</div>
+        </div>
+      </div>
+      <p class="figs mono">FY2026 매출 $5.47B(+10% YoY, 사상 최대)에도 주가는 1년간 -12.09%(2026-08-12 기준) 하락 · HOKA 최근 분기 성장률(+10%대)이 On Running(+43%)에 역전 · UGG 특허 무효 판결(2026-06)+Quince 반독점 역소송</p>
+      <p>Framework Fit은 Medium으로 판단했다(러닝화 프리미엄화라는 침투율 개념은 성립하나, UGG는 패션·트렌드 성격이 강해 침투율 신호가 희석되고, 캐시에 저장된 FRED 관측 구간(2024-08~2026-07)에 실제 경기 하방기가 없어 과거 경기민감도 검증이 제한적). Cyclical Contamination Test 결과: Test1(Historical Macro Sensitivity)은 경기 하방 구간 데이터 부재로 Insufficient Data 처리(Data Integrity Gate 발동). Test2(Peer Divergence)는 방향이 명확히 확인됐으나 Bear 방향이다 — HOKA가 최근 분기 +10%대 성장에 그친 반면 On Running은 +43% 성장해 카테고리 전체가 성장하는 국면에서 Deckers 고유의 경쟁우위가 아니라 상대적 열위가 드러난다. Test3(Growth Decomposition)은 관세 $185M 원가 영향을 가격인상으로 상쇄한 정책적 요인이 실적에 혼입돼 구조/순환을 분리하기 어렵다고 결론지었다. Financial Transmission Chain은 Company Revenue 단계에서 사실상 끊긴 것으로 평가됐다(Peer Divergence·Sell-side 재분류·Multiple Re-rating 모두 Broken). HOKA 둔화·경쟁열위·UGG 패션 리스크·관세 마진압박은 모두 이미 실적콜·언론에서 공개적으로 논의된 이슈(Variant Perception Category 1)라 Consensus Gate가 발동해 Layer G(Variant Perception) 점수가 0으로 강제됐다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준② "판정" — PASS(Score 50&ndash;64 또는 Gate 위반) → 미부합. <span class="mono">judge-structural-vs-cyclical/references/scorecard_and_verdict.md</span> Consensus Gate·Data Integrity Gate 발동, <span class="mono">references/cyclical_contamination_test.md</span> Test 1&ndash;3</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 대상 아님(NOT_APPLICABLE) · FRED(미국 CPI·기준금리·소매판매·실업률, Deckers는 미국 상장사라 국가 일치, 2026-08-13 조회) · web.json 실적·경쟁동향·소송·시세 서술(Proxy, Low&ndash;Medium)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>③ Underpriced Customer Love (ULRS)</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score ≈46&ndash;52/100 · Verdict: AVOID</div>
+        </div>
+      </div>
+      <p class="figs mono">Layer2(Durability) ≈35/100(Durability Gate 발동, 60점 상한) · Layer5(Market Recognition Gap) 0 강제(Consensus Gate) · Red Flag 확정 발동 0건(6개 항목 확인 불가, 감점 반영) · 러닝화 선호도 설문 HOKA 9% (Asics 16%·Brooks 15%·Nike/Saucony 12%보다 낮음)</p>
+      <p>Universe Filter: Framework Fit Medium(Apparel/Fashion 카테고리)으로 전체 절차를 진행했다. Layer1(Customer Love)은 HOKA 리뷰의 쿠션감·편안함 호평(Low confidence, 제3자 리뷰 요약)과 선호도 설문에서의 상대적 열위가 상쇄돼 ~55%ile로 채점됐고, 재구매율·DAU·브랜드 검색점유율 등 핵심 Behavioral 지표는 데이터 없음으로 처리됐다. Layer2(Durability)는 2026년 6월 UGG 'Ultra Mini Boot' 디자인 특허가 배심원단에 의해 무효 판결을 받고 Quince의 반독점 역소송까지 제기돼 IP moat가 약화됐고, On Running(+43%) 대비 HOKA(+10%대)의 상대적 성장 둔화, 신발업종 특유의 구독/락인 부재(구조적으로 낮은 전환비용)가 겹쳐 ~35점으로 40점 기준선에 미달, Durability Gate가 발동해 Total Score가 60점 상한으로 캡핑됐다. Layer5(Market Recognition Gap)는 확보한 근거(실적 발표·경쟁동향·특허소송)가 전부 공개정보에 그쳐 Consensus Gate가 발동해 0으로 강제됐다. Red Flag 10종 중 확정 발동은 0건이나 DART/FnGuide 공백으로 6개 항목이 "확인 불가" 처리돼 중립(50점) 대신 Weight 배제·재정규화 원칙에 따라 보수적으로 반영됐다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준③ "판정" — AVOID(Score 50&ndash;64 또는 Gate 위반, Red Flag 2개↑ 포함) → 미부합. <span class="mono">judge-underpriced-customer-love/references/scorecard_and_verdict.md</span> Durability Gate·Consensus Gate 미통과</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART/FnGuide 대상 아님·수집 안 됨(NOT_APPLICABLE/WARN, Market Recognition Gap 산정 시 중립 처리 금지 원칙에 따라 감점 처리) · web.json 리뷰·경쟁동향·소송·실적 서술(Proxy, Low&ndash;Medium)</dd>
+      </dl>
+    </article>
+
+    <p class="stage-summary terminal">1단계 종합 — 기준①②③ 모두 미부합(PASS/PASS/AVOID → 전부 미부합 환산)으로 확인됐다. <span class="mono">judgment-rules.md</span>의 "3개 모두 미부합이면 판단을 종료한다" 조건이 충족돼 2단계 스크리닝(<span class="mono">screen-fundamentals</span>)은 실행하지 않는다.</p>
+  </section>
+
+  <div class="opinion">
+    <h2>종합 투자의견</h2>
+    <p>Deckers Brands(HOKA/UGG)는 판단 규칙서의 핵심 기준 3개 모두 충족하지 못하는 것으로 나타났다. 공통적으로 (1) FY2026 매출 $5.47B(+10%, HOKA +15.9%, UGG +8.2%)와 매출총이익률 57.7%(관세 $185M 원가 부담을 가격인상으로 상쇄) 등 재무 실적 자체는 견조하지만, (2) 같은 기간 On Running(+43%)이 HOKA(+10%대)보다 훨씬 빠르게 성장해 러닝화 카테고리 성장의 수혜가 Deckers 고유의 경쟁우위가 아니라 카테고리 전체 재편에서 나온 것일 가능성이 크고, 실제로 사상 최대 실적 발표에도 주가는 1년간 -12% 하락해 시장이 이미 이런 경쟁열위·순환적 프레임을 가격에 반영 중임을 시사하며, (3) UGG의 디자인 특허 무효 판결과 Quince의 반독점 역소송으로 브랜드 방어력(Durability)에 대한 반증이 뚜렷하고, (4) Wholesale(+12%)이 DTC(+6%)보다 빠르게 성장해 자사 채널·고객 데이터 장악력이 오히려 약화되는 신호가 있으며, (5) HOKA의 관세 대응 가격인상·마진 방어 서사는 이미 공식 실적 콜과 언론에 공개된 정보라 세 기준 모두에서 요구하는 "시장이 아직 모르는 지점"을 확인할 수 없었다(Consensus Gate 세 기준 모두 반복 발동).</p>
+    <p>Deckers는 한국 상장 기업이 아니라 DART·FnGuide/FnSpace(리텐션·컨센서스·목표주가 등 핵심 정량 지표의 주 출처)가 원천적으로 커버하지 않는 대상이라, 세 기준의 결론 모두 웹 Proxy 자료와 IR 공식 발표에 상당 부분 의존한다는 한계가 있다. 데이터가 부족한 하위 지표(Retention/Cohort/Churn/CAC/LTV 등)는 추측으로 채우지 않고 Data Integrity Gate 발동·감점으로 보수적으로 처리했다.</p>
+    <div class="conclusion">
+      <p>핵심 기준 3개 전부 미부합(PASS/PASS/AVOID) — 2단계 스크리닝은 실행하지 않고 여기서 판단을 종료한다.</p>
+      <span class="stamp fail">미부합</span>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h2>사용한 원자료 출처</h2>
+    <ol>
+      <li><b>DART</b> — 대상 아님. Deckers Brands는 미국(NYSE: DECK) 상장 기업으로 한국 DART 공시 대상이 아니다(<span class="mono">data/cache/Deckers Brands/dart.json</span>, <span class="mono">lib/dart_client.py "Deckers Brands"</span> 실행 결과 corp_code 마스터 목록에서 매칭 실패, 2026-08-13 확인).</li>
+      <li><b>FRED</b> — <span class="mono">data/cache/Deckers Brands/fred.json</span>, CPI(CPIAUCSL)·기준금리(FEDFUNDS)·소매판매(RSAFS)·실업률(UNRATE), 미국 지표, 2026-08-13 조회. Deckers는 미국 상장사라 국가 일치.</li>
+      <li><b>FnGuide/FnSpace</b> — 수집 안 됨(WARN). 상위 오케스트레이터의 <span class="mono">check-requirements</span> 단계에서 사용 불가로 이미 확인돼 이번 실행에서는 호출을 생략했다. 리텐션·목표주가·컨센서스 지표는 판단 보류 처리했다.</li>
+      <li><b>Deckers Brands 공식 IR(ir.deckers.com)</b> (1차 출처) — "Deckers Brands Reports Fourth Quarter and Full Fiscal Year 2026 Financial Results" 보도자료. FY2026 연간 매출 $5.47B(+10%), HOKA $2.59B(+15.9%), UGG $2.74B(+8.2%), EPS $7.02(+11%), FY2027 가이던스($5.86~5.91B) 서술. 2026-08-13 조회. High Confidence(1차 IR 자료).</li>
+      <li><b>SGI Europe (sgieurope.com)</b> (Proxy) — Deckers FY2026 실적 요약 기사, 매출총이익률 57.7%(전년 57.9%), 영업이익률 23.1% 서술. 2026-08-13 조회. Medium Confidence.</li>
+      <li><b>Yahoo Finance</b> (Proxy) — "Deckers Trends Show DTC, Global Demand and Premium Pricing Strength" 기사, HOKA 관세 대응 가격인상(원가 영향 $185M), DTC +6%/Wholesale +12% 서술. 2026-08-13 조회. Medium Confidence.</li>
+      <li><b>YipitData</b> (Proxy) — "Footwear Market Trends 2026" 블로그, HOKA·On·New Balance·Adidas 점유율 확대와 Nike 점유율 하락, On Running +43% vs HOKA +10%대 성장률 비교, 러닝화 브랜드 선호도 설문(Asics 16%·Brooks 15%·Nike/Saucony 12%·HOKA 9%·Adidas 8%) 서술. 2026-08-13 조회. Low Confidence(2차 집계 매체, 방법론 불명확).</li>
+      <li><b>WWD (wwd.com)</b> (Proxy) — "Ugg Brand Owner Deckers Outdoor Corp. Loses Patent Case Against Quince" 기사, 2026년 6월 UGG 'Ultra Mini Boot' 디자인 특허 무효 판결과 Quince의 반독점 역소송(2026-02 제기) 서술. 2026-08-13 조회. Medium Confidence(업계 매체, SEC 8-K 교차 확인).</li>
+      <li><b>Thingtesting</b> (Proxy) — "Hoka Reviews 2026" 페이지, HOKA 제품 쿠션감·편안함 호평과 일부 모델의 조기 마모·핏 불일치 불만 서술(eBay 판매자 후기 기반). 2026-08-13 조회. Low Confidence.</li>
+      <li><b>companiesmarketcap.com</b> (Proxy) — Deckers Brands(DECK) 시가총액 $12.41B, 주가 $91.20, 1년 -12.09%, 2026-08-12 기준. Medium Confidence(3rd-party 웹, 공식 API 아님). 동일 시점 다른 소스(gurufocus, wallstreetzen)는 2026-08-04~05 기준 $99.87/$13.6B로 소폭 다른 값을 제시해 조회 시점 차이를 명시했다.</li>
+    </ol>
+  </section>
+
+  <div class="compliance">
+    <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+    <ul>
+      <li>기준①②③ 모두 각 스킬의 100점 Score+Gate 아키텍처(<span class="mono">references/scorecard_and_verdict.md</span>)로 산출된 최종 Verdict(PASS/PASS/AVOID)를 <span class="mono">judgment-rules.md</span> 각 기준의 매핑 조항 그대로 적용해 미부합으로 환산했다 — 임의 재량 해석을 추가하지 않았다.</li>
+      <li>기준①은 최초 병렬 디스패치한 서브에이전트가 완료 알림을 반환하지 않아 별도로 재디스패치해 판정을 확보했다(Score 30/100, PASS). 재실행 전까지는 web.json에 남아 있는 Proxy 자료만으로 Score를 임의 추정하지 않고 판단 보류로 유지했었다 — 재실행 결과가 도착한 뒤에야 최종 미부합으로 확정했다.</li>
+      <li>부합으로 판정된 기준이 하나도 없어 <span class="mono">judgment-rules.md</span> 2단계 조항("1단계에서 하나 이상의 기준에 부합한 기업만 대상으로")에 따라 스크리닝 체크리스트(<span class="mono">screen-fundamentals</span>)는 실행하지 않았다.</li>
+      <li>Deckers는 한국 상장 기업이 아니라 DART·FnGuide/FnSpace가 원천적으로 커버하지 않는 대상임을 세 기준 판단 모두에서 명시했고, 해당 데이터에 의존하는 하위 지표(Retention/Cohort/Churn/CAC/LTV 등)는 임의로 추정하지 않고 Data Integrity Gate 발동·감점으로 보수적으로 처리했다(재현성 원칙 2번).</li>
+      <li>모든 판단 문장에 적용한 <span class="mono">judgment-rules.md</span> 조항·스킬 Gate 이름을 괄호/각주로 명시했다(판단 일관성 원칙 3번).</li>
+    </ul>
+  </div>
+
+  <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13</footer>
+
+</div>

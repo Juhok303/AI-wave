@@ -1,0 +1,1036 @@
+<title>운동화 제조사 산업 투심 비교</title>
+<style>
+  :root {
+    --paper: #efeae0;
+    --paper-panel: #e6dfcf;
+    --paper-panel-2: #ded5c0;
+    --ink: #23241f;
+    --ink-soft: #5c5646;
+    --ink-faint: #8a8270;
+    --line: #c7bc9f;
+    --line-strong: #a89b77;
+    --forest: #2f5233;
+    --forest-ink: #24401f;
+    --brass: #8a6a1f;
+    --brass-ink: #6b5216;
+    --wine: #7d2036;
+    --wine-ink: #611829;
+    --navy: #2a3a52;
+    --link: #4a4530;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1a1813;
+      --paper-panel: #221f18;
+      --paper-panel-2: #2a261d;
+      --ink: #e9e2cf;
+      --ink-soft: #b9ae93;
+      --ink-faint: #857c65;
+      --line: #4a4433;
+      --line-strong: #6b6248;
+      --forest: #6fae74;
+      --forest-ink: #8fc793;
+      --brass: #d1a94a;
+      --brass-ink: #e0bd6c;
+      --wine: #d9748a;
+      --wine-ink: #e493a5;
+      --navy: #9fb3cc;
+      --link: #cbbf8e;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1a1813;
+    --paper-panel: #221f18;
+    --paper-panel-2: #2a261d;
+    --ink: #e9e2cf;
+    --ink-soft: #b9ae93;
+    --ink-faint: #857c65;
+    --line: #4a4433;
+    --line-strong: #6b6248;
+    --forest: #6fae74;
+    --forest-ink: #8fc793;
+    --brass: #d1a94a;
+    --brass-ink: #e0bd6c;
+    --wine: #d9748a;
+    --wine-ink: #e493a5;
+    --navy: #9fb3cc;
+    --link: #cbbf8e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin: 0;
+    padding: 48px 20px 96px;
+  }
+
+  .sheet { max-width: 860px; margin: 0 auto; }
+
+  .serif { font-family: "Noto Serif KR", "Batang", ui-serif, serif; }
+  .mono {
+    font-family: "D2Coding", "Consolas", "SFMono-Regular", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  header.letterhead {
+    border-top: 3px double var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 22px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  header.letterhead .titles h1 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 4px 0 6px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  header.letterhead .code { color: var(--ink-soft); font-size: 14px; }
+
+  header.letterhead .meta {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    white-space: nowrap;
+  }
+  header.letterhead .meta b { color: var(--ink); }
+
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid currentColor;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    transform: rotate(-2.5deg);
+    white-space: nowrap;
+    mix-blend-mode: multiply;
+  }
+  :root:not([data-theme="light"]) .stamp,
+  :root[data-theme="dark"] .stamp { mix-blend-mode: screen; }
+
+  .stamp.pass, .stamp.fit { color: var(--forest-ink); }
+  .stamp.partial { color: var(--brass-ink); }
+  .stamp.fail, .stamp.no-fit { color: var(--wine-ink); }
+  .stamp.hold { color: var(--ink-faint); border-style: dashed; }
+
+  .stamp-lg {
+    font-size: 20px;
+    padding: 11px 24px;
+    border-width: 3px;
+    border-radius: 8px;
+    transform: rotate(-3deg);
+  }
+
+  .overview { padding: 20px 0 8px; color: var(--ink-soft); }
+
+  .verdict-strip { display: flex; justify-content: center; padding: 6px 0 30px; }
+
+  section.stage { margin-top: 8px; }
+
+  .stage > .stage-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+
+  .stage-head h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .stage-summary {
+    font-size: 14px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--line-strong);
+    padding: 8px 14px;
+    margin: 4px 0 30px;
+  }
+  .stage-summary.terminal { border-left-color: var(--wine-ink); color: var(--wine-ink); font-weight: 600; }
+
+  .table-wrap { overflow-x: auto; margin-bottom: 20px; }
+
+  table.rank, table.dropout {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.6px;
+    min-width: 640px;
+  }
+
+  table.rank th, table.dropout th {
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+    padding: 0 10px 8px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  table.rank td, table.dropout td {
+    padding: 11px 10px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+
+  table.rank tr:last-child td, table.dropout tr:last-child td { border-bottom: 1px solid var(--line-strong); }
+
+  td.co { font-weight: 700; white-space: nowrap; font-family: "Noto Serif KR", "Batang", ui-serif, serif; }
+  td.num { text-align: right; white-space: nowrap; }
+  td.reason { color: var(--ink-soft); line-height: 1.65; }
+
+  .empty-note {
+    font-size: 14px;
+    color: var(--ink-soft);
+    font-style: italic;
+    padding: 14px 0 30px;
+    border-bottom: 1px dashed var(--line-strong);
+    margin-bottom: 30px;
+  }
+
+  .criterion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px 20px;
+    margin-bottom: 16px;
+  }
+
+  .criterion .crit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+
+  .criterion h3 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 17px;
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .criterion .code2 { font-size: 12.5px; color: var(--ink-faint); }
+  .criterion .score { font-size: 12.5px; color: var(--ink-faint); white-space: nowrap; }
+
+  .criterion dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 14px;
+    margin: 12px 0 0;
+  }
+  .criterion dt {
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+  .criterion dd { margin: 0; font-size: 14.5px; }
+
+  .criterion .figs {
+    font-size: 14.5px;
+    background: var(--paper-panel-2);
+    border-left: 3px solid var(--line-strong);
+    padding: 9px 13px;
+    margin: 4px 0 12px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .criterion .clause { font-size: 13px; color: var(--ink-soft); font-style: italic; }
+  .criterion p.note { font-size: 13.5px; color: var(--ink-soft); margin: 6px 0 0; }
+
+  .crit-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .score-badge {
+    font-family: "D2Coding", monospace;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    background: var(--paper-panel-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    padding: 3px 8px;
+  }
+
+  .opinion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 24px 26px;
+    margin-bottom: 40px;
+  }
+  .opinion h2 { font-family: "Noto Serif KR", "Batang", ui-serif, serif; font-size: 19px; margin: 0 0 12px; }
+  .opinion p { margin: 0 0 12px; }
+  .opinion p:last-child { margin-bottom: 0; }
+  .opinion .conclusion {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .opinion .conclusion p { flex: 1; min-width: 240px; margin: 0; }
+
+  .sources { font-size: 13.2px; color: var(--ink-soft); }
+  .sources h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 17px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+  .sources ol { margin: 0; padding-left: 20px; }
+  .sources li { margin-bottom: 10px; }
+  .sources li b { color: var(--ink); }
+  .sources a { color: var(--link); }
+  .sources a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+  .compliance { margin-top: 40px; border-top: 3px double var(--line-strong); padding-top: 18px; }
+  .compliance h2 { font-family: "Noto Serif KR", "Batang", ui-serif, serif; font-size: 15px; margin: 0 0 12px; color: var(--ink-soft); }
+  .compliance ul { list-style: none; margin: 0; padding: 0; font-size: 13px; color: var(--ink-soft); }
+  .compliance li { padding: 7px 0 7px 24px; border-bottom: 1px solid var(--line); position: relative; }
+  .compliance li:last-child { border-bottom: none; }
+  .compliance li::before { content: "✓"; position: absolute; left: 0; top: 7px; color: var(--forest-ink); font-family: "D2Coding", monospace; }
+
+  /* ---- 개별 보고서 접기/펼치기 ---- */
+  details.report-embed {
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    margin-bottom: 14px;
+    background: var(--paper-panel);
+    overflow: hidden;
+  }
+  details.report-embed > summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  details.report-embed > summary::-webkit-details-marker { display: none; }
+  details.report-embed > summary .re-name {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 16.5px;
+  }
+  details.report-embed > summary .re-code { font-size: 12.5px; color: var(--ink-faint); }
+  details.report-embed > summary .chevron {
+    margin-left: auto;
+    color: var(--ink-faint);
+    font-family: "D2Coding", monospace;
+    transition: transform 0.15s ease;
+  }
+  details.report-embed[open] > summary .chevron { transform: rotate(90deg); }
+  details.report-embed > summary:hover { background: var(--paper-panel-2); }
+  .re-body {
+    padding: 6px 24px 28px;
+    border-top: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .re-body header.letterhead { padding-top: 16px; }
+
+  footer.colophon { text-align: center; font-size: 11.5px; color: var(--ink-faint); margin-top: 40px; letter-spacing: 0.04em; }
+
+  a { color: var(--link); }
+
+  @media (max-width: 560px) {
+    header.letterhead { flex-direction: column; }
+    header.letterhead .meta { text-align: left; }
+    .criterion .crit-head { flex-direction: column; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="letterhead">
+    <div class="titles">
+      <div class="eyebrow">산업 비교 · 판단 규칙서 <span class="mono">judgment-rules.md</span> "산업/섹터 비교 — 순위 산정" 절 기준</div>
+      <h1>운동화 제조사 산업</h1>
+      <div class="code mono">Nike · Adidas · On Holding · Deckers Brands(HOKA) · Puma (5개사)</div>
+    </div>
+    <div class="meta">
+      작성일 <b>2026-08-13</b><br>
+      작성 도구 <b><span class="mono">investment-desk</span></b><br>
+      실행 방식 <b>기업별 병렬 서브에이전트 5개</b>
+    </div>
+  </header>
+
+  <p class="overview">사용자가 지정한 글로벌 운동화(스포츠웨어) 제조사 5개사(Nike·Adidas·On Holding·Deckers Brands/HOKA·Puma)를 각각 독립된 <span class="mono">investment-desk</span> 서브에이전트로 병렬 판단했다. 모두 Scope Gate(B2C)는 통과했다. <b>5개사 전부 한국 상장기업이 아니므로</b> 이 레포의 핵심 데이터 키트인 DART(전자공시)와 FnGuide/FnSpace(컨센서스)는 구조적으로 커버리지 밖이며, FRED(미국 거시지표, 국가 불일치 시 참고용)와 웹 검색(IR 발표·뉴스·리뷰·시가총액) Proxy 자료만으로 판단했다 — 이 데이터 공백이 아래 결과 전반의 공통 한계다.</p>
+
+  <div class="verdict-strip">
+    <span class="stamp stamp-lg fail">5개사 전부 3개 기준 모두 미부합 — 순위표 대상 없음</span>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">순위표</span>
+      <h2>부합/부분부합 기준이 있는 기업</h2>
+    </div>
+    <p class="empty-note"><span class="mono">judgment-rules.md</span> "산업/섹터 비교 — 순위 산정" 절에 따라 순위표는 부합 또는 부분부합 기준이 1개 이상 있는 기업만 대상으로 하는데, 이번 5개사는 전부 3개 기준 모두 미부합이라 <b>순위표에 오를 기업이 없다</b>. 아래 "탈락 목록"에 5개사 전부와 사유를 정리한다.</p>
+  </section>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">탈락 목록</span>
+      <h2>투자 매력 없음 (1단계 3개 기준 모두 미부합)</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="dropout">
+        <thead>
+          <tr>
+            <th>기업</th>
+            <th>① Retention&#8209;Pricing</th>
+            <th>② Structural vs Cyclical</th>
+            <th>③ Underpriced Love</th>
+            <th>탈락 핵심 사유</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="co">Nike</td>
+            <td class="num mono">PASS · 12/100</td>
+            <td class="num mono">PASS · 17&ndash;25/100</td>
+            <td class="num mono">AVOID · 11&ndash;13/100</td>
+            <td class="reason">FY2026 순이익·EPS 역성장(Financial Translation 단절), Greater China -17%, On/Hoka/Lululemon이 가장 빠르게 성장하는 카테고리에서 Nike보다 훨씬 빠르게 침투 — 리스크가 이미 언론·셀사이드에 공개돼 Consensus Gate 반복 발동</td>
+          </tr>
+          <tr>
+            <td class="co">Adidas</td>
+            <td class="num mono">PASS · 20/100</td>
+            <td class="num mono">PASS · 13/100</td>
+            <td class="num mono">AVOID · 19&ndash;20/100</td>
+            <td class="reason">매출총이익률 오히려 -100bp 하락(가격전가력 반증), 성장 동력이 구조적 카테고리 확장이 아니라 레트로 패션 트렌드(되돌림 리스크), 실적 회복 서사가 이미 시장에 폭넓게 공유돼 세 기준 모두 Consensus Gate 발동</td>
+          </tr>
+          <tr>
+            <td class="co">On Holding</td>
+            <td class="num mono">PASS · ≈23/100</td>
+            <td class="num mono">PASS · ≈21/100</td>
+            <td class="num mono">AVOID · ≈43/100</td>
+            <td class="reason">애널리스트 28명 Buy 컨센서스+목표주가 +46% 괴리가 "완전가 방어" 스토리를 이미 가격에 반영(Consensus Gate), 2026 Q2 매출은 컨센서스 하회·가이던스 하단 조정 vs 마진 가이던스는 상향되는 혼재 신호</td>
+          </tr>
+          <tr>
+            <td class="co">Deckers Brands (HOKA)</td>
+            <td class="num mono">PASS · 30/100</td>
+            <td class="num mono">PASS · 24/100</td>
+            <td class="num mono">AVOID · ≈46&ndash;52/100</td>
+            <td class="reason">On Running(+43%)이 HOKA(+10%대)보다 4배 빠르게 성장(경쟁열위), UGG 특허 무효 판결+Quince 반독점 역소송(Durability Gate), Wholesale이 DTC보다 빠르게 성장(자사 채널 약화), 관세 대응 마진방어 서사는 이미 공개정보</td>
+          </tr>
+          <tr>
+            <td class="co">Puma</td>
+            <td class="num mono">PASS · ≈9&ndash;12/100</td>
+            <td class="num mono">PASS · ≈19&ndash;25/100</td>
+            <td class="num mono">AVOID · ≈22&ndash;23/100</td>
+            <td class="reason">2024&ndash;2026 3년 연속·가속화된 매출 역성장(Hoka +68%·On +54% 대비 뚜렷한 경쟁열위), 매출총이익률 개선은 가격결정력이 아닌 원가절감·관세환급 효과, "Puma Reset" 턴어라운드 서사는 이미 공식 IR로 공개됨</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stage-summary terminal">5개사 공통 패턴 — (1) 전부 비한국 상장기업이라 DART·FnGuide/FnSpace가 원천적으로 커버하지 않아, 리텐션·코호트·컨센서스 등 세 철학의 핵심 정량 지표가 구조적으로 공백이다(Data Integrity Gate 5개사 전부 발동). (2) 확인 가능한 재무 신호(매출·이익률 추이, Peer 대비 성장률)는 대체로 경쟁열위 또는 마진 개선의 비(非)가격 요인을 가리켰다. (3) 각사가 내세우는 턴어라운드·프리미엄화·마진방어 서사는 예외 없이 이미 IR 공식 발표·주요 금융매체로 공개된 정보라 Variant Perception이 Category 1(시장이 이미 아는 좋은 점)로 분류되어 Consensus Gate가 5개사 전부·세 기준 전부에서 반복 발동했다 — "시장이 아직 모르는 지점"이라는 세 철학 공통의 핵심 전제가 이번 5개사 어디에서도 성립하지 않았다.</p>
+  </section>
+
+  <div class="opinion">
+    <h2>산업 종합 의견</h2>
+    <p>운동화 제조사 5개사는 이 판단 도구의 3개 핵심 철학(가격전가력 전이, 구조적/순환적 오분류, 저평가된 고객 애착) 어디에도 이번 데이터 시점(2026-08-13) 기준 부합하지 않았다. 업종 내부적으로는 뚜렷한 양극화가 있다 — On Holding·Deckers(HOKA)는 실제 매출 성장은 견조하지만 이미 시장이 그 강세 스토리를 가격에 반영한 상태(Consensus Gate)라 "저평가"가 성립하지 않았고, Nike·Adidas·Puma는 반대로 매출/이익 역성장 또는 경쟁열위가 실측으로 확인돼 애초에 가격전가력·구조적 성장 서사 자체가 뒷받침되지 않았다. 즉 5개사가 "미부합"에 이른 경로는 서로 다르지만(강세주는 이미 알려짐/약세주는 실제로 약함), 결과적으로 세 철학이 요구하는 "시장이 아직 모르는 좋은 지점"을 어느 기업에서도 확인하지 못했다.</p>
+    <p><b>다만 이 결론에는 데이터 공백에 따른 근본적 한계가 있다.</b> 5개사 전부 한국 상장기업이 아니라 DART(재무제표 원천)·FnGuide/FnSpace(컨센서스·목표주가 원천)가 구조적으로 커버하지 않으며, 리텐션·코호트·재구매율 등 세 철학의 핵심 인과사슬 지표는 어느 기업에서도 공개 데이터로 확인되지 않았다(임의 추정 없이 전부 Data Integrity Gate 발동·감점 처리). 이 레포의 데이터 인프라는 애초에 한국 상장기업 대상으로 설계돼 있어, 해외기업 판단은 웹 Proxy 자료에 크게 의존한다는 구조적 제약을 안고 있다 — 아래 "알려진 제약" 참고.</p>
+    <div class="conclusion">
+      <p>5개사 전부 탈락(투자 매력 없음) — 순위표에 오를 기업 없음. 2단계 스크리닝은 5개사 모두 1단계에서 판단이 종료돼 실행하지 않았다.</p>
+      <span class="stamp fail">미부합</span>
+    </div>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">알려진 제약</span>
+      <h2>이번 실행에서 발견된 이슈</h2>
+    </div>
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>DART/FnGuide 데이터 키트가 해외기업을 커버하지 않음</h3>
+      </div>
+      <p class="note">이 레포의 데이터 키트(DART·FnGuide/FnSpace)는 한국 상장기업 전용으로 설계돼 있다. Nike(NYSE)·Adidas(프랑크푸르트)·On Holding(NYSE)·Deckers(NYSE)·Puma(프랑크푸르트) 5개사 전부 이 커버리지 밖이라, <span class="mono">fetch-dart</span>는 corp_code 매칭 실패로 데이터 없음을 반환했고 <span class="mono">fetch-fnguide</span>(fnspace-mcp)도 KRX 종목코드 체계 기반이라 조회 대상이 아니었다. 결과적으로 재무제표 원자료는 각사의 공식 IR 발표·금융매체 보도(Medium Confidence Proxy)에, 컨센서스·목표주가는 On Holding을 제외하면 거의 확보되지 않았다. FRED(미국 매크로)도 유럽 기업(Adidas·Puma)에는 국가 불일치로 참고용 이상의 역할을 하지 못했다. 이 공백은 세 판단 기준 모두에서 Data Integrity Gate 발동·보수적 채점으로 이어졌고, 결과가 실제로 더 부정적으로 기운 방향과 일치했는지는 완전한 재무 데이터 확보 후 재실행해야 검증할 수 있다.</p>
+    </article>
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>Deckers(HOKA) 기준① 서브에이전트 응답 지연</h3>
+      </div>
+      <p class="note">최초 병렬 디스패치 시 Deckers의 기준①(Retention-to-Pricing-Power) 판단 서브에이전트가 완료 알림을 반환하지 않아, 나머지 두 기준(②③ 미부합 확인)만으로 잠정 "판단 보류" 보고서를 먼저 저장했다. 이후 별도로 재디스패치해 기준① 결과(Score 30/100, PASS → 미부합)를 확보했고, 개별 보고서(<a href="Deckers-20260813.html">Deckers-20260813.html</a>)와 이 섹터 요약을 최종 결과로 갱신했다. 나머지 4개사(Nike·Adidas·On Holding·Puma)는 최초 디스패치에서 3개 기준 모두 정상적으로 완료 알림을 반환했다.</p>
+    </article>
+  </section>
+
+  <div class="compliance">
+    <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+    <ul>
+      <li>순위 산정은 <span class="mono">judgment-rules.md</span> "산업/섹터 비교 — 순위 산정" 절의 규칙(부합/부분부합 기준 중 최고 Score 내림차순, 3개 모두 미부합이면 탈락 목록으로 분리)을 그대로 적용했다 — 5개사 전부 탈락 조건에 해당해 순위표는 의도적으로 비워뒀다.</li>
+      <li>2단계 스크리닝(시장성/경쟁력/수익성/재무효율성/ESG)은 5개사 전부 1단계에서 판단이 종료돼 실행하지 않았다 — <span class="mono">judgment-rules.md</span> 1단계 규정 그대로.</li>
+      <li>각 기업의 상세 근거·적용 조항·출처는 개별 보고서(아래 접힌 카드 및 링크)에 전부 기재돼 있다 — 이 산업 요약은 요약본이며 상세 판단의 재작성이 아니다.</li>
+      <li>DART/FnGuide 데이터 미확보라는 구조적 제약(해외기업)을 숨기지 않고 명시했고, 이 공백이 결론에 미쳤을 영향을 종합의견에 밝혔다(재현성 원칙 2번, 데이터 부족 시 임의 낙관 처리 금지).</li>
+      <li>Deckers의 기준① 서브에이전트 응답 지연 이슈와 재실행 경위를 숨기지 않고 "알려진 제약"에 기록했다.</li>
+    </ul>
+  </div>
+
+  <section class="stage" style="margin-top:36px;">
+    <div class="stage-head">
+      <span class="eyebrow">개별 보고서</span>
+      <h2>기업별 상세 판단</h2>
+    </div>
+    <p class="note" style="margin-bottom:14px;">각 기업의 Layer별 근거, Gate 발동 내역, 원자료 출처, Compliance Self-Check가 아래에 전체 원문 그대로 접혀 있다 — 클릭하면 펼쳐진다. 별도 파일로도 열 수 있다(각 카드 안 링크).</p>
+
+    <details class="report-embed">
+      <summary>
+        <span class="re-name">Nike</span>
+        <span class="re-code mono">NKE · NYSE</span>
+        <span class="stamp fail">투자 매력 없음</span>
+        <span class="chevron">&#9656;</span>
+      </summary>
+      <div class="re-body">
+        <p class="link-out"><a href="Nike-20260813.html">별도 파일로 열기 ↗</a></p>
+
+        <header class="letterhead">
+          <div class="titles">
+            <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 · 개별기업 판단</div>
+            <h1>Nike, Inc. (나이키)</h1>
+            <div class="code mono">티커 NKE · NYSE 상장</div>
+          </div>
+          <div class="meta">
+            작성일 <b>2026-08-13</b><br>
+            작성 도구 <b><span class="mono">investment-desk</span></b><br>
+            DART/FnGuide 커버리지 <b>해당 없음(미국 상장사)</b>
+          </div>
+        </header>
+
+        <p class="overview">Nike, Inc.(나이키)는 미국 오리건주에 본사를 둔 세계 최대 스포츠 신발·의류 브랜드로, 자체 브랜드 제품을 소비자에게 직접 판매(Nike Direct/DTC)하거나 도소매 유통망을 통해 판매하는 명확한 B2C 기업이다. FY2026(2025.6~2026.5) 전체 순이익 30억 1,100만 달러(EPS $2.10)를 기록했고, 글로벌 스포츠웨어 시장에서 매출 기준 약 27%의 점유율로 1위 지위를 유지하고 있으나, 최근 분기 China 매출 급감과 On·Hoka·Lululemon 등 신흥 브랜드의 빠른 잠식이 동시에 진행 중이다.</p>
+
+        <div class="verdict-strip">
+          <span class="stamp stamp-lg fail">투자 매력 없음 · PASS/AVOID</span>
+        </div>
+
+        <section class="stage">
+          <div class="stage-head">
+            <span class="eyebrow">STAGE 1</span>
+            <h2>핵심 판단 기준 3개</h2>
+          </div>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 12/100</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">FY2026 Q4 순매출 $10.97B (YoY &minus;1% reported / &minus;4% FX&#8209;neutral)<br>FY2026 전체 순이익 $3.11B(EPS $2.10) &lt; 전년 $3.22B(EPS $2.16)<br>Q4 총이익률 +8.9%p(관세 환급 일회성 요인, EPS 기여 +$0.52)</p>
+            <p>Framework Fit은 High(B2C·반복구매·멤버십 구조)로 판정됐으나, Retention&rarr;Pricing Power 인과 체인이 Financial Translation 단계에서 역행했다 &mdash; FY2026 순이익·EPS가 전년 대비 오히려 감소했고, 유일한 마진 개선(Q4 총이익률 +8.9%p)은 구조적 Pricing/Mix 개선이 아니라 IEEPA 관세 환급이라는 일회성 요인이다. 재구매/코호트 리텐션·CAC/LTV·ASP 등 Pricing Power Test 4개 하위 테스트 중 3개가 데이터 부재로 Insufficient Data 처리됐다(중립값으로 채우지 않음). Variant Perception 검증에서도 시장이 이미 아는 점(로열티 수치, China 약세, 경쟁 심화, 관세 리스크)만 확인돼 Category 1로 분류됐다. 결과적으로 Data Integrity Gate·Financial Translation Gate·Consensus Gate가 동시 발동해 최종 Verdict <b>PASS</b>(Score 12/100)로 귀결됐다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준① 판정 &mdash; "최종 Verdict 매핑: BUY&rarr;부합, WATCH&rarr;부분부합, PASS(또는 Gate 위반)&rarr;미부합" · `judge-retention-pricing-power` Layer A&ndash;G, Pricing Power Test, Financial Transmission, Variant Perception, Scorecard&amp;Verdict 4개 Gate</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 해당 없음(미국 상장사, 한국 공시 대상 아님) · FnGuide/FnSpace 해당 없음(한국 상장사 전용 커버리지) · web.json(Proxy, Medium) · 재무 수치는 Nike 공개 FY2026 Q4 실적발표 보도(CNBC·WWD) 기반</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>② Structural vs Cyclical Misclassification</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 약 17&ndash;25/100</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">FY2026 Q4 매출 YoY &minus;1%(reported) / &minus;4%(FX&#8209;neutral) · Greater China Q4 &minus;17%<br>On Running 3년 +285%(연매출 $3.2B) · Hoka 연 +45% · Lululemon 5년 +220%($10.6B)<br>주가 $40.51(2026&#8209;08&#8209;12, 52주 고점 $80.17 대비 &minus;50%↑)</p>
+            <p>Framework Fit은 Medium으로 판정됐다 &mdash; "구조냐 순환이냐" 논쟁 자체는 성립하지만, DART/FnGuide 공백으로 Nike 자체의 다년 매출 히스토리를 이 캐시만으로 확인할 수 없었다. Cyclical Contamination Test에서 (1) Historical Macro Sensitivity는 Nike 자체 시계열 데이터 부재로 Insufficient Data 처리됐고, (2) Peer Divergence 테스트는 오히려 Nike에 불리한 방향으로 확인됐다 &mdash; 가장 빠르게 성장하는 프리미엄 러닝·여성 카테고리에서 On·Hoka·Lululemon이 Nike보다 훨씬 빠르게 성장 중이다. (3) Growth Decomposition에서는 FY2026 Q4 마진 개선이 관세 환급이라는 정책적 일시 요인과 뒤섞여 있어 "구조적 강점을 시장이 순환으로 오인" 방향의 서사를 뒷받침하지 못했다. Financial Transmission 체인은 Penetration&rarr;Company Revenue 단계에서 이미 끊겼고(매출 감소 중), 주가는 52주 고점 대비 이미 &minus;50% 이상 de&#8209;rating된 상태로 시장이 이미 리스크를 반영한 것으로 보인다. Variant Perception도 Category 1(시장이 이미 아는 점)로 분류돼 Consensus Gate가 발동했고, Data Integrity Gate도 함께 발동해 최종 Verdict <b>PASS</b>로 귀결됐다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준② 판정 &mdash; "BUY(Score&ge;80)&rarr;부합, WATCH(65&ndash;79)&rarr;부분부합, PASS(50&ndash;64 또는 Gate 위반)&rarr;미부합" · `judge-structural-vs-cyclical` Cyclical Contamination Test(Test 1&ndash;3), Financial Transmission, Variant Perception, Scorecard&amp;Verdict</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 해당 없음 · FRED(미국 매크로 24개월, CPI·기준금리·소매판매·실업률, Medium&mdash;Nike가 실제 미국 상장·매출 비중 큰 기업이라 기준①②와 국가 일치) · FnGuide 해당 없음 · web.json(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>③ Underpriced Customer Love (ULRS)</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 약 10.9&ndash;12.5/100</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">자가인식 충성고객 83% · UBS 로열티 1위 67% · NPS 36(업계 평균 41 하회)<br>Financial Conversion Capacity(Layer4) = 0(데이터 전무) · Market Recognition Gap(Layer5) = 0(Consensus Gate 강제)<br>Conversion&#8209;Readiness Gap &asymp; &minus;0.11(음수) · ULRS(진단 지표) &asymp; &minus;1.43</p>
+            <p>Framework Fit은 Medium으로 판정됐다(Apparel/Fashion 섹터, 유행성 False Positive 위험 有). Layer 1(Customer Love)은 자가신고 로열티 지표(83%, UBS 1위)와 정량 지표(NPS 36, 업계 평균 이하)가 상충했고, 재구매율·Cohort Retention·DAU/MAU 등 핵심 정량 데이터는 전무했다. Layer 2(Durability)에서 유일하게 확보된 정량 경쟁 근거(On·Hoka·Lululemon의 빠른 카테고리 잠식)가 오히려 Moat 약화를 시사했다. Layer 4(Financial Conversion Capacity)는 LTV/CAC·FCF Conversion·ROIC 등 데이터 전무로 0점, Layer 5(Market Recognition Gap)는 FnGuide 컨센서스 공백과 Variant View Category 1 분류로 Consensus Gate가 발동해 0점 강제됐다. 그 결과 Conversion&#8209;Readiness Gap이 음수(&asymp;&minus;0.11)로 Market Recognition Gate를 위반했다. Red Flag 10종 중 명확히 발동 확인된 항목은 없었으나(강제 Avoid 사유는 아님), Score+Gate 임계값(50&ndash;64 또는 Gate 위반 = AVOID)에 따라 최종 Verdict <b>AVOID</b>(Score 약 10.9&ndash;12.5/100)로 귀결됐다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준③ 판정 &mdash; "BUY(Score&ge;80)&rarr;부합, WATCH(65&ndash;79)&rarr;부분부합, AVOID(50&ndash;64 또는 Gate 위반)&rarr;미부합" · `judge-underpriced-customer-love` Market Recognition Gate·Consensus Gate·Durability Gate·Red Flag Test·K절 데이터 신뢰도 원칙</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 해당 없음 · FnGuide 해당 없음(Market Recognition Gate 산출 근거 공백) · web.json(Proxy, Medium&mdash;일부 Love 지표는 자가신고 서베이 기반으로 신뢰도 낮음)</dd>
+            </dl>
+          </article>
+
+          <p class="stage-summary">1단계 종합 &mdash; 기준①·②·③ 모두 <b>미부합</b>. 2단계 스크리닝 체크리스트는 실행하지 않는다.</p>
+        </section>
+
+        <div class="opinion">
+          <h2>종합 투자의견</h2>
+          <p>Nike는 여전히 글로벌 스포츠웨어 시장 점유율 27%로 압도적 1위 지위를 유지하고 있으나, 세 기준 모두 미부합으로 판정됐다. 공통 근거는 (1) FY2026 순이익·EPS 역성장(Financial Translation 단절), (2) Greater China -17% 급감과 On·Hoka·Lululemon의 빠른 침투(경쟁우위 약화), (3) 이 모든 리스크가 이미 공개적으로 논의돼 Variant View를 입증하지 못함(Consensus Gate 반복 발동)이다.</p>
+          <div class="conclusion">
+            <p>세 기준 모두 미부합으로 1단계에서 판단이 종료되어 2단계 스크리닝은 실행하지 않았다.</p>
+            <span class="stamp fail">투자 매력 없음</span>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="report-embed">
+      <summary>
+        <span class="re-name">Adidas</span>
+        <span class="re-code mono">ADS · 프랑크푸르트(DAX)</span>
+        <span class="stamp fail">투자 매력 없음</span>
+        <span class="chevron">&#9656;</span>
+      </summary>
+      <div class="re-body">
+        <p class="link-out"><a href="Adidas-20260813.html">별도 파일로 열기 ↗</a></p>
+
+        <header class="letterhead">
+          <div class="titles">
+            <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 · 개별기업 판단</div>
+            <h1>Adidas (아디다스)</h1>
+            <div class="code mono">티커 ADS · 프랑크푸르트 증권거래소(Deutsche Börse) · DAX</div>
+          </div>
+          <div class="meta">
+            작성일 <b>2026-08-13</b><br>
+            작성 도구 <b><span class="mono">investment-desk</span></b><br>
+            DART/FnGuide <b>커버리지 밖(해외법인)</b>
+          </div>
+        </header>
+
+        <p class="overview">Adidas AG는 독일 헤르초게나우라흐에 본사를 둔 글로벌 스포츠웨어 브랜드로, Nike에 이은 세계 2위 사업자다. 2026년 1분기 매출은 통화중립 기준 +14% 성장했고 연간 가이던스도 상향됐으나, 이 레포의 판단 규칙서를 적용한 결과 1단계 핵심 기준 3개 모두 미부합으로 판정됐다.</p>
+
+        <div class="verdict-strip">
+          <span class="stamp stamp-lg fail">투자 매력 없음 · 1단계 종료</span>
+        </div>
+
+        <section class="stage">
+          <div class="stage-head">
+            <span class="eyebrow">STAGE 1</span>
+            <h2>핵심 판단 기준 3개</h2>
+          </div>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 20/100</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">Q1 2026 매출 EUR 6,592M(통화중립 +14%/보고기준 +7% YoY)<br>영업이익 EUR 705M(+16.5% YoY) · 순이익 EUR 484M(+11% YoY)<br>매출총이익률 51.1%(전년 동기 대비 &minus;100bp, FX·관세 영향)</p>
+            <p>Pricing Power Test 4개 서브테스트 중 3개가 Insufficient Data로 판정돼 Core Thesis의 핵심 증거가 성립하지 않았다. 영업이익 증가율(+16.5%)이 매출 증가율(+7%)을 상회해 Operating Leverage 신호는 있으나, 정작 매출총이익률이 &minus;100bp 하락(FX·관세 요인)해 Pricing&rarr;Gross Margin 단계에서 인과 사슬이 끊겼다(Broken). 시장은 이미 "Yeezy 손실 이후 클래식 라인 중심 회복"을 알고 있어 Category 1로 분류&mdash;Consensus Gate 발동. Financial Translation Gate·Data Integrity Gate도 함께 발동해 최종 Verdict <b>PASS</b>(Score 20/100)로 귀결됐다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준① 판정 · `judge-retention-pricing-power` Pricing Power Test 1&ndash;4, Consensus/Financial Translation/Data Integrity Gate</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART/FnGuide&mdash;커버리지 밖 · FRED(미국 매크로, Low&mdash;독일 본사) · web.json(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>② Structural vs Cyclical Misclassification</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 13/100</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">시가총액 약 EUR 27.58B(2026-08-12), 1년 &minus;5.94% · 2026년 6월 한 달 EUR 39.0B&rarr;32.4B 급락<br>스포츠웨어 시장점유율(2025) Nike 27%($51B) vs Adidas 13%($26B)<br>성장 견인 제품군: Samba/Gazelle/Campus 등 레트로 라이프스타일 실루엣</p>
+            <p>Cyclical Contamination Test 3개 하위테스트 모두 확정 판정에 이르지 못했다. Growth Decomposition 결과 매출 성장의 핵심 서사가 카테고리 구조 확장이 아니라 클래식 실루엣의 "패션 사이클"이며 FX·관세 노이즈까지 섞여 구조/순환을 분리할 수 없다는 결론이다. 최근 시가총액은 오히려 급락(1년&minus;5.94%)해 역방향으로 움직였다(Broken). "Yeezy 사태 이후 저base 회복+레트로 스니커 트렌드" 프레이밍이 이미 시장에 공유돼 Category 1로 분류&mdash;Consensus Gate 발동. Data Integrity Gate까지 함께 발동해 최종 Verdict <b>PASS</b>(Score 13/100).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준② 판정 · `judge-structural-vs-cyclical` Cyclical Contamination Test 1&ndash;3, Consensus/Data Integrity Gate</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART/FnGuide&mdash;커버리지 밖 · FRED(Low, 국가 불일치) · web.json(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>③ Underpriced Customer Love (ULRS)</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 약 19&ndash;20/100</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">Layer 1(Love) 정량지표 전무 · Layer 2(Durability) 25.3&mdash;스위칭 코스트 낮음 · ULRS(진단 지표) 약 +3.5&mdash;양수지만 유의미한 수준 아님</p>
+            <p>12M 재구매율, Cohort Retention, Branded Search Share 등 핵심 지표가 전부 데이터 없음으로 확인돼 K절 원칙대로 가중치 배제 후 재정규화해 Layer 2가 Durability Gate 임계치(40) 미만으로 산정됐다 &mdash; Total Score 상한 60 캡핑. 매출 성장의 실체(레트로 실루엣 수요)가 복고 스니커 트렌드와 구분되지 않아 Love&rarr;Durability 단계에서 이미 인과관계가 불확실하다. Q1 2026 실적 서프라이즈가 이미 보도돼 Category 1로 분류&mdash;Consensus Gate 발동, Market Recognition Gap 0점 강제. 최종 Verdict <b>AVOID</b>(Score 약 19&ndash;20/100).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준③ 판정 · `judge-underpriced-customer-love` Layer 1&ndash;5, Durability/Consensus Gate, Red Flag Test</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART/FnGuide&mdash;커버리지 밖(EV/Sales 컨센서스 산출 불가) · web.json(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <p class="stage-summary">1단계 종합 &mdash; 기준①·②·③ 모두 <b>미부합</b>. 2단계 스크리닝은 호출하지 않았다.</p>
+        </section>
+
+        <div class="opinion">
+          <h2>종합 투자의견</h2>
+          <p>Adidas는 1분기 실적 모멘텀이 양호했지만 세 기준 모두 미부합(Score 13&ndash;20/100)으로 판정됐다. 소비자 단위 정량 지표가 근본적으로 비공개이고, 성장 동력(레트로 실루엣)이 구조적이라기보다 되돌림 리스크가 있는 패션 트렌드에 가까우며(매출총이익률 오히려 -100bp), 회복 스토리가 이미 시장에 폭넓게 공유돼 Consensus Gate가 세 기준 모두에서 발동했다.</p>
+          <div class="conclusion">
+            <p>세 기준 모두 미부합으로 1단계에서 판단이 종료되어 2단계 스크리닝은 실행하지 않았다.</p>
+            <span class="stamp fail">투자 매력 없음</span>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="report-embed">
+      <summary>
+        <span class="re-name">On Holding</span>
+        <span class="re-code mono">ONON · NYSE</span>
+        <span class="stamp fail">투자 매력 없음</span>
+        <span class="chevron">&#9656;</span>
+      </summary>
+      <div class="re-body">
+        <p class="link-out"><a href="OnHolding-20260813.html">별도 파일로 열기 ↗</a></p>
+
+        <header class="letterhead">
+          <div class="titles">
+            <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 (Score+Gate 아키텍처)</div>
+            <h1>On Holding (온홀딩)</h1>
+            <div class="code mono">티커 ONON · NYSE 상장 · 스위스(취리히) 소재 러닝화/스포츠웨어 브랜드</div>
+          </div>
+          <div class="meta">
+            작성일 <b>2026-08-13</b><br>
+            작성 도구 <b><span class="mono">investment-desk</span></b><br>
+            DART/FnGuide <b>미대상(해외 상장)</b>
+          </div>
+        </header>
+
+        <p class="overview">On Holding은 스위스 취리히에 본사를 둔 프리미엄 러닝화·스포츠웨어 B2C 브랜드로, 고유 쿠셔닝 기술 CloudTec을 적용한 Cloud 시리즈가 주력 제품이며 로저 페더러가 브랜드 홍보대사 겸 주주로 참여한다. 2026년 2분기 순매출 CHF 850.3백만(+13.5% YoY)을 기록했다.</p>
+
+        <div class="verdict-strip">
+          <span class="stamp stamp-lg fail">투자 매력 없음 · 3개 기준 전부 미부합</span>
+        </div>
+
+        <section class="stage">
+          <div class="stage-head">
+            <span class="eyebrow">STAGE 1</span>
+            <h2>핵심 판단 기준 3개</h2>
+          </div>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score ≈23/100 · Verdict: PASS</div>
+              </div>
+            </div>
+            <p class="figs mono">2026 Q2 매출 CHF 850.3M(+13.5% YoY, 컨센서스 CHF 878M~1,114M 하회) · 매출총이익률 가이던스 65.0%+ · 조정 EBITDA 마진 가이던스 19.5~20.0%(상향) · 애널리스트 28명 컨센서스 Buy, 목표주가 $45.37(현재가 $31.01 대비 +46%)</p>
+            <p>Layer C(리텐션·Cohort·Churn)와 Pricing Power Test 중 가장 결정적인 Test 2(가격 인상 전후 리텐션 비교)가 전부 데이터 부재라 보수적으로 채점했다(Data Integrity Gate). 총이익률·EBITDA 마진 가이던스는 상향됐으나 동시에 분기 매출은 컨센서스를 하회하고 연간 가이던스도 레인지 하단으로 조정돼 상류(리텐션·물량)에서 하류(마진)로 이어지는 인과 체인의 앞단이 확인되지 않은 채 마진만 개선되는 혼재 신호다(Financial Translation Gate). "완전가 유지를 위한 의도적 wholesale 축소" 스토리는 이미 애널리스트 28명 Buy 컨센서스와 +46% 목표주가 괴리에 반영된 Category 1로 판단, Consensus Gate 발동.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준① 판정 — PASS(Gate 위반 포함) → 미부합. Data Integrity/Financial Translation/Consensus Gate 발동</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART/FnGuide 미대상 · web.json 실적·컨센서스(Proxy, Medium) · fred.json 참고용</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>② Structural vs Cyclical Misclassification</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score ≈21/100 · Verdict: PASS</div>
+              </div>
+            </div>
+            <p class="figs mono">On Running 매출 ≈$2.6B vs Hoka $2.2B · 프리미엄 러닝 세그먼트 점유율 On 8%→12%, On+Hoka 합산 19% · 글로벌 러닝화 시장 점유율 On 2~3% vs Nike 30%</p>
+            <p>경기 하방 사이클 데이터가 없어 Test1은 Insufficient Data(Data Integrity Gate). "38%(FX-adj) 성장" 서술과 실제 2026 Q2 매출 +13.5% YoY(컨센서스 하회) 사이 시점 불일치·괴리가 있어 "완전가 유지를 위한 wholesale 축소"가 일시적 관리 판단인지 실수요 둔화를 가리는 설명인지 현재 데이터로 분리되지 않는다. 애널리스트 28명 Buy 컨센서스와 +46% 목표주가 괴리는 시장이 이미 "구조적 성장 지속"을 기본 가정으로 반영하고 있음을 시사해 Consensus Gate 발동.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준② 판정 — PASS(Score 50&ndash;64 또는 Gate 위반) → 미부합. Consensus/Data Integrity Gate 발동</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART/FnGuide 미대상 · web.json(Proxy, Medium) · fred.json(참고용, 국가 불일치)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>③ Underpriced Customer Love (ULRS)</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score ≈43/100 · Verdict: AVOID</div>
+              </div>
+            </div>
+            <p class="figs mono">TTM 순이익 +191.5% YoY, TTM 매출 +18.5% YoY · 러닝화 리뷰: "가격 대비 퍼포먼스 평범", 일부 모델 쿠셔닝 내구성·힐 노이즈 불만 병존 · 미국 판매가 경쟁사 대비 $20~30 프리미엄</p>
+            <p>Layer 1의 핵심 행동지표가 전부 데이터 없음이며, 확인된 리뷰조차 긍정과 불만이 혼재해 긍정으로 단정하기 어렵다. Layer 2(Durability)도 Hoka가 빠르게 격차를 좁히는 중이고 Hoka 모회사 Deckers 주가가 YTD -50%를 기록해 "러닝화 유행 붕괴" 선례가 있어 Durability Gate 발동. 애널리스트 28명의 광범위한 Buy 컨센서스가 Category 1에 해당해 Market Recognition Gap이 강제 0점 처리됐다 — "애착은 있는데 시장이 아직 모른다"는 Gap 조건이 성립하지 않는다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준③ 판정 — AVOID(Score 50&ndash;64 또는 Gate 위반) → 미부합. Durability/Consensus/Data Integrity Gate 발동</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART/FnGuide 미대상 · web.json(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <p class="stage-summary terminal">1단계 종합 — 기준①·②·③ 모두 미부합(PASS/PASS/AVOID). 2단계 스크리닝은 실행하지 않는다.</p>
+        </section>
+
+        <div class="opinion">
+          <h2>종합 투자의견</h2>
+          <p>세 기준에 공통적으로 나타난 결정적 요인은 (1) 애널리스트 28명 Buy 컨센서스+목표주가 +46% 괴리라는 이미 형성된 강세 프레이밍(Consensus Gate 세 기준 모두 발동), (2) 2026 Q2 매출이 컨센서스를 하회·가이던스 하단 조정 vs 마진 가이던스는 상향된 혼재 신호, (3) 리텐션·재구매율·DART/FnGuide 기반 정량 지표가 원천적으로 확보되지 않아 Data Integrity Gate가 공통 발동했다는 점이다.</p>
+          <div class="conclusion">
+            <p>세 기준 모두 미부합 — 규칙서 조항에 따라 판단을 종료한다.</p>
+            <span class="stamp fail">투자 매력 없음</span>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="report-embed">
+      <summary>
+        <span class="re-name">Deckers Brands (HOKA)</span>
+        <span class="re-code mono">DECK · NYSE</span>
+        <span class="stamp fail">투자 매력 없음</span>
+        <span class="chevron">&#9656;</span>
+      </summary>
+      <div class="re-body">
+        <p class="link-out"><a href="Deckers-20260813.html">별도 파일로 열기 ↗</a></p>
+
+        <header class="letterhead">
+          <div class="titles">
+            <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 (Score+Gate 아키텍처)</div>
+            <h1>Deckers Brands (데커스 브랜즈)</h1>
+            <div class="code mono">NYSE: DECK · HOKA / UGG / Teva 브랜드 보유</div>
+          </div>
+          <div class="meta">
+            작성일 <b>2026-08-13</b><br>
+            작성 도구 <b><span class="mono">investment-desk</span></b><br>
+            DART 조회 <b>대상 아님(비상장·해외)</b>
+          </div>
+        </header>
+
+        <p class="overview">Deckers Outdoor Corporation(Deckers Brands)은 미국 캘리포니아에 본사를 둔 신발 기업으로, 러닝화 브랜드 HOKA와 부츠/캐주얼 브랜드 UGG를 D2C·도매 채널로 판매한다(FY2026 HOKA $2.59B, UGG $2.74B, 합산 $5.47B). 기준①은 최초 병렬 디스패치에서 서브에이전트 응답 지연으로 별도 재실행해 확보했다(아래 "알려진 제약" 참고).</p>
+
+        <div class="verdict-strip">
+          <span class="stamp stamp-lg fail">미부합 · 핵심 기준 3개 전부 미부합</span>
+        </div>
+
+        <section class="stage">
+          <div class="stage-head">
+            <span class="eyebrow">STAGE 1</span>
+            <h2>핵심 판단 기준 3개</h2>
+          </div>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score 30/100 · Verdict: PASS</div>
+              </div>
+            </div>
+            <p class="figs mono">Pricing Power Test 4개 중 확인 1개·Insufficient 2개·반대신호 1개(Wholesale +12% &gt; DTC +6%) · 매출총이익률 57.9%&rarr;57.7%(-20bp, 방어 수준) · FY27 EPS 가이던스 성장률이 매출 성장률보다 낮음(Operating Leverage 역전)</p>
+            <p>Pricing Power Test 4개 중 Test1(가격인상 발표)만 확인됐고, Test2(인상 후 Retention 유지)·Test4(Peer 대비 ASP Premium)는 Insufficient Data, Test3(Mix를 통한 가격상승)은 Wholesale이 DTC보다 빠르게 성장해 반대 신호로 나타났다. 확보한 좋은 소식(관세 상쇄, 마진 방어, 완판 판매)은 전부 이미 IR 공식 발표로 공개된 정보라 Consensus Gate 발동, Customer Economics 데이터 전무로 Data Integrity Gate도 발동. Gate 3개(Consensus/Financial Translation/Data Integrity) 위반이 겹쳐 최종 Verdict <b>PASS</b>(Score 30/100).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준① 판정 — PASS(또는 Gate 위반) → 미부합. Consensus·Financial Translation·Data Integrity Gate 발동</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 대상 아님 · web.json(Proxy, Medium) + 보완 WebSearch(Forward P/E 12.8&ndash;15x, 업종 16.6x)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>② Structural vs Cyclical Misclassification</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score 24/100 · Verdict: PASS</div>
+              </div>
+            </div>
+            <p class="figs mono">FY2026 매출 $5.47B(+10% YoY, 사상 최대)에도 주가는 1년간 -12.09% 하락 · HOKA 최근분기 성장률(+10%대)이 On Running(+43%)에 역전 · UGG 특허 무효 판결(2026-06)+Quince 반독점 역소송</p>
+            <p>Test2(Peer Divergence)는 방향이 명확하나 Bear다 — HOKA가 최근 분기 +10%대 성장에 그친 반면 On Running은 +43% 성장해 카테고리 전체가 성장하는 국면에서 Deckers 고유의 상대적 열위가 드러난다. 관세 $185M 원가 영향을 가격인상으로 상쇄한 정책적 요인이 실적에 혼입돼 구조/순환을 분리하기 어렵다. HOKA 둔화·경쟁열위·UGG 패션 리스크는 이미 실적콜·언론에서 공개적으로 논의된 이슈라 Consensus Gate 발동.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준② 판정 — PASS(Score 50&ndash;64 또는 Gate 위반) → 미부합. Consensus·Data Integrity Gate 발동</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 대상 아님 · FRED(미국 매크로, 국가 일치) · web.json(Proxy, Low&ndash;Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>③ Underpriced Customer Love (ULRS)</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score ≈46&ndash;52/100 · Verdict: AVOID</div>
+              </div>
+            </div>
+            <p class="figs mono">Layer2(Durability) ≈35/100(Durability Gate 발동) · Layer5(Market Recognition Gap) 0 강제(Consensus Gate) · 러닝화 선호도 설문 HOKA 9% (Asics 16%·Brooks 15%·Nike/Saucony 12%보다 낮음)</p>
+            <p>2026년 6월 UGG 'Ultra Mini Boot' 디자인 특허가 무효 판결을 받고 Quince의 반독점 역소송까지 제기돼 IP moat가 약화됐고, On Running 대비 HOKA의 상대적 성장 둔화, 신발업종 특유의 구독/락인 부재가 겹쳐 Durability Gate가 발동해 Total Score가 60점 상한으로 캡핑됐다. 확보한 근거가 전부 공개정보에 그쳐 Consensus Gate도 발동해 Market Recognition Gap이 0으로 강제됐다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준③ 판정 — AVOID(Score 50&ndash;64 또는 Gate 위반) → 미부합. Durability·Consensus Gate 미통과</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART/FnGuide 대상 아님 · web.json(Proxy, Low&ndash;Medium)</dd>
+            </dl>
+          </article>
+
+          <p class="stage-summary terminal">1단계 종합 — 기준①②③ 모두 미부합(PASS/PASS/AVOID → 전부 미부합 환산). 2단계 스크리닝은 실행하지 않는다.</p>
+        </section>
+
+        <div class="opinion">
+          <h2>종합 투자의견</h2>
+          <p>FY2026 매출 $5.47B(+10%)와 매출총이익률 57.7% 등 재무 실적 자체는 견조하지만, On Running(+43%)이 HOKA(+10%대)보다 훨씬 빠르게 성장해 카테고리 성장의 수혜가 Deckers 고유 경쟁우위가 아닐 가능성이 크고(사상 최대 실적에도 주가는 1년간 -12% 하락), UGG 특허 무효 판결·Quince 반독점 역소송으로 브랜드 방어력에 대한 반증이 뚜렷하며, 관세 대응 마진방어 서사는 이미 공개정보라 세 기준 모두 Consensus Gate가 발동했다.</p>
+          <div class="conclusion">
+            <p>핵심 기준 3개 전부 미부합(PASS/PASS/AVOID) — 2단계 스크리닝은 실행하지 않고 여기서 판단을 종료한다.</p>
+            <span class="stamp fail">미부합</span>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="report-embed">
+      <summary>
+        <span class="re-name">Puma</span>
+        <span class="re-code mono">PUM.DE · 프랑크푸르트</span>
+        <span class="stamp fail">투자 매력 없음</span>
+        <span class="chevron">&#9656;</span>
+      </summary>
+      <div class="re-body">
+        <p class="link-out"><a href="Puma-20260813.html">별도 파일로 열기 ↗</a></p>
+
+        <header class="letterhead">
+          <div class="titles">
+            <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 (Score+Gate 아키텍처)</div>
+            <h1>Puma (푸마)</h1>
+            <div class="code mono">PUM.DE / ETR: PUMG / OTC: PMMAF · 독일 프랑크푸르트증권거래소</div>
+          </div>
+          <div class="meta">
+            작성일 <b>2026-08-13</b><br>
+            작성 도구 <b><span class="mono">investment-desk</span></b><br>
+            DART 조회 <b>대상 아님(비상장·해외)</b>
+          </div>
+        </header>
+
+        <p class="overview">Puma SE는 독일에 본사를 둔 세계 3위권 스포츠웨어 브랜드로, 퍼포먼스 카테고리와 "Sport-Style" 카테고리를 소비자에게 직접 판매하는 대표적 B2C 기업이다.</p>
+
+        <div class="verdict-strip">
+          <span class="stamp stamp-lg fail">투자 매력 없음 · 3개 기준 전부 미부합</span>
+        </div>
+
+        <section class="stage">
+          <div class="stage-head">
+            <span class="eyebrow">STAGE 1</span>
+            <h2>핵심 판단 기준 3개</h2>
+          </div>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score ≈9&ndash;12/100 · Verdict: PASS</div>
+              </div>
+            </div>
+            <p class="figs mono">매출총이익률 +180bp(Q2 2026, YoY) — 원가절감·관세환급·채널믹스 효과 · 매출액 2024 -2.4% → 2025 -13.1% → 2026 Q2 organic -9.4% · 시장점유율: Nike 27% &gt; Adidas 13% &gt; Puma(3위)</p>
+            <p>Pricing Power Test 4개 서브테스트가 DART/FnGuide 공백으로 전부 데이터 부재 처리돼 Data Integrity Gate 발동. 유일하게 확인된 매출총이익률 개선(+180bp)도 웹 원문 자체가 "원가절감·관세환급·채널믹스"로 설명해 가격결정력이 아닌 비용 효과로 판단, Financial Translation Gate 발동. "Puma Reset" 서사는 이미 공식 IR로 공개된 내용이라 Consensus Gate도 발동.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준① 판정 — PASS(Gate 위반 포함) → 미부합. Data Integrity·Consensus·Financial Translation Gate 다중 발동</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART/FnGuide 대상 아님 · web.json(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>② Structural vs Cyclical Misclassification</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score ≈19&ndash;25/100 · Verdict: PASS</div>
+              </div>
+            </div>
+            <p class="figs mono">매출액 YoY 2022 +24.4% → 2023 +1.6% → 2024 -2.4% → 2025 -13.1% → 2026 Q2 organic -9.4%(3년 연속·가속화된 역성장) · Peer 2024 신발 매출 YoY: Hoka +68%, On Running +54% · 인력 감축 총 1,400명(전체 약 13%)</p>
+            <p>Test 2(Peer Divergence)는 명확히 확인됐으나 방향이 Bear다 — Hoka(+68%)·On(+54%)이 급성장하는 동안 Puma는 3년 연속·가속화된 역성장을 보여, 카테고리 자체는 구조적으로 성장 중이고 그 수혜가 Puma가 아닌 경쟁사로 이동하고 있다(고유 경쟁열위 신호). "2025=Reset, 2026=Transition, 2027=회복" 서사는 이미 반복 공개된 컨센서스 프레이밍이라 Consensus Gate 발동.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준② 판정 — PASS(Score 50&ndash;64 또는 Gate 위반) → 미부합. Data Integrity·Consensus Gate 발동</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART/FnGuide 대상 아님 · FRED(Low, 국가 불일치) · web.json(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>③ Underpriced Customer Love (ULRS)</h3>
+              <div>
+                <span class="stamp fail">미부합</span>
+                <div class="score mono">Score ≈22&ndash;23/100 · Verdict: AVOID</div>
+              </div>
+            </div>
+            <p class="figs mono">Layer1(Love) ≈35/100 · Layer2(Durability) ≈20/100(Durability Gate 발동) · Red Flag 발동 0개(6개 항목 확인 불가) · EBIT Q2 2026 -0.53억 EUR 적자 지속</p>
+            <p>뚜렷한 팬덤형 애착 근거는 미확인이고, 2024~2025년 2년 연속 매출 역성장·Hoka/On의 점유율 잠식·CEO 교체 후 대규모 구조조정이라는 반증이 뚜렷해 Durability Gate가 발동(Total Score 60점 상한 캡핑). "Puma Reset" 서사는 이미 공식 보도자료로 공개된 정보라 Market Recognition Gap이 0으로 강제됐다.</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause"><span class="mono">judgment-rules.md</span> 기준③ 판정 — AVOID(Score 50&ndash;64 또는 Gate 위반) → 미부합. Durability·Consensus·Data Integrity Gate 미통과</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART/FnGuide 대상 아님 · web.json(Proxy, Low&ndash;Medium)</dd>
+            </dl>
+          </article>
+
+          <p class="stage-summary terminal">1단계 종합 — 기준①·②·③ 모두 미부합(PASS/PASS/AVOID). 2단계 스크리닝은 실행하지 않는다.</p>
+        </section>
+
+        <div class="opinion">
+          <h2>종합 투자의견</h2>
+          <p>매출총이익률 개선(+180bp)은 확인되지만 원가절감·관세환급·채널믹스 효과로 설명돼 가격결정력에 의한 마진 확장이 검증되지 않았고, 2024~2026년 3년 연속·가속화된 매출 역성장이 Hoka(+68%)·On(+54%) 급성장과 대비되어 자사 고유의 경쟁열위·브랜드 약화 신호로 판단되며, "Puma Reset" 구조조정 서사는 이미 공식 IR로 공개된 서사라 시장 미인식을 인정할 근거가 없었다.</p>
+          <div class="conclusion">
+            <p>세 기준 모두 미부합 — 규칙서 조항에 따라 판단을 종료한다.</p>
+            <span class="stamp fail">투자 매력 없음</span>
+          </div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13</footer>
+
+</div>

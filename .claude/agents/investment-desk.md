@@ -13,7 +13,7 @@ model: sonnet
 
 0. **요구사항 점검**: `check-requirements`를 가장 먼저 호출한다. DART/FRED 중 하나라도 FAIL이면, 이후 단계를 실행하지 않고 사용자에게 `.env`에 무엇을 채워야 하는지 안내한 뒤 중단한다. FnGuide/FnSpace가 WARN이어도(=사용 불가 상태여도) 나머지 단계는 계속 진행한다.
 1. `judgment-rules.md`를 읽어 현재 판단 기준(1단계 핵심 기준 3가지, 2단계 스크리닝 체크리스트)을 확인한다.
-2. 다음 스킬을 순서대로 호출해 데이터를 수집한다: `fetch-dart`, `fetch-fnguide`(0단계에서 사용 불가로 확인됐으면 건너뛴다), `fetch-fred`, `fetch-web`(뉴스·홈페이지 — 데이터 키트 밖 Proxy 지표용)
+2. 다음 스킬을 순서대로 호출해 데이터를 수집한다: `fetch-dart`, `fetch-fnguide`(`fnspace-mcp` MCP 플러그인 연결 필요 — `claude mcp list`에서 `plugin:fnspace:fnspace`가 Connected가 아니면 건너뛴다), `fetch-fred`, `fetch-web`(뉴스·홈페이지 — 데이터 키트 밖 Proxy 지표용)
 3. **1단계 필터링**: 다음 스킬을 순서대로 호출해 각 핵심 기준에 부합하는지 판단한다: `judge-retention-pricing-power`, `judge-structural-vs-cyclical`, `judge-underpriced-customer-love`. 3개 모두 미부합이면 여기서 판단을 종료하고, 그 사실과 근거만 담아 보고서를 작성한다.
 4. **2단계 스크리닝**: 1단계에서 하나 이상 부합한 경우에만 `screen-fundamentals`를 호출해 시장성·경쟁력·수익성·재무 효율성·ESG 5개 항목을 flag한다.
 5. **보고서 초안 작성**: 결과를 종합해 `reports/<기업명>-<yyyymmdd>.md`에 투심보고서 초안을 작성한다. 보고서에는 다음을 포함한다:
@@ -33,5 +33,6 @@ model: sonnet
 
 ## TODO
 - [x] end-to-end 1건 실행 완료 (제출물③, BGF리테일 — `reports/BGF리테일-20260812.md`, 2026-08-12). DART_API_KEY/FRED_API_KEY로 실행, FnGuide는 아직 미확보라 해당 스텝은 생략됨. ⚠️ 기준①②가 이후 chaemin/pjueun 버전으로 교체돼 최신 규칙과는 다름 — 재실행 필요.
-- [ ] FNSPACE_API_KEY(FnGuide 공식 API, fnspace.com 유료 가입) 확보되면 기준②·③ 판단(현재 부분부합/판단보류)을 재실행해 갱신. FNGUIDE_ID/PW 로그인은 이용권 없어 사용 불가 확인됨(2026-08-12).
+- [x] FnGuide 접근 경로 확보(2026-08-13) — `fnspace-mcp` MCP 플러그인 설치·연결 완료(`fetch-fnguide` 참고). 단, 동봉된 임시 공유 키가 **2026-08-15 만료** — 그 전에 팀 자체 FNSPACE_API_KEY로 교체 필요. FNGUIDE_ID/PW 로그인은 이용권 없어 여전히 사용 불가.
+- [ ] `fetch-fnguide` 연결 후 기준②·③ 판단(현재 부분부합/판단보류)을 재실행해 컨센서스 반영된 결과로 갱신.
 - [ ] **구조 불일치**: 3단계에서 호출하는 `judge-retention-pricing-power`(pjueun)와 `judge-structural-vs-cyclical`(chaemin)가 각각 원작자의 공식 독립형 패키지로 교체되면서, 이 문서를 참조하지 않고 부합/부분부합/미부합 대신 BUY/WATCH/PASS/SELL(전자)·BUY/WATCH/PASS/SELL(후자, 문서 매핑 규칙은 judgment-rules.md 기준②에 명시)을 산출하며 별도 Investment Memo 파일(md+html)을 만드는 성격의 스킬이 됐다(`judge-underpriced-customer-love`는 자체적으로 축약 판정을 반환하도록 설계돼 이 문제가 없음). 둘 다 파일 출력 경로도 Claude.ai 관례(`/mnt/user-data/outputs/`, `present_files`)라 이 레포에서 호출 시 `reports/` 경로로 보정이 필요하다. 3단계에서 이 두 스킬을 호출한 뒤 그 Verdict를 부합/부분부합/미부합으로 환산하는 절차(judgment-rules.md에 매핑 규칙은 적어뒀음)를 오케스트레이터가 실제로 따르는지 end-to-end로 검증 필요 — 아직 미검증.

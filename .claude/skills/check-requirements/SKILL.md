@@ -11,7 +11,7 @@ description: 판단을 시작하기 전, 필요한 API 키/로그인 정보가 .
 ## 동작
 1. `python lib/check_requirements.py`를 실행한다(`requirements.txt` 설치 필요).
 2. DART_API_KEY, FRED_API_KEY는 값이 있는지뿐 아니라 실제 API를 호출해 라이브로 동작하는지까지 확인한다(단순 "키가 채워져 있다"가 아니라 "실제로 이 키로 데이터를 가져올 수 있다"를 확인).
-3. FnGuide는 `lib/fnguide_client.py`의 `login()`으로 브라우저 없이(requests + RSA 암호화) 실제 로그인하고, `has_consensus_entitlement()`로 컨센서스 서비스 접근 가능 여부까지 라이브로 확인한다. 로그인은 성공하지만 보유 계정에 이용권이 없어(2026-08-12 기준) 여전히 WARN으로 표시된다 — 이용권을 구매하거나 FnSpace(`FNSPACE_API_KEY`, 별도 유료 가입)로 전환해야 OK로 바뀐다.
+3. FnGuide는 이제 `fnspace-mcp` MCP 플러그인(`mcp__fnspace__*` 도구)이 실제 경로다(2026-08-13 갱신). 이 Python 스크립트는 Claude Code 세션 밖에서 돌기 때문에 MCP 연결 상태를 직접 확인할 수 없다 — `check_fnguide()`는 항상 WARN을 내며, 대신 `claude mcp list`로 `plugin:fnspace:fnspace`가 Connected인지, 세션 안에서 `mcp__fnspace__quickstart` 결과가 정상인지 확인하라고 안내한다. 참고로 현재는 동봉된 임시 공유 키로 동작 중이며 **2026-08-15 만료** — 그 이후엔 팀 자체 `FNSPACE_API_KEY`가 필요하다.
 4. 결과를 요약해서 출력한다: 항목별 OK/WARN/FAIL + 안내 메시지.
 
 ## 출력

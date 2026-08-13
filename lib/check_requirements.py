@@ -54,10 +54,13 @@ def check_fred() -> tuple[bool, str]:
 
 
 def check_fnguide() -> tuple[bool, str]:
-    fnspace_key = os.environ.get("FNSPACE_API_KEY")
-    if fnspace_key:
-        return False, "FNSPACE_API_KEY가 설정되어 있지만 아직 라이브 체크/구현이 연결되지 않았습니다 (TODO)."
+    """FnGuide 접근 경로를 안내한다.
 
+    ⚠️ 2026-08-13부터 실제 경로는 `fnspace-mcp` MCP 플러그인(mcp__fnspace__*)이다 —
+    이건 Claude Code 세션 안에서만 연결되므로 이 독립 Python 스크립트에서는 라이브
+    체크가 불가능하다(세션 밖에서 `claude mcp list`로 `plugin:fnspace:fnspace`가
+    Connected인지 확인). 아래는 과거에 검증한 대체/폴백 경로에 대한 라이브 체크다.
+    """
     fnguide_id = os.environ.get("FNGUIDE_ID")
     fnguide_pw = os.environ.get("FNGUIDE_PW")
     if fnguide_id and fnguide_pw:
@@ -73,16 +76,18 @@ def check_fnguide() -> tuple[bool, str]:
         except requests.RequestException as e:
             return False, f"로그인은 성공했지만 컨센서스 이용권 확인 중 오류: {e}"
 
-        if has_entitlement:
-            return True, "로그인 및 컨센서스 이용권 확인 완료 (브라우저 없이 requests 세션으로 라이브 체크)"
-        return False, (
-            "로그인은 성공(브라우저 불필요, requests 세션)하지만 해당 계정에 컨센서스 서비스 이용권이 없어 "
-            "사용할 수 없는 것으로 확인됨(2026-08-12 점검). fnspace.com(FnGuide 공식 API, 유료)으로 전환하거나 "
-            "이용권을 구매해야 합니다."
-        )
+        if not has_entitlement:
+            return False, (
+                "www.fnguide.com 로그인은 성공하지만 계정에 컨센서스 이용권이 없음(2026-08-12 확인, "
+                "이 경로는 사용하지 않음). fnspace-mcp 플러그인(mcp__fnspace__*)이 실제 경로다 — "
+                "`claude mcp list`로 연결 상태 확인, 세션 안에서 mcp__fnspace__quickstart 호출 권장."
+            )
+
     return False, (
-        "FnGuide 컨센서스 데이터 접근 수단이 설정되어 있지 않습니다. "
-        "fnspace.com에서 FNSPACE_API_KEY를 발급받아 .env에 채워주세요 (유료)."
+        "이 스크립트는 fnspace-mcp의 세션 내 연결 상태를 확인할 수 없다. "
+        "`claude mcp list`에서 plugin:fnspace:fnspace가 Connected인지, 세션 안에서 "
+        "mcp__fnspace__quickstart 결과가 정상인지 확인할 것. 현재는 동봉된 임시 공유 키로 동작 중이며 "
+        "2026-08-15 만료 — 그 이후엔 팀 자체 FNSPACE_API_KEY를 환경변수로 설정해야 한다."
     )
 
 

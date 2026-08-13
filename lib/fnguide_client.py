@@ -1,14 +1,14 @@
-"""FnGuide 컨센서스 데이터 클라이언트.
+"""FnGuide 컨센서스 데이터 클라이언트 — 참고/보관용, 현재는 사용하지 않음.
 
-fetch-fnguide 스킬이 호출한다. FnSpace(fnspace.com, FnGuide 공식 API) API 키를
-FNSPACE_API_KEY로 .env에서 읽는다.
+⚠️ 2026-08-13부터 `fetch-fnguide`는 이 모듈 대신 `fnspace-mcp` MCP 플러그인
+(mcp__fnspace__get_target_price 등)을 직접 호출한다 — `.claude/skills/
+fetch-fnguide/SKILL.md` 참고. 이 파일은 아래 두 가지를 실측 확인한 기록으로
+남겨둔다: (1) FNGUIDE_ID/FNGUIDE_PW 로그인은 브라우저 없이도 성공하지만
+(2) 보유 계정에 컨센서스 이용권이 없어 데이터 조회는 여전히 불가능함
+(2026-08-12, check-requirements가 지금도 이 라이브 체크를 수행함).
 
-FNGUIDE_ID/FNGUIDE_PW(www.fnguide.com 로그인)는 보유 계정에 컨센서스 이용권이
-없어 사용할 수 없는 것으로 확인됨(2026-08-12) — check-requirements 참고.
-
-login()은 브라우저 없이(requests 세션 + RSA 암호화 비밀번호) www.fnguide.com에
-로그인만 수행한다. 로그인 자체는 되더라도, 위 계정 이용권 제약 때문에 컨센서스
-데이터 조회는 여전히 불가능할 수 있다 — login()은 그 제약을 우회하지 않는다.
+get_consensus()는 FNSPACE_API_KEY 기반 직접 REST 호출을 시도하는 미완성
+스텁이며, fnspace-mcp로 대체됐으므로 더 구현하지 않는다.
 """
 
 import base64

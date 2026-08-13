@@ -16,8 +16,15 @@ B2C 개별기업에 대한 투자 판단을 자동화하는 Claude Code 기반 �
 3. 에이전트가 **0단계(요구사항 점검, `check-requirements`)**를 가장 먼저 실행해 `.env` 키가 실제로 동작하는지 확인한다. 필수 항목(DART/FRED)이 실패하면 여기서 멈추고 무엇을 채워야 하는지 안내한다.
 4. 이어서 데이터 수집 → 1단계(핵심 기준 3가지 필터링) → 2단계(스크리닝 체크리스트 5개 항목 flag) → 보고서 작성까지 자동으로 수행하며, 결과는 `reports/<기업명>-<yyyymmdd>.md`에 저장된다.
 
-### FnGuide 관련 참고 (2026-08-12 확인)
-FnGuide 컨센서스는 로그인 방식(`FNGUIDE_ID`/`FNGUIDE_PW`)이지만, 이용권이 없는 계정으로는 실제 데이터를 볼 수 없는 것으로 확인됐다. 정식 경로는 **fnspace.com(FnGuide 공식 API, 유료 가입)**의 `FNSPACE_API_KEY`다. 이 키가 없으면 `fetch-fnguide`는 자동으로 건너뛰고 나머지 파이프라인은 정상 진행된다.
+### FnGuide 관련 참고 (2026-08-13 갱신 — 연결됨)
+FnGuide 컨센서스·재무 데이터는 **[`fnspace-mcp`](https://github.com/xavierchoi/fnspace-mcp) MCP 플러그인**으로 연결 완료됐다(`mcp__fnspace__*` 도구 7개). 설치·연결 방법:
+```
+claude plugin marketplace add https://github.com/xavierchoi/fnspace-mcp
+claude plugin install fnspace@fnspace-mcp --scope user
+```
+그 다음 세션에서 `/reload-plugins`를 실행해야 도구가 보인다. `claude mcp list`에서 `plugin:fnspace:fnspace ✔ Connected`인지 확인할 것.
+
+⚠️ **키 만료 임박**: 현재 이 플러그인에 동봉된 임시 공유 키(원작자 xavierchoi 제공, 학습/해커톤용으로 보임)로 동작 중이며 **2026-08-15에 만료**된다. 그 전에 팀 자체 `FNSPACE_API_KEY`를 발급받아 환경변수로 export하면(동봉된 키보다 우선 적용) 계속 쓸 수 있다. 참고로 www.fnguide.com 로그인 방식(`FNGUIDE_ID`/`FNGUIDE_PW`)은 계정에 이용권이 없어 여전히 사용 불가 — 이제 이 경로는 쓰지 않는다.
 
 ## 레포 구조
 
@@ -47,7 +54,7 @@ AI-wave/
 | `check-requirements` | ✅ 구현·검증 완료 (DART/FRED 라이브 체크) |
 | `fetch-dart` | ✅ 구현 완료, 재무상태표 계정(부채총계·자본총계 등) 추가 반영 — BGF리테일 end-to-end 실행으로 검증됨 |
 | `fetch-fred` | ✅ 구현·검증 완료 (실제 API로 테스트) |
-| `fetch-fnguide` | ⏳ 보유 계정에 컨센서스 이용권 없음 확인됨 — FnSpace(fnspace.com) 유료 가입/키 발급 대기, 스텁만 존재 |
+| `fetch-fnguide` | ✅ `fnspace-mcp` MCP 플러그인으로 연결 완료(2026-08-13, `mcp__fnspace__*` 도구 7개 — 재무/목표주가/추정실적/Fwd지표). ⚠️ 동봉된 임시 공유 키가 2026-08-15 만료 — 팀 자체 FNSPACE_API_KEY로 교체 필요. `lib/fnguide_client.py`(www.fnguide.com 로그인)는 이용권 없어 폐기, 참고용으로만 보관 |
 | `fetch-web` | 🔧 스킬 정의 완료 (WebSearch/WebFetch 사용, 로직은 실행 시점에 Claude가 수행) |
 | `judge-structural-vs-cyclical` | ✅ chaemin의 공식 패키지(`SKILL.md` + `references/thesis-tree.md` + `assets/example-memo-onon.html`)로 통일 완료(2026-08-12) — jiwoong이 먼저 넣어둔 축약 버전은 폐기, 중복 폴더(`structural-cyclical-misclassification-memo`)는 삭제. `judge-retention-pricing-power`와 동일한 이슈(BUY/WATCH/PASS/SELL 산출, `/mnt/user-data/outputs/` 관례) 있음 |
 | `judge-retention-pricing-power` | ✅ pjueun의 공식 패키지(`SKILL.md` + `references/` 7개 문서 + `assets/` memo_template.html·example-memo-costco.html)로 통일 완료(2026-08-12) — 제가 먼저 쓴 역추출 잠정 버전 및 중복 폴더(`retention-pricing-power-memo`)는 정리·삭제. ⚠️ 다만 이 SKILL.md는 `judgment-rules.md`/`investment-desk` 파이프라인과 무관하게 독립적으로 작성돼(부합/부분부합/미부합이 아니라 BUY/WATCH/PASS/SELL 산출, `judgment-rules.md` 미참조), 파일 출력 경로도 Claude.ai 전용 표현(`/mnt/user-data/outputs/`, `present_files`)이라 Claude Code(`investment-desk`)에서 그대로 호출하면 안 맞는 부분이 있음 — 아래 참고 |
@@ -63,21 +70,20 @@ AI-wave/
 이 레포의 데이터 키트(DART/FRED/FnGuide) 중 어느 것도 **현재 주가·시가총액·발행주식수**를 제공하지 않는다.
 - **DART**: `lib/dart_client.py`가 가져오는 건 정기보고서 재무제표(손익계산서·재무상태표)와 공시 목록뿐 — 시세 데이터는 DART API 자체에 없음.
 - **FRED**: 미국 거시지표(CPI/기준금리/소매판매/실업률)만 제공 — 개별 종목 주가와 무관.
-- **FnGuide/FnSpace**: 컨센서스·목표주가 데이터의 정식 경로이나 현재 WARN 상태(이용권 없음, 유료 가입 대기).
+- **FnGuide/FnSpace**: 컨센서스·목표주가는 `fnspace-mcp`로 연결됐지만(2026-08-13), 재무 항목(`get_financials`)에도 시가총액·발행주식수는 포함되지 않음 — 시세 자체는 별도 소스가 필요.
 
 ### 영향받는 곳
 - `screen-fundamentals`의 "시장성" 항목 — TAM/시가총액 배수를 계산해야 하는데 시가총액 자체가 없어 `web.json` 검색 Proxy에만 의존(스킬 파일의 "알려진 데이터 공백"에 이미 명시돼 있음).
 - `judge-retention-pricing-power`, `judge-structural-vs-cyclical`의 **Valuation 섹션** — 현재 Multiple(PER/EV·EBITDA 등), 역사적 Range, Peer Multiple을 전부 계산해야 하는데 매번 "Insufficient Data"로 빠짐. BGF리테일 실행 사례(`reports/BGF리테일_Investment_Memo.md`)에서 실제로 이 섹션 전체가 Insufficient Data였고, Scorecard의 "I. Valuation" 항목이 매번 최저점 근처로 깎이는 구조적 원인이 됨.
 - `judge-underpriced-customer-love`의 Layer 5(Market Recognition Gap) — `EV/Sales Percentile` 계산에 시가총액이 필요.
 
-### 제안하는 해결 방향
-1. **`pykrx`(또는 동급의 무료 KRX 데이터 라이브러리)를 `requirements.txt`에 추가**한다 — API 키 없이 종목코드로 당일/기간 종가, 시가총액, 발행주식수를 가져올 수 있다. (대안: KRX 정보데이터시스템 정식 API는 별도 가입 필요, 네이버금융 스크레이핑은 유지보수 부담이 더 큼 — pykrx가 가장 낮은 비용.)
-2. **`lib/market_data_client.py` 신설** — `dart_client.py`가 이미 갖고 있는 `stock_code`를 입력받아 `{현재가, 발행주식수, 시가총액, 조회일자}`를 반환하는 함수 하나만 있으면 됨(다른 클라이언트와 동일한 값+기간+출처 원칙 유지).
-3. **새 스킬 `fetch-market-data`**를 만들거나, 기존 `fetch-dart`의 출력(`data/cache/<기업명>/dart.json`)에 `market_data` 필드로 병합한다 — 후자가 캐시 파일 수를 늘리지 않아 더 간단.
-4. **`screen-fundamentals`, `judge-*` 3개 스킬의 Valuation/시장성 관련 서술을 갱신** — 이제 시가총액이 Insufficient Data가 아니라 실측치임을 반영해 "TAM/시총 배수", "PER/PBR/EV·EBITDA" 계산 지시를 구체화한다.
+### 진행 상황 (2026-08-13)
+- **`pykrx` 시도 → 막힘**: `.venv`를 새로 만들어(전역 anaconda의 numpy/matplotlib ABI 충돌 회피) `pykrx`를 설치·실행했으나, KRX 데이터 엔드포인트가 세션 쿠키를 정상적으로 받아온 뒤에도 `400 LOGOUT`을 반환한다 — 알려진 pykrx/KRX anti-bot 이슈로 보이며, 헤더 한두 개 고치는 수준으로 해결되지 않았다.
+- **방향 전환(팀 결정)**: 스크래핑 대신 **KRX 정보데이터시스템 공식 API**(`openapi.krx.co.kr` 또는 공공데이터포털의 `금융위원회_주식시세정보`)로 전환하기로 함 — DART/FRED와 같은 "공식 API + 키 발급" 패턴. 다만 KRX Data Marketplace는 인증키 신청 후 **관리자 승인 대기**가 필요해 DART만큼 즉시 발급되지 않을 수 있다(공공데이터포털 쪽이 보통 더 빠름).
+- **미해결**: 아직 키 미발급 — 발급되면 `lib/market_data_client.py` 신설(다른 클라이언트와 동일한 값+기간+출처 원칙), `fetch-dart` 출력에 `market_data` 필드로 병합, `screen-fundamentals`/`judge-*` 3개 스킬의 Valuation·시장성 서술 갱신까지 이어서 진행.
 
 ### 우선순위
-`judgment-rules.md` 정합성(README 앞 절 "가장 시급한 문제") 다음으로 이게 두 번째로 시급하다 — 구조가 맞아도 Valuation·시장성 항목이 매번 공백이면 보고서 설득력이 떨어진다.
+`judgment-rules.md` 정합성 다음으로 이게 두 번째로 시급하다 — 구조가 맞아도 Valuation·시장성 항목이 매번 공백이면 보고서 설득력이 떨어진다.
 
 ## 스킬 구조 개선 가이드 — 기준①(`judge-retention-pricing-power`) 골격에 맞추기
 

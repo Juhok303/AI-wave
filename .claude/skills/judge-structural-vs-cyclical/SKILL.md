@@ -1,125 +1,145 @@
 ---
 name: judge-structural-vs-cyclical
-description: Generates a B2C stock investment decision memo (styled HTML, ledger/stamp aesthetic) by applying the "Structural vs. Cyclical Misclassification" investment philosophy — the thesis that the market mistakes a durable structural consumer-behavior shift for a temporary cyclical/fad swing and misprices the multiple as a result. Use this skill whenever the user asks to analyze a company (any ticker) through this specific philosophy, asks "이 회사가 구조적 성장인지 순환적인지 봐줘", "내 investment philosophy로 분석해줘" (when that philosophy is this one), asks for a thesis tree / scorecard / investment memo under this framework, or wants output matching the reference memo format even without naming the philosophy explicitly (e.g. "포트폴리오에 있는 종목들 이 철학으로 하나씩 돌려봐줘"). Also trigger for requests to update, re-run, or extend a memo already produced by this skill for a new ticker or new quarter's data.
+description: >
+  회사명/티커를 주고 투자 판단, BUY/WATCH/PASS/SELL 콜, Investment Memo, 또는 이 회사가 "구조적
+  성장"인지 "경기·유행 순환"인지 판정해달라는 요청이 오면 이 스킬을 쓴다 — "이 회사 구조적이야
+  순환적이야 봐줘", "내 investment philosophy로 분석해줘"(이 철학을 가리킬 때), "포트폴리오에
+  있는 종목들 이 철학으로 하나씩 돌려봐줘" 같은 표현도 트리거. 이 스킬은 하나의 고정된 투자철학만
+  적용한다 — 소비자 행동의 구조적 변화를 시장이 경기·유행 순환으로 오인해 Multiple을 잘못
+  매긴다는 가설을 검증하는 것. 다른 프레임워크(DCF-only, 일반 SWOT, 단순 Bull/Bear 나열)로
+  대체하지 않는다. 이 스킬은 항상 Markdown Investment Memo와 스타일이 적용된 HTML Investment
+  Memo 두 개의 산출물을 만드는 것으로 끝난다.
 ---
 
-# Structural vs. Cyclical Misclassification — Investment Memo Skill
+# Structural vs. Cyclical Misclassification — Investment Decision Skill
 
-이 스킬은 "구조적 변화를 시장이 경기·유행 순환으로 오인해 Multiple을 잘못 매긴다"는
-투자 철학을 특정 회사에 적용해, 팀 표준 포맷의 HTML 투자메모를 생성한다.
+## 이 스킬이 무엇인가
 
-같은 상위 시스템 안에 다른 철학을 쓰는 팀원의 스킬(예: Retention-to-Pricing-Power)이
-있을 수 있다 — 산출물의 **구조와 시각적 문법**은 통일하되 **분석 내용/Layer 가중치**는
-이 철학 고유의 것을 쓴다.
+이건 일반 리서치 어시스턴트가 아니다. 모든 회사에 항상 같은 질문을 던지는 **고정된 판단
+구조**다:
 
-## 언제 이 스킬을 쓰는가
+> "이 회사 소비자 행동의 [성장/둔화]는 경기 순환이나 일시적 유행이 아니라 구조적 전환이며,
+> 시장은 순환적 Multiple/할인율을 적용해 이를 오평가하고 있는가?"
 
-- 사용자가 회사/티커를 주고 "이 철학으로 분석해달라"고 할 때
-- 사용자가 "구조적이냐 순환적이냐" 논쟁이 있는 종목을 분석해달라고 할 때
-- 이미 만든 메모를 다른 회사/최신 데이터로 다시 돌려달라고 할 때
+다른 투자철학으로 절대 대체하지 않는다. 회사가 "뻔히" 통과/탈락할 것 같아도 스텝을 건너뛰지
+않는다. 항상 아래 인과사슬 전체를 실행하고, 어디서 체인이 끊기는지를 찾는다.
 
-## 필요한 것 (없으면 사용자에게 물어볼 것)
+**모든 분석을 관통하는 핵심 믿음:**
 
-1. **대상 회사/티커** — 없으면 반드시 먼저 확인. 임의로 고르지 말 것.
-2. **데이터 접근성** — 웹 검색 도구가 있는지 확인. 있으면 최신 실적/주가/Multiple을
-   직접 조사해서 쓴다. 없으면(또는 검색해도 확인 못한 항목이 있으면) 절대 숫자를
-   지어내지 말고 아래 "Data Integrity 원칙"을 따른다.
+> Penetration/Adoption ↑ → Category Volume ↑ → Company Revenue ↑(자사 고유, 카테고리 편승
+> 아님) → Peer Divergence 확인 → Sell-side 섹터 재분류 → Multiple Re-rating
 
-## 워크플로
+**매번 새로 검증할 Core Thesis (참으로 가정하지 않는다):**
 
-### 1단계 — 회사 리서치
+> "[회사]의 최근 [성장/둔화] 궤적은 경기 순환이나 일시적 유행이 아니라 구조적 전환이며, 시장은
+> 순환적 Multiple/할인율을 적용해 이를 오평가하고 있다."
 
-다음 항목을 최대한 채운다 (가능하면 web search, 없으면 학습 지식 + 명시적 Estimate 태그):
+Verdict는 반드시 다음 중 하나: **Supported / Partially Supported / Not Supported**.
 
-- 카테고리 침투율/참여 지표 (Layer 1)
-- 세대별/코호트별 채택 데이터 (Layer 1)
-- 구조 변화 동인의 성격 — 기술적/영구적인가 vs 유행성인가 (Layer 1)
-- 과거 경기 하방기 실적 동행 여부 (Layer 2) — 상장 이력이 짧으면 "Insufficient Data"
-- Peer/카테고리 전체와의 실적 divergence (Layer 2)
-- 최근 성장/둔화의 Volume vs Price/Cost 분해, 특히 관세·규제·원자재 등
-  정책적/일시적 요인이 섞여 있는지 (Layer 2)
-- 셀사이드가 이 회사를 어떤 섹터/Multiple 밴드로 다루는지, 그 논쟁이 이미
-  얼마나 공개적으로 논의되고 있는지 (Layer 3 — Consensus Gate 판단 근거)
-- 현재 Multiple, 역사적 Range, Peer Multiple (Valuation)
-- 최근 실적발표/IR 자료의 Bull/Bear 증거
+## Guiding behavioral rules (전 과정에 적용, 한 번만 적용하는 게 아님)
 
-**세부 Layer/Factor/Metric 정의는 `references/thesis-tree.md`를 반드시 참조할 것.**
-이 문서는 SKILL.md 요약만 보고 건너뛰지 말고, 매번 새 회사를 분석할 때 다시 읽어서
-Factor 단위로 빠짐없이 체크한다.
+1. **재무제표 우선순위**: 항상 최신 데이터를 검색해서 사용한다(web search / 회사 IR, 10-K/10-Q,
+   실적콜, investor day, 신뢰도 높은 산업 데이터·언론, 셀사이드 리포트 순). 숫자는 항상
+   **값 + 기간 + 출처**로 표기한다. 데이터가 없으면 만들지 말고 "Insufficient Data"라고 쓴다.
+   Fact / Estimate / Inference를 명확히 구분한다.
+2. **반증 우선 원칙**: 분석을 시작하기 전에 "이 회사가 이 투자철학(구조적 전환)에 맞지 않고
+   실은 순환적/유행성이라는 가장 강한 증거는 무엇인가?"를 먼저 묻고, 최소 3개의 반대 근거를
+   적극적으로 찾은 뒤에 Thesis를 평가한다. **Layer 2(Cyclical Contamination Test)는 절대
+   생략하지 않는다** — 진짜로 반증을 시도한다. PASS로 끝나는 것도 정상적인 결과다. Bull case를
+   만들기 위해 이 스킬이 존재하는 게 아니다.
+3. **인과 전달 확인**: 각 Layer를 독립 체크리스트로 채점하지 말고, 앞 Layer의 결과가 실제로
+   Financial Transmission Chain으로 전달되는지 확인한다. 연결이 끊어지는 지점을 반드시 찾아
+   명시한다.
+4. **추상적 표현 금지**: "구조적인 느낌이다", "확실히 트렌드가 바뀌었다" 같은 표현은 금지한다.
+   "구조적이다"라는 판단은 항상 침투율(%), 세대별 채택 데이터(pp 변화), 카테고리 성장률 같은
+   관찰 가능한 숫자로 뒷받침한다. "느낌상 구조적"은 근거가 아니다.
+5. **Variant Perception 자기검증**: 시장이 이미 공개적으로 논쟁 중인 "구조냐 순환이냐" 이슈를
+   Variant View로 인정하지 않는다. "정말 시장이 모르는가?"를 항상 먼저 검증한다. 이 철학은
+   Consensus Gate에 특히 취약하다 — 실적콜에서 애널리스트가 반복 질문하는 이슈는 대부분 이미
+   컨센서스에 편입돼 있기 때문이다.
 
-### 2단계 — Core Thesis 작성
+## Workflow (이 순서대로 실행)
 
-`references/thesis-tree.md`의 Core Thesis 템플릿을 이 회사에 맞게 구체적으로 다시 쓴다.
-막연히 복붙하지 말 것 — 그 회사의 실제 논쟁 지점(예: 관세, 신제품, 세대교체 등)을
-문장에 반영한다.
+1. **Universe Filter** — `references/layers_a_to_g.md` §Universe Filter를 먼저 읽는다.
+   `Framework Fit: High / Medium / Low`를 출력한다. Low면 왜 안 맞는지 평이하게 설명하고
+   14섹션 전체 메모를 억지로 만들지 않는다 — 짧은 설명이 Low-fit 회사에는 정확하고 완전한
+   산출물이다.
+2. **데이터 수집** — 어떤 Layer도 쓰기 전에 이 회사의 최신 침투율/코호트 데이터, 과거 경기
+   하방기 실적, Peer 실적, Volume/Price 분해, 셀사이드 섹터 분류, 현재/역사적 Multiple을
+   검색한다. web search를 적극 활용한다 — 이 스킬은 그 뒤의 데이터만큼만 좋다. 숫자마다 값 +
+   기간 + 출처를 남긴다.
+3. **Layers A → G** — `references/layers_a_to_g.md`를 순서대로 따른다(Structural Demand →
+   Product/Brand → Customer Economics → Competitive Advantage → Distribution → Financial
+   Translation → Variant Perception). Layer F(Financial Translation) 안에서
+   `references/cyclical_contamination_test.md`의 **Cyclical Contamination Test**(3개 하위
+   테스트)를 반드시 실행한다.
+4. **Financial Transmission Chain** — `references/financial_transmission.md`에 따라 각 링크를
+   Confirmed / Emerging / Broken / Insufficient Data로 마킹하고, 체인이 어디까지 진행됐는지 한
+   문장으로 진단한다.
+5. **Variant Perception** — Market Believes / We Believe / Why Market May Be Wrong / Evidence /
+   Recognition Trigger를 작성한 뒤, `references/variant_perception.md`의 6-category 자기검증으로
+   분류한다. Category 1은 절대 Variant View로 인정하지 않는다.
+6. **Catalyst Map, Entry Timing, Valuation, Expected Return, Holding Period, Thesis Break** —
+   `references/catalyst_and_entry.md`를 따른다. Entry Timing은 반드시 4개 중 하나로 고정한다.
+7. **Scorecard, Gates, Final Verdict** — `references/scorecard_and_verdict.md`를 정확히
+   따른다. Gate가 막은 점수는 주지 않는다. 모든 행에 점수/최대 + 1-2줄 근거를 남긴다.
+8. **메모 작성** — `references/output_template.md`의 정확한 구조를 따른다(0. Snapshot → 1. Fit
+   → 2. Core Thesis Test → 3. Structural Signal Evidence → 4. Cyclical Contamination & Market
+   Framing Test → 5. Financial Transmission → 6. Layer A-G → 7. Variant Perception → 8. Catalyst
+   Map → 9. Valuation → 10. Expected Return → 11. Entry Strategy → 12. Thesis Break → 13.
+   Scorecard → 14. Final Investment Decision).
+9. **산출물 생성** — 아래 "Final file output" 참조. 이 단계는 필수다 — 대화창 답변만으로는 이
+   스킬을 완료한 게 아니다.
 
-### 3단계 — Layer A–G 채점 (재가중 적용)
+## Final file output (필수)
 
-`references/thesis-tree.md`의 재가중 테이블(A=18, B=10, C=12, D=10, E=8, F=12,
-G=18, H=6, I=6, Risk 최대 -15)을 사용한다. 팀원의 다른 철학 스킬과 가중치가
-다른 것은 의도된 것이니 임의로 통일하지 말 것.
+메모 내용이 확정되면 항상 아래 두 파일을 **동일한 내용**으로 생성한다(회사명 공백은
+언더스코어로, 특수문자는 제거):
 
-채점 시 반드시:
-- Bear case를 Bull case와 동등한 무게로 조사한다 (이 철학은 확증편향 위험이 특히 큼)
-- Layer 2(Cyclical Contamination Test)를 절대 생략하지 않는다 — 진짜로 반증을 시도한다
-- 데이터가 불확실한 항목은 낙관적으로 채점하지 않는다 (Data Integrity Gate)
+- `[Company]_Investment_Memo.md` — `references/output_template.md`에 정의된 구조 그대로.
+- `[Company]_Investment_Memo.html` — 같은 내용을 ledger/paper/stamp 스타일 IM 리포트로 렌더링.
+  Scorecard, Financial Transmission Chain, Layer A-G 표, Catalyst Map, Valuation/Expected
+  Return은 반드시 실제 `<table>`로 렌더링하고(plain text 나열 금지), Final Verdict
+  (BUY/WATCH/PASS/SELL)는 상단에 스탬프 형태 배지로 눈에 띄게 표시한다. `assets/memo_template.html`
+  을 베이스로 쓰고, 매번 스타일을 새로 만들지 않는다.
 
-### 4단계 — Gate Condition 점검
+Steps:
+1. 두 파일을 먼저 `/home/claude/`에 쓰고, 최종본을 `/mnt/user-data/outputs/`로 복사한다.
+2. `present_files`로 두 경로를 전달한다(.md 먼저, .html 다음).
+3. 파일 전달 후 긴 후기를 붙이지 않는다 — 이 회사에 특화된 핵심 설계 판단(가중치가 왜 이렇게
+   나왔는지, Gate가 왜 발동/미발동했는지, 결론이 왜 그 등급인지)을 2-4줄로 짧게 설명한다.
 
-원본 설계 문서(Chapter 9)의 4개 Gate를 그대로 적용:
-1. Valuation Gate — 이미 Bull Case가 주가에 반영 중이면 점수 무관 PASS
-2. Consensus Gate — Variant View가 "시장이 이미 아는 좋은 점"뿐이면 해당 View 0점.
-   **이 철학은 특히 이 Gate에 취약하다** — "구조냐 순환이냐" 논쟁 자체가 이미
-   언론/실적콜에서 공개적으로 다뤄지는 경우가 많기 때문. 반드시 명시적으로 점검할 것.
-3. Financial Translation Gate — Layer C·D가 높아도 Layer F가 장기 정체면 60점 상한 캡
-4. Data Integrity Gate — 핵심 데이터 비공개/추정 불가 시 보수적 최저점, 임의 긍정 가정 금지
+## 이 레포 파이프라인(judgment-rules.md)에서 호출될 때만 적용하는 절차
 
-### 5단계 — 최종 판단 매핑
+Claude.ai 단독 실행이 아니라 `investment-desk` 오케스트레이터가 이 스킬을 호출하는 레포
+파이프라인 안에서 실행될 때는:
 
-BUY(80점 이상) / WATCH(65~79점) / PASS(50~64점) / SELL·PASS(50점 미만 또는 Gate 위반).
-보유 중 Thesis Break Signal 확정 시 점수 무관 SELL.
+- 파일 저장 경로를 위 `/mnt/user-data/outputs/` / `present_files` 관례 대신 그 레포의
+  `reports/` 관례로 보정한다(SKILL.md 본문 자체는 원작자 그대로 유지, 호출 시점에
+  오케스트레이터가 경로만 보정).
+- 최종 Verdict를 `judgment-rules.md`(기준②)가 정의한 매핑 규칙 그대로 축약해 반환한다:
+  - **BUY → 부합**
+  - **WATCH → 부분부합**
+  - **PASS (Gate 위반 포함) → 미부합**
+  - SELL은 신규 판단(1단계 필터링)에는 등장하지 않는다 — 기존 보유분 매도 판단에서만 쓴다.
+  - Core Thesis Test의 중간 판정(Supported/Partially/Not Supported)이 아니라, **Gate 적용 후
+    나오는 최종 Verdict**를 기준으로 매핑한다.
+- 100점 스코어카드(Layer A-G 재가중), 4개 Gate, 채점 로직 자체는 그대로 따르고 이 절차에서
+  별도 임계값을 새로 만들지 않는다.
 
-### 6단계 — HTML 메모 생성
+이 매핑 규칙의 유일한 출처는 `judgment-rules.md`이며, 그 문서가 개정되면 이 절차도 함께
+갱신한다.
 
-`assets/example-memo-onon.html`을 스타일/구조 참조본으로 삼아 같은 시각 문법을
-재사용한다 (ledger/paper 색상 변수, 원장 느낌 타이포그래피, stamp 형태의 verdict
-블록, 14개 섹션 구성). 색상 변수(`--ledger`, `--ledger-2`)는 다른 철학 스킬과
-구분되도록 슬레이트 계열을 유지하되, 완전히 동일한 파일을 복붙하지 말고 회사별
-내용에 맞게 다시 쓴다.
+## Reference files (필요할 때 로드)
 
-섹션 구성 (참조본과 동일 순서):
-1. Why This Company Fits the Philosophy
-2. Core Thesis Test (근거/반대근거 2단 비교)
-3. Layer 1 — Structural Signal Identification
-4. Layer 2/3 — Cyclical Contamination & Market Framing Test
-5. Financial Transmission
-6. Layer A–G Analysis (재가중 명시)
-7. Variant Perception (Market Believes / We Believe / Why Wrong / Evidence Needed
-   4카드 + Classification 배지)
-8. Catalyst Map
-9. Valuation
-10. Expected Return (Bull/Base/Bear)
-11. Entry Strategy
-12. Thesis Break (Confirmation/Weakening/Break/Sell Trigger)
-13. Scorecard (재가중 반영된 표)
-14. Final Investment Decision (5개 Q&A + verdict box)
-
-상단에는 항상 데이터 신뢰도 캐비어트 박스를 넣는다 — 실시간 검색으로 검증한
-항목과 Estimate/Insufficient Data로 남은 항목을 구분해서 사용자가 어디를
-재검증해야 하는지 알 수 있게 한다.
-
-### 7단계 — 파일 저장 및 전달
-
-`/mnt/user-data/outputs/`에 `{ticker}-structural-cyclical-memo.html` 형식으로
-저장하고 present_files로 전달한다. 대화창에는 이 회사에 특화된 핵심 설계
-판단(가중치를 왜 이렇게 줬는지, Gate가 왜 발동/미발동했는지, 결론이 왜 그
-등급으로 나왔는지)을 2~4줄로 짧게 설명한다 — 메모 전체를 다시 요약하지 않는다.
-
-## Data Integrity 원칙 (모든 단계에 공통 적용)
-
-- 웹 검색 결과가 없거나 불확실하면 반드시 `Estimate` / `Insufficient Data` 태그를
-  달고, 그 항목은 보수적으로(낙관적으로 채우지 않고) 채점한다.
-- 구체적인 숫자(주가, 정확한 % 성장률, Multiple)를 검증 없이 확신하는 어조로
-  쓰지 않는다. "~로 알려짐", "검증 필요"처럼 불확실성을 남긴다.
-- 이 메모는 투자 조언이 아니라 프레임워크 적용 예시이며, 실제 판단 전 원문
-  10-K/10-Q/실적발표로 재검증이 필요하다는 점을 항상 메모 안에 명시한다.
+- `references/layers_a_to_g.md` — Universe Filter + Layer A-G 전체 정의와 필요 지표.
+- `references/cyclical_contamination_test.md` — Layer F 안에서 실행하는 3개 필수 하위 테스트.
+- `references/financial_transmission.md` — Penetration→Re-rating 체인과 링크별 마킹법.
+- `references/variant_perception.md` — Market Believes/We Believe 구조 + 6-way 자기검증.
+- `references/catalyst_and_entry.md` — Catalyst Map, Entry Timing(4개 고정), Valuation, Expected
+  Return, Holding Period, Thesis Break/Sell Discipline.
+- `references/scorecard_and_verdict.md` — 100점 스코어카드(재가중), Gate 조건, BUY/WATCH/PASS/
+  SELL 임계값.
+- `references/output_template.md` — 채워야 할 정확한 메모 스켈레톤(요구되는 14-섹션 포맷과
+  일치).
+- `assets/memo_template.html` — HTML 산출물의 베이스 CSS/레이아웃 템플릿.

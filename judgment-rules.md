@@ -29,11 +29,11 @@
 
 ### 2. Structural vs Cyclical Misclassification
 
-> Source of truth: `.claude/skills/judge-structural-vs-cyclical/`(chaemin) — SKILL.md가 곧 이 기준의 정의다. `references/thesis-tree.md`에 전체 Layer/Factor 정의, 재가중 테이블, Gate 조건이 있다.
+> Source of truth: `.claude/skills/judge-structural-vs-cyclical/`(chaemin) — SKILL.md가 곧 이 기준의 정의다. `references/`(Layer A-G, Cyclical Contamination Test, Financial Transmission, Variant Perception, Catalyst/Entry, Scorecard/Gates, Output Template)에 전체 방법론이 있다.
 
 - **정의**: 소비자 행동의 구조적 변화를 시장이 경기순환이나 일시적 유행으로 오인해 Multiple을 잘못 매기고 있는가(또는 반대로 순환적 변화를 구조적으로 오인해 고평가하고 있는가).
 - **왜 가치가 있다고 보는가**: 구조적 성장기업이 경기순환주로 오분류되면 경기 저점에서 밸류에이션이 과도하게 할인되고, 오분류가 풀리는 리레이팅 시점에 이익 성장과 별개인 멀티플 확장 alpha가 발생한다. 이 철학은 확증편향 위험이 특히 크다 — "구조적이다"는 주장은 사후적으로만 완전히 검증되므로, 경기 하방 동행 여부(Layer 2, Cyclical Contamination Test)를 반드시 반증 시도해야 하며 Bear case를 Bull case와 동등한 무게로 다뤄야 한다.
-- **판정**: `references/thesis-tree.md`의 최종 판단 매핑(BUY 80점+/WATCH 65~79점/PASS 50~64점 또는 Gate 위반/SELL·PASS <50점)을 기준①과 동일한 규칙으로 환산한다 — **BUY → 부합**, **WATCH → 부분부합**, **PASS(또는 Gate 위반) → 미부합**. SELL은 신규 판단에는 등장하지 않는다. 상세 채점(Layer A-G 재가중, Gate 4종, 100점 스코어카드)은 `references/thesis-tree.md`의 재가중 테이블을 그대로 따른다.
+- **판정**: `references/scorecard_and_verdict.md`의 **최종 Verdict**(Core Thesis Test의 중간 판정 Supported/Partially/Not이 아니라, Gate 적용 후 나오는 최종 판정)를 기준으로 매핑한다 — **BUY(Score ≥80, 전 Gate 통과) → 부합**, **WATCH(Score 65~79) → 부분부합**, **PASS(Score 50~64 또는 Gate 위반) → 미부합**. SELL은 기존 보유분 매도 판단용이라 신규 판단(1단계 필터링)에는 등장하지 않는다. 100점 스코어카드(Layer A-G 재가중, 4개 Gate)는 그대로 따르고 이 문서에서 별도 임계값을 만들지 않는다. 이 매핑 규칙은 `judge-structural-vs-cyclical/SKILL.md`와 `references/scorecard_and_verdict.md` 안에도 동일하게 명시돼 있다(2026-08-13 정합성 확인).
 - **참고 예시**: [`.claude/skills/judge-structural-vs-cyclical/assets/example-memo-onon.html`](.claude/skills/judge-structural-vs-cyclical/assets/example-memo-onon.html) (chaemin).
 - ⚠️ 이 스킬도 `/mnt/user-data/outputs/` 관례로 작성돼 있어 `investment-desk` 호출 시 `reports/` 관례로 저장 경로를 보정해야 한다(위 기준① 참고).
 

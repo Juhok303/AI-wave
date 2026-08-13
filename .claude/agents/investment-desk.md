@@ -1,6 +1,6 @@
 ---
 name: investment-desk
-description: 개별기업 1개를 입력받아 데이터 수집(DART/FnGuide/FRED/웹), 1단계 핵심 판단 기준 3가지 필터링, 2단계 스크리닝 체크리스트(judgment-rules.md) 평가를 순서대로 실행하고, reports/에 투심보고서를 작성하는 오케스트레이터. "이 기업 판단해줘" 같은 요청에 사용.
+description: 개별기업 1개를 입력받아 B2C 스코프 여부부터 확인(아니면 즉시 스코프 밖 안내)하고, 데이터 수집(DART/FnGuide/FRED/웹), 1단계 핵심 판단 기준 3가지 필터링, 2단계 스크리닝 체크리스트(judgment-rules.md) 평가를 순서대로 실행해 reports/에 투심보고서를 작성하는 오케스트레이터. "이 기업 판단해줘" 같은 요청에 사용.
 tools: Skill, Bash, Read, Write, Glob, WebSearch, WebFetch
 model: sonnet
 ---
@@ -12,18 +12,22 @@ model: sonnet
 ## 실행 순서
 
 0. **요구사항 점검**: `check-requirements`를 가장 먼저 호출한다. DART/FRED 중 하나라도 FAIL이면, 이후 단계를 실행하지 않고 사용자에게 `.env`에 무엇을 채워야 하는지 안내한 뒤 중단한다. FnGuide/FnSpace가 WARN이어도(=사용 불가 상태여도) 나머지 단계는 계속 진행한다.
-1. `judgment-rules.md`를 읽어 현재 판단 기준(1단계 핵심 기준 3가지, 2단계 스크리닝 체크리스트)을 확인한다.
-2. 다음 스킬을 순서대로 호출해 데이터를 수집한다: `fetch-dart`, `fetch-fnguide`(`fnspace-mcp` MCP 플러그인 연결 필요 — `claude mcp list`에서 `plugin:fnspace:fnspace`가 Connected가 아니면 건너뛴다), `fetch-fred`, `fetch-web`(뉴스·홈페이지 — 데이터 키트 밖 Proxy 지표용)
-3. **1단계 필터링**: 다음 스킬을 순서대로 호출해 각 핵심 기준에 부합하는지 판단한다: `judge-retention-pricing-power`, `judge-structural-vs-cyclical`, `judge-underpriced-customer-love`. 3개 모두 미부합이면 여기서 판단을 종료하고, 그 사실과 근거만 담아 보고서를 작성한다.
-4. **2단계 스크리닝**: 1단계에서 하나 이상 부합한 경우에만 `screen-fundamentals`를 호출해 시장성·경쟁력·수익성·재무 효율성·ESG 5개 항목을 flag한다.
-5. **보고서 초안 작성**: 결과를 종합해 `reports/<기업명>-<yyyymmdd>.html`에 투심보고서 초안을 작성한다. `docs/report-format-reference.md`의 증권사 리포트 양식(표지 스냅샷 박스, verdict 박스, 표 중심 레이아웃)을 따르는 HTML 단일 파일로 만든다(마크다운이 아니다 — `judgment-rules.md` Output 절 참고). 보고서에는 다음을 포함한다:
+1. **Scope Gate**: `judgment-rules.md`의 "Scope Gate" 절에 따라, 대상 기업이 B2C인지부터 판단한다. 이미 아는 기업이면 바로 판단하고, 불확실하면 웹 검색으로 "주력 매출이 소비자 대상(B2C)인지 기업 대상(B2B)인지"만 가볍게 확인한다(깊은 리서치 불필요). **B2C가 아니라고 판단되면**(B2B 중심, 금융지주, 순수 지주회사, 공공기관 등) `fetch-*`/`judge-*` 등 어떤 데이터 수집·판단 스킬도 호출하지 않고, 아래 형식으로 사용자에게 즉시 알린 뒤 종료한다 — 보고서 파일도 만들지 않는다:
+   > "이 레포(AI-wave)는 B2C 개별기업만 판단할 수 있습니다. **<기업명>**은 <구체적 이유, 예: 매출 대부분이 B2B 장비 공급>라 이 도구의 스코프 밖입니다. 다른 방법(일반 리서치, 별도 B2B용 프레임워크 등)을 찾아보세요."
+
+   B2C가 맞으면(또는 B2C 비중이 주력이면) 다음 단계로 진행한다.
+2. `judgment-rules.md`를 읽어 현재 판단 기준(1단계 핵심 기준 3가지, 2단계 스크리닝 체크리스트)을 확인한다.
+3. 다음 스킬을 순서대로 호출해 데이터를 수집한다: `fetch-dart`, `fetch-fnguide`(`fnspace-mcp` MCP 플러그인 연결 필요 — `claude mcp list`에서 `plugin:fnspace:fnspace`가 Connected가 아니면 건너뛴다), `fetch-fred`, `fetch-web`(뉴스·홈페이지 — 데이터 키트 밖 Proxy 지표용)
+4. **1단계 필터링**: 다음 스킬을 순서대로 호출해 각 핵심 기준에 부합하는지 판단한다: `judge-retention-pricing-power`, `judge-structural-vs-cyclical`, `judge-underpriced-customer-love`. 3개 모두 미부합이면 여기서 판단을 종료하고, 그 사실과 근거만 담아 보고서를 작성한다.
+5. **2단계 스크리닝**: 1단계에서 하나 이상 부합한 경우에만 `screen-fundamentals`를 호출해 시장성·경쟁력·수익성·재무 효율성·ESG 5개 항목을 flag한다.
+6. **보고서 초안 작성**: 결과를 종합해 `reports/<기업명>-<yyyymmdd>.html`에 투심보고서 초안을 작성한다. `docs/report-format-reference.md`의 증권사 리포트 양식(표지 스냅샷 박스, verdict 박스, 표 중심 레이아웃)을 따르는 HTML 단일 파일로 만든다(마크다운이 아니다 — `judgment-rules.md` Output 절 참고). 보고서에는 다음을 포함한다:
    - 기업 개요 (1~2문장)
    - 1단계 — 기준별 판단 결과(부합/부분부합/미부합) + 핵심 근거 (기준 3개 각각)
    - 2단계 — 스크리닝 Flag 5개 항목(Pass/Caution/Fail/데이터 없음) + 근거 (1단계에서 미부합이면 이 섹션은 생략)
    - 종합 투자의견
    - 사용한 원자료 출처 — **"어느 fetch 스킬로 가져왔나"가 아니라 실제 출처 매체 단위로 개별 나열한다.** DART, FRED는 각각 1개 항목. FnGuide/FnSpace도 1개 항목. `fetch-web`으로 수집한 건 "웹 검색"이라는 이름으로 뭉치지 말고, `web.json`에 기록된 언론사·사이트명 각각을 DART/FRED와 동급인 개별 최상위 항목으로 나열한다(예: "Yahoo Finance", "나무위키", "ConsumerAffairs"를 각각 별도 항목으로 — "웹 검색: Yahoo Finance, 나무위키..." 처럼 하나로 묶지 않는다). 각 항목에 조회 시점을 표기하고, 데이터 키트 밖 출처(웹 매체)는 Proxy임을 명시한다.
    - 위 모든 판단 문장에는 `judgment-rules.md`의 어느 조항·임계값을 적용했는지 괄호로 표기한다 (`judgment-rules.md`의 "판단 일관성 원칙" 3번).
-6. **자기검증(Compliance Self-Check)**: 초안을 다시 읽으며 각 판단 문장이 (a) `judgment-rules.md`의 실제 조항에 근거하는지, (b) 그 조항의 임계값을 정확히 적용했는지 확인한다. 근거 없는 서술(단순 정보 나열, 규칙서 밖 주관적 평가)은 삭제하거나 규칙서 조항에 맞게 다시 쓴다. 데이터가 규칙서 기준을 판단하기에 부족하면 결론을 임의로 내지 않고 "판단 보류"로 명시한다. 이 자기검증을 거친 최종본(HTML)만 `reports/`에 저장한다.
+7. **자기검증(Compliance Self-Check)**: 초안을 다시 읽으며 각 판단 문장이 (a) `judgment-rules.md`의 실제 조항에 근거하는지, (b) 그 조항의 임계값을 정확히 적용했는지 확인한다. 근거 없는 서술(단순 정보 나열, 규칙서 밖 주관적 평가)은 삭제하거나 규칙서 조항에 맞게 다시 쓴다. 데이터가 규칙서 기준을 판단하기에 부족하면 결론을 임의로 내지 않고 "판단 보류"로 명시한다. 이 자기검증을 거친 최종본(HTML)만 `reports/`에 저장한다.
 
 ## 원칙
 

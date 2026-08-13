@@ -1,0 +1,493 @@
+<title>광주신세계 투심메모</title>
+<style>
+  :root {
+    --paper: #efeae0;
+    --paper-panel: #e6dfcf;
+    --paper-panel-2: #ded5c0;
+    --ink: #23241f;
+    --ink-soft: #5c5646;
+    --ink-faint: #8a8270;
+    --line: #c7bc9f;
+    --line-strong: #a89b77;
+    --forest: #2f5233;
+    --forest-ink: #24401f;
+    --brass: #8a6a1f;
+    --brass-ink: #6b5216;
+    --wine: #7d2036;
+    --wine-ink: #611829;
+    --navy: #2a3a52;
+    --link: #4a4530;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1a1813;
+      --paper-panel: #221f18;
+      --paper-panel-2: #2a261d;
+      --ink: #e9e2cf;
+      --ink-soft: #b9ae93;
+      --ink-faint: #857c65;
+      --line: #4a4433;
+      --line-strong: #6b6248;
+      --forest: #6fae74;
+      --forest-ink: #8fc793;
+      --brass: #d1a94a;
+      --brass-ink: #e0bd6c;
+      --wine: #d9748a;
+      --wine-ink: #e493a5;
+      --navy: #9fb3cc;
+      --link: #cbbf8e;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1a1813;
+    --paper-panel: #221f18;
+    --paper-panel-2: #2a261d;
+    --ink: #e9e2cf;
+    --ink-soft: #b9ae93;
+    --ink-faint: #857c65;
+    --line: #4a4433;
+    --line-strong: #6b6248;
+    --forest: #6fae74;
+    --forest-ink: #8fc793;
+    --brass: #d1a94a;
+    --brass-ink: #e0bd6c;
+    --wine: #d9748a;
+    --wine-ink: #e493a5;
+    --navy: #9fb3cc;
+    --link: #cbbf8e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin: 0;
+    padding: 48px 20px 96px;
+  }
+
+  .sheet { max-width: 740px; margin: 0 auto; }
+
+  .serif { font-family: "Noto Serif KR", "Batang", ui-serif, serif; }
+
+  .mono {
+    font-family: "D2Coding", "Consolas", "SFMono-Regular", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  header.letterhead {
+    border-top: 3px double var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 22px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  header.letterhead .titles h1 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 4px 0 6px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  header.letterhead .code { color: var(--ink-soft); font-size: 14px; }
+
+  header.letterhead .meta {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    white-space: nowrap;
+  }
+
+  header.letterhead .meta b { color: var(--ink); }
+
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid currentColor;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    transform: rotate(-2.5deg);
+    white-space: nowrap;
+    mix-blend-mode: multiply;
+  }
+  :root:not([data-theme="light"]) .stamp,
+  :root[data-theme="dark"] .stamp { mix-blend-mode: screen; }
+
+  .stamp.pass, .stamp.fit { color: var(--forest-ink); }
+  .stamp.partial { color: var(--brass-ink); }
+  .stamp.fail, .stamp.no-fit { color: var(--wine-ink); }
+  .stamp.hold { color: var(--ink-faint); border-style: dashed; }
+
+  .stamp-lg {
+    font-size: 22px;
+    padding: 12px 26px;
+    border-width: 3px;
+    border-radius: 8px;
+    transform: rotate(-3deg);
+  }
+
+  .overview { padding: 20px 0 8px; color: var(--ink-soft); }
+
+  .verdict-strip { display: flex; justify-content: center; padding: 6px 0 30px; }
+
+  section.stage { margin-top: 8px; }
+
+  .stage > .stage-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+
+  .stage-head h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .criterion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px 20px;
+    margin-bottom: 16px;
+  }
+
+  .criterion .crit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .criterion h3 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .crit-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+  .score-badge {
+    font-family: "D2Coding", monospace;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    background: var(--paper-panel-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    padding: 3px 8px;
+  }
+
+  .criterion dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 14px;
+    margin: 12px 0 0;
+  }
+
+  .criterion dt {
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .criterion dd { margin: 0; font-size: 14.5px; }
+
+  .criterion .figs {
+    font-size: 14.5px;
+    background: var(--paper-panel-2);
+    border-left: 3px solid var(--line-strong);
+    padding: 9px 13px;
+    margin: 4px 0 12px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .criterion .clause { font-size: 13px; color: var(--ink-soft); font-style: italic; }
+
+  .stage-summary {
+    font-size: 14px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--line-strong);
+    padding: 8px 14px;
+    margin: 4px 0 44px;
+  }
+
+  .table-wrap { overflow-x: auto; margin-bottom: 44px; }
+
+  table.screen {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.8px;
+    min-width: 620px;
+  }
+
+  table.screen th {
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+    padding: 0 12px 8px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  table.screen td { padding: 12px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.screen tr:last-child td { border-bottom: 1px solid var(--line-strong); }
+  table.screen td.item { font-weight: 700; white-space: nowrap; font-family: "Noto Serif KR", "Batang", ui-serif, serif; }
+
+  .chip {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 3px 9px;
+    border-radius: 3px;
+    border: 1.5px solid currentColor;
+  }
+  .chip.none { color: var(--ink-faint); border-style: dashed; }
+
+  .opinion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 24px 26px;
+    margin-bottom: 44px;
+    position: relative;
+  }
+
+  .opinion h2 { font-family: "Noto Serif KR", "Batang", ui-serif, serif; font-size: 19px; margin: 0 0 12px; }
+  .opinion p { margin: 0 0 12px; }
+  .opinion p:last-child { margin-bottom: 0; }
+
+  .opinion .conclusion {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .opinion .conclusion p { flex: 1; min-width: 240px; margin: 0; }
+
+  .sources { font-size: 13.2px; color: var(--ink-soft); }
+
+  .sources h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 17px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+
+  .sources ol { margin: 0; padding-left: 20px; }
+  .sources li { margin-bottom: 10px; }
+  .sources li b { color: var(--ink); }
+  .sources a { color: var(--link); }
+  .sources a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+  .compliance {
+    margin-top: 40px;
+    border-top: 3px double var(--line-strong);
+    padding-top: 18px;
+  }
+
+  .compliance h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 15px;
+    margin: 0 0 12px;
+    color: var(--ink-soft);
+  }
+
+  .compliance ul { list-style: none; margin: 0; padding: 0; font-size: 13px; color: var(--ink-soft); }
+  .compliance li { padding: 7px 0 7px 24px; border-bottom: 1px solid var(--line); position: relative; }
+  .compliance li:last-child { border-bottom: none; }
+  .compliance li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    color: var(--forest-ink);
+    font-family: "D2Coding", monospace;
+  }
+
+  footer.colophon {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin-top: 40px;
+    letter-spacing: 0.04em;
+  }
+
+  a { color: var(--link); }
+
+  @media (max-width: 560px) {
+    header.letterhead { flex-direction: column; }
+    header.letterhead .meta { text-align: left; }
+    .criterion .crit-head { flex-direction: column; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="letterhead">
+    <div class="titles">
+      <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 · 백화점 산업 비교 구성원</div>
+      <h1>광주신세계</h1>
+      <div class="code mono">종목코드 037710 · 코스피</div>
+    </div>
+    <div class="meta">
+      작성일 <b>2026-08-13</b><br>
+      작성 도구 <b><span class="mono">investment-desk</span></b><br>
+      DART 조회 <b>corp_code 00220561</b>
+    </div>
+  </header>
+
+  <p class="overview">광주신세계는 광주광역시 유스퀘어(고속버스터미널) 부속 건물에서 백화점을 운영하는 호남 지역 대표 유통기업이다(1995년 개점). 롯데백화점 광주점을 제외하면 지역 내 실질적 경쟁 점포가 없어 2007년 이후 호남 매출 1위를 유지하고 있으며, 루이비통·디올·몽클레르·티파니·델보 등 전라도 단독 명품 매장을 다수 보유한다. 2025년(제31기) 매출액 1,842억원, 영업이익 524.7억원(영업이익률 약 28.5%)을 기록했고, 현재 유스퀘어 부지 복합개발("더 그레이트 광주", 공공기여금 1,497억원, 2028년 개점 목표)을 위한 대규모 확장 투자를 진행 중이다.</p>
+
+  <div class="verdict-strip">
+    <span class="stamp stamp-lg fail">투자 매력 없음 · PASS</span>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">STAGE 1</span>
+      <h2>핵심 판단 기준 3개</h2>
+    </div>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+        <div class="crit-badges">
+          <span class="score-badge">Score 8/100</span>
+          <span class="stamp fail">미부합</span>
+        </div>
+      </div>
+      <p class="figs mono">매출액 YoY +2.22%(제29→30기) → +0.35%(제30→31기)<br>매출총이익률 90.78% → 91.02% → 91.30%<br>영업이익률 30.57% → 28.51% → 28.48%<br>이자보상배율 60.3x → 22.1x → 12.0x</p>
+      <p>Framework Fit부터 Low로 판정됐다 — 광주신세계는 입점 브랜드의 매출에서 수수료를 받는 백화점 운영사라, 자사 상품·서비스에 대한 재구매율·Cohort Retention·멤버십 데이터가 DART/FnGuide/web 어디에도 없다(Customer Economics Layer 사실상 공백). 매출 성장은 사실상 정체(+0.35% YoY)인데 영업이익률은 오히려 하락(30.57%→28.48%)해 Financial Translation 체인이 Operating Leverage 단계에서 끊긴다(Broken). 부채총계가 2년 만에 약 3.5배 급증(1,153억→3,976억)하고 이자보상배율이 60.3배에서 12.0배로 급락하는 추세도 확인됐다. `references/scorecard_and_verdict.md`의 100점 스코어카드(Layer A&ndash;G, 4개 Gate)에서 Score 8/100, Consensus Gate·Financial Translation Gate·Data Integrity Gate가 동시 발동해 최종 Verdict <b>PASS</b>가 산출됐다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">judgment-rules.md 기준① 판정 — "최종 Verdict 매핑: BUY→부합, WATCH→부분부합, PASS(또는 Gate 위반)→미부합" · `judge-retention-pricing-power` Layer A&ndash;G, Pricing Power Test, Financial Transmission, Scorecard&amp;Verdict 4개 Gate</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART(Primary, Medium) · FnGuide/FnSpace 이번 실행 조회 불가(MCP 미연결, 컨센서스 관련 항목 데이터 없음 처리) · web.json(Proxy, Medium)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>② Structural vs Cyclical Misclassification</h3>
+        <div class="crit-badges">
+          <span class="score-badge">Score 16/100</span>
+          <span class="stamp fail">미부합</span>
+        </div>
+      </div>
+      <p class="figs mono">매출액 3개년 1,795.9억 → 1,835.8억 → 1,842.1억원(성장률 +2.22%→+0.35%, 뚜렷한 둔화)<br>부채총계 1,152.6억 → 3,909.6억 → 3,975.9억원(약 3.5배 급증)<br>유동비율 310.5% → 59.7% → 40.2%(급락)</p>
+      <p>Framework Fit은 Medium으로 판정됐다(럭셔리 소비 확대·무신사 스탠다드 입점을 통한 신규 고객층 확장 시도는 일부 "카테고리 침투" 서사에 부합하나, 핵심은 매출 성장 정체 + 대규모 물리적 확장(CapEx)이라는 재무적 요인에 가깝다). Growth Decomposition 테스트에서 매출 성장 둔화와 재무 구조 급격 악화(이자비용 9.1억→43.6억, 부채 3.5배 증가)가 유스퀘어 복합개발 자금조달이라는 정책적·재무적 요인에서 기인함이 확인돼 "구조적 수요 확대" 서사를 뒷받침하지 못했다(재무 노이즈 오염 판정). 2028년 더현대 광주(현대백화점) 출점 예정은 지역독점 프리미엄의 지속가능성에 대한 명확한 Bear 근거(Layer D 반증)다. 시장(언론)이 이미 광주신세계의 소외·유동성 리스크를 인지하고 있어 "시장이 오분류했다"는 차별화된 시각(Variant View)도 확인되지 않았다(Consensus Gate 발동). Score 16/100, Consensus/Financial Translation/Data Integrity 3개 Gate 동시 발동으로 최종 Verdict <b>PASS</b>.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">judgment-rules.md 기준② 판정 — "BUY(Score&ge;80)→부합, WATCH(65&ndash;79)→부분부합, PASS(50&ndash;64 또는 Gate 위반)→미부합" · `judge-structural-vs-cyclical` Cyclical Contamination Test, Financial Transmission, Variant Perception, Scorecard&amp;Verdict</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART(Primary, Medium) · FRED(미국 매크로, Low&mdash;국가 불일치로 한국 백화점 경기 사이클 직접 검증 불가, 한국 자체 매크로 데이터는 이 레포 데이터 키트에 없음) · FnGuide 이번 실행 조회 불가 · web.json(Proxy, Medium)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>③ Underpriced Customer Love (ULRS)</h3>
+        <div class="crit-badges">
+          <span class="score-badge">Score 약 25&ndash;30/100</span>
+          <span class="stamp fail">미부합</span>
+        </div>
+      </div>
+      <p class="figs mono">Layer 1(Love) 정량지표 전무 · Layer 3(Monetization) 매출총이익률 90.8%&rarr;91.3% · Layer 4(Financial Conversion) 제29&rarr;30기 영업이익 549.0억&rarr;523.3억(감소, Incremental Margin 음수)</p>
+      <p>Framework Fit이 Low로 판정됐다 &mdash; ULRS가 요구하는 핵심 Love 지표(12M 재구매율, 리뷰 볼륨 증가율 YoY, DAU/MAU, 브랜드 검색점유율 변화)는 오프라인 실물 유통업 구조상 관측이 불가능하고, 이번 데이터 수집으로도 전혀 확보되지 않았다(중립 50점으로 대체하지 않고 데이터 없음으로 처리). 유일하게 확인된 강점(매출총이익률 90%대)은 소비자 애착이 아니라 백화점 특유의 수수료 매출 인식 구조에서 기인한다. 오히려 확인된 재무 신호는 부정적이다 &mdash; 매출 +2.2% 증가에도 영업이익은 감소했고(Financial Conversion Capacity 약화), 이자비용·유동부채 급증으로 재무 부담이 커졌다. FnGuide 컨센서스 부재로 Market Recognition Gate(Conversion_Readiness_Gap)를 산출할 근거가 없어 "시장이 아직 모른다"는 핵심 조건도 입증하지 못했다. Red Flag 10종 중 "발동" 확인된 항목은 없어 강제 Avoid는 아니지만, Score+Gate 임계값(50&ndash;64 또는 Gate 위반 = AVOID)에 따라 <b>AVOID</b>로 귀결됐다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">judgment-rules.md 기준③ 판정 — "BUY(Score&ge;80)→부합, WATCH(65&ndash;79)→부분부합, AVOID(50&ndash;64 또는 Gate 위반)→미부합" · `judge-underpriced-customer-love` Market Recognition Gate·Durability Gate·Red Flag Test·K절 데이터 신뢰도 원칙</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART(Primary, Medium) · FnGuide 이번 실행 조회 불가(Market Recognition Gate 산출 불가) · web.json(Proxy, Medium&mdash;정량 Love 지표는 미확보)</dd>
+      </dl>
+    </article>
+
+    <p class="stage-summary">1단계 종합 &mdash; 기준①·②·③ 모두 <b>미부합</b>(judgment-rules.md "1단계" 절: "3개 모두 미부합이면 그 시점에 투자 매력이 없는 것으로 보고 판단을 종료한다"). 2단계 스크리닝 체크리스트는 실행하지 않는다.</p>
+  </section>
+
+  <div class="opinion">
+    <h2>종합 투자의견</h2>
+    <p>광주신세계는 호남 지역 백화점 시장에서 사실상 독점적 지위를 유지하며 업계 최고 수준의 영업이익률(약 28&ndash;30%)을 기록하는 재무적으로 견조한 기업이다. 그러나 이 레포의 판단 규칙서(judgment-rules.md) 1단계 핵심 기준 3개&mdash;가격전가력(Retention-to-Pricing-Power), 구조적/경기순환 오분류(Structural vs Cyclical), 저평가된 고객 애착(Underpriced Customer Love)&mdash;에 각각 적용했을 때 세 기준 모두 미부합으로 판정됐다. 공통적으로 (1) 이 회사는 자사 상품에 대한 반복구매·재구독 관계가 아니라 입점 브랜드 수수료 구조라 세 철학이 요구하는 소비자 단위 정량 지표(재구매율, Cohort Retention, 리뷰·DAU 기반 애착도)를 근본적으로 관측하기 어렵고(Framework Fit Low&sim;Medium), (2) 확인 가능한 재무 데이터 자체도 매출 성장 정체, 영업이익률 소폭 하락, 대규모 확장 투자에 따른 부채·이자비용 급증(3년간 부채 약 3.5배, 이자비용 약 4.8배 증가)과 유동비율 급락(310%&rarr;40%)이라는 부정적 신호를 보였다. 2028년 더현대 광주(현대백화점) 출점 예정은 현재의 지역 독점 프리미엄이 향후 약화될 수 있는 구체적 리스크다.</p>
+    <div class="conclusion">
+      <p>세 기준 모두 미부합으로 1단계에서 판단이 종료되어 2단계 스크리닝(시장성/경쟁력/수익성/재무효율성/ESG)은 실행하지 않았다. 백화점 산업 비교에서는 &ldquo;탈락(투자 매력 없음)&rdquo; 목록으로 분류하는 것이 규칙서에 부합한다&mdash;재무 기초체력과 지역 독점적 지위 자체를 부정하는 것이 아니라, 이 도구가 적용하는 세 가지 특정 투자철학(가격전가력·구조적 오분류·저평가된 고객 애착) 렌즈에는 맞지 않는다는 의미다. FnGuide/FnSpace 컨센서스가 확보되면 기준①·②·③(특히 Consensus Gate·Market Recognition Gate)을 재실행해 갱신이 필요하다.</p>
+      <span class="stamp fail">투자 매력 없음</span>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h2>사용한 원자료 출처</h2>
+    <ol>
+      <li><b>DART</b> &mdash; <span class="mono">data/cache/광주신세계/dart.json</span>, 사업보고서(제29&ndash;31기) 재무제표, corp_code 00220561, 2026-08-13 조회. 원본 계정명 "수익(매출액)"이 fetch-dart 스킬의 기본 동의어 목록에 없어 raw API 응답에서 수동 확인 후 매출액 필드로 보정 저장(<span class="mono">_note</span> 필드 기록, 동일 DART API 원자료).</li>
+      <li><b>FRED</b> &mdash; <span class="mono">data/cache/광주신세계/fred.json</span>, CPI·기준금리·소매판매(RSAFS)·실업률(미국 지표), 2026-08-13 조회. 국가 불일치로 참고용(Low Confidence).</li>
+      <li><b>FnGuide/FnSpace</b> &mdash; 이번 실행에서 조회 불가(fnspace MCP 도구가 이 서브에이전트 세션에 연결되지 않음). 컨센서스·목표주가·추정실적 관련 판단은 전부 데이터 없음으로 처리.</li>
+      <li><b>다음뉴스</b> &mdash; <a href="https://v.daum.net/v/20251022194757676?f=p" target="_blank" rel="noopener">광주전남 상장사 시황 기사</a>(2025-10-22), 시가총액 약 2,423억원 확인(Proxy, Medium).</li>
+      <li><b>공감신문</b> &mdash; <a href="https://www.gokorea.kr/news/articleView.html?idxno=94528" target="_blank" rel="noopener">주가 동향 기사</a>, 주가 약 203,000원(2026-08-11 기준, Proxy, Medium).</li>
+      <li><b>나무위키</b> &mdash; <a href="https://namu.wiki/w/%EA%B4%91%EC%A3%BC%EC%8B%A0%EC%84%B8%EA%B3%84%EB%B0%B1%ED%99%94%EC%A0%90" target="_blank" rel="noopener">광주신세계백화점 문서</a>, 개점 연혁·명품 입점 현황·호남 매출 1위 지위 확인(Proxy, Medium).</li>
+      <li><b>kjmbc</b> &mdash; <a href="https://kjmbc.co.kr/article/n78d4c_vAP2v4l" target="_blank" rel="noopener">광주 신세계 확장 본격화 기사</a>, 유스퀘어 복합개발 진행 현황(Proxy, Medium).</li>
+      <li><b>서울신문</b> &mdash; <a href="https://www.seoul.co.kr/news/economy/2026/02/03/20260203500290" target="_blank" rel="noopener">공공기여금 1,497억 확정 기사</a>, 확장 개점 목표 2028년(Proxy, Medium).</li>
+      <li><b>뉴시스</b> &mdash; <a href="https://www.newsis.com/view/NISX20250723_0003262848" target="_blank" rel="noopener">유스퀘어 문화관 철거 착수 기사</a>(Proxy, Medium).</li>
+      <li><b>무신사 뉴스룸</b> &mdash; <a href="https://newsroom.musinsa.com/newsroom-menu/2026-0408" target="_blank" rel="noopener">무신사 스탠다드 광주점 입점 발표</a>, 2026-04-16 오픈(Proxy, Medium).</li>
+      <li><b>IB토마토</b> &mdash; <a href="https://www.ibtomato.com/ExternalView.aspx?type=1&no=11816" target="_blank" rel="noopener">신세계 광주드림 ③ 순위 경쟁 기사</a>, 2028년 더현대 광주 출점 예정·경쟁 심화 리스크(Proxy, Medium).</li>
+      <li><b>전남일보</b> &mdash; <a href="https://m.jnilbo.com/76535859747" target="_blank" rel="noopener">광주신세계 ESG 활동 강화 기사</a>, 개점 30주년 ESG 활동 발표(Proxy, Medium). 중대 ESG 제재·소송 이력은 검색상 확인되지 않음(데이터 없음, Pass로 임의 격상하지 않음).</li>
+    </ol>
+  </section>
+
+  <div class="compliance">
+    <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+    <ul>
+      <li>기준①·②·③ 모두 각 스킬의 100점 Score+Gate 아키텍처(`references/scorecard_and_verdict.md`, 기준별)를 그대로 따라 산출된 최종 Verdict(PASS/PASS/AVOID)를 judgment-rules.md의 매핑 규칙 그대로 적용해 미부합으로 환산했으며, 오케스트레이터가 임의로 등급을 조정하지 않았다.</li>
+      <li>FnGuide/FnSpace 데이터가 이번 서브에이전트 세션에서 조회 불가했던 부분(컨센서스, 목표주가, Market Recognition Gap)은 전부 "데이터 없음"으로 명시했고, 중립값(50점 등)으로 임의 대체하지 않았다.</li>
+      <li>DART 원본 계정명 "수익(매출액)"을 매출액으로 보정한 것은 fetch-dart 스킬의 동의어 목록 누락을 raw API 응답(동일 DART 원자료)으로 보완한 것이며, 수치를 추정·가공하지 않았다(dart.json <span class="mono">_note</span> 필드에 기록).</li>
+      <li>1단계에서 3개 기준이 모두 미부합으로 판정됨에 따라 judgment-rules.md "1단계" 절 규정대로 2단계 스크리닝(screen-fundamentals)은 호출하지 않았다.</li>
+      <li>한국 자체 매크로 사이클 데이터(기준②)와 소비자 애착 정량 지표(기준③)는 이 레포 데이터 키트 밖의 공백으로, 판단 보류가 아닌 "확인 가능한 범위 내에서 보수적으로 채점"으로 처리된 부분을 본문에 명시했다.</li>
+    </ul>
+  </div>
+
+  <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13 · 백화점 산업 비교의 일부로 실행됨</footer>
+
+</div>

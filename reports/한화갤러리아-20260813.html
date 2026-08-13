@@ -1,0 +1,501 @@
+<title>한화갤러리아 투심메모</title>
+<style>
+  :root {
+    --paper: #efeae0;
+    --paper-panel: #e6dfcf;
+    --paper-panel-2: #ded5c0;
+    --ink: #23241f;
+    --ink-soft: #5c5646;
+    --ink-faint: #8a8270;
+    --line: #c7bc9f;
+    --line-strong: #a89b77;
+    --forest: #2f5233;
+    --forest-ink: #24401f;
+    --brass: #8a6a1f;
+    --brass-ink: #6b5216;
+    --wine: #7d2036;
+    --wine-ink: #611829;
+    --navy: #2a3a52;
+    --link: #4a4530;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1a1813;
+      --paper-panel: #221f18;
+      --paper-panel-2: #2a261d;
+      --ink: #e9e2cf;
+      --ink-soft: #b9ae93;
+      --ink-faint: #857c65;
+      --line: #4a4433;
+      --line-strong: #6b6248;
+      --forest: #6fae74;
+      --forest-ink: #8fc793;
+      --brass: #d1a94a;
+      --brass-ink: #e0bd6c;
+      --wine: #d9748a;
+      --wine-ink: #e493a5;
+      --navy: #9fb3cc;
+      --link: #cbbf8e;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1a1813;
+    --paper-panel: #221f18;
+    --paper-panel-2: #2a261d;
+    --ink: #e9e2cf;
+    --ink-soft: #b9ae93;
+    --ink-faint: #857c65;
+    --line: #4a4433;
+    --line-strong: #6b6248;
+    --forest: #6fae74;
+    --forest-ink: #8fc793;
+    --brass: #d1a94a;
+    --brass-ink: #e0bd6c;
+    --wine: #d9748a;
+    --wine-ink: #e493a5;
+    --navy: #9fb3cc;
+    --link: #cbbf8e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin: 0;
+    padding: 48px 20px 96px;
+  }
+
+  .sheet {
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  .serif {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+  }
+
+  .mono {
+    font-family: "D2Coding", "Consolas", "SFMono-Regular", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  /* ---- Letterhead ---- */
+  header.letterhead {
+    border-top: 3px double var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 22px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  header.letterhead .titles h1 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 4px 0 6px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  header.letterhead .code {
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  header.letterhead .meta {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    white-space: nowrap;
+  }
+
+  header.letterhead .meta b { color: var(--ink); }
+
+  /* ---- Verdict stamp ---- */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid currentColor;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    transform: rotate(-2.5deg);
+    white-space: nowrap;
+    mix-blend-mode: multiply;
+  }
+  :root:not([data-theme="light"]) .stamp,
+  :root[data-theme="dark"] .stamp {
+    mix-blend-mode: screen;
+  }
+
+  .stamp.pass, .stamp.fit { color: var(--forest-ink); }
+  .stamp.partial { color: var(--brass-ink); }
+  .stamp.fail, .stamp.no-fit { color: var(--wine-ink); }
+  .stamp.hold { color: var(--ink-faint); border-style: dashed; }
+
+  .stamp-lg {
+    font-size: 22px;
+    padding: 12px 26px;
+    border-width: 3px;
+    border-radius: 8px;
+    transform: rotate(-3deg);
+  }
+
+  /* ---- Overview ---- */
+  .overview {
+    padding: 20px 0 8px;
+    color: var(--ink-soft);
+  }
+
+  /* ---- Verdict summary strip ---- */
+  .verdict-strip {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0 30px;
+  }
+
+  /* ---- Section ---- */
+  section.stage {
+    margin-top: 8px;
+  }
+
+  .stage > .stage-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+
+  .stage-head h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  /* ---- Criterion card ---- */
+  .criterion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px 20px;
+    margin-bottom: 16px;
+  }
+
+  .criterion .crit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .criterion h3 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .criterion .score {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .criterion dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 14px;
+    margin: 12px 0 0;
+  }
+
+  .criterion dt {
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .criterion dd {
+    margin: 0;
+    font-size: 14.5px;
+  }
+
+  .criterion .figs {
+    font-size: 14.5px;
+    background: var(--paper-panel-2);
+    border-left: 3px solid var(--line-strong);
+    padding: 9px 13px;
+    margin: 4px 0 12px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .criterion .clause {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .stage-summary {
+    font-size: 14px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--line-strong);
+    padding: 8px 14px;
+    margin: 4px 0 44px;
+  }
+
+  /* ---- Opinion panel ---- */
+  .opinion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 24px 26px;
+    margin-bottom: 44px;
+    position: relative;
+  }
+
+  .opinion h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0 0 12px;
+  }
+
+  .opinion p { margin: 0 0 12px; }
+  .opinion p:last-child { margin-bottom: 0; }
+
+  .opinion .conclusion {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .opinion .conclusion p { flex: 1; min-width: 240px; margin: 0; }
+
+  /* ---- Sources ---- */
+  .sources {
+    font-size: 13.2px;
+    color: var(--ink-soft);
+  }
+
+  .sources h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 17px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+
+  .sources ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .sources li { margin-bottom: 10px; }
+  .sources li b { color: var(--ink); }
+  .sources a { color: var(--link); }
+  .sources a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+  /* ---- Compliance ledger ---- */
+  .compliance {
+    margin-top: 40px;
+    border-top: 3px double var(--line-strong);
+    padding-top: 18px;
+  }
+
+  .compliance h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 15px;
+    margin: 0 0 12px;
+    color: var(--ink-soft);
+  }
+
+  .compliance ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .compliance li {
+    padding: 7px 0 7px 24px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .compliance li:last-child { border-bottom: none; }
+
+  .compliance li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    color: var(--forest-ink);
+    font-family: "D2Coding", monospace;
+  }
+
+  footer.colophon {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin-top: 40px;
+    letter-spacing: 0.04em;
+  }
+
+  a { color: var(--link); }
+
+  @media (max-width: 560px) {
+    header.letterhead { flex-direction: column; }
+    header.letterhead .meta { text-align: left; }
+    .criterion .crit-head { flex-direction: column; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="letterhead">
+    <div class="titles">
+      <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준</div>
+      <h1>한화갤러리아</h1>
+      <div class="code mono">종목코드 452260 · 코스피</div>
+    </div>
+    <div class="meta">
+      작성일 <b>2026-08-13</b><br>
+      작성 도구 <b><span class="mono">investment-desk</span></b> (백화점 산업 비교 서브에이전트)<br>
+      DART 조회 <b>corp_code 01722437</b>
+    </div>
+  </header>
+
+  <p class="overview">한화갤러리아는 2023년 한화솔루션에서 인적분할로 설립된 백화점·유통 전문기업으로, 압구정 명품관을 포함한 백화점 5개 점포를 운영한다(주력 매출 90% 이상이 백화점 부문 — B2C). 2025년(제3기) 매출액 약 5,751억원, 영업이익 94.1억원을 기록했으며, 롯데·신세계·현대백화점 대비 규모(총거래액 약 2.7조원)가 업계 최하위 수준이다.</p>
+
+  <div class="verdict-strip">
+    <span class="stamp stamp-lg fail">투자 매력 없음 · PASS</span>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">STAGE 1</span>
+      <h2>핵심 판단 기준 3개</h2>
+    </div>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+        <span class="score mono">Score ≈ 10/100</span>
+        <span class="stamp fail">미부합</span>
+      </div>
+      <p class="figs mono">매출총이익률 73.8% → 67.8% → 61.8% (제1→2→3기, 3년 연속 하락)<br>영업이익 98.2억 → 33.9억 → 94.1억원 · 이자비용 207.6억 → 265.9억 → 293.8억원<br>PER(POR) 약 650배 (업계 평균 15&ndash;30배)</p>
+      <p>`judge-retention-pricing-power` 스킬의 100점 스코어카드(Layer A&ndash;G)를 적용한 결과 Score ≈10/100으로, Financial Translation Gate(매출총이익률 3개년 연속 하락 + 최근 분기 영업이익 급감)와 Valuation Gate(PER 650배로 이미 M&A·지배구조 재료를 과도 반영)가 동시에 위반돼 최종 Verdict <b>PASS</b>가 확정됐다. Retention이 Pricing Power로 전환되는 인과 체인이 오히려 역방향(원가율 상승 → 마진 압축)으로 나타나 규칙서 정의(Retention↑ → Gross Margin↑ → Multiple Re-rating)와 정반대다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">기준① 판정 — "`scorecard_and_verdict.md`의 최종 Verdict 기준, PASS(또는 Gate 위반) → 미부합"</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 재무제표(Primary, Medium) · web.json 이초's Seconds 기사(밸류에이션·수익성, Medium) · FnGuide/FnSpace 미확보(컨센서스·코호트 데이터 없음, Low)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>② Structural vs Cyclical Misclassification</h3>
+        <span class="score mono">Score ≈ 1/100</span>
+        <span class="stamp fail">미부합</span>
+      </div>
+      <p class="figs mono">부채비율 144.3% (+9.1%p YoY) · 단기차입금 +90% YoY<br>총거래액 약 2.7조원 (롯데 14.2조 · 신세계 13.3조 · 현대백화점 9.1조 대비 최하위)<br>압구정 명품관 1개 점포가 거래액 40%↑ 차지</p>
+      <p>`judge-structural-vs-cyclical` 스킬의 Layer A&ndash;G 및 Cyclical Contamination Test를 적용한 결과, 국내 명품/백화점 소비의 구조적 침투율을 입증할 데이터가 캐시에 없어(FRED는 미국 지표) Layer A(구조적 수요)를 구조적으로 판정할 근거가 부재했다. 관찰 가능한 유일한 신호는 회사 고유의 경쟁 열위(점포 5개, 단일 점포 집중)와 재무 번역 단절(매출 소폭 증가에도 영업이익·순손실 급격 악화)이며, 4개 Gate(Valuation·Consensus·Financial Translation·Data Integrity) 모두 위반돼 Score ≈1/100, 최종 Verdict <b>PASS</b>.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">기준② 판정 — "`scorecard_and_verdict.md`의 최종 Verdict 기준, PASS(Score 50~64 또는 Gate 위반) → 미부합"</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 3개년 재무제표(Primary, Medium) · FRED 매크로(미국 지표, Low&ndash;국가 불일치) · web.json 업계 총거래액 비교(Medium) · FnGuide 미확보</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>③ Underpriced Customer Love (ULRS)</h3>
+        <span class="score mono">Score ≈ 6&ndash;15/100</span>
+        <span class="stamp fail">미부합</span>
+      </div>
+      <p class="figs mono">ULRS(진단 지표) ≈ &minus;8 (음수) · Red Flag 확정 1건(밸류에이션 과열, POR 650배)<br>리뷰 볼륨·재구매율·DAU 등 Love%ile 핵심 지표 데이터 없음</p>
+      <p>`judge-underpriced-customer-love` 스킬의 Score+Gate 아키텍처(Layer 1&ndash;5 + Catalyst) 적용 결과 Score 6&ndash;15/100으로 AVOID(50&ndash;64) 구간에도 못 미친다. Market Recognition Gate(전환 능력은 낮은데 밸류에이션은 이미 고평가)와 Consensus Gate(컨센서스 부재로 진정한 Variant View 제시 불가)가 위반됐다. "고객 애착은 있는데 시장이 아직 모른다"는 이 기준의 핵심 가설과 반대로, 애착 지표 자체가 확인되지 않는 채 시장은 이미 과열(POR 650배) 상태다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">기준③ 판정 — "`scorecard_and_verdict.md`의 Score+Gate, AVOID(Score 50~64 또는 Gate 위반) → 미부합"</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>web.json — 소비자 리뷰 볼륨 데이터 확인 안 됨(Low, 데이터 없음으로 처리) · DART 재무(Medium) · FnGuide 미확보(Market Recognition%ile 산출 불가)</dd>
+      </dl>
+    </article>
+
+    <p class="stage-summary">1단계 종합 — 3개 기준 모두 <b>미부합</b>(①PASS·②PASS·③AVOID, 각 Gate 위반 포함)이다. judgment-rules.md "3개 모두 미부합이면 그 시점에 투자 매력이 없는 것으로 보고 판단을 종료한다"에 따라 <b>2단계 스크리닝은 실행하지 않는다.</b></p>
+  </section>
+
+  <div class="opinion">
+    <h2>종합 투자의견</h2>
+    <p>한화갤러리아는 1단계 핵심 판단 기준 3개(Retention-to-Pricing-Power, Structural vs Cyclical, Underpriced Customer Love) 모두에서 미부합 판정을 받았다. 공통적으로 확인되는 문제는 (1) 매출총이익률의 3년 연속 하락과 이자비용이 영업이익을 상회하는 수준의 재무 압박, (2) 압구정 명품관 1개 점포에 40% 이상 집중된 극단적 사업 편중과 업계 최하위권 규모, (3) 현재 주가가 본업 펀더멘털이 아니라 F&B 자회사 매각차익·최대주주 변경 같은 투기적 재료(PER 약 650배)에 의존하고 있다는 점이다.</p>
+    <p>FnGuide/FnSpace 컨센서스 데이터를 이번 실행에서 확보하지 못해(MCP 도구 미제공) 목표주가 괴리율·코호트 리텐션 등 일부 근거는 데이터 부족으로 반영하지 못했다 — 이 공백이 결론을 뒤집을 가능성은 낮다고 판단하나(3개 기준 모두 Gate 다수 위반으로 이미 명확히 미부합), 추후 FnGuide 확보 시 재검증이 필요하다.</p>
+    <div class="conclusion">
+      <p>1단계에서 판단이 종료되어 2단계 스크리닝을 진행하지 않았다. 규칙서 기준상 <b>투자 매력 없음</b>으로 판단한다 — 백화점 산업 비교 순위표에서는 "탈락(투자 매력 없음)" 목록으로 분류한다.</p>
+      <span class="stamp fail">PASS</span>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h2>사용한 원자료 출처</h2>
+    <ol>
+      <li><b>DART</b> — <span class="mono">data/cache/한화갤러리아/dart.json</span>, 사업보고서(제1&ndash;3기) 재무제표, corp_code 01722437, 2026-08-13 조회.</li>
+      <li><b>FRED</b> — <span class="mono">data/cache/한화갤러리아/fred.json</span>, CPI·기준금리·소매판매(RSAFS)·실업률(미국 지표), 2026-08-13 조회. 국가 불일치로 참고용(Low Confidence).</li>
+      <li><b>FnGuide/FnSpace</b> — 미확보. 상위 세션에서는 <span class="mono">plugin:fnspace:fnspace</span> MCP 연결이 확인됐으나, 이 서브에이전트(투자 판단 서브에이전트)의 툴 목록에 <span class="mono">mcp__fnspace__*</span> 도구가 포함되지 않아 이번 실행에서는 직접 호출하지 못했다. 컨센서스·목표주가·추정실적·코호트 데이터는 전량 "데이터 없음"으로 처리했다.</li>
+      <li><b>뉴스웨이</b> — <a href="https://www.newsway.co.kr/news/view?ud=2026061811190314570" target="_blank" rel="noopener">"압구정 명품관 의존 한화갤러리아···본업 경쟁력 과제"</a>, 2026-08-13 수집(Proxy, Medium).</li>
+      <li><b>이초's Seconds</b> — <a href="https://etseconds.com/%ec%a3%bc%ec%8b%9d%ec%a0%95%eb%b3%b4/19700" target="_blank" rel="noopener">"한화갤러리아(452260) 주가 전망: 심각한 수익성 악화에 따른 재무제표 분석 및 밸류에이션 진단"</a>, 2026-08-13 수집(Proxy, Medium — 2025년 3분기 누적 실적·밸류에이션 근거).</li>
+      <li><b>더벨</b> — <a href="https://www.thebell.co.kr/front/newsview.asp?key=202512181716368120107052" target="_blank" rel="noopener">"파이브가이즈 '3배 차익' 한화갤러리아, 백화점 올인"</a>, 2026-08-13 수집(Proxy, Medium — 신사업 매각·전략 방향).</li>
+      <li><b>Google Finance</b> — <span class="mono">google.com/finance/quote/452260:KRX</span>, 2026-08-13 수집(Proxy, Medium — 시가총액/주가, fnguide.com·sedaily.com·stockplus.com과 교차확인했으나 값 편차 있음).</li>
+      <li><b>한화갤러리아 ESG 정보 페이지</b> — <span class="mono">hanwhagalleria.co.kr/management/esg-information.html</span>, 2026-08-13 수집(1차 소스이나 회사 자체 발간 자료, Medium — 페이지 존재만 확인, 중대 소송·제재 이력은 검색으로 확인 안 됨).</li>
+      <li><b>잡플래닛</b> — <span class="mono">jobplanet.co.kr/companies/47965/reviews</span>, 2026-08-13 수집(Low — 재직자 리뷰로 소비자 애착도 Proxy로 사용 불가, ULRS Love%ile 산정에는 미반영).</li>
+    </ol>
+  </section>
+
+  <div class="compliance">
+    <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+    <ul>
+      <li>3개 기준 모두 미부합 판정은 각 판단 스킬(judge-retention-pricing-power, judge-structural-vs-cyclical, judge-underpriced-customer-love)의 100점 스코어카드 + Gate 결과를 judgment-rules.md에 명시된 매핑 규칙(BUY/WATCH/PASS·AVOID → 부합/부분부합/미부합)으로 그대로 환산한 것이며, 오케스트레이터가 임의로 등급을 조정하지 않았다.</li>
+      <li>2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)은 "1단계에서 하나 이상 기준에 부합한 경우에만" 실행한다는 조항에 따라 이번 건에서는 생략했다.</li>
+      <li>FnGuide/FnSpace 데이터는 이 서브에이전트의 툴 제약으로 수집하지 못했다는 사실을 추측으로 채우지 않고 "데이터 없음"으로 명시했다(재현성 원칙 2번, "데이터 부족 시 처리" 절차 준수).</li>
+      <li>시가총액은 검색 소스마다 값이 상이해(3,935억/2,722억/6,494억원) 가장 최근 시점(2026-08-07) 값을 채택하고 편차를 본문·출처에 병기했다 — 임의로 하나만 골라 불확실성을 숨기지 않았다.</li>
+      <li>웹 검색 출처는 "웹 검색"으로 뭉치지 않고 뉴스웨이·이초's Seconds·더벨·Google Finance·한화갤러리아 ESG 페이지·잡플래닛을 각각 개별 항목으로 나열했다(Output 절 지침 준수).</li>
+    </ul>
+  </div>
+
+  <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13 · 백화점 산업 비교의 일부로 실행</footer>
+
+</div>

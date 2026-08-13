@@ -1,0 +1,566 @@
+<title>현대백화점 투심메모</title>
+<style>
+  :root {
+    --paper: #efeae0;
+    --paper-panel: #e6dfcf;
+    --paper-panel-2: #ded5c0;
+    --ink: #23241f;
+    --ink-soft: #5c5646;
+    --ink-faint: #8a8270;
+    --line: #c7bc9f;
+    --line-strong: #a89b77;
+    --forest: #2f5233;
+    --forest-ink: #24401f;
+    --brass: #8a6a1f;
+    --brass-ink: #6b5216;
+    --wine: #7d2036;
+    --wine-ink: #611829;
+    --navy: #2a3a52;
+    --link: #4a4530;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1a1813;
+      --paper-panel: #221f18;
+      --paper-panel-2: #2a261d;
+      --ink: #e9e2cf;
+      --ink-soft: #b9ae93;
+      --ink-faint: #857c65;
+      --line: #4a4433;
+      --line-strong: #6b6248;
+      --forest: #6fae74;
+      --forest-ink: #8fc793;
+      --brass: #d1a94a;
+      --brass-ink: #e0bd6c;
+      --wine: #d9748a;
+      --wine-ink: #e493a5;
+      --navy: #9fb3cc;
+      --link: #cbbf8e;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1a1813;
+    --paper-panel: #221f18;
+    --paper-panel-2: #2a261d;
+    --ink: #e9e2cf;
+    --ink-soft: #b9ae93;
+    --ink-faint: #857c65;
+    --line: #4a4433;
+    --line-strong: #6b6248;
+    --forest: #6fae74;
+    --forest-ink: #8fc793;
+    --brass: #d1a94a;
+    --brass-ink: #e0bd6c;
+    --wine: #d9748a;
+    --wine-ink: #e493a5;
+    --navy: #9fb3cc;
+    --link: #cbbf8e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin: 0;
+    padding: 48px 20px 96px;
+  }
+
+  .sheet {
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  .serif {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+  }
+
+  .mono {
+    font-family: "D2Coding", "Consolas", "SFMono-Regular", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  /* ---- Letterhead ---- */
+  header.letterhead {
+    border-top: 3px double var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 22px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  header.letterhead .titles h1 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 4px 0 6px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  header.letterhead .code {
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  header.letterhead .meta {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    white-space: nowrap;
+  }
+
+  header.letterhead .meta b { color: var(--ink); }
+
+  /* ---- Verdict stamp ---- */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid currentColor;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    transform: rotate(-2.5deg);
+    white-space: nowrap;
+    mix-blend-mode: multiply;
+  }
+  :root:not([data-theme="light"]) .stamp,
+  :root[data-theme="dark"] .stamp {
+    mix-blend-mode: screen;
+  }
+
+  .stamp.pass, .stamp.fit { color: var(--forest-ink); }
+  .stamp.partial { color: var(--brass-ink); }
+  .stamp.fail, .stamp.no-fit { color: var(--wine-ink); }
+  .stamp.hold { color: var(--ink-faint); border-style: dashed; }
+
+  .stamp-lg {
+    font-size: 22px;
+    padding: 12px 26px;
+    border-width: 3px;
+    border-radius: 8px;
+    transform: rotate(-3deg);
+  }
+
+  /* ---- Overview ---- */
+  .overview {
+    padding: 20px 0 8px;
+    color: var(--ink-soft);
+  }
+
+  /* ---- Verdict summary strip ---- */
+  .verdict-strip {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0 30px;
+  }
+
+  /* ---- Section ---- */
+  section.stage {
+    margin-top: 8px;
+  }
+
+  .stage > .stage-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+
+  .stage-head h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  /* ---- Criterion card ---- */
+  .criterion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px 20px;
+    margin-bottom: 16px;
+  }
+
+  .criterion .crit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .criterion h3 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .criterion .score {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .criterion dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 14px;
+    margin: 12px 0 0;
+  }
+
+  .criterion dt {
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .criterion dd {
+    margin: 0;
+    font-size: 14.5px;
+  }
+
+  .criterion .figs {
+    font-size: 14.5px;
+    background: var(--paper-panel-2);
+    border-left: 3px solid var(--line-strong);
+    padding: 9px 13px;
+    margin: 4px 0 12px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .criterion .clause {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .stage-summary {
+    font-size: 14px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--line-strong);
+    padding: 8px 14px;
+    margin: 4px 0 44px;
+  }
+
+  .stage-summary.terminal {
+    border-left-color: var(--wine-ink);
+    color: var(--wine-ink);
+    font-weight: 600;
+  }
+
+  /* ---- Screening table ---- */
+  .table-wrap { overflow-x: auto; margin-bottom: 44px; }
+
+  table.screen {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.8px;
+    min-width: 620px;
+  }
+
+  table.screen caption { display: none; }
+
+  table.screen th {
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+    padding: 0 12px 8px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  table.screen td {
+    padding: 12px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+
+  table.screen tr:last-child td { border-bottom: 1px solid var(--line-strong); }
+
+  table.screen td.item {
+    font-weight: 700;
+    white-space: nowrap;
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+  }
+
+  table.screen td.flag { white-space: nowrap; }
+
+  table.screen td.basis { color: var(--ink-soft); line-height: 1.65; }
+
+  .chip {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 3px 9px;
+    border-radius: 3px;
+    border: 1.5px solid currentColor;
+  }
+  .chip.pass { color: var(--forest-ink); }
+  .chip.none { color: var(--ink-faint); border-style: dashed; }
+
+  /* ---- Opinion panel ---- */
+  .opinion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 24px 26px;
+    margin-bottom: 44px;
+    position: relative;
+  }
+
+  .opinion h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0 0 12px;
+  }
+
+  .opinion p { margin: 0 0 12px; }
+  .opinion p:last-child { margin-bottom: 0; }
+
+  .opinion .conclusion {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .opinion .conclusion p { flex: 1; min-width: 240px; margin: 0; }
+
+  /* ---- Sources ---- */
+  .sources {
+    font-size: 13.2px;
+    color: var(--ink-soft);
+  }
+
+  .sources h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 17px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+
+  .sources ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .sources li { margin-bottom: 10px; }
+  .sources li b { color: var(--ink); }
+  .sources a { color: var(--link); }
+  .sources a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+  /* ---- Compliance ledger ---- */
+  .compliance {
+    margin-top: 40px;
+    border-top: 3px double var(--line-strong);
+    padding-top: 18px;
+  }
+
+  .compliance h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 15px;
+    margin: 0 0 12px;
+    color: var(--ink-soft);
+  }
+
+  .compliance ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .compliance li {
+    padding: 7px 0 7px 24px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .compliance li:last-child { border-bottom: none; }
+
+  .compliance li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    color: var(--forest-ink);
+    font-family: "D2Coding", monospace;
+  }
+
+  footer.colophon {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin-top: 40px;
+    letter-spacing: 0.04em;
+  }
+
+  a { color: var(--link); }
+
+  @media (max-width: 560px) {
+    header.letterhead { flex-direction: column; }
+    header.letterhead .meta { text-align: left; }
+    .criterion .crit-head { flex-direction: column; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="letterhead">
+    <div class="titles">
+      <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 (Score+Gate 아키텍처)</div>
+      <h1>현대백화점</h1>
+      <div class="code mono">종목코드 069960 · 코스피 · 백화점 산업 비교 대상</div>
+    </div>
+    <div class="meta">
+      작성일 <b>2026-08-13</b><br>
+      작성 도구 <b><span class="mono">investment-desk</span></b><br>
+      DART 조회 <b>corp_code 00428251</b>
+    </div>
+  </header>
+
+  <p class="overview">현대백화점은 롯데·신세계와 함께 국내 백화점 3사 과점 구조에 속한 오프라인 소매(B2C) 유통기업으로, DART 사업보고서 기준 제24기(FY2025) 연결 매출액 4조 2,303억원, 영업이익 3,779억원을 기록했다. Scope Gate 판단: 주력 매출이 소비자 대상 백화점 소매업이므로 B2C 스코프에 해당해 판단을 진행했다.</p>
+
+  <div class="verdict-strip">
+    <span class="stamp stamp-lg fail">투자 매력 없음 · 3개 기준 전부 미부합</span>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">STAGE 1</span>
+      <h2>핵심 판단 기준 3개</h2>
+    </div>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score 14/100 · Verdict: PASS</div>
+        </div>
+      </div>
+      <p class="figs mono">영업이익률 7.21% → 6.78% → 8.93% (제22→23→24기) · 매출액 YoY 전기 &minus;0.47% · 당기 +1.02%</p>
+      <p>Layer C(Customer Economics)와 Pricing Power Test 4개 서브테스트(가격 인상 이력, 인상 전후 리텐션, Mix/업셀, 경쟁사 대비 ASP) 전부가 데이터 부재(Insufficient Data)로, Financial Transmission Chain이 출발점(Retention)부터 끊겨 있어 FY2025 마진 개선을 가격전가력에 귀속시킬 인과 근거가 없다. Variant Perception도 "백화점 오프라인 구조적 저성장" 컨센서스 범위를 벗어나지 못해 Category 1(시장이 이미 아는 좋은 점)로 분류돼 Consensus Gate가 발동했다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준① "Verdict 매핑" — PASS(Gate 위반 포함) → 미부합. <span class="mono">judge-retention-pricing-power/references/scorecard_and_verdict.md</span> Consensus Gate·Data Integrity Gate·Financial Translation Gate 다중 발동</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 연결재무제표(Primary, Medium) · FnGuide/FnSpace 미확보(이번 실행 MCP 툴 미노출, 컨센서스·리텐션 지표 판단 보류) · web.json 출점계획(Proxy, 간접 근거)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>② Structural vs Cyclical Misclassification</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score 14/100 · Verdict: PASS</div>
+        </div>
+      </div>
+      <p class="figs mono">3개년 매출액 4.2075조 / 4.1876조(&minus;0.47%) / 4.2303조원(+1.02%) · 영업이익 3,035억 → 2,840억 → 3,779억원(+33.1%)</p>
+      <p>Cyclical Contamination Test 결과, Peer Divergence 테스트는 Broken(백화점 3사 매출 신장률 21.7% YoY 동반 성장 확인, 자사 고유의 구조적 괴리 근거 없음) 판정이고, Growth Decomposition 결과 매출은 3년간 사실상 정체(CAGR 약 0.3%)인데 영업이익 급증은 매출원가 절감·이자비용 감소(101.7십억←109.9십억, &minus;7.5%)가 주도해 Volume(구조적) 축이 아닌 Cost/금융비용(순환적) 축에서 발생한 것으로 확인됐다. 반증 시도(Bear case) 결과 핵심 테제가 지지되지 않았다. Variant Perception 역시 "더현대 신드롬/백화점 위기론" 범위를 벗어나지 못해 Consensus Gate가 발동했다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준② "Verdict 매핑" — PASS(Score 50&ndash;64 또는 Gate 위반) → 미부합. <span class="mono">judge-structural-vs-cyclical/references/cyclical_contamination_test.md</span> Peer Divergence Broken, Consensus Gate·Data Integrity Gate 발동</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 3개년 매출·영업이익·이자비용(Primary, Medium) · FRED(미국 CPI·기준금리·소매판매·실업률, 국가 불일치로 Low, 참고용) · web.json 업계 경쟁동향(Medium)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>③ Underpriced Customer Love (ULRS)</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score ≈41/100 · Verdict: AVOID</div>
+        </div>
+      </div>
+      <p class="figs mono">한국소비자원 백화점 만족도(2025.09, 5점 만점): 현대 3.85 vs 신세계 3.83 vs 롯데 3.75(격차 0.02점)</p>
+      <p>유일한 실측 Love 지표(소비자원 만족도 1위)도 경쟁사와 사실상 동률이라 강한 애착의 증거로 보기 어렵다. Durability Layer는 리텐션 감쇠·스위칭코스트 데이터 부재에 더해 복수 백화점 카드 병행 보유가 흔하고 온라인 유통 대체 위협이 상존해 40점 미만으로 산정, Durability Gate가 발동했다(이 자체로 Total Score 60점 상한 적용 대상). Market Recognition Gap(Layer 5)은 컨센서스 데이터 부재로 산정 불가해 중립(50점) 처리하지 않고 보수적으로 0점 처리했다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준③ "Verdict 매핑" — AVOID(Score 50&ndash;64 또는 Gate 위반, Red Flag 2개↑ 포함) → 미부합. <span class="mono">judge-underpriced-customer-love/references/scorecard_and_verdict.md</span> Durability Gate·Market Recognition Gate 미통과</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>web.json 소비자원 만족도조사(Medium, Proxy) · DART 마진 데이터(Primary, Medium) · FnGuide/FnSpace 미확보(Market Recognition Gap 산정 불가, 중립 처리 금지 원칙에 따라 감점 처리)</dd>
+      </dl>
+    </article>
+
+    <p class="stage-summary terminal">1단계 종합 — 기준①·②·③ 모두 미부합(각 PASS/PASS/AVOID → 미부합 환산)이다. <span class="mono">judgment-rules.md</span> "3개 모두 미부합이면 그 시점에 투자 매력이 없는 것으로 보고 판단을 종료한다" 조항에 따라 2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)은 실행하지 않는다.</p>
+  </section>
+
+  <div class="opinion">
+    <h2>종합 투자의견</h2>
+    <p>1단계 핵심 판단 기준 3개(Retention-to-Pricing-Power, Structural vs Cyclical, Underpriced Customer Love) 모두 미부합으로 판정됐다. 공통적으로 (1) 매출이 3개년간 사실상 정체된 상태에서 최근 영업이익 개선이 매출총이익률·가격전가력이 아니라 원가·이자비용 절감에 주로 기인하는 것으로 확인됐고, (2) 백화점 3사가 동반 성장(YoY +21.7%)하는 국면이라 현대백화점 고유의 구조적 우위·가격결정력·소비자 애착 우위를 뒷받침할 근거가 부족했으며, (3) 소비자 만족도(1위)·출점계획(더현대 오모테산도·부산·광주)은 긍정적 정황이나 세 기준 어느 것도 정량 임계값(Score 50 이상 또는 각 Gate 통과)을 충족하지 못했다.</p>
+    <p><span class="mono">judgment-rules.md</span> "1단계" 절의 "3개 모두 미부합이면 투자 매력이 없는 것으로 보고 판단을 종료한다"는 규정에 따라, 이번 데이터 시점(2026-08-13) 기준 현대백화점은 이 판단 규칙서상 투자 매력이 없는 것으로 결론짓는다. 단, FnGuide/FnSpace 컨센서스와 리텐션·재구매율 등 핵심 지표가 이번 실행에서 다수 미확보됐다는 점을 고려하면 이 결론은 "데이터가 부족해 부합 근거를 찾지 못했다"는 성격이 크며, 해당 데이터가 확보되면 재실행이 필요하다.</p>
+    <div class="conclusion">
+      <p>세 기준 모두 미부합 — 규칙서 조항에 따라 판단을 종료한다. 2단계 스크리닝은 실행하지 않았다.</p>
+      <span class="stamp fail">투자 매력 없음</span>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h2>사용한 원자료 출처</h2>
+    <ol>
+      <li><b>DART</b> — <span class="mono">data/cache/현대백화점/dart.json</span>, 사업보고서(제22&ndash;24기) 연결 손익계산서·재무상태표, corp_code 00428251, 2026-08-13 조회.</li>
+      <li><b>FRED</b> — <span class="mono">data/cache/현대백화점/fred.json</span>, CPI·기준금리(FEDFUNDS)·소매판매(RSAFS)·실업률(UNRATE), 미국 지표, 2026-08-13 조회. 국가 불일치로 Low Confidence, 참고용.</li>
+      <li><b>FnGuide/FnSpace</b> — 미확보. fnspace MCP 플러그인은 연결 상태였으나 이번 서브에이전트 세션의 툴 목록에 <span class="mono">mcp__fnspace__*</span> 함수가 노출되지 않아 컨센서스·추정실적·목표주가 데이터를 수집하지 못했다. 세 기준 판단 모두에서 이 공백을 명시하고 관련 하위 지표를 판단 보류 처리했다.</li>
+      <li><b>alphasquare.co.kr</b> (Proxy) — <span class="mono">data/cache/현대백화점/web.json</span> market_data, 2026-08-13 조회. 시가총액 2조 2,535억원, 현재가 146,500원, 52주 최고/최저가. Medium Confidence(3rd-party 웹, 공식 API 아님).</li>
+      <li><b>다음뉴스(한국소비자원 조사 인용)</b> (Proxy) — 백화점 3사 소비자 만족도 조사(2025-09), 현대 3.85점 1위(신세계 3.83, 롯데 3.75). Medium Confidence.</li>
+      <li><b>Teamblind</b> (Proxy) — 현대백화점 직원 리뷰. 소비자 애착 지표로 직접 사용 불가해 참고용으로만 표기, Low Confidence.</li>
+      <li><b>thesmileinfo.com</b> (Proxy) — "2026 유통업 대전환 분석"(2026-01), 더현대 오모테산도(도쿄, 2026)·더현대 부산(2027)·더현대 광주(2028) 등 출점 계획. Medium Confidence.</li>
+      <li><b>alphabiz.co.kr</b> (Proxy) — 현대백화점그룹 ESG 등급 A+(2년 연속) 기사. 최근 1년 내 중대 ESG 제재·소송 이력은 검색상 확인되지 않음(데이터 없음, Pass로 임의 격상하지 않음). Medium Confidence.</li>
+      <li><b>CEO매거진</b> (Proxy) — 백화점 3사(롯데·신세계·현대) 경쟁 구도 및 매출 신장률(2026-04 YoY +21.7%, 유통업 평균 대비 3배) 기사. Medium Confidence.</li>
+    </ol>
+  </section>
+
+  <div class="compliance">
+    <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+    <ul>
+      <li>세 기준 모두 각 스킬의 100점 Score+Gate 아키텍처(<span class="mono">references/scorecard_and_verdict.md</span>)로 산출된 최종 Verdict(PASS/PASS/AVOID)를 <span class="mono">judgment-rules.md</span> 기준①②③의 매핑 조항 그대로 적용해 미부합으로 환산했다 — 임의 재량 해석을 추가하지 않았다.</li>
+      <li>3개 기준 모두 미부합이므로 <span class="mono">judgment-rules.md</span> 1단계 규정에 따라 2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)을 실행하지 않았다.</li>
+      <li>FnGuide/FnSpace 데이터 미확보를 세 기준 판단 각각에서 명시했고, 해당 데이터에 의존하는 하위 지표(Market Recognition Gap, 컨센서스 오차, Valuation 배수 등)는 임의로 추정하지 않고 판단 보류·감점 처리했다(재현성 원칙 2번).</li>
+      <li>모든 판단 문장에 적용한 <span class="mono">judgment-rules.md</span> 조항·스킬 Gate 이름을 괄호/각주로 명시했다(판단 일관성 원칙 3번).</li>
+      <li>이 보고서는 "백화점 산업" 비교의 일부로 실행됐으며, 산업 순위표에서는 "탈락(투자 매력 없음)" 목록에 사유와 함께 기재되어야 한다(<span class="mono">judgment-rules.md</span> "산업/섹터 비교 — 순위 산정" 절).</li>
+    </ul>
+  </div>
+
+  <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13</footer>
+
+</div>

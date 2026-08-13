@@ -1,0 +1,516 @@
+<title>신세계 투심메모</title>
+<style>
+  :root {
+    --paper: #efeae0;
+    --paper-panel: #e6dfcf;
+    --paper-panel-2: #ded5c0;
+    --ink: #23241f;
+    --ink-soft: #5c5646;
+    --ink-faint: #8a8270;
+    --line: #c7bc9f;
+    --line-strong: #a89b77;
+    --forest: #2f5233;
+    --forest-ink: #24401f;
+    --brass: #8a6a1f;
+    --brass-ink: #6b5216;
+    --wine: #7d2036;
+    --wine-ink: #611829;
+    --navy: #2a3a52;
+    --link: #4a4530;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1a1813;
+      --paper-panel: #221f18;
+      --paper-panel-2: #2a261d;
+      --ink: #e9e2cf;
+      --ink-soft: #b9ae93;
+      --ink-faint: #857c65;
+      --line: #4a4433;
+      --line-strong: #6b6248;
+      --forest: #6fae74;
+      --forest-ink: #8fc793;
+      --brass: #d1a94a;
+      --brass-ink: #e0bd6c;
+      --wine: #d9748a;
+      --wine-ink: #e493a5;
+      --navy: #9fb3cc;
+      --link: #cbbf8e;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1a1813;
+    --paper-panel: #221f18;
+    --paper-panel-2: #2a261d;
+    --ink: #e9e2cf;
+    --ink-soft: #b9ae93;
+    --ink-faint: #857c65;
+    --line: #4a4433;
+    --line-strong: #6b6248;
+    --forest: #6fae74;
+    --forest-ink: #8fc793;
+    --brass: #d1a94a;
+    --brass-ink: #e0bd6c;
+    --wine: #d9748a;
+    --wine-ink: #e493a5;
+    --navy: #9fb3cc;
+    --link: #cbbf8e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin: 0;
+    padding: 48px 20px 96px;
+  }
+
+  .sheet {
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  .serif {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+  }
+
+  .mono {
+    font-family: "D2Coding", "Consolas", "SFMono-Regular", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  /* ---- Letterhead ---- */
+  header.letterhead {
+    border-top: 3px double var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 22px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  header.letterhead .titles h1 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 4px 0 6px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  header.letterhead .code {
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  header.letterhead .meta {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    white-space: nowrap;
+  }
+
+  header.letterhead .meta b { color: var(--ink); }
+
+  /* ---- Verdict stamp ---- */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid currentColor;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    transform: rotate(-2.5deg);
+    white-space: nowrap;
+    mix-blend-mode: multiply;
+  }
+  :root:not([data-theme="light"]) .stamp,
+  :root[data-theme="dark"] .stamp {
+    mix-blend-mode: screen;
+  }
+
+  .stamp.pass, .stamp.fit { color: var(--forest-ink); }
+  .stamp.partial { color: var(--brass-ink); }
+  .stamp.fail, .stamp.no-fit { color: var(--wine-ink); }
+  .stamp.hold { color: var(--ink-faint); border-style: dashed; }
+
+  .stamp-lg {
+    font-size: 22px;
+    padding: 12px 26px;
+    border-width: 3px;
+    border-radius: 8px;
+    transform: rotate(-3deg);
+  }
+
+  /* ---- Overview ---- */
+  .overview {
+    padding: 20px 0 8px;
+    color: var(--ink-soft);
+  }
+
+  /* ---- Verdict summary strip ---- */
+  .verdict-strip {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0 30px;
+  }
+
+  /* ---- Section ---- */
+  section.stage {
+    margin-top: 8px;
+  }
+
+  .stage > .stage-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+
+  .stage-head h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  /* ---- Criterion card ---- */
+  .criterion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px 20px;
+    margin-bottom: 16px;
+  }
+
+  .criterion .crit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .criterion h3 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .criterion .score {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .criterion dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 14px;
+    margin: 12px 0 0;
+  }
+
+  .criterion dt {
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .criterion dd {
+    margin: 0;
+    font-size: 14.5px;
+  }
+
+  .criterion .figs {
+    font-size: 14.5px;
+    background: var(--paper-panel-2);
+    border-left: 3px solid var(--line-strong);
+    padding: 9px 13px;
+    margin: 4px 0 12px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .criterion .clause {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .stage-summary {
+    font-size: 14px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--line-strong);
+    padding: 8px 14px;
+    margin: 4px 0 44px;
+  }
+
+  .stage-summary.terminal {
+    border-left-color: var(--wine-ink);
+    color: var(--wine-ink);
+    font-weight: 600;
+  }
+
+  /* ---- Opinion panel ---- */
+  .opinion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 24px 26px;
+    margin-bottom: 44px;
+    position: relative;
+  }
+
+  .opinion h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0 0 12px;
+  }
+
+  .opinion p { margin: 0 0 12px; }
+  .opinion p:last-child { margin-bottom: 0; }
+
+  .opinion .conclusion {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .opinion .conclusion p { flex: 1; min-width: 240px; margin: 0; }
+
+  /* ---- Sources ---- */
+  .sources {
+    font-size: 13.2px;
+    color: var(--ink-soft);
+  }
+
+  .sources h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 17px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+
+  .sources ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .sources li { margin-bottom: 10px; }
+  .sources li b { color: var(--ink); }
+  .sources a { color: var(--link); }
+  .sources a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+  /* ---- Compliance ledger ---- */
+  .compliance {
+    margin-top: 40px;
+    border-top: 3px double var(--line-strong);
+    padding-top: 18px;
+  }
+
+  .compliance h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 15px;
+    margin: 0 0 12px;
+    color: var(--ink-soft);
+  }
+
+  .compliance ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .compliance li {
+    padding: 7px 0 7px 24px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .compliance li:last-child { border-bottom: none; }
+
+  .compliance li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    color: var(--forest-ink);
+    font-family: "D2Coding", monospace;
+  }
+
+  footer.colophon {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin-top: 40px;
+    letter-spacing: 0.04em;
+  }
+
+  a { color: var(--link); }
+
+  @media (max-width: 560px) {
+    header.letterhead { flex-direction: column; }
+    header.letterhead .meta { text-align: left; }
+    .criterion .crit-head { flex-direction: column; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="letterhead">
+    <div class="titles">
+      <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 (Score+Gate 아키텍처)</div>
+      <h1>신세계</h1>
+      <div class="code mono">종목코드 004170 · 코스피 · 백화점 산업 비교 대상</div>
+    </div>
+    <div class="meta">
+      작성일 <b>2026-08-13</b><br>
+      작성 도구 <b><span class="mono">investment-desk</span></b><br>
+      DART 조회 <b>corp_code 00136378</b>
+    </div>
+  </header>
+
+  <p class="overview">신세계는 롯데·현대와 함께 국내 백화점 3사 과점 구조에 속한 오프라인 소매(B2C) 유통기업으로, 백화점(본점·강남점 등 전국 13개 점포) 및 면세업을 핵심 사업으로 영위한다. DART 사업보고서 기준 제69기(FY2025) 별도 매출액 6조 9,295억원, 영업이익 4,800억원을 기록했다. Scope Gate 판단: 주력 매출이 소비자 대상 백화점·면세 소매업이므로 B2C 스코프에 해당해 판단을 진행했다.</p>
+
+  <div class="verdict-strip">
+    <span class="stamp stamp-lg fail">투자 매력 없음 · 3개 기준 전부 미부합</span>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">STAGE 1</span>
+      <h2>핵심 판단 기준 3개</h2>
+    </div>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score 4/100 · Verdict: PASS</div>
+        </div>
+      </div>
+      <p class="figs mono">매출총이익률 60.63% → 61.68% → 60.51% (제67→68→69기) · 영업이익률 10.07% → 7.26% → 6.93%(3개년 연속 하락) · 매출원가 YoY +8.69% &gt; 매출액 YoY +5.47%</p>
+      <p>Layer C(Customer Economics: 리텐션·CAC·LTV)와 Pricing Power Test 4개 서브테스트(가격 인상 이력, 인상 전후 리텐션 유지, Mix를 통한 가격 상승, 경쟁사 대비 ASP 프리미엄)가 전부 데이터 부재(Insufficient Data)로 Data Integrity Gate가 발동했다. "명품관 확장·프리미엄 Mix 전환" 서술(웹 뉴스)은 존재하나 실제 매출총이익률·영업이익률은 오히려 3개년 연속 하락해 Financial Transmission Chain이 Gross Margin 단계에서 끊긴다(Financial Translation Gate 발동). 현재가(721,000원)가 52주 최고가(722,000원)에 근접해 있어 "명품·면세 개선" 스토리가 이미 상당 부분 가격에 반영된 것으로 판단, Variant Perception이 Category 1(시장이 이미 아는 좋은 점)로 분류돼 Consensus Gate도 발동했다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준① "Verdict 매핑" — PASS(Gate 위반 포함) → 미부합. <span class="mono">judge-retention-pricing-power/references/scorecard_and_verdict.md</span> Consensus Gate·Data Integrity Gate·Financial Translation Gate·Valuation Gate(확인 불가로 미통과 처리) 다중 발동</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 별도재무제표(Primary, Medium) · FnGuide/FnSpace 미확보(이번 실행 서브에이전트 툴셋에 MCP 함수 미노출, 리텐션·컨센서스 지표 판단 보류) · web.json 명품관 확장·시세(Proxy, Medium)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>② Structural vs Cyclical Misclassification</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score ≈15/100 · Verdict: PASS</div>
+        </div>
+      </div>
+      <p class="figs mono">매출액 YoY 3.36%(68기) → 5.47%(69기) · 2026년 1분기 연결 매출 YoY +10.9%(웹, 분기·연결 vs 연간·별도라 직접 비교 불가) · 영업이익률 10.07% → 7.26% → 6.93%(3개년 연속 하락)</p>
+      <p>Cyclical Contamination Test 결과, Test 1(한국 매크로 동행 여부)은 FRED 캐시가 미국 지표(CPI·기준금리·소매판매·실업률)만 포함해 판단 보류로 처리했다. Test 3(Growth Decomposition)에서 최근 실적 개선 서술이 "중국 단체관광객 무비자 시행에 따른 방한객 증가"(정책 변수)와 "럭셔리 초격차"(Mix/Price 축)에 집중돼 있는데, 정작 연간 영업이익률은 3개년 연속 하락해 순수 Volume 중심의 구조적 전환으로 보기 어렵다 — 구조와 순환이 뒤섞여 분리되지 않는다는 결론이다. Test 2(Peer Divergence)는 정량 데이터가 없으나, 롯데·현대·신세계 3사가 동시에 명품관·이커머스 확장 전략을 펴고 있다는 정성 근거(웹 뉴스)가 오히려 Divergence 부재 방향을 시사한다. Financial Transmission Chain은 Company Revenue 단계에서부터 Broken이며, 그 이후 Peer Divergence·Sell-side 재분류·Multiple Re-rating은 데이터 없음으로 판단 보류다. 현재가가 52주 최고가권에 있어 Variant Perception도 Category 1로 분류돼 Consensus Gate가 발동했다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준② "Verdict 매핑" — PASS(Score 50&ndash;64 또는 Gate 위반) → 미부합. <span class="mono">judge-structural-vs-cyclical/references/cyclical_contamination_test.md</span>·<span class="mono">scorecard_and_verdict.md</span> Valuation·Consensus·Financial Translation·Data Integrity Gate 4개 전부 발동</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 3개년 매출·영업이익(Primary, Medium) · FRED(미국 CPI·기준금리·소매판매·실업률, 국가 불일치로 Low, 참고용) · web.json 업계 경쟁·정책 동향(Medium)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>③ Underpriced Customer Love (ULRS)</h3>
+        <div>
+          <span class="stamp fail">미부합</span>
+          <div class="score mono">Score ≈5&ndash;10/100 · Verdict: AVOID</div>
+        </div>
+      </div>
+      <p class="figs mono">한계영업이익률(ΔEBIT/ΔRev) 68기 구간 음수, 69기 구간 0에 근접 · 이자보상배율 ≈1.80배(69기) · 점포 수 롯데 30 &gt; 현대 16 &gt; 신세계 13(3사 중 최소)</p>
+      <p>Layer 1(Customer Love)·Layer 2(Durability)의 핵심 정량 지표(재구매율, 리뷰 스코어 추이, Retention Decay, Switching Cost)가 전부 데이터 없음이라 Durability Gate 통과를 확인할 근거가 없다(Layer2 ≥40 입증 불가 → 60점 상한 적용 대상). Layer 3(Operating Monetization Gap)의 유일한 실측치인 영업이익률이 3개년 연속 하락(10.1%→7.3%→6.9%)했고, Layer 4(Financial Conversion Capacity)의 한계영업이익률도 음수~0에 근접해 영업레버리지가 작동하지 않는다. Layer 5(Market Recognition Gap)는 컨센서스·Peer 데이터 부재로 완전 판단 보류이며, ULRS 진단 공식(Conversion_Readiness_Gap)도 Layer4·5 Percentile 부재로 산출 자체가 불가해 Market Recognition Gate 통과를 확인할 수 없다. Red Flag 10종 중 9개가 "확인 불가"(임의로 미해당 처리하지 않음)로, 이 자체가 Data Integrity Gate를 발동시킨다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause"><span class="mono">judgment-rules.md</span> 기준③ "Verdict 매핑" — AVOID(Score 50&ndash;64 또는 Gate 위반, Red Flag 2개↑ 포함) → 미부합. <span class="mono">judge-underpriced-customer-love/references/scorecard_and_verdict.md</span> Durability Gate·Market Recognition Gate·Data Integrity Gate 미통과</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 마진·이자비용 데이터(Primary, Medium) · web.json 점포 수·경쟁 구도(Proxy, Medium) · FnGuide/FnSpace 미확보(Market Recognition Gap 산정 불가, 중립 처리 금지 원칙에 따라 감점 처리)</dd>
+      </dl>
+    </article>
+
+    <p class="stage-summary terminal">1단계 종합 — 기준①·②·③ 모두 미부합(각 PASS/PASS/AVOID → 미부합 환산)이다. <span class="mono">judgment-rules.md</span> "3개 모두 미부합이면 그 시점에 투자 매력이 없는 것으로 보고 판단을 종료한다" 조항에 따라 2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)은 실행하지 않는다.</p>
+  </section>
+
+  <div class="opinion">
+    <h2>종합 투자의견</h2>
+    <p>1단계 핵심 판단 기준 3개(Retention-to-Pricing-Power, Structural vs Cyclical, Underpriced Customer Love) 모두 미부합으로 판정됐다. 공통적으로 (1) 명품관 확장·면세 방한객 증가 등 긍정적 서술은 다수 확인되나 정작 매출총이익률·영업이익률은 최근 3개년 연속 하락해 "프리미엄화 → 가격결정력 → 마진 확장"이라는 핵심 인과 체인이 재무제표에서 검증되지 않았고, (2) 현재가가 52주 최고가권(721,000원/722,000원)에 있어 알려진 호재가 이미 상당 부분 주가에 반영된 것으로 판단되며, (3) 점포 수 기준 3사 중 최소 규모라는 경쟁 열위와 리텐션·재구매율 등 소비자 애착 정량 지표 부재가 겹쳐 어느 기준도 정량 임계값(Score 50 이상 또는 각 Gate 통과)을 충족하지 못했다.</p>
+    <p><span class="mono">judgment-rules.md</span> "1단계" 절의 "3개 모두 미부합이면 투자 매력이 없는 것으로 보고 판단을 종료한다"는 규정에 따라, 이번 데이터 시점(2026-08-13) 기준 신세계는 이 판단 규칙서상 투자 매력이 없는 것으로 결론짓는다. 단, FnGuide/FnSpace 컨센서스와 리텐션·재구매율 등 핵심 지표가 이번 실행에서 다수 미확보됐다는 점을 고려하면 이 결론은 "데이터가 부족해 부합 근거를 찾지 못했다"는 성격이 크며, 해당 데이터가 확보되면 재실행이 필요하다.</p>
+    <div class="conclusion">
+      <p>세 기준 모두 미부합 — 규칙서 조항에 따라 판단을 종료한다. 2단계 스크리닝은 실행하지 않았다.</p>
+      <span class="stamp fail">투자 매력 없음</span>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h2>사용한 원자료 출처</h2>
+    <ol>
+      <li><b>DART</b> — <span class="mono">data/cache/신세계/dart.json</span>, 사업보고서(제67&ndash;69기) 별도 손익계산서·재무상태표, corp_code 00136378, 2026-08-13 조회.</li>
+      <li><b>FRED</b> — <span class="mono">data/cache/신세계/fred.json</span>, CPI·기준금리(FEDFUNDS)·소매판매(RSAFS)·실업률(UNRATE), 미국 지표, 2026-08-13 조회. 국가 불일치로 Low Confidence, 참고용.</li>
+      <li><b>FnGuide/FnSpace</b> — 미확보. fnspace MCP 플러그인은 연결 상태였으나 이번 서브에이전트 세션의 툴 목록에 <span class="mono">mcp__fnspace__*</span> 함수가 노출되지 않아 컨센서스·추정실적·목표주가 데이터를 수집하지 못했다. 세 기준 판단 모두에서 이 공백을 명시하고 관련 하위 지표를 판단 보류 처리했다.</li>
+      <li><b>Tripadvisor</b> (Proxy) — 신세계백화점 본점 이용 후기, 2026-08-13 수집. 정성적 호평(식품매장)·부정 피드백(명품관 동선) 혼재, 수치화된 재구매율·NPS 지표 아님. Low&ndash;Medium Confidence.</li>
+      <li><b>나무위키</b> (Proxy) — 신세계백화점 본점·강남점 문서, 2026-08-13 수집. 명품관·식품관 확장 서술. Low Confidence(위키형 매체).</li>
+      <li><b>Daum(연합 등 통신기사 재게재)</b> (Proxy) — "매장 더 크게… 판 커진 백화점 '명품관 전쟁'"(2026-07-28), 명동 디올 부티크 복층 확장 등. Medium Confidence.</li>
+      <li><b>한국경제</b> (Proxy) — 2026년 1분기 연결 실적(매출 YoY +10.9%, 영업이익 YoY +49.5%, 순이익 YoY +108.9%) 및 상반기 백화점 명품 매출 YoY +30%대 서술. 분기·연결 기준이라 DART 연간·별도 수치와 직접 비교하지 않고 참고용으로만 사용. Medium Confidence.</li>
+      <li><b>인사이트코리아</b> (Proxy) — "현대·신세계·롯데百, 이커머스 전면 재편" 기사, 점포 수(롯데30·현대16·신세계13) 및 3사 이커머스 재편 전략. Medium Confidence.</li>
+      <li><b>아시아경제</b> (Proxy) — "[단독]'계열 분리' 신세계百, 자사몰 결제 도입…이커머스 재진출" 기사, 비욘드 신세계 재출시(2025-07) 서술. Medium Confidence.</li>
+      <li><b>Daum Finance</b> (Proxy) — <span class="mono">data/cache/신세계/web.json</span> market_data, 2026-08-13 조회. 시가총액 약 6조 8,099억원, 현재가 721,000원(+5.26%), 52주 160,800원~722,000원. Medium Confidence(3rd-party 웹, 공식 API 아님).</li>
+      <li><b>브런치(ESG 동향 정리 게시물)</b> (Proxy) — 신세계㈜ 자체의 중대 소송·제재 이력은 검색상 확인되지 않음(데이터 없음, Pass로 임의 격상하지 않음). 계열사 신세계I&amp;C의 KCGS ESG A등급(3년 연속)은 별도 법인이라 참고용으로만 표기. Low&ndash;Medium Confidence.</li>
+    </ol>
+  </section>
+
+  <div class="compliance">
+    <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+    <ul>
+      <li>세 기준 모두 각 스킬의 100점 Score+Gate 아키텍처(<span class="mono">references/scorecard_and_verdict.md</span>)로 산출된 최종 Verdict(PASS/PASS/AVOID)를 <span class="mono">judgment-rules.md</span> 기준①②③의 매핑 조항 그대로 적용해 미부합으로 환산했다 — 임의 재량 해석을 추가하지 않았다.</li>
+      <li>3개 기준 모두 미부합이므로 <span class="mono">judgment-rules.md</span> 1단계 규정에 따라 2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)을 실행하지 않았다.</li>
+      <li>FnGuide/FnSpace 데이터 미확보를 세 기준 판단 각각에서 명시했고, 해당 데이터에 의존하는 하위 지표(Market Recognition Gap, 컨센서스 오차, Valuation 배수 등)는 임의로 추정하지 않고 판단 보류·감점 처리했다(재현성 원칙 2번).</li>
+      <li>2026년 1분기 연결 실적(YoY +49.5% 영업이익 등)은 분기·연결 기준이라 DART에서 확보한 연간·별도 기준 수치와 집계 범위가 달라 직접 비교·상쇄에 사용하지 않고 참고용으로만 인용했다 — 서로 다른 집계 기준을 섞어 결론을 내리지 않기 위함이다.</li>
+      <li>모든 판단 문장에 적용한 <span class="mono">judgment-rules.md</span> 조항·스킬 Gate 이름을 괄호/각주로 명시했다(판단 일관성 원칙 3번).</li>
+      <li>이 보고서는 "백화점 산업" 비교의 일부로 실행됐으며, 산업 순위표에서는 "탈락(투자 매력 없음)" 목록에 사유와 함께 기재되어야 한다(<span class="mono">judgment-rules.md</span> "산업/섹터 비교 — 순위 산정" 절).</li>
+    </ul>
+  </div>
+
+  <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13</footer>
+
+</div>

@@ -63,6 +63,9 @@ Verdict must be one of: **Supported / Partially Supported / Not Supported**.
 2. **Data gathering** — before writing any layer, search for the company's latest retention/cohort
    data, pricing history, ASP/ARPU, margins, and consensus estimates. Use web search liberally; this
    skill is only as good as the data behind it. Cite value + period + source for every number.
+   이 레포(Claude Code) 안에서 실행할 때는 `data/cache/<기업명>/*.json`(fetch-dart/fetch-fnguide/
+   fetch-fred/fetch-web이 이미 수집한 원자료)이 있으면 먼저 재사용하고, 거기 없는 retention/가격/
+   ASP 등 이 철학 고유 지표만 웹 검색으로 보완한다.
 3. **Layers A → G** — follow `references/layers_a_to_g.md` in order (Demand → Product/Brand →
    Customer Economics → Competitive Advantage → Distribution → Financial Translation →
    Variant Perception). Run the **Pricing Power Test** (4 sub-tests) inside Layer C/D per
@@ -82,6 +85,10 @@ Verdict must be one of: **Supported / Partially Supported / Not Supported**.
    Expected Return → Entry Strategy → Thesis Break → Scorecard → Final Investment Decision).
 9. **Produce deliverable files** — see "Final file output" below. This step is mandatory; a
    conversational answer alone is not a complete run of this skill.
+10. **(이 레포 파이프라인에서 호출될 때만) 축약 판정 반환** — `investment-desk`가 1단계 필터링용으로
+    호출한 경우, 위 Final Verdict를 `judgment-rules.md` 기준① 매핑(BUY→부합, WATCH→부분부합,
+    PASS 또는 Gate 위반→미부합)으로 환산해 짧게 반환한다. SELL은 신규 판단(1단계 필터링)에는
+    등장하지 않는다. 두 출력(전체 메모 vs 파이프라인용 축약 판정)은 같은 계산에서 나와야 한다.
 
 ## Final file output (mandatory)
 
@@ -96,10 +103,11 @@ content, using the company's name (spaces replaced with underscores, no special 
   yellow=WATCH, gray=PASS, red=SELL). Use `assets/memo_template.html` as the base template/CSS;
   do not reinvent styling from scratch each time.
 
-Steps:
-1. Write both files under `/home/claude/` first, then copy final versions into `/mnt/user-data/outputs/`.
-2. Call `present_files` with both paths (.md first, then .html) so the user can open/download them.
-3. Do not add a long post-amble after presenting the files — a one-line summary of the verdict is enough.
+**저장 위치**: 이 레포(Claude Code) 안에서 실행할 때는 Claude.ai 관례(`/home/claude/`,
+`/mnt/user-data/outputs/`, `present_files`)를 쓰지 않는다 — 워크드 예시/템플릿은 `assets/`에,
+`investment-desk`가 실제 대상 기업으로 실행한 최종 결과는
+`reports/<기업명>_Investment_Memo_retention-pricing-power.md`(+`.html`)에 저장한다. 파일을 저장한
+뒤에는 저장된 두 경로만 짧게 알려준다 — 긴 후기(post-amble)는 붙이지 않는다.
 
 ## Reference files (load as needed)
 

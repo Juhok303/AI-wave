@@ -57,7 +57,7 @@ AI-wave/
 | `fetch-fnguide` | ✅ `fnspace-mcp` MCP 플러그인으로 연결 완료(2026-08-13, `mcp__fnspace__*` 도구 7개 — 재무/목표주가/추정실적/Fwd지표). ⚠️ 동봉된 임시 공유 키가 2026-08-15 만료 — 팀 자체 FNSPACE_API_KEY로 교체 필요. `lib/fnguide_client.py`(www.fnguide.com 로그인)는 이용권 없어 폐기, 참고용으로만 보관 |
 | `fetch-web` | 🔧 스킬 정의 완료 (WebSearch/WebFetch 사용, 로직은 실행 시점에 Claude가 수행) |
 | `judge-structural-vs-cyclical` | ✅ chaemin이 기준①(pjueun) 깊이에 맞춰 전면 재작성한 버전으로 교체 완료(2026-08-13, 커밋명 "cyclical judgement redrafted") — 아래 "깊이 격차 8가지" 전 항목 반영: `references/{layers_a_to_g, cyclical_contamination_test, financial_transmission, variant_perception, catalyst_and_entry, scorecard_and_verdict, output_template}.md` + `assets/memo_template.html`. **파이프라인용 부합/부분부합/미부합 환산 절차도 SKILL.md·`scorecard_and_verdict.md` 양쪽에 자체 내장**(judge-underpriced-customer-love와 동일 패턴) — 더 이상 `judgment-rules.md` 미참조 이슈 없음. On Holding(ONON) 워크드 예시를 새 구조로 재생성(`assets/example-memo-onon.md`+`.html`). 업로드된 중복 원본(`cyclical_judgement_redrafted/` 폴더, `.zip` 2개)은 정리·삭제 |
-| `judge-retention-pricing-power` | ✅ pjueun의 공식 패키지(`SKILL.md` + `references/` 7개 문서 + `assets/` memo_template.html·example-memo-costco.html)로 통일 완료(2026-08-12) — 제가 먼저 쓴 역추출 잠정 버전 및 중복 폴더(`retention-pricing-power-memo`)는 정리·삭제. ⚠️ 다만 이 SKILL.md는 `judgment-rules.md`/`investment-desk` 파이프라인과 무관하게 독립적으로 작성돼(부합/부분부합/미부합이 아니라 BUY/WATCH/PASS/SELL 산출, `judgment-rules.md` 미참조), 파일 출력 경로도 Claude.ai 전용 표현(`/mnt/user-data/outputs/`, `present_files`)이라 Claude Code(`investment-desk`)에서 그대로 호출하면 안 맞는 부분이 있음 — 아래 참고 |
+| `judge-retention-pricing-power` | ✅ pjueun의 공식 패키지(`SKILL.md` + `references/` 7개 문서 + `assets/` memo_template.html·example-memo-costco.html)로 통일 완료(2026-08-12) — 제가 먼저 쓴 역추출 잠정 버전 및 중복 폴더(`retention-pricing-power-memo`)는 정리·삭제. ✅ **파이프라인 정합성 보완 완료(2026-08-13, pjueun)** — `judge-underpriced-customer-love`와 동일한 형태로 SKILL.md에 (1) "이 레포 파이프라인 호출 시 축약 판정 반환" 단계(BUY→부합/WATCH→부분부합/PASS 또는 Gate위반→미부합), (2) `reports/<기업명>_Investment_Memo_retention-pricing-power.*` 저장 경로(Claude.ai `/mnt/user-data/outputs/`·`present_files` 관례 대체), (3) `data/cache/<기업명>/*.json` 우선 재사용 안내를 추가함. |
 | `judge-underpriced-customer-love` | ✅ 기준①(pjueun) 깊이에 맞춰 전면 재작성 완료(2026-08-12) — 아래 "깊이 격차 8가지" 전 항목 반영: Guiding Rules 5개, Universe Filter, 하위테스트 파일 승격(`references/underpricing_gap_test.md`, `references/red_flag_test.md`), Financial Transmission 6단계 체인+링크별 마킹(`references/financial_transmission.md`), Variant Perception 6-category(`references/variant_perception.md`, 기준①과 동일 체계 재사용), Entry Timing 4-category 재매핑(`references/entry_timing.md`), `output_template.md` 14-section 스켈레톤, `.md`+`.html` 이중 산출물. Duolingo(DUOL) 워크드 예시를 새 구조로 재생성(`assets/example-memo-duolingo.md`+`.html`, 당시 결과: WATCH, ULRS≈−0.10, Score 56/100). **2026-08-13 개편**: 최종 Verdict 결정 방식을 ULRS 부호 직접 판정에서 기준①②와 동일한 Score+Gate 임계값 방식으로 통일(`references/scorecard_and_verdict.md` 신설, Gate 5종 — Market Recognition/Consensus/Durability/Red Flag/Data Integrity) — ULRS는 Market Recognition Gate 판정 근거·Entry Timing 산정용 진단 지표로 격하. 세 기준의 판정 아키텍처가 이제 완전히 동일. ⚠️ Duolingo 예시는 옛 방식 결과라 새 임계값(Score 56은 50~64 구간 → AVOID 가능성)과 불일치 — `investment-desk.md` TODO에 재실행 필요 항목으로 남겨둠 |
 | `screen-fundamentals` | ✅ 5개 항목 계산식·임계값 반영 완료 (이자보상배율·ROIC·TAM/시가총액은 데이터 공백으로 일부 Proxy·미구현 상태, 스킬 파일에 명시) |
 | `investment-desk` (오케스트레이터) | ✅ end-to-end 1건 실행 완료(제출물③, BGF리테일) — `reports/BGF리테일-20260812.md`. 실행 중 `dart_client.py`의 CIS/IS 버그 발견·수정. ⚠️ 이 보고서는 기준①②가 chaemin/pjueun 버전으로 교체되기 **전** 정의로 만들어졌으므로 최신 판단 규칙과 정확히 일치하지 않는다 — 별도로 `reports/BGF리테일_Investment_Memo.md`+`.html`(공식 retention-pricing-power 패키지로 재실행, PASS 39/100, Entry: WAIT)이 생성됐지만 이건 기준① 단독 메모이지 3기준 통합 재실행은 아직임. **Scope Gate 추가(2026-08-13)** — 1단계로 대상 기업이 B2C인지부터 확인하고, B2B 등 스코프 밖이면 데이터 수집·판단을 아예 시작하지 않고 그 자리에서 사용자에게 안내(`judgment-rules.md`의 "Scope Gate" 절 참고). 아직 실제 B2B 기업으로 실행 검증은 안 함 |
@@ -88,15 +88,14 @@ AI-wave/
 
 ## 스킬 구조 개선 가이드 — 기준①(`judge-retention-pricing-power`) 골격에 맞추기
 
-**2026-08-13 업데이트 (3차, 완료)**: 기준②③ 모두 깊이 격차 8가지를 전부 반영 완료. 기준②(`judge-structural-vs-cyclical`)는 chaemin 본인이 직접 재작성해 커밋("cyclical judgement redrafted")했다 — 더 이상 남은 작업 없음.
+**2026-08-13 업데이트 (3차, 완료)**: 기준①②③ 모두 깊이 격차 8가지와 판단 규칙서 정합성을 전부 반영 완료. 기준②(`judge-structural-vs-cyclical`)는 chaemin 본인이 직접 재작성해 커밋("cyclical judgement redrafted")했고, 기준①(`judge-retention-pricing-power`)도 같은 형태로 보완했다 — 더 이상 남은 작업 없음.
 
-### ⚠️ 판단 규칙서(`judgment-rules.md`) 정합성 — 기준②③ 해결, 기준①만 남음
+### ✅ 판단 규칙서(`judgment-rules.md`) 정합성 — 기준①②③ 모두 해결
 
-"결과물은 판단 규칙서를 최대한 따라가야 한다"는 원칙 — 기준①(`judge-retention-pricing-power`)만 아직 남아있다.
+"결과물은 판단 규칙서를 최대한 따라가야 한다"는 원칙이 세 기준 스킬 모두에서 지켜지고 있다.
 
-- `judge-retention-pricing-power`(pjueun)는 **`judgment-rules.md`를 전혀 참조하지 않는다.** Verdict를 부합/부분부합/미부합이 아니라 자체 체계(BUY/WATCH/PASS/SELL)로만 산출하고, 매핑 규칙(BUY→부합 등)을 스킬 파일 자신이 실행하는 절차로 갖고 있지 않다 — 매핑이 규칙서·오케스트레이터 프롬프트에만 적혀 있고 스킬엔 없다. 파일 출력 경로도 Claude.ai 전용 표현(`/mnt/user-data/outputs/`, `present_files`)이라 이 레포에서 그대로 실행하면 안 맞는다.
-- **`judge-underpriced-customer-love`와 `judge-structural-vs-cyclical`는 이미 이 문제를 스스로 해결했다** — SKILL.md에 "이 레포 파이프라인에서 호출될 때만 `judgment-rules.md`가 정의한 매핑으로 환산해 반환한다"는 절차가 명시돼 있고(`judge-structural-vs-cyclical`는 `references/scorecard_and_verdict.md`에도 동일 절차를 중복 기재), 저장 경로도 이 레포의 `reports/` 관례를 따른다. **기준①도 이 방식을 그대로 따라야 한다** — pjueun 확인 후 진행.
-- `investment-desk.md`의 병렬 디스패치 프롬프트(1단계 필터링)는 세 스킬 각각에 정확한 매핑 규칙 출처를 명시해 이 공백을 오케스트레이션 레벨에서도 한 번 더 방어하고 있다.
+- **세 스킬 모두 SKILL.md 안에 "이 레포 파이프라인에서 호출될 때만 `judgment-rules.md` 매핑으로 환산해 반환한다"는 절차가 내장돼 있다** — BUY→부합/WATCH→부분부합/PASS(또는 Gate 위반)→미부합(기준③은 AVOID→미부합). `judge-structural-vs-cyclical`는 `references/scorecard_and_verdict.md`에도 동일 절차를 중복 기재. 저장 경로도 세 스킬 모두 이 레포의 `reports/` 관례를 따른다(Claude.ai `/mnt/user-data/outputs/`·`present_files` 관례는 쓰지 않음).
+- `investment-desk.md`의 병렬 디스패치 프롬프트(1단계 필터링)는 세 스킬 각각에 정확한 매핑 규칙 출처를 명시해 이 정합성을 오케스트레이션 레벨에서도 한 번 더 방어하고 있다.
 
 ### 깊이 격차 8가지 (기준①이 가진 것, 기준②③ 반영 상태)
 

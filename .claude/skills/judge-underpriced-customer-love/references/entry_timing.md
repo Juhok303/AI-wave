@@ -34,8 +34,9 @@ Never output a bare BUY/WATCH. 아래 중 정확히 하나를 고른다:
 ## Valuation
 
 가능하면 EV/Sales, EV/EBITDA 등 업종에 맞는 Multiple로: 현재 Multiple / 역사적 Range / Peer
-Multiple을 비교한다. 데이터가 없는 항목(이 레포는 시가총액 데이터 소스가 아직 없음)은
-"Insufficient Data"로 명시한다.
+Multiple을 비교한다. 시가총액은 `fetch-web`이 `data/cache/<기업명>/web.json`의 `market_data`
+필드에 채워둔다(공식 API 아닌 웹 검색 기반 Medium Confidence — KRX 공식 API 승인 전까지의
+잠정 소스). 그래도 확인이 안 되는 항목은 "Insufficient Data"로 명시한다.
 
 핵심 질문: 우리가 찾은 Love→Conversion 전환이 현재 가격에 이미 반영돼 있는가?
 

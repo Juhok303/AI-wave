@@ -27,7 +27,12 @@ model: sonnet
    B2C가 맞으면(또는 B2C 비중이 주력이면) 다음 단계로 진행한다.
 3. `judgment-rules.md`를 읽어 현재 판단 기준(1단계 핵심 기준 3가지, 2단계 스크리닝 체크리스트)을 확인한다.
 4. 다음 스킬을 순서대로 호출해 데이터를 수집한다: `fetch-dart`, `fetch-fnguide`(`fnspace-mcp` MCP 플러그인 연결 필요 — `claude mcp list`에서 `plugin:fnspace:fnspace`가 Connected가 아니면 건너뛴다), `fetch-fred`, `fetch-web`(뉴스·홈페이지·시가총액 — 데이터 키트 밖 Proxy 지표용)
-5. **1단계 필터링**: 다음 스킬을 순서대로 호출해 각 핵심 기준에 부합하는지 판단한다: `judge-retention-pricing-power`, `judge-structural-vs-cyclical`, `judge-underpriced-customer-love`. 3개 모두 미부합이면 여기서 판단을 종료하고, 그 사실과 근거만 담아 보고서를 작성한다.
+5. **1단계 필터링(병렬)**: 세 기준 판단은 서로 독립적이므로(같은 캐시 데이터를 읽기만 하고 서로의 결과에 의존하지 않음) 순차 호출 대신 `Agent` 툴로 **`general-purpose` 서브에이전트 3개를 한 메시지 안에서 동시에** 디스패치한다(`judge-*` 자체는 등록된 서브에이전트 타입이 아니라 스킬이라, `investment-desk`처럼 `subagent_type`으로 직접 부를 수 없다 — 대신 `general-purpose`에게 해당 스킬을 실행하라고 지시한다):
+   - 서브에이전트 A 프롬프트: "`judge-retention-pricing-power` 스킬을 로드해 그 절차 그대로 <기업명>을 판단하라. 데이터는 `data/cache/<기업명>/`에 이미 수집돼 있다. 스킬 자체의 산출물(있다면 Investment Memo 파일)도 정상 생성하되, 마지막에 (1) 최종 판정(BUY/WATCH/PASS/SELL 및 부합/부분부합/미부합 환산), (2) 핵심 근거, (3) 적용한 `judgment-rules.md`/스킬 조항을 요약해서 답하라."
+   - 서브에이전트 B: 동일하되 `judge-structural-vs-cyclical`.
+   - 서브에이전트 C: 동일하되 `judge-underpriced-customer-love`.
+   
+   세 서브에이전트가 모두 완료될 때까지 기다린 뒤 결과를 취합한다. 3개 모두 미부합이면 여기서 판단을 종료하고, 그 사실과 근거만 담아 보고서를 작성한다.
 6. **2단계 스크리닝**: 1단계에서 하나 이상 부합한 경우에만 `screen-fundamentals`를 호출해 시장성·경쟁력·수익성·재무 효율성·ESG 5개 항목을 flag한다.
 7. **보고서 초안 작성**: 결과를 종합해 `reports/<기업명>-<yyyymmdd>.html`에 투심보고서 초안을 작성한다. `docs/report-format-reference.md`의 증권사 리포트 양식(표지 스냅샷 박스, verdict 박스, 표 중심 레이아웃)을 따르는 HTML 단일 파일로 만든다(마크다운이 아니다 — `judgment-rules.md` Output 절 참고). 보고서에는 다음을 포함한다:
    - 기업 개요 (1~2문장)
@@ -45,7 +50,7 @@ model: sonnet
 - **재현성**: 같은 기업 + 같은 시점의 원자료가 주어지면, 이 에이전트를 누가 실행하든 같은 판단(부합/부분부합/미부합, Pass/Caution/Fail)이 나와야 한다. 규칙서에 명시되지 않은 재량적 해석을 추가하면 안 된다 — 애매한 경우는 각 스킬의 "데이터 부족 시 처리" 절차를 그대로 따른다.
 
 ## TODO
-- [ ] **산업/섹터 입력 + 병렬 서브에이전트 디스패치(2026-08-13 신규)** — 아직 실제 산업명으로 end-to-end 실행 검증 안 됨. 확인할 것: (a) 여러 `investment-desk` 서브에이전트가 동시에 `fetch-dart`의 `data/cache/dart_corp_codes.json` 캐시 파일에 동시 쓰기 경합이 없는지, (b) 병렬 실행 시 DART/FRED/FnSpace API 레이트리밋에 걸리지 않는지, (c) `sector-summary.html` 취합 로직이 실제로 정확한지.
+- [ ] **병렬 서브에이전트 디스패치(2026-08-13 신규, 2단계)** — (1) 산업 입력 시 기업별 `investment-desk` 서브에이전트 병렬 디스패치, (2) 기업 1건 판단 안에서 3개 기준(`judge-*`)의 `general-purpose` 서브에이전트 병렬 디스패치. 둘 다 실제 실행 검증 안 됨. 특히 산업 입력(위 1단계)과 기준 병렬화(5단계)가 겹치면 **중첩 병렬**이 된다(기업 N개 × 기준 3개 = 최대 3N개 서브에이전트 동시 실행) — DART/FRED/FnSpace API 레이트리밋, `dart_corp_codes.json` 캐시 경합(원자적 쓰기로 이미 완화), 비용 폭증 여부를 소규모(기업 2~3개)로 먼저 검증할 것.
 - [x] end-to-end 1건 실행 완료 (제출물③, BGF리테일 — `reports/BGF리테일-20260812.md`, 2026-08-12). DART_API_KEY/FRED_API_KEY로 실행, FnGuide는 아직 미확보라 해당 스텝은 생략됨. ⚠️ 기준①②가 이후 chaemin/pjueun 버전으로 교체돼 최신 규칙과는 다름 — 재실행 필요.
 - [x] FnGuide 접근 경로 확보(2026-08-13) — `fnspace-mcp` MCP 플러그인 설치·연결 완료(`fetch-fnguide` 참고). 단, 동봉된 임시 공유 키가 **2026-08-15 만료** — 그 전에 팀 자체 FNSPACE_API_KEY로 교체 필요. FNGUIDE_ID/PW 로그인은 이용권 없어 여전히 사용 불가.
 - [ ] `fetch-fnguide` 연결 후 기준②·③ 판단(현재 부분부합/판단보류)을 재실행해 컨센서스 반영된 결과로 갱신.

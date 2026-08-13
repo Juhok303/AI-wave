@@ -1,0 +1,908 @@
+<title>K팝 엔터테인먼트 산업 투심 비교</title>
+<style>
+  :root {
+    --paper: #efeae0;
+    --paper-panel: #e6dfcf;
+    --paper-panel-2: #ded5c0;
+    --ink: #23241f;
+    --ink-soft: #5c5646;
+    --ink-faint: #8a8270;
+    --line: #c7bc9f;
+    --line-strong: #a89b77;
+    --forest: #2f5233;
+    --forest-ink: #24401f;
+    --brass: #8a6a1f;
+    --brass-ink: #6b5216;
+    --wine: #7d2036;
+    --wine-ink: #611829;
+    --navy: #2a3a52;
+    --link: #4a4530;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1a1813;
+      --paper-panel: #221f18;
+      --paper-panel-2: #2a261d;
+      --ink: #e9e2cf;
+      --ink-soft: #b9ae93;
+      --ink-faint: #857c65;
+      --line: #4a4433;
+      --line-strong: #6b6248;
+      --forest: #6fae74;
+      --forest-ink: #8fc793;
+      --brass: #d1a94a;
+      --brass-ink: #e0bd6c;
+      --wine: #d9748a;
+      --wine-ink: #e493a5;
+      --navy: #9fb3cc;
+      --link: #cbbf8e;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1a1813;
+    --paper-panel: #221f18;
+    --paper-panel-2: #2a261d;
+    --ink: #e9e2cf;
+    --ink-soft: #b9ae93;
+    --ink-faint: #857c65;
+    --line: #4a4433;
+    --line-strong: #6b6248;
+    --forest: #6fae74;
+    --forest-ink: #8fc793;
+    --brass: #d1a94a;
+    --brass-ink: #e0bd6c;
+    --wine: #d9748a;
+    --wine-ink: #e493a5;
+    --navy: #9fb3cc;
+    --link: #cbbf8e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin: 0;
+    padding: 48px 20px 96px;
+  }
+
+  .sheet { max-width: 860px; margin: 0 auto; }
+
+  .serif { font-family: "Noto Serif KR", "Batang", ui-serif, serif; }
+  .mono {
+    font-family: "D2Coding", "Consolas", "SFMono-Regular", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  header.letterhead {
+    border-top: 3px double var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 22px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  header.letterhead .titles h1 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 4px 0 6px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  header.letterhead .code { color: var(--ink-soft); font-size: 14px; }
+
+  header.letterhead .meta {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    white-space: nowrap;
+  }
+  header.letterhead .meta b { color: var(--ink); }
+
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid currentColor;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    transform: rotate(-2.5deg);
+    white-space: nowrap;
+    mix-blend-mode: multiply;
+  }
+  :root:not([data-theme="light"]) .stamp,
+  :root[data-theme="dark"] .stamp { mix-blend-mode: screen; }
+
+  .stamp.pass, .stamp.fit { color: var(--forest-ink); }
+  .stamp.partial { color: var(--brass-ink); }
+  .stamp.fail, .stamp.no-fit { color: var(--wine-ink); }
+  .stamp.hold { color: var(--ink-faint); border-style: dashed; }
+
+  .stamp-lg {
+    font-size: 20px;
+    padding: 11px 24px;
+    border-width: 3px;
+    border-radius: 8px;
+    transform: rotate(-3deg);
+  }
+
+  .overview { padding: 20px 0 8px; color: var(--ink-soft); }
+
+  .verdict-strip { display: flex; justify-content: center; padding: 6px 0 30px; }
+
+  section.stage { margin-top: 8px; }
+
+  .stage > .stage-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+
+  .stage-head h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .stage-summary {
+    font-size: 14px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--line-strong);
+    padding: 8px 14px;
+    margin: 4px 0 30px;
+  }
+  .stage-summary.terminal { border-left-color: var(--wine-ink); color: var(--wine-ink); font-weight: 600; }
+
+  .table-wrap { overflow-x: auto; margin-bottom: 20px; }
+
+  table.rank, table.dropout {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.6px;
+    min-width: 640px;
+  }
+
+  table.rank th, table.dropout th {
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+    padding: 0 10px 8px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  table.rank td, table.dropout td {
+    padding: 11px 10px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+
+  table.rank tr:last-child td, table.dropout tr:last-child td { border-bottom: 1px solid var(--line-strong); }
+
+  td.co { font-weight: 700; white-space: nowrap; font-family: "Noto Serif KR", "Batang", ui-serif, serif; }
+  td.num { text-align: right; white-space: nowrap; }
+  td.reason { color: var(--ink-soft); line-height: 1.65; }
+
+  .empty-note {
+    font-size: 14px;
+    color: var(--ink-soft);
+    font-style: italic;
+    padding: 14px 0 30px;
+    border-bottom: 1px dashed var(--line-strong);
+    margin-bottom: 30px;
+  }
+
+  .criterion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px 20px;
+    margin-bottom: 16px;
+  }
+
+  .criterion .crit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+
+  .criterion h3 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 17px;
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .criterion .code2 { font-size: 12.5px; color: var(--ink-faint); }
+  .criterion .score { font-size: 12.5px; color: var(--ink-faint); white-space: nowrap; }
+
+  .criterion dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 14px;
+    margin: 12px 0 0;
+  }
+  .criterion dt {
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+  .criterion dd { margin: 0; font-size: 14.5px; }
+
+  .criterion .figs {
+    font-size: 14.5px;
+    background: var(--paper-panel-2);
+    border-left: 3px solid var(--line-strong);
+    padding: 9px 13px;
+    margin: 4px 0 12px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .criterion .clause { font-size: 13px; color: var(--ink-soft); font-style: italic; }
+  .criterion p.note { font-size: 13.5px; color: var(--ink-soft); margin: 6px 0 0; }
+
+  .crit-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .score-badge {
+    font-family: "D2Coding", monospace;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    background: var(--paper-panel-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    padding: 3px 8px;
+  }
+
+  .opinion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 24px 26px;
+    margin-bottom: 40px;
+  }
+  .opinion h2 { font-family: "Noto Serif KR", "Batang", ui-serif, serif; font-size: 19px; margin: 0 0 12px; }
+  .opinion p { margin: 0 0 12px; }
+  .opinion p:last-child { margin-bottom: 0; }
+  .opinion .conclusion {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .opinion .conclusion p { flex: 1; min-width: 240px; margin: 0; }
+
+  .sources { font-size: 13.2px; color: var(--ink-soft); }
+  .sources h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 17px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+  .sources ol { margin: 0; padding-left: 20px; }
+  .sources li { margin-bottom: 10px; }
+  .sources li b { color: var(--ink); }
+  .sources a { color: var(--link); }
+  .sources a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+  .compliance { margin-top: 40px; border-top: 3px double var(--line-strong); padding-top: 18px; }
+  .compliance h2 { font-family: "Noto Serif KR", "Batang", ui-serif, serif; font-size: 15px; margin: 0 0 12px; color: var(--ink-soft); }
+  .compliance ul { list-style: none; margin: 0; padding: 0; font-size: 13px; color: var(--ink-soft); }
+  .compliance li { padding: 7px 0 7px 24px; border-bottom: 1px solid var(--line); position: relative; }
+  .compliance li:last-child { border-bottom: none; }
+  .compliance li::before { content: "✓"; position: absolute; left: 0; top: 7px; color: var(--forest-ink); font-family: "D2Coding", monospace; }
+
+  /* ---- 개별 보고서 접기/펼치기 ---- */
+  details.report-embed {
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    margin-bottom: 14px;
+    background: var(--paper-panel);
+    overflow: hidden;
+  }
+  details.report-embed > summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  details.report-embed > summary::-webkit-details-marker { display: none; }
+  details.report-embed > summary .re-name {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 16.5px;
+  }
+  details.report-embed > summary .re-code { font-size: 12.5px; color: var(--ink-faint); }
+  details.report-embed > summary .chevron {
+    margin-left: auto;
+    color: var(--ink-faint);
+    font-family: "D2Coding", monospace;
+    transition: transform 0.15s ease;
+  }
+  details.report-embed[open] > summary .chevron { transform: rotate(90deg); }
+  details.report-embed > summary:hover { background: var(--paper-panel-2); }
+  .re-body {
+    padding: 6px 24px 28px;
+    border-top: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .re-body header.letterhead { padding-top: 16px; }
+
+  footer.colophon { text-align: center; font-size: 11.5px; color: var(--ink-faint); margin-top: 40px; letter-spacing: 0.04em; }
+
+  a { color: var(--link); }
+
+  @media (max-width: 560px) {
+    header.letterhead { flex-direction: column; }
+    header.letterhead .meta { text-align: left; }
+    .criterion .crit-head { flex-direction: column; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="letterhead">
+    <div class="titles">
+      <div class="eyebrow">산업 비교 · 판단 규칙서 <span class="mono">judgment-rules.md</span> "산업/섹터 비교 — 순위 산정" 절 기준</div>
+      <h1>K팝 엔터테인먼트 산업</h1>
+      <div class="code mono">HYBE · SM엔터테인먼트 · JYP엔터테인먼트 · YG엔터테인먼트 (Big4, 4개사)</div>
+    </div>
+    <div class="meta">
+      작성일 <b>2026-08-13</b><br>
+      작성 도구 <b><span class="mono">investment-desk</span></b><br>
+      실행 방식 <b>기업별 병렬 서브에이전트 4개</b>
+    </div>
+  </header>
+
+  <p class="overview">모델(claude, 이 세션)이 자체적으로 선정한 산업이다 — 팬덤의 실제 애착(재구매·재방문)이 뚜렷하고, K팝 글로벌 확장이라는 구조적 성장 서사와 "유행일 뿐"이라는 시장의 통념이 충돌하는 전형적 케이스라 이 레포의 세 철학과 상성이 좋다고 판단해 골랐다. 4개사(HYBE·SM·JYP·YG) 전부 한국 코스피/코스닥 상장기업이라 지난 운동화 산업 실행과 달리 DART·FnGuide/FnSpace 데이터가 정상적으로 활용됐다(단, HYBE·SM 서브에이전트에서는 세션 도구 제약으로 FnGuide/FnSpace MCP 호출이 실패 — 아래 "알려진 제약" 참고). 4개사 모두 Scope Gate(B2C)는 통과했다.</p>
+
+  <div class="verdict-strip">
+    <span class="stamp stamp-lg fail">4개사 전부 3개 기준 모두 미부합 — 순위표 대상 없음</span>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">순위표</span>
+      <h2>부합/부분부합 기준이 있는 기업</h2>
+    </div>
+    <p class="empty-note"><span class="mono">judgment-rules.md</span> "산업/섹터 비교 — 순위 산정" 절에 따라 순위표는 부합 또는 부분부합 기준이 1개 이상 있는 기업만 대상으로 하는데, 이번 4개사는 전부 3개 기준 모두 미부합이라 <b>순위표에 오를 기업이 없다</b>. 아래 "탈락 목록"에 4개사 전부와 사유를 정리한다.</p>
+  </section>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">탈락 목록</span>
+      <h2>투자 매력 없음 (1단계 3개 기준 모두 미부합)</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="dropout">
+        <thead>
+          <tr>
+            <th>기업</th>
+            <th>① Retention&#8209;Pricing</th>
+            <th>② Structural vs Cyclical</th>
+            <th>③ Underpriced Love</th>
+            <th>탈락 핵심 사유</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="co">HYBE</td>
+            <td class="num mono">PASS · 25/100</td>
+            <td class="num mono">PASS · 26/100</td>
+            <td class="num mono">AVOID · 29&ndash;35/100</td>
+            <td class="reason">별도재무제표 영업이익률 3년 연속 붕괴(13.6%→8.2%→1.9%), 최근 실적 반등은 BTS 활동 재개라는 아티스트 사이클 의존(구조/순환 미분리), 민희진·ADOR 경영권 분쟁(430억 배상소송) 미해소, FnGuide 컨센서스 이번 세션 미확보</td>
+          </tr>
+          <tr>
+            <td class="co">SM엔터테인먼트</td>
+            <td class="num mono">PASS · 26/100</td>
+            <td class="num mono">PASS · 19/100</td>
+            <td class="num mono">AVOID · 15/100</td>
+            <td class="reason">가격전가력의 유일한 정량 근거가 SM 본체가 아닌 계열사 디어유(버블)에서만 확인, 2025년 실적 반등이 사업 성장인지 합병(연결범위 변경) 효과인지 분리 불가, 4대 기획사 동반 신인 데뷔로 진입장벽 약화, FnGuide 컨센서스 이번 세션 미확보</td>
+          </tr>
+          <tr>
+            <td class="co">JYP엔터테인먼트</td>
+            <td class="num mono">PASS · 28/100</td>
+            <td class="num mono">PASS · ≈22/100</td>
+            <td class="num mono">AVOID · ≈44/100</td>
+            <td class="reason">매출총이익률·영업이익률 3년 연속 하락(29.9%→21.3%→18.9%), 자체 성장률(컨센서스 +6.9%)이 K팝 산업 평균(+15~25%) 하회, 팬클럽 멤버십 가격 대폭 인상 후 팬 반발("호구 취급"·불매), 자체 대형 팬 플랫폼 부재(위버스 대비 열위)</td>
+          </tr>
+          <tr>
+            <td class="co">YG엔터테인먼트</td>
+            <td class="num mono">PASS · ≈21/100</td>
+            <td class="num mono">PASS · 42(34)/100</td>
+            <td class="num mono">AVOID · ≈44/100</td>
+            <td class="reason">2025 영업이익이 컨센서스 대비 26%↓ 미달(매출은 상회, Volume→Margin 전이 단절), 매출·이익 변동폭이 블랙핑크 컴백/투어 스케줄에 연동(회사 고유 순환), Big4 중 매출·영업이익 최하위, 목표주가 2.5개월간 -21.7% 연속 하향(시장이 이미 인식·재평가 중)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="stage-summary terminal">4개사 공통 패턴 — (1) 팬덤의 진짜 애착(앨범 초동·투어 매진 확대 등)은 4개사 전부에서 어느 정도 확인되나, 그 애착이 마진 개선·구조적 재무전환으로 이어지는 사슬이 예외 없이 끊겼다(Financial Translation Gate 4개사 전부 발동) — "Love는 있는데 돈으로 전환이 안 된다"는 동일한 패턴이 반복됐다. (2) 4개사 실적의 큰 변동폭이 산업 전체의 구조적 성장이 아니라 개별 아티스트의 컴백·투어 캘린더(회사 고유 순환)와 동행해, Peer Divergence가 성립하지 않았다(Big4 동반 실적·주가 등락). (3) "K팝 구조냐 유행이냐"·"팬덤 지불의사" 같은 이 산업의 핵심 서사가 이미 업계 리포트·언론·셀사이드 컨센서스로 폭넓게 공개돼 있어 Consensus Gate가 4개사·세 기준 대부분에서 발동했다 — 시장이 이미 알고 있어 "저평가"가 성립하지 않는다.</p>
+  </section>
+
+  <div class="opinion">
+    <h2>산업 종합 의견</h2>
+    <p>K팝 Big4는 이 판단 도구의 3개 핵심 철학 어디에도 이번 데이터 시점(2026-08-13) 기준 부합하지 않았다. 흥미로운 점은 실패 경로가 운동화 산업(강세주는 이미 알려짐/약세주는 실제로 약함)과 다르다는 것이다 — 4개사 전부 팬덤 애착 자체는 어느 정도 확인되지만(Layer 1 Love는 상대적으로 양호), 그 애착이 회계상 이익으로 전환되는 능력(Financial Translation/Conversion Capacity)이 구조적으로 약했다. 멤버십 가격 인상 시도가 반복적으로 팬 반발(JYP)이나 공정위 약관 시정 조치(YG 등 18개사)로 이어졌다는 점은, "가격결정력"이 진짜 pricing power라기보다 락인에 가까울 수 있다는 반증이기도 하다.</p>
+    <p>또 하나 눈에 띄는 점은 4개사 실적의 변동성이 거시경기가 아니라 개별 아티스트의 컴백·투어·완전체 활동 스케줄에 크게 좌우된다는 사실이다 — 이는 "K팝 = 구조적 성장"이라는 산업 차원의 통념이 개별 기업 단위에서는 오히려 "회사 특정 순환"으로 재분류돼야 함을 시사하며, 이 도구의 기준②가 정확히 겨냥하는 오분류 패턴이 K팝 업종에서 실제로 관찰됐다는 점에서 산업 선택 자체는 유효했다고 판단한다(다만 그 결과가 "저평가"가 아니라 "정당한 순환적 할인"으로 나온 것뿐이다).</p>
+    <div class="conclusion">
+      <p>4개사 전부 탈락(투자 매력 없음) — 순위표에 오를 기업 없음. 2단계 스크리닝은 4개사 모두 1단계에서 판단이 종료돼 실행하지 않았다.</p>
+      <span class="stamp fail">미부합</span>
+    </div>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">알려진 제약</span>
+      <h2>이번 실행에서 발견된 이슈</h2>
+    </div>
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>HYBE·SM 서브에이전트에 FnSpace MCP 도구 미노출</h3>
+      </div>
+      <p class="note">4개사 중 HYBE·SM 서브에이전트의 툴 목록에는 <span class="mono">mcp__fnspace__*</span> 함수가 노출되지 않아 <span class="mono">fetch-fnguide</span> 단계에서 데이터를 확보하지 못했다(<span class="mono">claude mcp list</span> 상 플러그인 연결 자체는 정상). 반면 JYP·YG 서브에이전트는 동일 세션 조건에서 fnspace MCP를 정상 호출해 확정재무·목표주가 컨센서스·Forward 지표까지 반영했다 — 지난 백화점 산업 실행 때와 동일하게 서브에이전트별로 도구 노출이 일관되지 않는 원인 불명의 이슈가 재현됐다. 컨센서스 데이터 공백은 HYBE·SM 판정에서 Data Integrity Gate·Consensus Gate 관련 항목을 보수적 방향으로 이끌었을 가능성이 있다.</p>
+    </article>
+  </section>
+
+  <div class="compliance">
+    <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+    <ul>
+      <li>순위 산정은 <span class="mono">judgment-rules.md</span> "산업/섹터 비교 — 순위 산정" 절의 규칙(부합/부분부합 기준 중 최고 Score 내림차순, 3개 모두 미부합이면 탈락 목록으로 분리)을 그대로 적용했다 — 4개사 전부 탈락 조건에 해당해 순위표는 의도적으로 비워뒀다.</li>
+      <li>2단계 스크리닝(시장성/경쟁력/수익성/재무효율성/ESG)은 4개사 전부 1단계에서 판단이 종료돼 실행하지 않았다 — <span class="mono">judgment-rules.md</span> 1단계 규정 그대로.</li>
+      <li>각 기업의 상세 근거·적용 조항·출처는 개별 보고서(아래 접힌 카드 및 링크)에 전부 기재돼 있다 — 이 산업 요약은 요약본이며 상세 판단의 재작성이 아니다.</li>
+      <li>HYBE·SM의 FnGuide/FnSpace 데이터 미확보라는 실행상 제약을 숨기지 않고 명시했고, 이 공백이 결론에 미쳤을 영향을 종합의견에 밝혔다(재현성 원칙 2번, 데이터 부족 시 임의 낙관 처리 금지).</li>
+      <li>산업 선택 자체(claude가 "투자할 만하다고 판단하는 기업이 속한 산업"으로 자체 선정)의 근거를 개요에 명시했다 — 결과가 사전 기대(투자 매력 있을 가능성)와 다르게 나왔다는 사실을 숨기거나 결론을 유리하게 왜곡하지 않았다.</li>
+    </ul>
+  </div>
+
+  <section class="stage" style="margin-top:36px;">
+    <div class="stage-head">
+      <span class="eyebrow">개별 보고서</span>
+      <h2>기업별 상세 판단</h2>
+    </div>
+    <p class="note" style="margin-bottom:14px;">각 기업의 Layer별 근거, Gate 발동 내역, 원자료 출처, Compliance Self-Check가 아래에 전체 원문 그대로 접혀 있다 — 클릭하면 펼쳐진다. 별도 파일로도 열 수 있다(각 카드 안 링크).</p>
+
+    <details class="report-embed">
+      <summary>
+        <span class="re-name">HYBE</span>
+        <span class="re-code mono">352820 · 코스피</span>
+        <span class="stamp fail">투자 매력 없음</span>
+        <span class="chevron">&#9656;</span>
+      </summary>
+      <div class="re-body">
+        <p class="link-out"><a href="HYBE-20260813.html">별도 파일로 열기 ↗</a></p>
+
+        <header class="letterhead">
+          <div class="titles">
+            <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 · 개별기업 판단</div>
+            <h1>HYBE (하이브)</h1>
+            <div class="code mono">티커 352820 · 코스피(KOSPI) · 엔터테인먼트/멀티레이블 아티스트 매니지먼트</div>
+          </div>
+          <div class="meta">
+            작성일 <b>2026-08-13</b><br>
+            작성 도구 <b><span class="mono">investment-desk</span></b><br>
+            DART <b>연동(별도재무제표)</b> · FnGuide/FnSpace <b>이번 세션 수집 실패</b>
+          </div>
+        </header>
+
+        <p class="overview">HYBE는 BTS·TXT·ENHYPEN·&amp;TEAM·BOYNEXTDOOR 등을 멀티 레이블 체제로 운영하는 국내 최대 엔터테인먼트 기업으로, 음반·음원·공연·MD·라이선싱과 팬덤 플랫폼 Weverse(MAU 약 1,000만, 해외비중 87%) 운영으로 소비자에 직접 매출을 일으키는 B2C 기업이다.</p>
+
+        <div class="verdict-strip">
+          <span class="stamp stamp-lg fail">투자 매력 없음 · 1단계 종료</span>
+        </div>
+
+        <section class="stage">
+          <div class="stage-head">
+            <span class="eyebrow">STAGE 1</span>
+            <h2>핵심 판단 기준 3개</h2>
+          </div>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 25/100(추정)</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">별도재무제표 매출총이익률 46.3%(FY23)→42.6%(FY24)→35.3%(FY25), 영업이익률 13.6%→8.2%→1.9% 3개년 연속 하락<br>2024 Q4 Weverse 유료 멤버십 도입 &mdash; 가격인상 후 Retention/Churn 데이터 없음<br>2026 Q2 연결 실적: 매출 1.45조원·영업이익 1,709억원(YoY +159.3%, 별도재무제표와 범위 다름)</p>
+            <p>Pricing Power Test 4개 중 Test1(가격인상 여부)만 확인, 나머지 3개는 Insufficient Data. 별도재무제표 마진이 3개년 연속 악화돼 "가격결정력→마진 개선" 인과가 정반대(마진 붕괴)로 나타나 Financial Translation Gate 발동. 2026 Q2 연결 실적 개선은 BTS 완전체 활동 재개(Volume 효과)로 설명돼 가격/마진 구조 개선과는 별개다. FnGuide 컨센서스 미확보로 Data Integrity Gate도 발동해 최종 Verdict <b>PASS</b>(Score 25/100 추정).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준① 판정 · `judge-retention-pricing-power` Layer A&ndash;G, Pricing Power Test, Financial Translation/Data Integrity Gate</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART&mdash;별도재무제표(High, 연결과 범위 상이) · FnGuide/FnSpace&mdash;이번 세션 수집 실패(N/A) · web.json(Proxy, Medium&ndash;Low)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>② Structural vs Cyclical Misclassification</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 26/100</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">별도재무제표 영업이익 2,956억(FY23)→1,840억(FY24)→493억(FY25) 3개년 연속 급감<br>K팝 글로벌 레이블 시장 약 66조원 규모 전망 · 2024년 음반수출 사상 첫 역성장 vs Weverse 해외비중 87%</p>
+            <p>Bull(66조원 시장, Weverse 확장, 투어 관객 전망 상향)과 Bear(음반수출 첫 역성장, BTS 활동 사이클 의존, 민희진·ADOR 분쟁)를 동등하게 검토한 결과 구조와 순환이 데이터로 분리되지 않았다. "K팝 구조냐 유행이냐" 논쟁 자체가 이미 업계 리포트·언론에 공개돼 Consensus Gate 발동, 경쟁사 정량 데이터·컨센서스 부재로 Data Integrity Gate도 발동해 최종 Verdict <b>PASS</b>(Score 26/100).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준② 판정 · `judge-structural-vs-cyclical` Cyclical Contamination Test 1&ndash;3, Consensus/Data Integrity Gate</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART&mdash;별도재무제표(High) · FnGuide&mdash;수집 실패(N/A) · web.json(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>③ Underpriced Customer Love (ULRS)</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 29&ndash;35/100(추정)</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">Weverse MAU 약 1,000만(해외비중 87%) · 2026 콘서트 투어 관객 전망 약 450만(상향) · 12M 재구매율·DAU/MAU 등 정량 데이터 없음</p>
+            <p>Behavioral Love를 시사하는 정성적 신호는 있으나 ULRS 핵심 정량 지표는 전부 데이터 없음(Data Integrity Gate). 3개년 연속 마진 악화와 민희진·ADOR 분쟁을 반영해 Durability Gate(&lt;40) 발동, Total Score 60점 상한 캡핑. FnGuide 수집 실패로 Market Recognition Gate도 미확인(통과로 인정하지 않음, Gate 위반 처리). 최종 Verdict <b>AVOID</b>(Score 29&ndash;35/100 추정).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준③ 판정 · `judge-underpriced-customer-love` K절 데이터 신뢰도 원칙, Durability/Market Recognition/Data Integrity Gate, Red Flag #7</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART&mdash;별도재무제표(High) · FnGuide&mdash;수집 실패(N/A, Market Recognition Gate 산출 불가) · web.json(Proxy, Medium&ndash;Low)</dd>
+            </dl>
+          </article>
+
+          <p class="stage-summary">1단계 종합 &mdash; 기준①·②·③ 모두 <b>미부합</b>. 2단계 스크리닝은 호출하지 않았다.</p>
+        </section>
+
+        <div class="opinion">
+          <h2>종합 투자의견</h2>
+          <p>2026 Q2 사상 최대 분기 실적·Weverse 확장 등 표면적 모멘텀은 긍정적이나, 별도재무제표 마진이 3년 연속 악화돼 가격결정력의 마진 전이가 확인되지 않고, 실적 반등은 BTS 활동 재개라는 특정 사이클 의존이며, FnGuide 컨센서스 공백으로 Market Recognition·Consensus 판정도 뒷받침되지 않았다.</p>
+          <div class="conclusion">
+            <p>세 기준 모두 미부합으로 1단계에서 판단이 종료되어 2단계 스크리닝은 실행하지 않았다. FnGuide/FnSpace 재확보 후 재실행을 권고한다.</p>
+            <span class="stamp fail">투자 매력 없음</span>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="report-embed">
+      <summary>
+        <span class="re-name">SM엔터테인먼트</span>
+        <span class="re-code mono">041510 · 코스닥</span>
+        <span class="stamp fail">투자 매력 없음</span>
+        <span class="chevron">&#9656;</span>
+      </summary>
+      <div class="re-body">
+        <p class="link-out"><a href="SM엔터테인먼트-20260813.html">별도 파일로 열기 ↗</a></p>
+
+        <header class="letterhead">
+          <div class="titles">
+            <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준</div>
+            <h1>SM엔터테인먼트</h1>
+            <div class="code mono">종목코드 041510 · 코스닥</div>
+          </div>
+          <div class="meta">
+            작성일 <b>2026-08-13</b><br>
+            작성 도구 <b><span class="mono">investment-desk</span></b><br>
+            DART 조회 <b>corp_code 00260930</b>
+          </div>
+        </header>
+
+        <p class="overview">SM엔터테인먼트는 보아·동방신기·슈퍼주니어·소녀시대·샤이니·EXO·레드벨벳·NCT·에스파 등의 음반·음원, 콘서트, 팬 멤버십, MD 판매가 매출 근간인 B2C 사업이다. 2025년 연결 매출액 약 1조 1,749억원, 영업이익 약 1,830억원(영업이익률 15.6%)을 기록했다.</p>
+
+        <div class="verdict-strip">
+          <span class="stamp stamp-lg fail">투자 매력 없음 · PASS / AVOID</span>
+        </div>
+
+        <section class="stage">
+          <div class="stage-head">
+            <span class="eyebrow">STAGE 1</span>
+            <h2>핵심 판단 기준 3개</h2>
+          </div>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+              <span class="score mono">Score ≈ 26/100</span>
+              <span class="stamp fail">미부합</span>
+            </div>
+            <p class="figs mono">매출총이익률 35.5%→31.0%→36.8%(제29~31기, 변동성 큼) · 영업이익률 11.8%→8.8%→15.6%<br>디어유 '버블' 구독료 2025.7 +11~12% 인상 후에도 매출 YoY +34%·영업이익 YoY +100%(단, SM 본체 아닌 계열사 Proxy)</p>
+            <p>Pricing Power의 유일한 근거가 SM 본체가 아니라 별도 상장 계열사 디어유 '버블'에서만 확인되며, SM 본체 멤버십·앨범·티켓 가격 데이터는 확보되지 않아 Insufficient Data. Financial Translation Gate(본체 Retention→Pricing Power 전이 미입증)와 Consensus Gate(구독료 인상 정보가 이미 계열사 공시로 공개)가 동시 발동해 최종 Verdict <b>PASS</b>(Score ≈26/100).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">기준① 판정 &mdash; PASS(또는 Gate 위반) → 미부합</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 재무제표(Primary, Medium) · web.json 디어유 버블 관련 기사(Proxy, Medium&mdash;계열사 데이터) · FnGuide/FnSpace 미확보</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>② Structural vs Cyclical Misclassification</h3>
+              <span class="score mono">Score ≈ 19/100</span>
+              <span class="stamp fail">미부합</span>
+            </div>
+            <p class="figs mono">자산총계 1.54조→1.42조→2.01조원(제29~31기) · 자본총계 +63.9%(FY25, 합병 공시와 시기 일치) · 2024년 K팝 음반수출 첫 역성장</p>
+            <p>FY31(2025)의 매출·이익 급반등이 순수 Volume 성장인지 같은 시기 합병(연결범위 변경)에 따른 인오가닉 효과인지 DART 데이터만으로 분리되지 않았다. Peer 데이터 부재로 SM 고유 우위 근거도 확인 안 됨, 오히려 4대 기획사 동반 확장 신호만 관찰. Data Integrity Gate·Consensus Gate 발동해 최종 Verdict <b>PASS</b>(Score ≈19/100).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">기준② 판정 &mdash; PASS(Score 50&ndash;64 또는 Gate 위반) → 미부합</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART 3개년 재무제표(Primary, Medium) · FRED(참고용, Low) · web.json(Proxy, Medium) · FnGuide/Peer 재무 미확보</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>③ Underpriced Customer Love (ULRS)</h3>
+              <span class="score mono">Score ≈ 15/100</span>
+              <span class="stamp fail">미부합</span>
+            </div>
+            <p class="figs mono">ULRS(진단 지표) ≈6.4(양수지만 미약) · 디어유 버블 유료 구독자 약 202만명(SM 본체 앨범/MD/콘서트 재구매율은 데이터 없음) · Red Flag 발동 1건(#7 낮은 진입장벽)</p>
+            <p>팬덤 재구매·재방문의 SM 본체 직접 근거가 전량 데이터 없음으로 Customer Love Layer가 저평가됐고, 유일한 정량 신호도 계열사 Proxy다. Durability Gate(신인 그룹 데뷔 러시로 진입장벽 약화)와 Data Integrity Gate 동시 발동으로 AVOID 하한(50)에도 못 미쳐 최종 Verdict <b>AVOID</b>(Score ≈15/100).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">기준③ 판정 &mdash; AVOID(Score 50&ndash;64 또는 Gate 위반) → 미부합</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>web.json 디어유 버블 데이터(Proxy, Medium), SM 본체 앨범·MD 판매량 데이터 없음 · DART(Medium) · FnGuide 미확보</dd>
+            </dl>
+          </article>
+
+          <p class="stage-summary">1단계 종합 &mdash; 3개 기준 모두 <b>미부합</b>. 2단계 스크리닝은 실행하지 않는다.</p>
+        </section>
+
+        <div class="opinion">
+          <h2>종합 투자의견</h2>
+          <p>공통 문제는 (1) 팬덤 지불의사·리텐션 근거가 SM 본체가 아니라 계열사 디어유에서만 확인, (2) FY2025 실적 반등이 사업 성장인지 합병 효과인지 분리 불가, (3) 4대 기획사 동반 신인 론칭으로 경쟁·진입장벽 약화가 구조적으로 진행 중이라는 점이다.</p>
+          <div class="conclusion">
+            <p>1단계에서 판단이 종료되어 2단계 스크리닝을 진행하지 않았다. 규칙서 기준상 투자 매력 없음으로 판단한다.</p>
+            <span class="stamp fail">PASS / AVOID</span>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="report-embed">
+      <summary>
+        <span class="re-name">JYP엔터테인먼트</span>
+        <span class="re-code mono">035900 · 코스닥</span>
+        <span class="stamp fail">투자 매력 없음</span>
+        <span class="chevron">&#9656;</span>
+      </summary>
+      <div class="re-body">
+        <p class="link-out"><a href="JYP엔터테인먼트-20260813.html">별도 파일로 열기 ↗</a></p>
+
+        <header class="letterhead">
+          <div class="titles">
+            <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준</div>
+            <h1>JYP엔터테인먼트</h1>
+            <div class="code mono">종목코드 035900 · 코스닥</div>
+          </div>
+          <div class="meta">
+            작성일 <b>2026-08-13</b><br>
+            작성 도구 <b><span class="mono">investment-desk</span></b><br>
+            DART 조회 <b>corp_code 00258689</b>
+          </div>
+        </header>
+
+        <p class="overview">JYP엔터테인먼트는 스트레이키즈·트와이스·ITZY·DAY6·NiziU·NMIXX·KickFlip 등의 음반·음원·콘서트·MD·팬클럽 멤버십을 팬에게 직접 판매하는 B2C 사업이다. 2025년 연결 매출액 8,219억원(YoY +36.6%), 영업이익 1,552억원(영업이익률 18.9%)이나 영업이익률은 29.9%→21.3%→18.9%로 3개년 연속 하락 추세다.</p>
+
+        <div class="verdict-strip">
+          <span class="stamp stamp-lg fail">투자 매력 없음 · PASS/AVOID</span>
+        </div>
+
+        <section class="stage">
+          <div class="stage-head">
+            <span class="eyebrow">STAGE 1</span>
+            <h2>핵심 판단 기준 3개</h2>
+          </div>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 28/100</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">매출총이익률 47.4%(2023)→42.6%(2024)→36.9%(2025) 3개년 연속 하락 · 목표주가 91,824원(2026-06-01)→78,722원(2026-08-13), 6주간 &minus;14.3% 하향</p>
+            <p>스트레이키즈 팬클럽 '스테이' 6기 멤버십 가격이 5기 대비 최대 약 2배 인상, MD 매출 비중도 6%(2021)→22%(2024) 급증해 표면적 가격전가 시도는 확인되나, 가격 인상 후 실제 Churn/갱신율 데이터가 없고 매출총이익률·영업이익률이 3개년 연속 하락해 "가격결정력→마진 개선" 인과가 반대로 작동(Financial Translation Gate). 가격 인상·MD 믹스 확대는 이미 언론 보도된 공지 사실이라 Consensus Gate도 발동. 최종 Verdict <b>PASS</b>(Score 28/100).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준① 판정 · Pricing Power Test 2, Financial Translation/Consensus/Data Integrity Gate</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART(Primary, Medium) · FnGuide/FnSpace 컨센서스·목표주가(Primary, Medium) · web.json(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>② Structural vs Cyclical Misclassification</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 약 22/100</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">2024년 영업이익 YoY &minus;24.3%(스트레이키즈 월드투어 공백기와 연동) · 2026년 컨센서스 매출 가이던스 +6.9% vs K팝 산업 평균(+15~25%) 하회</p>
+            <p>2024년 영업이익 급락이 거시경기보다 아티스트 활동 캘린더와 직결(Test1). K팝 산업 전체 성장률 대비 JYP 자체 가이던스가 오히려 하회해 "JYP 고유 구조적 우위"가 아니라 산업 성장 편승 수준으로 판정(Test2, Peer Divergence Broken). 목표주가·EPS 지속 하향, 주가 YoY &minus;39.15%로 시장이 이미 우려 반영 중(Consensus Gate). 최종 Verdict <b>PASS</b>(Score 약 22/100).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준② 판정 · Cyclical Contamination Test 1&ndash;3, Consensus Gate</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART(Primary, Medium) · FnGuide/FnSpace 목표주가·Forward 지표(Primary, Medium) · FRED(참고용, Low) · web.json(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>③ Underpriced Customer Love (ULRS)</h3>
+              <div class="crit-badges">
+                <span class="score-badge">Score 약 44/100</span>
+                <span class="stamp fail">미부합</span>
+              </div>
+            </div>
+            <p class="figs mono">킥플립 초동 27→40만장(+48%) · 목표주가 괴리율 71.14%(단, 6주간 목표주가 &minus;14.3%·Fwd EPS &minus;3.4% 지속 하향) · 위버스(하이브) MAU 1,160만 vs 버블(SM/JYP 일부 입점) 약 200만</p>
+            <p>신인 IP 초동판매 증가 등 Love 신호는 일부 확인되나, 자체 대형 팬 플랫폼 부재(위버스 대비 구조적 열위), 영업이익률 3개년 연속 하락, 멤버십 가격 대폭 인상 후 팬 반발("호구 취급"·불매)이 Red Flag #8(가격탄력성 취약)에 해당해 Durability Gate 발동(Total Score 60점 상한). 목표주가 괴리율은 크지만 컨센서스 자체가 지속 하향 중이라 Variant View로 불인정(Consensus Gate). 최종 Verdict <b>AVOID</b>(Score 약 44/100).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">judgment-rules.md 기준③ 판정 · Durability Gate(Layer2&lt;40)·Consensus Gate·Red Flag #8·Market Recognition Gate</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART(Primary, Medium) · FnGuide/FnSpace 목표주가 컨센서스(Primary, Medium) · web.json(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <p class="stage-summary">1단계 종합 &mdash; 기준①·②·③ 모두 <b>미부합</b>. 2단계 스크리닝은 실행하지 않는다.</p>
+        </section>
+
+        <div class="opinion">
+          <h2>종합 투자의견</h2>
+          <p>스트레이키즈·트와이스 중심 안정적 매출 기반과 K팝 산업의 구조적 순풍에도 불구, 매출총이익률·영업이익률 3개년 연속 하락, 멤버십 가격 인상 시도의 팬 반발, 자체 팬 플랫폼 부재로 인한 구조적 열위, 자체 성장률의 산업 평균 하회, 컨센서스 지속 하향이 겹쳐 세 기준 모두 미부합으로 판정됐다.</p>
+          <div class="conclusion">
+            <p>세 기준 모두 미부합으로 1단계에서 판단이 종료되어 2단계 스크리닝은 실행하지 않았다.</p>
+            <span class="stamp fail">투자 매력 없음</span>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="report-embed">
+      <summary>
+        <span class="re-name">YG엔터테인먼트</span>
+        <span class="re-code mono">122870 · 코스닥</span>
+        <span class="stamp fail">투자 매력 없음</span>
+        <span class="chevron">&#9656;</span>
+      </summary>
+      <div class="re-body">
+        <p class="link-out"><a href="YG엔터테인먼트-20260813.html">별도 파일로 열기 ↗</a></p>
+
+        <header class="letterhead">
+          <div class="titles">
+            <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준</div>
+            <h1>YG엔터테인먼트</h1>
+            <div class="code mono">종목코드 122870 · 코스닥</div>
+          </div>
+          <div class="meta">
+            작성일 <b>2026-08-13</b><br>
+            작성 도구 <b><span class="mono">investment-desk</span></b><br>
+            DART 조회 <b>corp_code 00613318</b>
+          </div>
+        </header>
+
+        <p class="overview">YG엔터테인먼트는 블랙핑크·트레저·베이비몬스터의 음반·음원, 콘서트·월드투어, 팬클럽 유료 멤버십, MD 판매를 주력으로 하는 B2C 기업이다. 2025년 연결 매출액 5,454억원·영업이익 521.5억원을 기록했으나 Big4 중 매출·이익 규모 최하위다.</p>
+
+        <div class="verdict-strip">
+          <span class="stamp stamp-lg fail">투자 매력 없음 · 3개 기준 전부 미부합</span>
+        </div>
+
+        <section class="stage">
+          <div class="stage-head">
+            <span class="eyebrow">STAGE 1</span>
+            <h2>핵심 판단 기준 3개</h2>
+          </div>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+              <span class="score mono">Score ≈ 21/100</span>
+              <span class="stamp fail">미부합</span>
+            </div>
+            <p class="figs mono">2025 확정 영업이익 521.5억원 vs 컨센서스 707.5억원(73.7% 수준, 매출은 컨센서스 상회) · 목표주가 78,000원→61,059원(&minus;21.7%, 약 2.5개월)</p>
+            <p>멤버십 가격 정책·Retention/Churn/ARPU 데이터 전무로 Pricing Power Test 4개 전부 Insufficient Data(Data Integrity Gate). 매출은 컨센서스 상회했지만 영업이익은 26%↓ 미달해 Volume→Margin 전이 단절(Financial Translation Gate). 목표주가 2.5개월간 &minus;21.7% 연속 하향(Consensus Gate). 2026-06 공정위가 YG 포함 18개 엔터사 팬클럽 멤버십 약관의 불공정 조항 적발 — 기존 재구매가 자발적 가격결정력이 아닌 약관성 락인일 가능성. 최종 Verdict <b>PASS</b>(Score ≈21/100).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">기준① 판정 &mdash; PASS(또는 Gate 위반) → 미부합</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>FnGuide/FnSpace 확정재무·목표주가 컨센서스(Primary, Medium) · DART(Primary, Medium) · web.json(Proxy, Medium)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>② Structural vs Cyclical Misclassification</h3>
+              <span class="score mono">Score ≈ 42/100(Risk 조정 후 34/100)</span>
+              <span class="stamp fail">미부합</span>
+            </div>
+            <p class="figs mono">매출액 5,692억(2023)→3,649.5억(2024, &minus;35.9%)→5,454억(2025, +49.4%) · Big4 2026 상반기 동반 주가 하락(SM &minus;42.6%·YG &minus;39.2%·HYBE &minus;33.2%·JYP &minus;30.2%) · 비음악 매출 비중 YG 18%(4사 중 3위)</p>
+            <p>매출·이익의 큰 진폭이 매크로보다 블랙핑크 컴백 공백(2024)→월드투어 재개(2025)라는 아티스트 활동 스케줄과 동행(Test1, 회사 특정 사이클). Big4 전체가 동반 급락·목표주가 동시 하향돼 "YG만의 구조적 우위" 반증(Test2, Peer Divergence 없음). K팝 카테고리 TAM은 구조적 성장이나 Company Revenue 단계에서 체인 단절(Broken). Consensus·Financial Translation·Valuation Gate 3개 동시 위반해 최종 Verdict <b>PASS</b>(Score ≈42→34/100).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">기준② 판정 &mdash; PASS(Score 50&ndash;64 또는 Gate 위반) → 미부합</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>DART·FnGuide 3개년 확정재무(Primary, Medium) · web.json Big4 실적·주가 비교(Proxy, Medium) · FRED(참고용, Low)</dd>
+            </dl>
+          </article>
+
+          <article class="criterion">
+            <div class="crit-head">
+              <h3>③ Underpriced Customer Love (ULRS)</h3>
+              <span class="score mono">Score ≈ 44/100</span>
+              <span class="stamp fail">미부합</span>
+            </div>
+            <p class="figs mono">TREASURE 미니 4집 초동 100만장 돌파 · 월드투어 전석 매진 확대(총 10개 도시 22회차) · ULRS(진단 지표) ≈&minus;9.9(Conversion-Readiness Gap 음수)</p>
+            <p>팬덤 애착(Love%ile≈65)은 긍정적이나 아티스트 리스크 이력·모방장벽 취약으로 Durability%ile 38에 그쳐 Durability Gate(&lt;40) 발동(Total Score 60점 상한). 비음악 매출 비중 18%로 하이브·SM 대비 열위(Financial Conversion Capacity 열위). 목표주가가 실적 발표 직후 연속 하향되는 중이라 Conversion-Readiness Gap이 음수(&minus;0.20)로 Market Recognition Gate 위반 — "시장이 아직 모른다"는 조건이 성립하지 않고 오히려 이미 인식하며 하향 중. 최종 Verdict <b>AVOID</b>(Score ≈44/100).</p>
+            <dl>
+              <dt>적용 조항</dt>
+              <dd class="clause">기준③ 판정 &mdash; AVOID(Score 50&ndash;64 또는 Gate 위반) → 미부합</dd>
+              <dt>출처·신뢰도</dt>
+              <dd>web.json 팬덤 재구매 뉴스(Proxy, Medium) · FnGuide/FnSpace 목표주가·투자의견 컨센서스(Primary, Medium)</dd>
+            </dl>
+          </article>
+
+          <p class="stage-summary">1단계 종합 &mdash; 3개 기준 모두 <b>미부합</b>. 2단계 스크리닝은 실행하지 않는다.</p>
+        </section>
+
+        <div class="opinion">
+          <h2>종합 투자의견</h2>
+          <p>팬덤 재구매·재방문 자체는 확인되나(트레저 초동 100만장, 투어 매진 확대) 이 애착이 회계상 이익으로 전이되는 능력이 취약하다 — 매출은 컨센서스 상회했지만 영업이익은 74% 수준에 그쳤고, 비음악 매출 비중도 하이브·SM 대비 하위권이다. 매출·이익 변동폭은 거시경기가 아니라 아티스트 컴백·투어 스케줄이라는 회사 고유 순환에 기인하며, 시장은 이미 목표주가를 2.5개월간 -21.7% 연속 하향해 재평가가 실시간으로 진행 중이다.</p>
+          <div class="conclusion">
+            <p>1단계에서 판단이 종료되어 2단계 스크리닝을 진행하지 않았다. 규칙서 기준상 투자 매력 없음으로 판단한다.</p>
+            <span class="stamp fail">PASS / AVOID</span>
+          </div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13</footer>
+
+</div>

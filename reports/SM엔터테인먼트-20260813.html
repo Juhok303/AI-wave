@@ -1,0 +1,504 @@
+<title>SM엔터테인먼트 투심메모</title>
+<style>
+  :root {
+    --paper: #efeae0;
+    --paper-panel: #e6dfcf;
+    --paper-panel-2: #ded5c0;
+    --ink: #23241f;
+    --ink-soft: #5c5646;
+    --ink-faint: #8a8270;
+    --line: #c7bc9f;
+    --line-strong: #a89b77;
+    --forest: #2f5233;
+    --forest-ink: #24401f;
+    --brass: #8a6a1f;
+    --brass-ink: #6b5216;
+    --wine: #7d2036;
+    --wine-ink: #611829;
+    --navy: #2a3a52;
+    --link: #4a4530;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1a1813;
+      --paper-panel: #221f18;
+      --paper-panel-2: #2a261d;
+      --ink: #e9e2cf;
+      --ink-soft: #b9ae93;
+      --ink-faint: #857c65;
+      --line: #4a4433;
+      --line-strong: #6b6248;
+      --forest: #6fae74;
+      --forest-ink: #8fc793;
+      --brass: #d1a94a;
+      --brass-ink: #e0bd6c;
+      --wine: #d9748a;
+      --wine-ink: #e493a5;
+      --navy: #9fb3cc;
+      --link: #cbbf8e;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1a1813;
+    --paper-panel: #221f18;
+    --paper-panel-2: #2a261d;
+    --ink: #e9e2cf;
+    --ink-soft: #b9ae93;
+    --ink-faint: #857c65;
+    --line: #4a4433;
+    --line-strong: #6b6248;
+    --forest: #6fae74;
+    --forest-ink: #8fc793;
+    --brass: #d1a94a;
+    --brass-ink: #e0bd6c;
+    --wine: #d9748a;
+    --wine-ink: #e493a5;
+    --navy: #9fb3cc;
+    --link: #cbbf8e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin: 0;
+    padding: 48px 20px 96px;
+  }
+
+  .sheet {
+    max-width: 740px;
+    margin: 0 auto;
+  }
+
+  .serif {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+  }
+
+  .mono {
+    font-family: "D2Coding", "Consolas", "SFMono-Regular", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  /* ---- Letterhead ---- */
+  header.letterhead {
+    border-top: 3px double var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 22px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  header.letterhead .titles h1 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 4px 0 6px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  header.letterhead .code {
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  header.letterhead .meta {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    white-space: nowrap;
+  }
+
+  header.letterhead .meta b { color: var(--ink); }
+
+  /* ---- Verdict stamp ---- */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid currentColor;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    transform: rotate(-2.5deg);
+    white-space: nowrap;
+    mix-blend-mode: multiply;
+  }
+  :root:not([data-theme="light"]) .stamp,
+  :root[data-theme="dark"] .stamp {
+    mix-blend-mode: screen;
+  }
+
+  .stamp.pass, .stamp.fit { color: var(--forest-ink); }
+  .stamp.partial { color: var(--brass-ink); }
+  .stamp.fail, .stamp.no-fit { color: var(--wine-ink); }
+  .stamp.hold { color: var(--ink-faint); border-style: dashed; }
+
+  .stamp-lg {
+    font-size: 22px;
+    padding: 12px 26px;
+    border-width: 3px;
+    border-radius: 8px;
+    transform: rotate(-3deg);
+  }
+
+  /* ---- Overview ---- */
+  .overview {
+    padding: 20px 0 8px;
+    color: var(--ink-soft);
+  }
+
+  /* ---- Verdict summary strip ---- */
+  .verdict-strip {
+    display: flex;
+    justify-content: center;
+    padding: 6px 0 30px;
+  }
+
+  /* ---- Section ---- */
+  section.stage {
+    margin-top: 8px;
+  }
+
+  .stage > .stage-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+
+  .stage-head h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  /* ---- Criterion card ---- */
+  .criterion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px 20px;
+    margin-bottom: 16px;
+  }
+
+  .criterion .crit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .criterion h3 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .criterion .score {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .criterion dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 14px;
+    margin: 12px 0 0;
+  }
+
+  .criterion dt {
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .criterion dd {
+    margin: 0;
+    font-size: 14.5px;
+  }
+
+  .criterion .figs {
+    font-size: 14.5px;
+    background: var(--paper-panel-2);
+    border-left: 3px solid var(--line-strong);
+    padding: 9px 13px;
+    margin: 4px 0 12px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .criterion .clause {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .stage-summary {
+    font-size: 14px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--line-strong);
+    padding: 8px 14px;
+    margin: 4px 0 44px;
+  }
+
+  /* ---- Opinion panel ---- */
+  .opinion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 24px 26px;
+    margin-bottom: 44px;
+    position: relative;
+  }
+
+  .opinion h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0 0 12px;
+  }
+
+  .opinion p { margin: 0 0 12px; }
+  .opinion p:last-child { margin-bottom: 0; }
+
+  .opinion .conclusion {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .opinion .conclusion p { flex: 1; min-width: 240px; margin: 0; }
+
+  /* ---- Sources ---- */
+  .sources {
+    font-size: 13.2px;
+    color: var(--ink-soft);
+  }
+
+  .sources h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 17px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+
+  .sources ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .sources li { margin-bottom: 10px; }
+  .sources li b { color: var(--ink); }
+  .sources a { color: var(--link); }
+  .sources a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+  /* ---- Compliance ledger ---- */
+  .compliance {
+    margin-top: 40px;
+    border-top: 3px double var(--line-strong);
+    padding-top: 18px;
+  }
+
+  .compliance h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 15px;
+    margin: 0 0 12px;
+    color: var(--ink-soft);
+  }
+
+  .compliance ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .compliance li {
+    padding: 7px 0 7px 24px;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .compliance li:last-child { border-bottom: none; }
+
+  .compliance li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    color: var(--forest-ink);
+    font-family: "D2Coding", monospace;
+  }
+
+  footer.colophon {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin-top: 40px;
+    letter-spacing: 0.04em;
+  }
+
+  a { color: var(--link); }
+
+  @media (max-width: 560px) {
+    header.letterhead { flex-direction: column; }
+    header.letterhead .meta { text-align: left; }
+    .criterion .crit-head { flex-direction: column; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="letterhead">
+    <div class="titles">
+      <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준</div>
+      <h1>SM엔터테인먼트</h1>
+      <div class="code mono">종목코드 041510 · 코스닥</div>
+    </div>
+    <div class="meta">
+      작성일 <b>2026-08-13</b><br>
+      작성 도구 <b><span class="mono">investment-desk</span></b><br>
+      DART 조회 <b>corp_code 00260930</b>
+    </div>
+  </header>
+
+  <p class="overview">SM엔터테인먼트(에스엠)는 1995년 설립된 국내 대표 엔터테인먼트사로, 소속 아티스트(보아·동방신기·슈퍼주니어·소녀시대·샤이니·EXO·레드벨벳·NCT·에스파 등)의 음반·음원, 콘서트, 팬 멤버십, MD 판매가 매출의 근간을 이루는 소비자 대상(B2C) 사업이다. 2025년(제31기) 연결 매출액 약 1조 1,749억원, 영업이익 약 1,830억원(영업이익률 15.6%)을 기록했다(DART).</p>
+
+  <div class="verdict-strip">
+    <span class="stamp stamp-lg fail">투자 매력 없음 · PASS / AVOID</span>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">STAGE 1</span>
+      <h2>핵심 판단 기준 3개</h2>
+    </div>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+        <span class="score mono">Score ≈ 26/100</span>
+        <span class="stamp fail">미부합</span>
+      </div>
+      <p class="figs mono">매출총이익률 35.5% → 31.0% → 36.8% (제29→30→31기, 3년간 변동성 큼)<br>영업이익률 11.8% → 8.8% → 15.6% · 영업이익 YoY −23.1%(FY24) → +109.7%(FY25)<br>자회사 디어유 '버블' 구독료 2025.7 +11~12% 인상 후에도 매출 YoY +34%·영업이익 YoY +100%(Proxy)</p>
+      <p>`judge-retention-pricing-power` 스킬의 100점 스코어카드(Layer A&ndash;G)를 적용한 결과 Score ≈26/100. Pricing Power의 유일하고 가장 강력한 근거(멤버십 구독료 인상 후에도 리텐션·이익 유지)는 SM 본체가 아니라 별도 상장된 계열사 디어유의 '버블' 사업에서만 확인되며, SM 본체의 멤버십·앨범·티켓 가격 정책 데이터는 확보되지 않아(웹 데이터 갭) Customer Economics·Product/Brand Layer가 Insufficient Data로 처리됐다. Financial Translation Gate(SM 본체의 Retention→Pricing Power 전이 미입증)와 Consensus Gate(구독료 인상 정보 자체가 이미 별도 상장사 공시로 공개돼 있어 시장 미인식이라 보기 어려움)가 동시에 발동해 최종 Verdict <b>PASS</b>로 귀결됐다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">기준① 판정 — "`scorecard_and_verdict.md`의 최종 Verdict 기준, PASS(또는 Gate 위반) → 미부합"</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 재무제표(Primary, Medium) · web.json 디어유 버블 관련 증권사 리서치 인용 기사(Proxy, Medium — SM 본체 아닌 계열사 데이터) · FnGuide/FnSpace 미확보(컨센서스·목표주가 데이터 없음, 판단 보류)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>② Structural vs Cyclical Misclassification</h3>
+        <span class="score mono">Score ≈ 19/100</span>
+        <span class="stamp fail">미부합</span>
+      </div>
+      <p class="figs mono">자산총계 1조 5,410억 → 1조 4,191억 → 2조 77억원(제29→30→31기) · 자본총계 +63.9%(FY25, 2025년 합병 공시와 시기 일치)<br>2024년 K팝 음반 수출 사상 첫 역성장(웹 Proxy) · 2026년 4대 기획사(하이브·SM·JYP·YG) 동반 신인 그룹 데뷔 러시<br>PER 8.94배(2026-08-13, 업종 대비 낮은 편)</p>
+      <p>`judge-structural-vs-cyclical` 스킬의 Cyclical Contamination Test(반증 시도)를 적용한 결과, FY31(2025)의 매출·이익 급반등이 순수 Volume 성장(글로벌 침투 확대)인지, 같은 시기 진행된 합병(연결범위 변경)에 따른 인오가닉 효과인지 DART 데이터만으로는 분리되지 않았다. Peer(하이브·JYP·YG) 재무 비교 데이터 부재로 "SM만의 구조적 우위"를 뒷받침할 Divergence 근거도 확인되지 않았고, 오히려 4대 기획사 동반 확장이라는 업종 공통 신호만 관찰됐다. Data Integrity Gate와 Consensus Gate("K팝 구조냐 유행이냐" 논쟁 자체가 이미 다수 언론에 공개)가 발동해 최종 Verdict <b>PASS</b>.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">기준② 판정 — "`scorecard_and_verdict.md`의 최종 Verdict 기준, PASS(Score 50~64 또는 Gate 위반) → 미부합"</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART 3개년 재무제표+공시목록(Primary, Medium) · FRED 미국 거시지표(참고용, Low — 국가 불일치) · web.json K팝 산업 리포트(뉴스핌·알파스퀘어 인용, Proxy, Medium) · FnGuide/Peer 재무 미확보</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>③ Underpriced Customer Love (ULRS)</h3>
+        <span class="score mono">Score ≈ 15/100</span>
+        <span class="stamp fail">미부합</span>
+      </div>
+      <p class="figs mono">ULRS(진단 지표) ≈ 6.4(양수이나 미약, Layer5 데이터 공백에 기인해 신뢰도 낮음)<br>디어유 '버블' 유료 구독자 약 202만명(2026 Q1, Proxy) · 앨범/MD/콘서트 재구매율·리뷰 지표 데이터 없음<br>Red Flag 발동 1건(#7 낮은 진입장벽 — 신인 그룹 데뷔 러시 + 카테고리 성장 둔화 동반)</p>
+      <p>`judge-underpriced-customer-love` 스킬의 Score+Gate 아키텍처(Layer 1&ndash;5 + Catalyst)를 적용한 결과 Score ≈15/100. 팬덤 재구매·팬 플랫폼 재방문의 직접 근거(SM 본체 앨범/MD 판매량, 리뷰 볼륨, 검색점유율, 콘서트 재관람율)가 전량 데이터 없음으로 처리돼 Customer Love Layer가 크게 저평가됐고, 유일한 정량 신호(디어유 버블 구독자·가격인상 후 실적)도 SM 본체가 아닌 계열사 Proxy다. Durability Gate(신인 그룹 데뷔 러시로 인한 진입장벽 약화, Layer2&lt;40)와 Data Integrity Gate가 동시에 발동해 Score가 AVOID 하한(50)에도 못 미쳤다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">기준③ 판정 — "`scorecard_and_verdict.md`의 Score+Gate, AVOID(Score 50~64 또는 Gate 위반) → 미부합"</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>web.json — 디어유 버블 구독자/실적(Proxy, Medium), SM 본체 앨범·MD 판매량은 데이터 없음(Low) · DART 재무(Medium) · FnGuide 미확보(Market Recognition%ile 산출 불가)</dd>
+      </dl>
+    </article>
+
+    <p class="stage-summary">1단계 종합 — 3개 기준 모두 <b>미부합</b>(①PASS 26점 · ②PASS 19점 · ③AVOID 15점, 각 Gate 위반 포함)이다. judgment-rules.md "3개 모두 미부합이면 그 시점에 투자 매력이 없는 것으로 보고 판단을 종료한다"에 따라 <b>2단계 스크리닝은 실행하지 않는다.</b></p>
+  </section>
+
+  <div class="opinion">
+    <h2>종합 투자의견</h2>
+    <p>SM엔터테인먼트는 1단계 핵심 판단 기준 3개(Retention-to-Pricing-Power, Structural vs Cyclical, Underpriced Customer Love) 모두에서 미부합 판정을 받았다. 세 기준을 관통하는 공통 문제는 (1) 팬덤 지불의사·재구매·리텐션을 뒷받침할 근거가 SM 본체가 아니라 별도 상장된 계열사 디어유(버블)에서만 확인되고 SM 자체의 앨범·멤버십·티켓 판매 데이터는 확보되지 않았다는 점, (2) FY2025 실적 반등이 순수 사업 성장인지 같은 시기 진행된 합병(연결범위 변경)에 따른 효과인지 재무제표만으로 분리되지 않는다는 점, (3) 4대 기획사(하이브·SM·JYP·YG)가 2026년 동반 신인 그룹을 론칭하며 경쟁·진입장벽 약화가 구조적으로 진행 중이라는 점이다.</p>
+    <p>FnGuide/FnSpace 컨센서스 데이터를 이번 실행에서 확보하지 못해(MCP 도구가 이 세션의 툴 목록에 없음) 목표주가 괴리율·추정실적·Peer 밸류에이션 비교 등 일부 근거는 판단 보류로 처리했다. 또한 web.json이 보고한 PBR(3.08배)은 DART 자본총계(1조 3,587억원) 대비 시가총액(1조 7,285억원)으로 역산한 값(약 1.27배)과 상당한 차이가 있어 신뢰도를 낮춰 참고만 했다 — 어느 쪽이든 3개 기준 모두 Gate 다수 위반으로 이미 명확히 미부합에 해당해 이 공백이 결론을 뒤집을 가능성은 낮다고 판단하나, FnGuide 확보 후 재검증이 필요하다.</p>
+    <div class="conclusion">
+      <p>1단계에서 판단이 종료되어 2단계 스크리닝을 진행하지 않았다. 규칙서 기준상 <b>투자 매력 없음</b>으로 판단한다.</p>
+      <span class="stamp fail">PASS / AVOID</span>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h2>사용한 원자료 출처</h2>
+    <ol>
+      <li><b>DART</b> — <span class="mono">data/cache/SM엔터테인먼트/dart.json</span>, 사업보고서(제29&ndash;31기) 손익계산서·재무상태표, 최근 1년 공시목록, corp_code 00260930, 2026-08-13 조회.</li>
+      <li><b>FRED</b> — <span class="mono">data/cache/SM엔터테인먼트/fred.json</span>, CPI·기준금리·소매판매(RSAFS)·실업률(미국 지표), 2026-08-13 조회. SM은 한국·일본·중국·미국 등 글로벌 매출 비중이 큰 기업이나 이 시리즈는 미국 지표 한정이라 참고용(Low&ndash;Medium Confidence, 국가 불일치).</li>
+      <li><b>FnGuide/FnSpace</b> — 미확보. 세션 상 <span class="mono">plugin:fnspace:fnspace</span> MCP 연결(<span class="mono">claude mcp list</span>)은 확인됐으나, 이 에이전트의 실제 툴 목록에 <span class="mono">mcp__fnspace__*</span> 도구가 노출되지 않아 이번 실행에서는 직접 호출하지 못했다. 컨센서스·목표주가·추정실적·EPS 데이터는 전량 "데이터 없음"으로 처리했다.</li>
+      <li><b>alphasquare.co.kr</b> — <a href="https://alphasquare.co.kr/home/stock-summary?code=041510" target="_blank" rel="noopener">에스엠 실시간 주가·시가총액·PER·PBR</a>, 2026-08-13 12:46:28 수집(Proxy, Medium — 시가총액 1조 7,285억원·PER 8.94배·PBR 3.08배).</li>
+      <li><b>데일리인베스트</b> — <a href="http://www.dailyinvest.kr/news/articleView.html?idxno=69182" target="_blank" rel="noopener">"디어유, '버블'에 결집하는 팬덤이 글로벌 확대 디딤돌"</a> 및 <a href="https://v.daum.net/v/20260217165325323" target="_blank" rel="noopener">"디어유, 최대 실적과 더 좋아질 2026년"</a>, 2026-08-13 수집(Proxy, Medium — 디어유 버블 구독자·가격인상·실적, SM 본체 아닌 계열사 데이터).</li>
+      <li><b>DS투자증권 리서치(datatooza.com 인용)</b> — <a href="https://www.datatooza.com/article/20260427114436571352ef3fbfd8_80" target="_blank" rel="noopener">"디어유, 글로벌 팬덤 비즈니스 확장 지속…1분기 영업익 77% 급증 전망"</a>, 2026-08-13 수집(Proxy, Medium).</li>
+      <li><b>나무위키</b> — <a href="https://namu.wiki/w/Dear%20U%20bubble" target="_blank" rel="noopener">"Dear U bubble"</a>, <a href="https://namu.wiki/w/SM%EC%97%94%ED%84%B0%ED%85%8C%EC%9D%B8%EB%A8%BC%ED%8A%B8%20%EA%B2%BD%EC%98%81%EA%B6%8C%20%EB%B6%84%EC%9F%81" target="_blank" rel="noopener">"SM엔터테인먼트 경영권 분쟁"</a>, 2026-08-13 수집(Proxy, Low&ndash;Medium — 커뮤니티 편집 기반, 팩트 교차확인 필요).</li>
+      <li><b>뉴스핌</b> — <a href="https://www.newspim.com/news/view/20240730000688" target="_blank" rel="noopener">"[K팝 위기론②] 사상 첫 역성장한 음반수출…'과열된 거품' 걷혔나"</a> 및 <a href="https://v.daum.net/v/20260109073122278" target="_blank" rel="noopener">"[2026 전망보고서] 위기의 케이팝, '거물들의 귀환'이 반등 트리거 될까"</a>, 2026-08-13 수집(Proxy, Medium — K팝 산업 구조/순환 논쟁).</li>
+      <li><b>알파스퀘어(키움증권 리포트 인용)</b> — <span class="mono">file.alphasquare.co.kr</span> "K-POP 산업 중장기 시나리오"(2026-05-07), 2026-08-13 수집(Proxy, Medium — 산업 리포트).</li>
+      <li><b>이즈(ize)</b> — <a href="https://www.ize.co.kr/news/articleView.html?idxno=73293" target="_blank" rel="noopener">"Welcome 2026 l 엔터 빅4, 신인 론칭 계획은?"</a>, 2026-08-13 수집(Proxy, Medium — 4대 기획사 경쟁 동향).</li>
+      <li><b>ESG경제</b> — <a href="https://www.esgeconomy.com/news/articleView.html?idxno=3113" target="_blank" rel="noopener">"이수만, 가처분서 승리…카카오, SM 주식 취득 급제동"</a>, 2026-08-13 수집(Proxy, Medium — 2023년 경영권 분쟁·시세조종 의혹, 최근 1년 내 신규 중대 ESG 이슈는 미확인).</li>
+    </ol>
+  </section>
+
+  <div class="compliance">
+    <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+    <ul>
+      <li>3개 기준 모두 미부합 판정은 각 판단 스킬(judge-retention-pricing-power, judge-structural-vs-cyclical, judge-underpriced-customer-love)의 100점 스코어카드 + Gate 결과를 judgment-rules.md에 명시된 매핑 규칙(BUY/WATCH/PASS·AVOID → 부합/부분부합/미부합)으로 그대로 환산한 것이며, 오케스트레이터가 임의로 등급을 조정하지 않았다.</li>
+      <li>2단계 스크리닝(시장성·경쟁력·수익성·재무효율성·ESG)은 "1단계에서 하나 이상 기준에 부합한 경우에만" 실행한다는 조항에 따라 이번 건에서는 생략했다.</li>
+      <li>FnGuide/FnSpace 데이터는 이 세션의 툴 제약으로 수집하지 못했다는 사실을 추측으로 채우지 않고 "데이터 없음/판단 보류"로 명시했다(재현성 원칙 2번, "데이터 부족 시 처리" 절차 준수).</li>
+      <li>디어유 '버블' 관련 지표는 SM 본체 실적이 아닌 별도 상장 계열사 데이터임을 세 서브에이전트 모두 명시적으로 Proxy로만 취급했고, SM 본체 고유 지표(앨범·멤버십·티켓 판매)의 부재를 감점 요인으로 반영했다(Data Integrity Gate).</li>
+      <li>PBR 수치는 web.json 수집값(3.08배)과 DART 재무제표 역산값(약 1.27배)이 상충해, 어느 한쪽만 취해 불확실성을 숨기지 않고 본문·출처 양쪽에 병기했다.</li>
+      <li>웹 검색 출처는 "웹 검색"으로 뭉치지 않고 alphasquare·데일리인베스트·DS투자증권 리서치·나무위키·뉴스핌·알파스퀘어(키움증권 리포트)·이즈·ESG경제를 각각 개별 항목으로 나열했다(Output 절 지침 준수).</li>
+    </ul>
+  </div>
+
+  <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13</footer>
+
+</div>

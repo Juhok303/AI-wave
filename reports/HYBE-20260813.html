@@ -1,0 +1,500 @@
+<title>HYBE(하이브) 투심메모</title>
+<style>
+  :root {
+    --paper: #efeae0;
+    --paper-panel: #e6dfcf;
+    --paper-panel-2: #ded5c0;
+    --ink: #23241f;
+    --ink-soft: #5c5646;
+    --ink-faint: #8a8270;
+    --line: #c7bc9f;
+    --line-strong: #a89b77;
+    --forest: #2f5233;
+    --forest-ink: #24401f;
+    --brass: #8a6a1f;
+    --brass-ink: #6b5216;
+    --wine: #7d2036;
+    --wine-ink: #611829;
+    --navy: #2a3a52;
+    --link: #4a4530;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1a1813;
+      --paper-panel: #221f18;
+      --paper-panel-2: #2a261d;
+      --ink: #e9e2cf;
+      --ink-soft: #b9ae93;
+      --ink-faint: #857c65;
+      --line: #4a4433;
+      --line-strong: #6b6248;
+      --forest: #6fae74;
+      --forest-ink: #8fc793;
+      --brass: #d1a94a;
+      --brass-ink: #e0bd6c;
+      --wine: #d9748a;
+      --wine-ink: #e493a5;
+      --navy: #9fb3cc;
+      --link: #cbbf8e;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #1a1813;
+    --paper-panel: #221f18;
+    --paper-panel-2: #2a261d;
+    --ink: #e9e2cf;
+    --ink-soft: #b9ae93;
+    --ink-faint: #857c65;
+    --line: #4a4433;
+    --line-strong: #6b6248;
+    --forest: #6fae74;
+    --forest-ink: #8fc793;
+    --brass: #d1a94a;
+    --brass-ink: #e0bd6c;
+    --wine: #d9748a;
+    --wine-ink: #e493a5;
+    --navy: #9fb3cc;
+    --link: #cbbf8e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin: 0;
+    padding: 48px 20px 96px;
+  }
+
+  .sheet { max-width: 740px; margin: 0 auto; }
+
+  .serif { font-family: "Noto Serif KR", "Batang", ui-serif, serif; }
+
+  .mono {
+    font-family: "D2Coding", "Consolas", "SFMono-Regular", Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .eyebrow {
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  header.letterhead {
+    border-top: 3px double var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 22px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  header.letterhead .titles h1 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 4px 0 6px;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  header.letterhead .code { color: var(--ink-soft); font-size: 14px; }
+
+  header.letterhead .meta {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.9;
+    white-space: nowrap;
+  }
+
+  header.letterhead .meta b { color: var(--ink); }
+
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2.5px solid currentColor;
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    transform: rotate(-2.5deg);
+    white-space: nowrap;
+    mix-blend-mode: multiply;
+  }
+  :root:not([data-theme="light"]) .stamp,
+  :root[data-theme="dark"] .stamp { mix-blend-mode: screen; }
+
+  .stamp.pass, .stamp.fit { color: var(--forest-ink); }
+  .stamp.partial { color: var(--brass-ink); }
+  .stamp.fail, .stamp.no-fit { color: var(--wine-ink); }
+  .stamp.hold { color: var(--ink-faint); border-style: dashed; }
+
+  .stamp-lg {
+    font-size: 22px;
+    padding: 12px 26px;
+    border-width: 3px;
+    border-radius: 8px;
+    transform: rotate(-3deg);
+  }
+
+  .overview { padding: 20px 0 8px; color: var(--ink-soft); }
+
+  .verdict-strip { display: flex; justify-content: center; padding: 6px 0 30px; }
+
+  section.stage { margin-top: 8px; }
+
+  .stage > .stage-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+
+  .stage-head h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 19px;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .criterion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 18px 22px 20px;
+    margin-bottom: 16px;
+  }
+
+  .criterion .crit-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .criterion h3 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 16px;
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .crit-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+  .score-badge {
+    font-family: "D2Coding", monospace;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    background: var(--paper-panel-2);
+    border: 1px solid var(--line-strong);
+    border-radius: 3px;
+    padding: 3px 8px;
+  }
+
+  .criterion dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 14px;
+    margin: 12px 0 0;
+  }
+
+  .criterion dt {
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .criterion dd { margin: 0; font-size: 14.5px; }
+
+  .criterion .figs {
+    font-size: 14.5px;
+    background: var(--paper-panel-2);
+    border-left: 3px solid var(--line-strong);
+    padding: 9px 13px;
+    margin: 4px 0 12px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .criterion .clause { font-size: 13px; color: var(--ink-soft); font-style: italic; }
+
+  .stage-summary {
+    font-size: 14px;
+    color: var(--ink-soft);
+    border-left: 3px solid var(--line-strong);
+    padding: 8px 14px;
+    margin: 4px 0 44px;
+  }
+
+  .table-wrap { overflow-x: auto; margin-bottom: 44px; }
+
+  table.screen {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.8px;
+    min-width: 620px;
+  }
+
+  table.screen th {
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+    padding: 0 12px 8px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  table.screen td { padding: 12px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  table.screen tr:last-child td { border-bottom: 1px solid var(--line-strong); }
+  table.screen td.item { font-weight: 700; white-space: nowrap; font-family: "Noto Serif KR", "Batang", ui-serif, serif; }
+
+  .chip {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 3px 9px;
+    border-radius: 3px;
+    border: 1.5px solid currentColor;
+  }
+  .chip.none { color: var(--ink-faint); border-style: dashed; }
+
+  .opinion {
+    background: var(--paper-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 24px 26px;
+    margin-bottom: 44px;
+    position: relative;
+  }
+
+  .opinion h2 { font-family: "Noto Serif KR", "Batang", ui-serif, serif; font-size: 19px; margin: 0 0 12px; }
+  .opinion p { margin: 0 0 12px; }
+  .opinion p:last-child { margin-bottom: 0; }
+
+  .opinion .conclusion {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--line-strong);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .opinion .conclusion p { flex: 1; min-width: 240px; margin: 0; }
+
+  .sources { font-size: 13.2px; color: var(--ink-soft); }
+
+  .sources h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 17px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+
+  .sources ol { margin: 0; padding-left: 20px; }
+  .sources li { margin-bottom: 10px; }
+  .sources li b { color: var(--ink); }
+  .sources a { color: var(--link); }
+  .sources a:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+  .compliance {
+    margin-top: 40px;
+    border-top: 3px double var(--line-strong);
+    padding-top: 18px;
+  }
+
+  .compliance h2 {
+    font-family: "Noto Serif KR", "Batang", ui-serif, serif;
+    font-size: 15px;
+    margin: 0 0 12px;
+    color: var(--ink-soft);
+  }
+
+  .compliance ul { list-style: none; margin: 0; padding: 0; font-size: 13px; color: var(--ink-soft); }
+  .compliance li { padding: 7px 0 7px 24px; border-bottom: 1px solid var(--line); position: relative; }
+  .compliance li:last-child { border-bottom: none; }
+  .compliance li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 7px;
+    color: var(--forest-ink);
+    font-family: "D2Coding", monospace;
+  }
+
+  footer.colophon {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin-top: 40px;
+    letter-spacing: 0.04em;
+  }
+
+  a { color: var(--link); }
+
+  @media (max-width: 560px) {
+    header.letterhead { flex-direction: column; }
+    header.letterhead .meta { text-align: left; }
+    .criterion .crit-head { flex-direction: column; }
+  }
+</style>
+
+<div class="sheet">
+
+  <header class="letterhead">
+    <div class="titles">
+      <div class="eyebrow">투심보고서 · 판단 규칙서 <span class="mono">judgment-rules.md</span> 기준 · 개별기업 판단</div>
+      <h1>HYBE (하이브)</h1>
+      <div class="code mono">티커 352820 · 코스피(KOSPI) · 엔터테인먼트/멀티레이블 아티스트 매니지먼트</div>
+    </div>
+    <div class="meta">
+      작성일 <b>2026-08-13</b><br>
+      작성 도구 <b><span class="mono">investment-desk</span></b><br>
+      DART <b>연동(별도재무제표)</b> · FnGuide/FnSpace <b>이번 세션 수집 실패</b>
+    </div>
+  </header>
+
+  <p class="overview">HYBE(하이브)는 BTS·TXT·ENHYPEN·&amp;TEAM·BOYNEXTDOOR 등 다수의 아티스트를 멀티 레이블 체제로 운영하는 국내 최대 엔터테인먼트 기업으로, 음반·음원·공연·MD(굿즈)·라이선싱 판매와 팬덤 커뮤니티 플랫폼 Weverse(위버스, MAU 약 1,000만 명, 해외 이용자 비중 87%) 운영을 통해 소비자에게 직접 매출을 일으키는 명백한 B2C 기업이다(Scope Gate 통과). 이 레포의 판단 규칙서(judgment-rules.md)를 적용한 결과, 1단계 핵심 기준 3개가 모두 <b>미부합</b>으로 판정됐다(아래 참조).</p>
+
+  <div class="verdict-strip">
+    <span class="stamp stamp-lg fail">투자 매력 없음 · 1단계 종료</span>
+  </div>
+
+  <section class="stage">
+    <div class="stage-head">
+      <span class="eyebrow">STAGE 1</span>
+      <h2>핵심 판단 기준 3개</h2>
+    </div>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>① Retention&#8209;to&#8209;Pricing&#8209;Power</h3>
+        <div class="crit-badges">
+          <span class="score-badge">Score 25/100(추정)</span>
+          <span class="stamp fail">미부합</span>
+        </div>
+      </div>
+      <p class="figs mono">별도재무제표 기준 매출총이익률 46.3%(FY23)&rarr;42.6%(FY24)&rarr;35.3%(FY25), 영업이익률 13.6%&rarr;8.2%&rarr;1.9%로 3개년 연속 하락(dart.json)<br>2024년 4분기 Weverse 유료 멤버십 도입(web.json) &mdash; 가격인상 후 Retention/Churn 데이터는 없음<br>2026년 2분기 연결 실적: 매출 1조4,500억원 · 영업이익 1,709억원(YoY +159.3%, web.json, 별도재무제표와는 범위가 다른 별개 수치)</p>
+      <p>멤버십/팬클럽 가격 정책(Weverse 유료화) 관점에서 Pricing Power Test 4개 서브테스트를 적용한 결과, Test1(가격인상 여부)만 확인됐고&mdash;2024년 4분기 유료 멤버십 도입 확인&mdash;나머지 3개(가격인상 후 Retention 유지, Mix 상향 효과, 경쟁사 대비 ASP 프리미엄)는 데이터 없음으로 Insufficient Data 처리됐다. 오히려 Korea Herald 보도(web.json, Low confidence)는 신규 유료 멤버십 의무화에 대해 일부 레이블·팬 사이의 "착취적(exploiting)"이라는 비판을 전해 자발적 지불의사보다 강제 부과에 가까운 리스크 시그널로 반영했다. Financial Transmission Chain의 결정적 단절은 마진 데이터에서 확인된다&mdash;DART 별도재무제표(제19~21기, FY2023~FY2025) 기준 매출총이익률·영업이익률이 3개년 연속 악화돼(위 figs 참고) "가격결정력&rarr;Gross Margin&rarr;Operating Margin 개선"이라는 인과 체인이 정반대 방향(마진 붕괴)으로 나타났다&mdash;Layer F(Financial Transmission)가 Broken으로 판정됐다. 다만 web.json에 보도된 2026년 2분기 연결 실적(매출 1.45조원, 영업이익 1,709억원, YoY +159.3%)은 최근 개선 신호이나 이는 연결 기준으로 위 별도재무제표와 회계 범위가 다르며, 보도상 BTS 완전체 활동 재개(Volume 효과)가 주 요인으로 설명돼 가격/마진 구조 개선이라기보다 활동 재개에 따른 매출 볼륨 회복에 가깝다&mdash;두 수치 세트를 혼용하지 않고 별도로 병기했다. FnGuide/FnSpace 컨센서스 데이터가 이번 세션에서 수집되지 않아 목표주가·Estimate Revision 등 Consensus/Valuation 관련 항목은 전부 "데이터 없음"으로 처리했으며, 그 결과 Financial Translation Gate와 Data Integrity Gate가 함께 발동해 Score 25/100(추정), 최종 Verdict <b>PASS</b>로 귀결됐다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">judgment-rules.md 기준① 판정 &mdash; "최종 Verdict 매핑: BUY&rarr;부합, WATCH&rarr;부분부합, PASS(또는 Gate 위반)&rarr;미부합" · `judge-retention-pricing-power` Layer A&ndash;G, Pricing Power Test 1&ndash;4, Financial Transmission Chain, Scorecard&amp;Verdict Financial Translation/Data Integrity Gate</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART&mdash;별도재무제표(High, 단 연결과 범위 상이) · FnGuide/FnSpace&mdash;이번 세션 수집 실패(N/A) · FRED(미국 매크로, Low&mdash;참고용) · web.json(Proxy, Medium~Low)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>② Structural vs Cyclical Misclassification</h3>
+        <div class="crit-badges">
+          <span class="score-badge">Score 26/100</span>
+          <span class="stamp fail">미부합</span>
+        </div>
+      </div>
+      <p class="figs mono">별도재무제표 영업이익 2,956억(FY23)&rarr;1,840억(FY24)&rarr;493억(FY25)으로 3개년 연속 급감(dart.json)<br>K팝 글로벌 레이블 시장 약 66조원 규모 전망(PwC/alphasquare 리포트, web.json)<br>2024년 상반기 음반수출 사상 첫 역성장(뉴스핌, web.json) vs Weverse 해외 이용자 비중 87%</p>
+      <p>Framework Fit은 Medium으로 판정됐다&mdash;소비자 행동의 "구조적 확장(글로벌 침투율 상승)" 서사는 일부 성립하나, 상장 이후 뚜렷한 경기 하방 국면에서의 실적 데이터가 없어 Cyclical Contamination Test의 검증력이 제한적이다. Test 1(Historical Macro Sensitivity)은 경기 하강 국면 동행성 데이터 부재로 Insufficient Data, Test 2(Peer Divergence)는 SM/YG/JYP의 정량 실적 데이터가 없어 Insufficient Data(다만 경쟁사들도 다수 신인 그룹을 동시에 데뷔시키고 있다는 정성적 근거는 "하이브 고유 우위"보다 "카테고리 전체 편승" 쪽에 무게를 싣는다), Test 3(Growth Decomposition)은 별도재무제표 기준 매출총이익률 하락(46.3%&rarr;42.6%&rarr;35.3%)이 원가(콘텐츠 제작비) 증가가 매출 증가를 상회한 결과라는 사실은 확인되나 세부 원인(신규 레이블 확장 투자 vs 기존 사업 수익성 악화)은 데이터로 분리할 수 없어 "구조와 순환이 실제로 뒤섞여 분리가 어렵다"는 결론에 이르렀다&mdash;확증편향 방지 원칙(Bear/Bull 동등 검토)에 따라 이 불확실성을 그대로 반영했다. Bull case(66조원 글로벌 레이블 시장, Weverse MAU 1,000만·해외비중 87%, 콘서트 투어 관객 전망 300~350만&rarr;450만 상향)와 Bear case(2024년 음반수출 첫 역성장, 실적 반등이 BTS 활동 재개라는 특정 아티스트 사이클에 크게 의존, 민희진&#183;ADOR 경영권 분쟁 및 430억원 배상소송 미종결, Weverse 유료멤버십 관련 비판 보도)를 동등한 무게로 검토한 결과 Financial Transmission Gate·Consensus Gate(K팝 구조/유행 논쟁 자체가 이미 업계 리포트·언론에 공개돼 Variant Perception이 Category 1로 분류돼 0점 처리)·Data Integrity Gate(경쟁사 정량 데이터, 경기 하강 데이터, 컨센서스 데이터 모두 부재)가 함께 발동해 Score 26/100, 최종 Verdict <b>PASS</b>로 귀결됐다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">judgment-rules.md 기준② 판정 &mdash; "BUY(Score&ge;80)&rarr;부합, WATCH(65&ndash;79)&rarr;부분부합, PASS(50&ndash;64 또는 Gate 위반)&rarr;미부합" · `judge-structural-vs-cyclical` Cyclical Contamination Test 1&ndash;3, Financial Transmission, Variant Perception(Category 1), Scorecard&amp;Verdict Financial Translation/Consensus/Data Integrity Gate</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART&mdash;별도재무제표(High, 연결과 범위 상이) · FnGuide/FnSpace&mdash;이번 세션 수집 실패(N/A) · FRED(미국 매크로, Low&mdash;참고용) · web.json(Proxy, Medium)</dd>
+      </dl>
+    </article>
+
+    <article class="criterion">
+      <div class="crit-head">
+        <h3>③ Underpriced Customer Love (ULRS)</h3>
+        <div class="crit-badges">
+          <span class="score-badge">Score 29&ndash;35/100(추정)</span>
+          <span class="stamp fail">미부합</span>
+        </div>
+      </div>
+      <p class="figs mono">Weverse MAU 약 1,000만(2026-06) · 해외 이용자 비중 87%(web.json)<br>2026년 상반기 밀리언셀러 아티스트 다수(BTS·TXT·ENHYPEN 등) · 2026 콘서트 투어 관객 전망 약 450만명(당초 300~350만 상회, web.json)<br>12M 재구매율·리뷰 볼륨 증가율·DAU/MAU 비율·브랜드 검색점유율 변화: 정량 데이터 없음(Insufficient Data)</p>
+      <p>팬덤 재구매(앨범 멀티버전 수집, 콘서트 재관람, MD 굿즈)와 Weverse 플랫폼 재방문·재구독을 Love/Durability Layer의 핵심 proxy로 살펴본 결과, Weverse MAU 1,000만·해외비중 87%, 밀리언셀러 다수 배출, 콘서트 동원 전망 상향 등 Behavioral Love를 시사하는 정성적 신호는 확인되나, ULRS 공식이 요구하는 1차 정량 지표(12M 재구매율, 리뷰 볼륨 증가율(YoY), DAU/MAU, 브랜드 검색점유율 변화)는 전부 데이터 없음이라 K절 원칙(중립 50점 처리 금지, weight 배제 후 재정규화)에 따라 배제·재정규화했다&mdash;이 자체가 Data Integrity Gate 발동 사유다. Durability Layer는 별도재무제표 기준 3개년 연속 마진 악화(매출총이익률 46.3%&rarr;42.6%&rarr;35.3%, 영업이익률 13.6%&rarr;8.2%&rarr;1.9%, dart.json) 및 민희진&#183;ADOR 경영권 분쟁·430억원 배상소송 미해소(web.json)를 반영해 추정 35점 미만으로 Durability Gate(<40)가 발동, Total Score 상한이 60점으로 캡핑됐다. Market Recognition Gate는 Conversion_Readiness_Gap 산정에 필요한 Layer5(FnGuide 컨센서스·EV/Sales)가 이번 세션 수집 실패로 전무해 통과 여부 자체를 확정할 수 없다&mdash;미확인은 통과로 인정하지 않는다는 원칙에 따라 Gate 위반으로 처리했다. Red Flag 10종 중 확인 가능했던 것은 #7(낮은 진입장벽: SM&#183;YG&#183;JYP 및 하이브 자체 멀티레이블의 다수 신인 데뷔 + 2024년 음반수출 첫 역성장) 1건이며 나머지는 데이터 부족으로 "확인 불가"로 남겨(임의로 미발동 처리하지 않음) 강제 AVOID 요건(2개 이상)에는 해당하지 않았다. 다만 Durability Gate·Market Recognition Gate 위반만으로도 Score+Gate 임계값(BUY&ge;80&amp;전 Gate 통과, WATCH 65&ndash;79, AVOID 50&ndash;64 또는 Gate 위반)에 따라 최종 Verdict는 <b>AVOID</b>로 귀결됐다.</p>
+      <dl>
+        <dt>적용 조항</dt>
+        <dd class="clause">judgment-rules.md 기준③ 판정 &mdash; "BUY(Score&ge;80)&rarr;부합, WATCH(65&ndash;79)&rarr;부분부합, AVOID(50&ndash;64 또는 Gate 위반)&rarr;미부합" · `judge-underpriced-customer-love` K절 데이터 신뢰도 처리 원칙, Durability Gate·Market Recognition Gate·Data Integrity Gate·Red Flag Test(#7)·Scorecard&amp;Verdict</dd>
+        <dt>출처·신뢰도</dt>
+        <dd>DART&mdash;별도재무제표(High, 연결과 범위 상이) · FnGuide/FnSpace&mdash;이번 세션 수집 실패(N/A, Market Recognition Gate 산출 불가) · web.json(Proxy, Medium~Low&mdash;정량 Love 지표는 미확보)</dd>
+      </dl>
+    </article>
+
+    <p class="stage-summary">1단계 종합 &mdash; 기준①·②·③ 모두 <b>미부합</b>(judgment-rules.md "1단계" 절: "3개 모두 미부합이면 그 시점에 투자 매력이 없는 것으로 보고 판단을 종료한다"). 2단계 스크리닝 체크리스트(`screen-fundamentals`)는 이 규정에 따라 호출하지 않았다.</p>
+  </section>
+
+  <div class="opinion">
+    <h2>종합 투자의견</h2>
+    <p>HYBE는 2026년 2분기 연결 기준 사상 최대 분기 매출(1조4,500억원)·영업이익(1,709억원, YoY +159.3%)을 기록했고, Weverse MAU 1,000만·해외비중 87%, 2026년 콘서트 투어 관객 전망 상향(300~350만&rarr;450만) 등 표면적 사업 모멘텀은 긍정적이다. 그러나 이 레포의 판단 규칙서(judgment-rules.md) 1단계 핵심 기준 3개&mdash;가격전가력(Retention-to-Pricing-Power), 구조적/경기순환 오분류(Structural vs Cyclical), 저평가된 고객 애착(Underpriced Customer Love)&mdash;에 각각 적용한 결과 세 기준 모두 미부합(Score 25~35/100 내외)으로 판정됐다. 공통적으로 확인된 문제는 세 가지다. 첫째, DART 공시(별도재무제표) 기준 매출총이익률·영업이익률이 FY2023&rarr;FY2025 3개년 연속 악화(46.3%&rarr;35.3%, 13.6%&rarr;1.9%)돼, "Retention&#183;가격결정력이 마진으로 전이된다"는 세 철학 공통의 핵심 인과 체인이 오히려 정반대 방향으로 나타났다&mdash;다만 이는 별도 기준이며 2026년 2분기 연결 실적(영업이익 YoY +159.3%)과는 범위가 달라 두 수치를 혼용하지 않고 병기했음을 명확히 한다. 둘째, 최근 실적 개선의 핵심 동력이 BTS 완전체 활동 재개라는 특정 아티스트 사이클로 보도돼 "구조적 확장"과 "활동 사이클에 따른 순환적 반등"을 데이터로 분리할 수 없었다&mdash;2024년 음반수출 첫 역성장 이력도 유행/순환 리스크의 반증 근거로 함께 반영했다. 셋째, FnGuide/FnSpace 컨센서스 데이터가 이번 세션에서 수집되지 않아(플러그인 연결 자체는 정상이나 세션 도구 미로드) 목표주가·EV/Sales·Estimate Revision 등 Market Recognition·Consensus 판정에 필요한 데이터가 전부 공백이었고, 이로 인해 세 기준 모두에서 Data Integrity Gate 또는 이에 준하는 Gate가 발동했다. 여기에 민희진&#183;ADOR 경영권 분쟁(430억원 배상소송, 2026년 8월 현재도 미종결)이라는 미해소 지배구조 리스크도 함께 확인됐다.</p>
+    <div class="conclusion">
+      <p>세 기준 모두 미부합으로 1단계에서 판단이 종료되어 2단계 스크리닝(시장성/경쟁력/수익성/재무효율성/ESG)은 실행하지 않았다. 이는 하이브의 사업 자체나 최근 실적 모멘텀을 부정하는 것이 아니라, 이 도구가 적용하는 세 가지 특정 투자철학(가격전가력·구조적 오분류·저평가된 고객 애착) 렌즈에는 현재 시점 확보 가능한 데이터(특히 FnGuide 컨센서스 공백과 별도&#183;연결 재무제표 괴리)로는 판단이 뒷받침되지 않는다는 의미다. FnGuide/FnSpace 연동을 다음 세션에서 재확보해 컨센서스·목표주가 데이터를 반영하면 기준①&#183;③(Consensus/Market Recognition Gate 관련)의 판정이 달라질 가능성이 있다&mdash;재실행을 권고한다.</p>
+      <span class="stamp fail">투자 매력 없음</span>
+    </div>
+  </div>
+
+  <section class="sources">
+    <h2>사용한 원자료 출처</h2>
+    <ol>
+      <li><b>DART</b> &mdash; <span class="mono">data/cache/HYBE/dart.json</span>, 하이브(corp_code 01204056, 종목코드 352820) 별도재무제표 손익계산서·재무상태표(제19~21기, FY2023~FY2025) 및 최근 1년 공시 목록, 2026-08-13 조회. 이 수치는 연결재무제표가 아닌 별도(모회사 단독) 기준이며, 최근 언론 보도의 연결 실적과 회계 범위가 다르다는 점을 본문에 명시했다.</li>
+      <li><b>FRED</b> &mdash; <span class="mono">data/cache/HYBE/fred.json</span>, CPI·기준금리·소매판매(RSAFS)·실업률(미국 지표), 2026-08-13 조회. 하이브 매출의 상당 부분이 해외(미국 포함)에서 발생하지만 본사·상장지는 한국이라 참고용(Low~Medium Confidence)으로만 사용했다.</li>
+      <li><b>FnGuide/FnSpace</b> &mdash; 이번 세션에서 수집 실패. `claude mcp list` 상 <span class="mono">plugin:fnspace:fnspace</span> 연결 자체는 정상(✔ Connected)이었으나, 세션에 해당 MCP 도구 카탈로그가 로드되지 않아 `mcp__fnspace__*` 도구 호출이 불가능했다(2026-08-13). 목표주가·투자의견·컨센서스 추정실적·Estimate Revision Momentum 관련 판단은 전부 "데이터 없음"으로 처리했으며, `data/cache/HYBE/fnguide.json`은 생성되지 않았다.</li>
+      <li><b>the bell</b> &mdash; <a href="https://www.thebell.co.kr/front/newsview.asp?key=202408131528071640101483" target="_blank" rel="noopener">"[베일 벗은 하이브2.0] 하이브, 1000만 팬덤 플랫폼 위버스 유료화로 진화"</a> 및 <a href="https://www.thebell.co.kr/front/newsview.asp?key=202411051555236760101175" target="_blank" rel="noopener">"[컨콜 Q&amp;A 리뷰] 하이브, 팬덤 플랫폼 위버스 유료화 '자신'"</a>, Weverse 유료 멤버십 도입 확인(Proxy, Medium), 2026-08-13 조회.</li>
+      <li><b>한국경제</b> &mdash; <a href="https://www.hankyung.com/article/202501235848i" target="_blank" rel="noopener">"하이브 성장동력으로 부상하는 팬덤 플랫폼...위버스 이용자 1000만 눈앞"</a>, Weverse MAU·해외 이용자 비중 확인(Proxy, Medium), 2026-08-13 조회.</li>
+      <li><b>The Korea Herald</b> &mdash; <a href="https://www.koreaherald.com/article/3495201" target="_blank" rel="noopener">"Weverse accused of exploiting labels, fans with new mandatory paid-membership service"</a>, Weverse 유료 멤버십 의무화 비판 보도(Proxy, Low&mdash;헤드라인만 확인), 2026-08-13 조회.</li>
+      <li><b>헤럴드경제</b> &mdash; <a href="https://biz.heraldcorp.com/article/10824352" target="_blank" rel="noopener">"하이브, 2분기 매출 1조·영업이익 1천억 돌파…사상 최대 분기 실적"</a>(Proxy, Medium), 2026-08-13 조회.</li>
+      <li><b>다음뉴스</b> &mdash; <a href="https://v.daum.net/v/20260728150937201" target="_blank" rel="noopener">"하이브, 2분기 매출 1조4500억원…영업이익도 역대 최대"</a> 및 <a href="https://v.daum.net/v/20260103080149131?f=p" target="_blank" rel="noopener">"Welcome 2026 l 엔터 빅4, 신인 론칭 계획은?"</a>(Proxy, Medium), 2026-08-13 조회.</li>
+      <li><b>CBC뉴스</b> &mdash; <a href="https://www.cbci.co.kr/news/articleView.html?idxno=592555" target="_blank" rel="noopener">"[속보] 하이브, 2분기 영업이익 1,709억원…전분기 대비 흑자전환·전년 대비 159.3% 증가"</a>(Proxy, Medium), 2026-08-13 조회.</li>
+      <li><b>Radio Seoul</b> &mdash; <a href="https://www.radioseoul1650.com/archives/149101" target="_blank" rel="noopener">"BTS 효과 제대로..하이브, 분기 매출 최초 1조원 찍었다"</a>, 2026 상반기 밀리언셀러 아티스트·콘서트 투어 관객 전망 확인(Proxy, Medium), 2026-08-13 조회.</li>
+      <li><b>나무위키</b> &mdash; <a href="https://namu.wiki/w/%EB%AF%BC%ED%9D%AC%EC%A7%84-HYBE%20%EA%B0%84%20ADOR%20%EA%B2%BD%EC%98%81%EA%B6%8C%20%EB%B6%84%EC%9F%81" target="_blank" rel="noopener">"민희진-HYBE 간 ADOR 경영권 분쟁"</a>, 지배구조 소송 경과 확인(Proxy, Low~Medium), 2026-08-13 조회.</li>
+      <li><b>뉴시스</b> &mdash; <a href="https://www.newsis.com/view/NISX20260225_0003526014" target="_blank" rel="noopener">"민희진, 하이브에 '256억 내려놓겠다…모든 소송 중단하자'"</a>(Proxy, Medium), 2026-08-13 조회.</li>
+      <li><b>이코노미스트</b> &mdash; <a href="https://economist.co.kr/article/view/ecn202603260020" target="_blank" rel="noopener">"'430억원 배상하라' 민희진·다니엘 소송 시동…하이브 주가도 함께 '꿈틀'"</a>(Proxy, Medium), 2026-08-13 조회.</li>
+      <li><b>Billboard Korea</b> &mdash; <a href="https://billboard.co.kr/editorial/music/article/2025-k-pop-hybe-sm-yg-jyp-entertainment/" target="_blank" rel="noopener">"2024년을 돌아보며 예측한 4대 K팝 기업의 2025년 전략"</a>, 경쟁사(SM/YG/JYP) 신인 데뷔 계획 확인(Proxy, Medium), 2026-08-13 조회.</li>
+      <li><b>alphasquare</b> &mdash; <a href="https://file.alphasquare.co.kr/media/pdfs/market-report/%EB%AF%B8%EB%94%94%EC%96%B4K-POP20260507%ED%82%A4%EC%9B%80%EC%A6%9D%EA%B6%8C." target="_blank" rel="noopener">"K-POP 산업 중장기 시나리오"</a>, 66조원 글로벌 레이블 시장 규모 추정 확인(Proxy, Medium&mdash;업계 리포트), 2026-08-13 조회.</li>
+      <li><b>PwC컨설팅</b> &mdash; <a href="https://www.pwcconsulting.co.kr/ko/insight/pwcconsulting_data-kpop.pdf" target="_blank" rel="noopener">"데이터기반 K팝 밸류 극대화"(2026-01)</a>(Proxy, Medium), 2026-08-13 조회.</li>
+      <li><b>뉴스핌</b> &mdash; <a href="https://www.newspim.com/news/view/20240730000688" target="_blank" rel="noopener">"[K팝 위기론②] 사상 첫 역성장한 음반수출…'과열된 거품' 걷혔나"</a>, 2024년 음반수출 역성장 확인(Proxy, Medium&mdash;Bear case 근거), 2026-08-13 조회.</li>
+      <li><b>Google Finance</b> &mdash; <a href="https://www.google.com/finance/beta/quote/352820:KRX?hl=ko" target="_blank" rel="noopener">하이브(352820:KRX) 시세</a>, 시가총액 약 8.8~9.35조원(소스 간 편차 존재, Proxy, Medium), 2026-08-13 조회.</li>
+    </ol>
+  </section>
+
+  <div class="compliance">
+    <h2 class="eyebrow">Compliance Self-Check 메모</h2>
+    <ul>
+      <li>기준①·②·③ 모두 각 스킬의 100점 Score+Gate 아키텍처(`references/scorecard_and_verdict.md`, 기준별)를 그대로 따라 산출된 최종 Verdict(PASS/PASS/AVOID)를 judgment-rules.md의 매핑 규칙 그대로 적용해 미부합으로 환산했으며, 오케스트레이터가 임의로 등급을 조정하지 않았다.</li>
+      <li>DART 데이터가 별도(모회사 단독)재무제표이며 언론 보도의 연결 실적과 회계 범위가 다르다는 사실을 본문 전체에서 일관되게 구분·병기했다 &mdash; 두 수치 세트를 혼용해 유리한 쪽만 인용하지 않았다.</li>
+      <li>FnGuide/FnSpace는 "커버리지 밖"이 아니라 "이번 세션 도구 미로드로 인한 수집 실패"임을 명확히 구분해 기록했다(플러그인 연결 자체는 정상). 관련 항목(컨센서스·목표주가·EV/Sales)은 전부 데이터 없음으로 처리했고 중립값으로 임의 대체하지 않았다.</li>
+      <li>Retention/재구매율/DAU-MAU 등 세 철학의 핵심 정량 지표가 "데이터 없음"으로 확인된 부분은 각 스킬의 데이터 부족 처리 절차(가중치 배제 후 재정규화, 보수적 채점)를 그대로 따랐고 중립(50점) 처리하지 않았다.</li>
+      <li>1단계에서 3개 기준이 모두 미부합으로 판정됨에 따라 judgment-rules.md "1단계" 절 규정대로 2단계 스크리닝(screen-fundamentals)은 호출하지 않았다.</li>
+      <li>FRED(미국 매크로) 데이터는 하이브의 상장지·본사 소재국(한국)과 완전히 일치하지 않아 참고용(Low~Medium Confidence)으로만 사용했고 이 한계를 본문에 명시했다.</li>
+    </ul>
+  </div>
+
+  <footer class="colophon">investment&#8209;desk · judgment&#8209;rules.md 재현성 원칙에 따라 작성 · 2026&#8209;08&#8209;13</footer>
+
+</div>

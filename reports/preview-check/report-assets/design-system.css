@@ -1,0 +1,259 @@
+/* =========================================================================
+   investment-desk — REPORT DESIGN SYSTEM
+   ---------------------------------------------------------------------
+   모든 투자 리포트(HTML)는 이 파일을 그대로 <link>하고, 아래 컴포넌트
+   클래스만 조합해서 사용한다. 색을 직접 hex로 쓰지 말고 반드시
+   var(--토큰)을 참조할 것 — 리포트 간 색상 언어가 어긋나면 이 시스템의
+   존재 의미가 없어진다.
+
+   사용법 (모든 리포트 <head>에 동일하게 삽입):
+
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+   <link rel="stylesheet" href="report-assets/design-system.css">
+
+   구조: <div class="sheet"> 안에 .hero → .stat-strip → <section> 반복 → footer
+   ========================================================================= */
+
+:root{
+  /* --- surfaces --- */
+  --bg:#F6F7F9; --surface:#FFFFFF; --surface-2:#FBFBFD;
+  --line:#E4E7EC; --line-soft:#EDEFF3;
+
+  /* --- text --- */
+  --ink:#12151C; --ink-soft:#5B6472; --ink-faint:#8B93A3;
+  --accent:#2954E5; --accent-soft:#EDF1FE;
+
+  /* --- semantic status colors: 리포트 전체에서 이 4개 의미만 쓴다 ---
+     buy    = Confirmed / Bull / Pass
+     watch  = Partial / Neutral / Caution / 관찰
+     avoid  = Broken / Bear / Fail
+     na     = Insufficient data / 해당없음                                */
+  --buy:#188A56;   --buy-bg:#EAFAF1;   --buy-line:#BFE8D3;
+  --watch:#A6720B; --watch-bg:#FDF4DF; --watch-line:#EFD79C;
+  --avoid:#C23B3B; --avoid-bg:#FCEBEB; --avoid-line:#F1C3C3;
+  --na:#6B7280;    --na-bg:#F1F2F5;    --na-line:#DDE0E6;
+
+  /* --- terminal / code panel (다크 카드 전용 팔레트) --- */
+  --term-bg:#0D1017; --term-ink:#D7DEE8; --term-soft:#8891A0;
+  --term-key:#7FB0FF; --term-str:#7EE2A8;
+
+  /* --- fonts ---
+     --sans = 한글 본문 전체 (Pretendard)
+     --lat  = 라틴 문자 라벨/배지/제목 강조용 (Inter)
+     --mono = 숫자/데이터/터미널 (IBM Plex Mono)                          */
+  --sans:'Pretendard', -apple-system, sans-serif;
+  --lat:'Inter', sans-serif;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+}
+
+*{box-sizing:border-box;}
+html{background:var(--bg); scroll-behavior:smooth;}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.7; -webkit-font-smoothing:antialiased;}
+.sheet{max-width:900px; margin:0 auto; padding:0 0 80px;}
+a{color:inherit;}
+
+/* =========================================================================
+   HERO — 리포트 최상단. 왼쪽 텍스트 + 오른쪽 .term 스냅샷 패널 2단 그리드.
+   ========================================================================= */
+.hero{padding:64px 24px 40px; display:grid; grid-template-columns:1.1fr 1fr; gap:40px; align-items:start;}
+@media(max-width:760px){ .hero{grid-template-columns:1fr; padding:40px 20px 24px;} }
+.eyebrow{font-family:var(--lat); font-size:11.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; display:flex; align-items:center; gap:8px;}
+.eyebrow::before{content:"◇"; font-size:11px;}
+.hero h1{margin:0 0 6px; font-size:32px; font-weight:800; letter-spacing:-.02em; line-height:1.25;}
+.hero .headline{font-size:16px; color:var(--ink); font-weight:500; margin:14px 0 18px; line-height:1.6;}
+.chips{display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;}
+.chip{font-family:var(--mono); font-size:11px; color:var(--ink-soft); background:var(--surface-2); border:1px solid var(--line); padding:4px 10px; border-radius:6px;}
+
+/* verdict pill: 최종 판정 하나를 항상 이 컴포넌트로 표시. */
+.verdict-pill{display:inline-flex; align-items:center; gap:8px; font-family:var(--lat); font-weight:700; font-size:12.5px; letter-spacing:.04em; text-transform:uppercase; padding:7px 14px; border-radius:7px; margin-bottom:16px;}
+.verdict-pill.watch{background:var(--watch-bg); color:var(--watch); border:1px solid var(--watch-line);}
+.verdict-pill.buy{background:var(--buy-bg); color:var(--buy); border:1px solid var(--buy-line);}
+.verdict-pill.avoid{background:var(--avoid-bg); color:var(--avoid); border:1px solid var(--avoid-line);}
+.verdict-pill.na{background:var(--na-bg); color:var(--na); border:1px solid var(--na-line);}
+.verdict-pill::before{content:"●"; font-size:8px;}
+
+/* =========================================================================
+   TERMINAL — 다크 코드 카드. 히어로 스냅샷 + 근거 로그(term-table)에 재사용.
+   히어로에서는 반드시 .term-kv (라벨-값, 문법기호 없음) 포맷을 쓸 것 —
+   JSON 문법({}, "", : ,)을 그대로 보여주는 과거 버전은 폐기됨.
+   ========================================================================= */
+.term{background:var(--term-bg); border-radius:12px; overflow:hidden; box-shadow:0 8px 30px -12px rgba(20,25,40,.35);}
+.term-bar{display:flex; align-items:center; gap:6px; padding:10px 14px; border-bottom:1px solid rgba(255,255,255,.06);}
+.term-dot{width:8px; height:8px; border-radius:50%; background:#4a5468;}
+.term-label{margin-left:8px; font-family:var(--mono); font-size:11px; color:var(--term-soft);}
+.term-body{padding:16px 18px; font-family:var(--mono); font-size:12.5px; line-height:1.9;}
+.term-cmd{color:var(--term-soft);}
+.term-cmd b{color:var(--term-ink); font-weight:500;}
+.term-kv{display:flex; justify-content:space-between; max-width:340px; padding:3px 0;}
+.term-kv .k{color:var(--term-soft);}
+.term-kv .v{color:var(--term-ink); font-weight:600;}
+
+/* term-table: 근거 표를 다크 카드 안에 넣을 때 (Financial Transmission,
+   Layer 분석 등 정보 밀도가 높은 표에 사용, <details>로 기본 접어두기 권장) */
+.term-table{width:100%; border-collapse:collapse; font-family:var(--mono); font-size:11.8px;}
+.term-table th{color:var(--term-soft); text-align:left; font-weight:500; padding:6px 10px; border-bottom:1px solid rgba(255,255,255,.08);}
+.term-table td{padding:9px 10px; border-bottom:1px solid rgba(255,255,255,.06); color:var(--term-ink); vertical-align:top;}
+.term-table tr:last-child td{border-bottom:none;}
+.term-table td.num, .term-table th.num{text-align:right;}
+.term-table .tag{background:transparent; border:none; padding:2px 0;}
+.term-table .tag.bull{color:#7EE2A8;} .term-table .tag.bear{color:#F09393;} .term-table .tag.neutral{color:#E8C97A;}
+.term-table .status{font-size:11.5px;}
+
+/* =========================================================================
+   STAT STRIP — 히어로 바로 아래, 4칸 핵심 지표 요약.
+   ========================================================================= */
+.stat-strip{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden; margin:0 24px;}
+.stat-cell{background:var(--surface); padding:16px 16px;}
+.stat-cell .lbl{font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-faint); margin-bottom:6px;}
+.stat-cell .val{font-family:var(--mono); font-size:15.5px; font-weight:600; color:var(--ink);}
+.stat-cell .val small{display:block; font-family:var(--sans); font-size:10.5px; font-weight:400; color:var(--ink-faint); margin-top:3px;}
+@media(max-width:640px){ .stat-strip{grid-template-columns:repeat(2,1fr); margin:0 20px;} }
+
+/* =========================================================================
+   SECTIONS — 본문 섹션 공통 골격.
+   ========================================================================= */
+section{margin:64px 24px 0;}
+@media(max-width:640px){ section{margin-left:20px; margin-right:20px;} }
+.sec-eyebrow{font-family:var(--lat); font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:10px; display:flex; align-items:center; gap:8px;}
+.sec-eyebrow::before{content:"◇"; font-size:10px;}
+.sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:18px;}
+.sec-num{font-family:var(--lat); font-size:13px; font-weight:800; color:var(--accent); min-width:20px;}
+h2{font-size:20px; font-weight:800; margin:0 0 4px; letter-spacing:-.015em; color:var(--ink);}
+h2 small{font-size:12px; font-weight:400; color:var(--ink-faint);}
+h4{font-family:var(--lat); font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; margin:0 0 8px; color:var(--ink-faint);}
+h4.pro{color:var(--buy);} h4.con{color:var(--avoid);}
+p{margin:0 0 12px; font-size:14px; color:#374151;}
+.cite{font-family:var(--mono); font-size:11px; color:var(--ink-faint);}
+.quote-line{font-size:15px; font-style:italic; color:var(--ink); border-left:3px solid var(--accent); padding:2px 0 2px 16px; margin:0 0 16px;}
+
+/* 섹션 본문을 감싸는 기본 카드. 여러 개 쓸 때는 .gate 같은 전용 변형을 써도 됨 */
+.card{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:22px 24px;}
+
+ol.evid, ul.evid, ul.plain{margin:0 0 6px; padding-left:20px;}
+ol.evid li, ul.evid li, ul.plain li{margin-bottom:8px; font-size:13.8px; color:#374151;}
+ol.evid li b, ul.evid li b, ul.plain li b{color:var(--ink);}
+.evid-cols{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+@media(max-width:640px){ .evid-cols{grid-template-columns:1fr;} }
+
+.diagnosis{background:var(--accent-soft); border:1px solid #D6E0FB; border-radius:10px; padding:14px 16px; font-style:italic; font-size:13.8px; color:var(--ink); margin-top:12px;}
+.summary-line{font-size:13.4px; color:var(--ink-soft); background:var(--surface-2); border:1px dashed var(--line); border-radius:10px; padding:14px 18px; margin-top:6px;}
+.summary-line b{color:var(--ink);}
+
+/* =========================================================================
+   GATE CARDS — 판단 기준을 01/02/03… 넘버링 카드로 나열할 때
+   ========================================================================= */
+.gate{background:var(--surface); border:1px solid var(--line); border-radius:12px; margin-bottom:14px; overflow:hidden;}
+.gate-head{padding:18px 22px; display:flex; align-items:flex-start; gap:16px;}
+.gate-num{font-family:var(--lat); font-size:26px; font-weight:800; color:var(--line); line-height:1; flex-shrink:0; margin-top:2px;}
+.gate-titlewrap{flex:1; min-width:0;}
+.gate-titlewrap .fw{display:block; font-family:var(--mono); font-size:10.5px; color:var(--ink-faint); margin-top:4px;}
+.gate-head h3{margin:0; font-size:15.5px; font-weight:700;}
+.gate-body{padding:0 22px 20px 62px; border-top:1px solid var(--line-soft);}
+@media(max-width:640px){ .gate-body{padding-left:22px;} }
+.gate-body .thesis{padding-top:16px; font-size:13.6px; color:#374151;}
+.gate-body .thesis b{color:var(--ink);}
+
+/* =========================================================================
+   BADGES / FLAGS / TAGS — 판정 표시는 반드시 이 셋 중 하나로 통일.
+   badge = 카드 헤더의 큰 판정 배지 / flag = 체크리스트 행의 작은 판정 /
+   tag = 표 셀 단위 인라인 판정. 색은 항상 buy/watch/avoid/na 의미체계.
+   ========================================================================= */
+.badge{font-family:var(--lat); font-weight:700; font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:5px 11px; border-radius:6px; white-space:nowrap;}
+.badge.pass{color:var(--buy); background:var(--buy-bg); border:1px solid var(--buy-line);}
+.badge.partial{color:var(--watch); background:var(--watch-bg); border:1px solid var(--watch-line);}
+.badge.na{color:var(--na); background:var(--na-bg); border:1px solid var(--na-line);}
+.badge.avoid{color:var(--avoid); background:var(--avoid-bg); border:1px solid var(--avoid-line);}
+
+.flag{font-family:var(--lat); font-weight:700; padding:4px 10px; font-size:10px; letter-spacing:.03em; text-transform:uppercase; border-radius:6px; display:inline-block;}
+.flag.ok{color:var(--buy); background:var(--buy-bg); border:1px solid var(--buy-line);}
+.flag.caution{color:var(--watch); background:var(--watch-bg); border:1px solid var(--watch-line);}
+.flag.fail{color:var(--avoid); background:var(--avoid-bg); border:1px solid var(--avoid-line);}
+.flag.na{color:var(--na); background:var(--na-bg); border:1px solid var(--na-line);}
+
+.tag{display:inline-block; font-family:var(--mono); font-weight:700; font-size:10.5px; padding:3px 9px; border-radius:5px; letter-spacing:.02em;}
+.tag.bull{background:var(--buy-bg); color:var(--buy); border:1px solid var(--buy-line);}
+.tag.bear{background:var(--avoid-bg); color:var(--avoid); border:1px solid var(--avoid-line);}
+.tag.neutral{background:var(--watch-bg); color:var(--watch); border:1px solid var(--watch-line);}
+
+.status{font-family:var(--mono); font-weight:700; white-space:nowrap; font-size:12px;}
+.status.ok{color:var(--buy);} .status.bad{color:var(--avoid);} .status.mid{color:var(--watch);} .status.na{color:var(--na);}
+
+.class-badge{display:inline-block; font-family:var(--mono); font-size:11.3px; font-weight:600; background:var(--watch-bg); color:var(--watch); border:1px solid var(--watch-line); border-radius:7px; padding:6px 12px; margin-top:4px;}
+
+/* =========================================================================
+   SCREEN LIST — 스크리닝 체크리스트 (라벨 · 플래그 · 설명 3열 행)
+   ========================================================================= */
+.screen-card{background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden;}
+.screen-row{display:grid; grid-template-columns:110px 90px 1fr; gap:14px; align-items:start; padding:16px 20px; border-bottom:1px solid var(--line-soft);}
+.screen-row:last-child{border-bottom:none;}
+.screen-row .label{font-size:13.5px; font-weight:700; color:var(--ink); padding-top:3px;}
+.screen-row .desc{font-size:13px; color:var(--ink-soft);}
+@media(max-width:640px){ .screen-row{grid-template-columns:1fr; gap:6px;} }
+
+/* =========================================================================
+   VARIANT PERCEPTION 4-CARD GRID
+   ========================================================================= */
+.vp-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;}
+@media(max-width:640px){ .vp-grid{grid-template-columns:1fr;} }
+.vp-card{border:1px solid var(--line); border-radius:10px; padding:14px 16px; background:var(--surface-2);}
+.vp-card h4{margin:0 0 8px;}
+.vp-card p{font-size:13.3px; margin:0; color:#374151;}
+
+/* =========================================================================
+   Q&A / FINAL VERDICT BOX — 최종 투자 판단 섹션
+   ========================================================================= */
+.qa{margin-bottom:16px;}
+.qa .q{font-family:var(--lat); font-size:11px; font-weight:700; letter-spacing:.04em; color:var(--accent); margin-bottom:5px;}
+.qa .a{font-size:14.5px; color:var(--ink);}
+
+.verdict-box{border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin-top:20px; background:var(--surface-2);}
+.verdict-box .row{display:flex; justify-content:space-between; gap:16px; padding:8px 0; border-bottom:1px dashed var(--line); font-size:13.5px;}
+.verdict-box .row:last-child{border-bottom:none;}
+.verdict-box .row .k{font-family:var(--mono); font-size:10.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-faint); flex-shrink:0;}
+.verdict-box .row .v{font-weight:600; text-align:right; color:var(--ink);}
+
+.final{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:28px 26px;}
+.final p{color:#374151;}
+
+/* =========================================================================
+   TABLES — 라이트 테마 기본 표
+   ========================================================================= */
+table{width:100%; border-collapse:collapse; font-size:12.8px; margin:0;}
+th{font-family:var(--lat); font-size:10.5px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; text-align:left; color:var(--ink-faint); border-bottom:1px solid var(--line); padding:8px 10px;}
+td{padding:9px 10px; border-bottom:1px solid var(--line-soft); vertical-align:top; color:#374151;}
+tr:last-child td{border-bottom:none;}
+td.num, th.num{text-align:right; font-family:var(--mono);}
+
+/* 재무제표 전용 (자체 border+radius 카드형 표) */
+.fin-table{width:100%; border-collapse:collapse; font-size:12.8px; margin:0; background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden;}
+.fin-table th{background:var(--surface-2); color:var(--ink-soft); font-family:var(--mono); font-size:10.5px; text-align:left; padding:10px 12px; border-bottom:1px solid var(--line);}
+.fin-table td{padding:10px 12px; border-bottom:1px solid var(--line-soft); color:var(--ink);}
+.fin-table tr:last-child td{border-bottom:none;}
+.fin-table td.num, .fin-table th.num{text-align:right; font-family:var(--mono);}
+.fin-note{font-size:12px; color:var(--ink-faint); border-top:1px dashed var(--line); padding-top:12px; margin-top:16px;}
+
+/* =========================================================================
+   DETAILS / SUMMARY — 근거 표를 기본적으로 접어두는 progressive disclosure.
+   정보 밀도가 높은 근거는 항상 이 안에 넣을 것.
+   ========================================================================= */
+details{margin-top:6px;}
+summary{cursor:pointer; font-family:var(--lat); font-size:12px; font-weight:600; color:var(--accent); padding:8px 0; list-style:none; display:flex; align-items:center; gap:6px;}
+summary::-webkit-details-marker{display:none;}
+summary::before{content:"▸"; display:inline-block; transition:transform .15s; font-size:10px;}
+details[open] summary::before{transform:rotate(90deg);}
+details .inner{padding:8px 0 2px;}
+
+/* =========================================================================
+   SOURCES / FOOTER
+   ========================================================================= */
+.sources ul{margin:0; padding-left:0; list-style:none;}
+.sources li{font-size:12.3px; color:var(--ink-soft); padding:12px 0; border-bottom:1px solid var(--line-soft);}
+.sources li:last-child{border-bottom:none;}
+.sources code{font-family:var(--mono); color:var(--accent); font-size:11.3px;}
+.sources b{color:var(--ink);}
+
+footer{margin:60px 24px 0; padding:18px 22px; background:var(--surface-2); border:1px solid var(--line); border-radius:12px; font-family:var(--mono); font-size:10.5px; color:var(--ink-faint); line-height:1.8; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+footer code{font-family:var(--mono); color:var(--ink-soft);}

@@ -83,14 +83,26 @@ Verdict must be one of: **Supported / Partially Supported / Not Supported**.
    the required section 27 format: Snapshot → Thesis Test → Retention Quality → Pricing Power Evidence
    → Financial Transmission table → Layer A-G table → Variant Perception → Catalyst Map → Valuation →
    Expected Return → Entry Strategy → Thesis Break → Scorecard → Final Investment Decision).
-9. **Produce deliverable files** — see "Final file output" below. This step is mandatory; a
-   conversational answer alone is not a complete run of this skill.
+9. **Produce deliverable files** — see "Final file output" below. **Skip this step when called in
+   pipeline/light mode** (see below); otherwise it's mandatory — a conversational answer alone is not
+   a complete standalone run of this skill.
 10. **(이 레포 파이프라인에서 호출될 때만) 축약 판정 반환** — `investment-desk`가 1단계 필터링용으로
     호출한 경우, 위 Final Verdict를 `judgment-rules.md` 기준① 매핑(BUY→부합, WATCH→부분부합,
     PASS 또는 Gate 위반→미부합)으로 환산해 짧게 반환한다. SELL은 신규 판단(1단계 필터링)에는
-    등장하지 않는다. 두 출력(전체 메모 vs 파이프라인용 축약 판정)은 같은 계산에서 나와야 한다.
+    등장하지 않는다. 두 출력(전체 메모 vs 파이프라인용 축약 판정)이 있을 경우엔 같은 계산에서
+    나와야 한다.
 
-## Final file output (mandatory)
+## 파이프라인/간이 모드 (2026-08-13 추가 — 속도 최적화)
+
+`investment-desk`가 이 스킬을 호출하는 프롬프트에 "간이 모드"라고 명시돼 있으면, 위 8단계까지의
+분석(Layer A-G, Pricing Power Test, Financial Transmission, Variant Perception, Scorecard, Final
+Verdict)은 그대로 다 수행하되 **"Final file output" 아래의 파일 생성(9단계)은 생략**하고, 10단계의
+축약 판정(부합/부분부합/미부합 + 핵심 근거 + 적용 조항)만 답변으로 반환한다 — `investment-desk`의
+최종 종합보고서가 어차피 이 근거를 다시 문서화하므로, 파이프라인 실행마다 별도 전체 메모까지 중복
+생성하지 않기 위함이다. 사용자가 이 스킬을 **직접** 호출한 경우(간이 모드 지시 없음)에는 이 절을
+무시하고 원래대로 9단계(파일 생성)까지 전부 수행한다.
+
+## Final file output (mandatory unless called in pipeline/light mode above)
 
 Once the memo content is finalized, always generate BOTH of the following files, with identical
 content, using the company's name (spaces replaced with underscores, no special characters):

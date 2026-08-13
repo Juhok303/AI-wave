@@ -97,12 +97,13 @@ Verdict를 정한다).
     + 1-2줄 근거를 남긴다.
 11. **메모 작성** — `references/output_template.md`의 정확한 스켈레톤을 채운다. `.md`와 `.html`
     모두 같은 구조를 쓴다.
-12. **산출물 생성** — 아래 "Final file output" 참조. **필수 단계다** — 대화창 답변만으로는 완료가
-    아니다.
-13. **(이 레포 파이프라인에서 호출될 때만) 축약 판정 반환** — `investment-desk`가 1단계 필터링용으로
-    호출한 경우, `references/scorecard_and_verdict.md`의 매핑(BUY→부합, WATCH→부분부합, AVOID→
-    미부합)으로 환산해 짧게 반환한다. 두 출력(전체 메모 vs 파이프라인용 축약 판정)은 같은 계산에서
-    나와야 한다.
+12. **산출물 생성** — 아래 "Final file output" 참조. **호출 프롬프트에 "간이 모드"라고 명시된
+    경우(파이프라인 호출) 이 단계는 생략**하고 13번 축약 판정만 반환한다 — 그 외(단독 실행)에는
+    필수 단계이며, 대화창 답변만으로는 완료가 아니다.
+13. **축약 판정 반환** — `investment-desk`가 1단계 필터링용으로 호출한 경우(간이 모드),
+    `references/scorecard_and_verdict.md`의 매핑(BUY→부합, WATCH→부분부합, AVOID→미부합)으로
+    환산해 판정+핵심 근거만 짧게 반환한다(파일 생성 없이). 단독 실행이라 12단계에서 전체 메모를
+    만들었다면, 그 계산과 같은 결과로 이 축약 판정도 함께 제시한다.
 
 ## Peer Group 축소판 (이 레포는 GICS DB가 없음)
 
@@ -128,7 +129,7 @@ Verdict를 정한다).
 - `assets/memo_template.html` — HTML 산출물의 CSS/레이아웃 뼈대.
 - `assets/example-memo-duolingo.html` — Duolingo(DUOL) 워크드 예시이자 스타일 참조본.
 
-## Final file output (mandatory)
+## Final file output (mandatory unless called in pipeline/light mode — see step 12)
 
 메모 내용이 확정되면 아래 두 파일을 **동일한 내용**으로 항상 생성한다(기업명은 공백 없이):
 

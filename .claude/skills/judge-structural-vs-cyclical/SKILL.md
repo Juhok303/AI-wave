@@ -88,10 +88,11 @@ Verdict는 반드시 다음 중 하나: **Supported / Partially Supported / Not 
    Framing Test → 5. Financial Transmission → 6. Layer A-G → 7. Variant Perception → 8. Catalyst
    Map → 9. Valuation → 10. Expected Return → 11. Entry Strategy → 12. Thesis Break → 13.
    Scorecard → 14. Final Investment Decision).
-9. **산출물 생성** — 아래 "Final file output" 참조. 이 단계는 필수다 — 대화창 답변만으로는 이
-   스킬을 완료한 게 아니다.
+9. **산출물 생성** — 아래 "Final file output" 참조. **파이프라인/간이 모드로 호출된 경우 이 단계는
+   생략한다**(아래 "이 레포 파이프라인에서 호출될 때만 적용하는 절차" 참고) — 그 외(단독 실행)에는
+   필수다. 대화창 답변만으로는 단독 실행을 완료한 게 아니다.
 
-## Final file output (필수)
+## Final file output (단독 실행 시 필수, 파이프라인/간이 모드에서는 생략)
 
 메모 내용이 확정되면 항상 아래 두 파일을 **동일한 내용**으로 생성한다(회사명 공백은
 언더스코어로, 특수문자는 제거):
@@ -114,8 +115,14 @@ Steps:
 Claude.ai 단독 실행이 아니라 `investment-desk` 오케스트레이터가 이 스킬을 호출하는 레포
 파이프라인 안에서 실행될 때는:
 
-- 파일 저장 경로를 위 `/mnt/user-data/outputs/` / `present_files` 관례 대신 그 레포의
-  `reports/` 관례로 보정한다(SKILL.md 본문 자체는 원작자 그대로 유지, 호출 시점에
+- **간이 모드(2026-08-13 추가 — 속도 최적화)**: 호출 프롬프트에 "간이 모드"라고 명시돼 있으면
+  1~8단계 분석(Layer A-G, Cyclical Contamination Test, Financial Transmission, Variant
+  Perception, Scorecard, Final Verdict)은 그대로 다 수행하되 **9단계(파일 생성)는 생략**하고
+  바로 아래 부합/부분부합/미부합 축약 판정만 반환한다 — `investment-desk`의 최종 종합보고서가
+  이 근거를 다시 문서화하므로 중복 생성하지 않기 위함이다. 프롬프트에 간이 모드 지시가 없으면
+  (사용자가 이 스킬을 직접 호출한 경우 등) 9단계까지 전부 수행한다.
+- 파일을 생성하는 경우, 저장 경로를 위 `/mnt/user-data/outputs/` / `present_files` 관례 대신 그
+  레포의 `reports/` 관례로 보정한다(SKILL.md 본문 자체는 원작자 그대로 유지, 호출 시점에
   오케스트레이터가 경로만 보정).
 - 최종 Verdict를 `judgment-rules.md`(기준②)가 정의한 매핑 규칙 그대로 축약해 반환한다:
   - **BUY → 부합**
